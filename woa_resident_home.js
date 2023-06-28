@@ -1,1 +1,141 @@
+function memberProfile() {
+    modifyPage();
+    var oLay = document.getElementById("overlay");
+    var woaFrame = document.getElementById("MyFrame");
+    var emailDiv = document.getElementById("emailList");
+    var docDiv = document.getElementById("docList");
+    var newsDiv = document.getElementById("newsList");
+    var eventDiv = document.getElementById("eventList");
+    var groupDiv = document.getElementById("groupList");
+    var sellDiv = document.getElementById("sellList");
+    var woaPage = woaFrame.contentWindow.document
+    var profileTitle = document.getElementsByClassName("clsHeader")[0]
 
+    oLay.style.display = "none"
+    if (profileTitle.getElementsByTagName("a").length > 0) {
+        profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
+    } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
+
+    // =================== Display news articles uploaded to the Resource Center: ==================
+    let recentNewsText = woaPage.getElementById("panel_news_content").getElementsByClassName("news");
+    let recentNewsUL = document.createElement('ul');
+    recentNewsUL.setAttribute('style', 'padding: 0; margin: 0;');
+    for (let p = 0; p < recentNewsText.length; p++) {
+        let contentURL = recentNewsText[p].getElementsByTagName("a")[0].href
+        let contentText = recentNewsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
+        let contentTitle = recentNewsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")
+        let contentLI = document.createElement('li');
+        contentLI.innerHTML = "<p><b>" + contentTitle + "</b><br />" + contentText + "<a href=" + contentURL + ">&nbsp;<i>Read More</i></a></p>";
+        contentLI.setAttribute('style', 'display: block;');
+        recentNewsUL.appendChild(contentLI);
+    }
+    newsDiv.appendChild(recentNewsUL);
+    //=================  Display last three emails sent from Messenger================================
+    let recentEmailsText = woaPage.getElementById("panel_messages_content").getElementsByClassName("message");
+    let recentEmailsUL = document.createElement('ul');
+    recentEmailsUL.setAttribute('style', 'padding: 0; margin: 0;');
+    for (let p = 0; p < recentEmailsText.length; p++) {
+        let contentLI = document.createElement('li');
+        let contentURL = recentEmailsText[p].getElementsByTagName("a")[0].getAttribute("onclick");
+        let contentText = recentEmailsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").split("by");
+        let contentBody = recentEmailsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
+        contentLI.innerHTML = "<p><b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a></p>";
+        contentLI.setAttribute('style', 'display: block; padding:bottom:10px;');
+        recentEmailsUL.appendChild(contentLI);
+    }
+    emailDiv.appendChild(recentEmailsUL);
+    // =================== Display last three documents uploaded to the Resource Center: ======
+    let recentDocsText = woaPage.getElementById("panel_resource_content").getElementsByClassName("document")
+    let recentDocsUL = document.createElement('ul');
+    recentDocsUL.setAttribute('style', 'padding: 0; margin: 0;');
+    for (let p = 0; p < recentDocsText.length; p++) {
+        let contentURL = recentDocsText[p].getElementsByTagName("a")[0].getAttribute("data-item-viewurl")
+        let contentText = recentDocsText[p].getElementsByTagName("a")[0].innerText
+
+        let contentLI = document.createElement('li');
+        contentLI.innerHTML = "<a href='" + contentURL + "'>" + contentText + "</a>";
+        contentLI.setAttribute('style', 'display: block;');
+        recentDocsUL.appendChild(contentLI);
+    }
+    docDiv.appendChild(recentDocsUL);
+    //=================  Display last three calendar events================================
+    let recentEventsText = woaPage.getElementById("panel_cal_content").getElementsByClassName("event")
+    let recentEventsUL = document.createElement('ul');
+    recentEventsUL.setAttribute('style', 'padding: 0; margin: 0;');
+    for (let p = 0; p < recentEventsText.length; p++) {
+        let contentURL = recentEventsText[p].getElementsByTagName("a")[0].href
+        let contentText = recentEventsText[p].getElementsByTagName("a")[0].innerText;
+        let contentLI = document.createElement('li');
+        contentLI.innerHTML = "<a href=" + contentURL + ">" + contentText + "</a>";
+        contentLI.setAttribute('style', 'display: block;');
+        recentEventsUL.appendChild(contentLI);
+    }
+    eventDiv.appendChild(recentEventsUL);
+    //=================  Display lastest discussion================================
+    let recentgroupsText = woaPage.getElementById("panel_discuss_content").getElementsByClassName("post")
+    let recentgroupsUL = document.createElement('ul');
+    recentgroupsUL.setAttribute('style', 'padding: 0; margin: 0;');
+    for (let p = 0; p < recentgroupsText.length; p++) {
+        let contentURL = recentgroupsText[p].getElementsByTagName("a")[0].href
+        let contentText = recentgroupsText[p].getElementsByTagName("a")[0].innerText;
+        let contentLI = document.createElement('li');
+        contentLI.innerHTML = "<a href=" + contentURL + ">" + contentText + "</a>";
+        contentLI.setAttribute('style', 'display: block;');
+        recentgroupsUL.appendChild(contentLI);
+    }
+    groupDiv.appendChild(recentgroupsUL);
+    //=================  Display lastest classifieds================================
+    let recentsellsText = woaPage.getElementById("panel_classifieds_content").getElementsByClassName("classified")
+    let recentsellsUL = document.createElement('ul');
+    recentsellsUL.setAttribute('style', 'padding: 0; margin: 0;');
+    for (let p = 0; p < recentsellsText.length; p++) {
+        let contentURL = recentsellsText[p].getElementsByTagName("a")[0].href
+        let contentText = recentsellsText[p].getElementsByTagName("a")[0].innerText;
+        let contentTitle = recentsellsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
+        let contentLI = document.createElement('li');
+        contentLI.innerHTML = "<p><a href=" + contentURL + ">" + contentText + "</a><br />" + contentTitle + "</p>";
+        contentLI.setAttribute('style', 'display: block;');
+        recentsellsUL.appendChild(contentLI);
+    }
+    sellDiv.appendChild(recentsellsUL);
+}
+function modifyPage() {
+    document.getElementById("overlay").addEventListener("click", turnOff, false);
+    var returnBtn = document.getElementById("btnReturn");
+    if (returnBtn !== null) { returnBtn.style.display = "none"; };
+
+    var editBtn = document.getElementById("btnEditNews");
+    if (editBtn !== null) { editBtn.style.display = "none"; };
+
+    var signinStatus = document.getElementById("HeaderPublishGuestSignIn");
+    if (signinStatus !== null) {
+        signinStatus.href = "https://ourwoodbridge.net/page/28118~1093962/welcome-to-woodbridge"
+        signinStatus.style.display = "none";
+    };
+
+    var loginStatus = document.getElementById("HeaderPublishAuthLogout");
+    if (loginStatus !== null) {
+        loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out"
+        var profileTitle = document.getElementById("login_header");
+        if (profileTitle !== null) {
+            if (loginStatus.innerText = "Sign Out") {
+                profileTitle.innerText = "Your Status: Logged In";
+                document.getElementById("login_div").style.display = "none";
+                document.getElementById("loggedinDiv").style.display = "block";
+            }
+        }
+    }
+
+    var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
+    if (m_loginStatus !== null) {
+        if (m_loginStatus.length == 2) { m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" }
+        if (m_loginStatus.length == 1) {
+            m_loginStatus[0].href = "https://ourwoodbridge.net/page/28118~1093962/welcome-to-woodbridge"
+            m_loginStatus[0].style.display = "none";
+        }
+    }
+
+}
+function turnOff() {
+    document.getElementById("overlay").style.display = "none";
+}
