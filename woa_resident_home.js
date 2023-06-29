@@ -19,11 +19,12 @@ var woaFrame = document.getElementById("MyFrame");
 var inter = window.setInterval(function () {
     if (woaFrame.contentWindow.document.readyState === "complete") {
         window.clearInterval(inter);
-        alert("loaded")
+
         woaFrame.contentWindow.addEventListener('load', memberProfile)
     }
 }, 100)
 function memberProfile() {
+        alert("loaded")
     document.getElementById("overlay").style.display = "none";
 
     var woaPage = woaFrame.contentWindow.document
