@@ -99,9 +99,9 @@ woaFrame.onload = function () {
         recentgroupsUL.appendChild(contentLI);
     }
     profileData[6].appendChild(recentgroupsUL);
+document.getElementById("overlay").style.display = "none";
 
 
-    try {
         let p_name = document.getElementById("profile_name")
         let p_address = document.getElementById("profile_address")
         let p_city = document.getElementById("profile_city")
@@ -112,8 +112,6 @@ woaFrame.onload = function () {
         p_address.value = p_info.getElementsByTagName("div")[1].innerText
         p_city.value = p_info.getElementsByTagName("div")[2].innerText
         p_image.src = p_info.getElementsByTagName("img")[2].src
-    } catch (err) {
 
-    }
-    document.getElementById("overlay").style.display = "none";
+    
 }
