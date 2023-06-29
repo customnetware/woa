@@ -20,7 +20,13 @@ var inter = window.setInterval(function () {
     if (woaFrame.contentWindow.document.readyState === "complete") {
         window.clearInterval(inter);
 
-        woaFrame.contentWindow.addEventListener('load', memberProfile)
+        if (woaFrame.contentWindow.attachEvent) { woaFrame.contentWindow.attachEvent('onload', memberProfile); }
+        else if (woaFrame.contentWindow.addEventListener) { woaFrame.contentWindow.addEventListener('load', memberProfile, false); }
+        else { woaFrame.contentWindow.document.addEventListener('load', memberProfile, false); }
+
+
+
+
     }
 }, 100)
 function memberProfile() {
