@@ -72,7 +72,7 @@ woaFrame.onload = function () {
         contentLI.setAttribute('style', 'display: block;');
         recentDocsUL.appendChild(contentLI);
     }
-    profileData[3].appendChild(recentDocsUL);
+    profileData[4].appendChild(recentDocsUL);
     //=================  Display last three calendar events================================
     let recentEventsText = woaPage.getElementById("panel_cal_content").getElementsByClassName("event")
     let recentEventsUL = document.createElement('ul');
@@ -85,7 +85,7 @@ woaFrame.onload = function () {
         contentLI.setAttribute('style', 'display: block;');
         recentEventsUL.appendChild(contentLI);
     }
-    profileData[4].appendChild(recentEventsUL);
+    profileData[5].appendChild(recentEventsUL);
     //=================  Display lastest discussion================================
     let recentgroupsText = woaPage.getElementById("panel_discuss_content").getElementsByClassName("post")
     let recentgroupsUL = document.createElement('ul');
@@ -98,7 +98,7 @@ woaFrame.onload = function () {
         contentLI.setAttribute('style', 'display: block;');
         recentgroupsUL.appendChild(contentLI);
     }
-    profileData[5].appendChild(recentgroupsUL);
+    profileData[6].appendChild(recentgroupsUL);
 
 
     try {
