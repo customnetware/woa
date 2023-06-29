@@ -13,7 +13,7 @@ var newsDiv = document.getElementById("newsList");
 var eventDiv = document.getElementById("eventList");
 var groupDiv = document.getElementById("groupList");
 var sellDiv = document.getElementById("sellList");
-var profileTitle = document.getElementsByClassName("clsHeader")[0]
+
 
 var woaFrame = document.getElementById("MyFrame");
 var woaPage = woaFrame.contentWindow.document
@@ -29,7 +29,7 @@ function memberProfile() {
 
     document.getElementById("overlay").style.display = "none";
 
-
+    var profileTitle = document.getElementsByClassName("clsHeader")[0]
     if (profileTitle.getElementsByTagName("a").length > 0) {
         profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
     } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
