@@ -111,7 +111,7 @@ document.getElementById("overlay").style.display = "none";
         p_name.value = p_info.getElementsByTagName("div")[0].innerText
         p_address.value = p_info.getElementsByTagName("div")[1].innerText
         p_city.value = p_info.getElementsByTagName("div")[2].innerText
-        p_image.src = p_info.getElementsByTagName("img")[2].src
+        p_image.src = p_info.getElementsByTagName("img")[0].src
 
     
 }
