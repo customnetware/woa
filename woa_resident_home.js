@@ -10,10 +10,10 @@ woaFrame.onload = function () {
     var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
     if (m_loginStatus !== null && m_loginStatus.length == 2) { m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
 
-    let p_name = document.getElementById("profile_name")
-    let p_address = document.getElementById("profile_address")
-    let p_city = document.getElementById("profile_city")
-    let p_image = document.getElementById("profile_image")
+    var p_name = document.getElementById("profile_name")
+    var p_address = document.getElementById("profile_address")
+    var p_city = document.getElementById("profile_city")
+    var p_image = document.getElementById("profile_image")
 
 
 
@@ -22,10 +22,10 @@ woaFrame.onload = function () {
     var status01 = window.setInterval(function () {
         if (p_info !== null) {
             window.clearInterval(status01);
-    p_name.value = p_info.getElementsByTagName("div")[0].innerText
-    p_address.value = p_info.getElementsByTagName("div")[1].innerText
-    p_city.value = p_info.getElementsByTagName("div")[2].innerText
-    p_image.src = p_info.getElementsByTagName("img")[0].src
+            p_name.value = p_info.getElementsByTagName("div")[0].innerText
+            p_address.value = p_info.getElementsByTagName("div")[1].innerText
+            p_city.value = p_info.getElementsByTagName("div")[2].innerText
+            p_image.src = p_info.getElementsByTagName("img")[0].src
         };
     }, 100)
 
@@ -118,10 +118,10 @@ woaFrame.onload = function () {
         recentgroupsUL.appendChild(contentLI);
     }
     profileData[6].appendChild(recentgroupsUL);
-document.getElementById("overlay").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
 
 
 
 
-    
+
 }
