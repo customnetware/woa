@@ -1,4 +1,5 @@
-window.addEventListener('load', function () {
+
+
     document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
     var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
 
@@ -17,7 +18,7 @@ window.addEventListener('load', function () {
             memberProfile();
         }
     }, 100);
-});
+
 function memberProfile() {
     document.getElementById("overlay").style.display = "none";
     var profileTitle = document.getElementsByClassName("clsHeader")[0]
@@ -108,3 +109,5 @@ function memberProfile() {
 
 
 }
+
+
