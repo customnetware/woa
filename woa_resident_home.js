@@ -26,9 +26,9 @@ function memberProfile() {
 
 
 
-    if (profileTitle.getElementsByTagName("a").length > 0) {
-        profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
-    } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
+    //if (profileTitle.getElementsByTagName("a").length > 0) {
+    //    profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
+    //} else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
 
     // =================== Display news articles uploaded to the Resource Center: ==================
     let recentNewsText = woaPage.getElementById("panel_news_content").getElementsByClassName("news");
