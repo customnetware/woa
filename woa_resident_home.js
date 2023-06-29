@@ -1,21 +1,23 @@
-document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
-var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
+window.addEventListener('load', function () {
+    document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
+    var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
 
-var loginStatus = document.getElementById("HeaderPublishAuthLogout");
-if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
+    var loginStatus = document.getElementById("HeaderPublishAuthLogout");
+    if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
 
-var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
-if (m_loginStatus !== null && m_loginStatus.length == 2) { m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
+    var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
+    if (m_loginStatus !== null && m_loginStatus.length == 2) { m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
 
-var woaFrame = document.getElementById("MyFrame");
-var woaPage = woaFrame.contentWindow.document
+    var woaFrame = document.getElementById("MyFrame");
+    var woaPage = woaFrame.contentWindow.document
 
-var inter = window.setInterval(function () {
-    if (window.readyState === "complete" && woaPage.readyState === "complete") {
-        window.clearInterval(inter);
-        memberProfile();
-    }
-}, 100)
+    var inter = window.setInterval(function () {
+        if (window.readyState === "complete" && woaPage.readyState === "complete") {
+            window.clearInterval(inter);
+            memberProfile();
+        }
+    }, 100);
+});
 function memberProfile() {
     document.getElementById("overlay").style.display = "none";
     var profileTitle = document.getElementsByClassName("clsHeader")[0]
