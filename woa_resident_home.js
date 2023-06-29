@@ -1,3 +1,5 @@
+
+
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
 var woaFrame = document.getElementById("MyFrame");
 var inter = window.setInterval(function () {
@@ -113,7 +115,7 @@ function memberProfile() {
         }
         sellDiv.appendChild(recentsellsUL);
     }
-    catch (err) { }
+    catch (err) { document.getElementById("err_message").innerText=err }
     finally {
         document.getElementById("overlay").style.display = "none";
     }
