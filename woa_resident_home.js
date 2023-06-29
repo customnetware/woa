@@ -18,13 +18,13 @@ woaFrame.onload = function () {
 
 
     var woaPage = woaFrame.contentWindow.document
-    var p_info = woaPage.getElementById("panel_acct_profile_ajax")
+    let p_info = woaPage.getElementById("panel_acct_profile_ajax")
     var status01 = window.setInterval(function () {
         if (p_info !== null) {
             window.clearInterval(status01);
-            p_name.value = p_info.getElementsByTagName("div")[0].innerText
-            p_address.value = p_info.getElementsByTagName("div")[1].innerText
-            p_city.value = p_info.getElementsByTagName("div")[2].innerText
+            p_name.innerText = p_info.getElementsByTagName("div")[0].innerText
+            p_address.innerText = p_info.getElementsByTagName("div")[1].innerText
+            p_city.innerText = p_info.getElementsByTagName("div")[2].innerText
             p_image.src = p_info.getElementsByTagName("img")[0].src
         };
     }, 100)
