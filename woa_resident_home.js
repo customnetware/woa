@@ -1,11 +1,11 @@
 
 
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
-    var loginStatus = document.getElementById("HeaderPublishAuthLogout");
-    if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
+var loginStatus = document.getElementById("HeaderPublishAuthLogout");
+if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
 
-    var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
-    if (m_loginStatus !== null && m_loginStatus.length == 2) { m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
+var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
+if (m_loginStatus !== null && m_loginStatus.length == 2) { m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
 
 var emailDiv = document.getElementById("emailList");
 var docDiv = document.getElementById("docList");
@@ -16,8 +16,10 @@ var sellDiv = document.getElementById("sellList");
 var profileTitle = document.getElementsByClassName("clsHeader")[0]
 
 var woaFrame = document.getElementById("MyFrame");
+var woaPage = woaFrame.contentWindow.document
+
 var inter = window.setInterval(function () {
-    if (woaFrame.contentWindow.document.readyState === "complete") {
+    if (woaPage.readyState === "complete") {
         window.clearInterval(inter);
         memberProfile();
     }
@@ -26,7 +28,7 @@ function memberProfile() {
 
     document.getElementById("overlay").style.display = "none";
 
-    var woaPage = woaFrame.contentWindow.document
+
     if (profileTitle.getElementsByTagName("a").length > 0) {
         profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
     } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
