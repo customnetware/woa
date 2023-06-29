@@ -1,3 +1,5 @@
+
+
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
 var loginStatus = document.getElementById("HeaderPublishAuthLogout");
 if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
@@ -17,11 +19,13 @@ var woaFrame = document.getElementById("MyFrame");
 var inter = window.setInterval(function () {
     if (woaFrame.contentWindow.document.readyState === "complete") {
         window.clearInterval(inter);
-        memberProfile();
-        document.getElementById("overlay").style.display = "none";
+        woaFrame.contentWindow.addEventListener('load', memberProfile)
+
+
     }
 }, 100)
 function memberProfile() {
+        document.getElementById("overlay").style.display = "none";
     var woaPage = woaFrame.contentWindow.document
     if (profileTitle.getElementsByTagName("a").length > 0) {
         profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
@@ -111,3 +115,5 @@ function memberProfile() {
     sellDiv.appendChild(recentsellsUL);
   
 }
+
+
