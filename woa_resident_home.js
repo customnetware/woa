@@ -15,14 +15,14 @@ woaFrame.onload = function () {
     let p_city = document.getElementById("profile_city")
     let p_image = document.getElementById("profile_image")
 
+
+
+    var woaPage = woaFrame.contentWindow.document
     let p_info = woaPage.getElementById("panel_acct_profile_ajax")
     p_name.value = p_info.getElementsByTagName("div")[0].innerText
     p_address.value = p_info.getElementsByTagName("div")[1].innerText
     p_city.value = p_info.getElementsByTagName("div")[2].innerText
     p_image.src = p_info.getElementsByTagName("img")[0].src
-
-    var woaPage = woaFrame.contentWindow.document
-
 
 
     var profileTitle = document.getElementsByClassName("clsHeader")[0]
