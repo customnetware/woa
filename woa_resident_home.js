@@ -18,6 +18,7 @@ var inter = window.setInterval(function () {
     if (woaFrame.contentWindow.document.readyState === "complete") {
         window.clearInterval(inter);
         memberProfile();
+        document.getElementById("overlay").style.display = "none";
     }
 }, 100)
 function memberProfile() {
@@ -108,5 +109,5 @@ function memberProfile() {
         recentsellsUL.appendChild(contentLI);
     }
     sellDiv.appendChild(recentsellsUL);
-    document.getElementById("overlay").style.display = "none";
+  
 }
