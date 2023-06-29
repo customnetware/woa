@@ -10,6 +10,17 @@ woaFrame.onload = function () {
     var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
     if (m_loginStatus !== null && m_loginStatus.length == 2) { m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
 
+    let p_name = document.getElementById("profile_name")
+    let p_address = document.getElementById("profile_address")
+    let p_city = document.getElementById("profile_city")
+    let p_image = document.getElementById("profile_image")
+
+    let p_info = woaPage.getElementById("panel_acct_profile_ajax")
+    p_name.value = p_info.getElementsByTagName("div")[0].innerText
+    p_address.value = p_info.getElementsByTagName("div")[1].innerText
+    p_city.value = p_info.getElementsByTagName("div")[2].innerText
+    p_image.src = p_info.getElementsByTagName("img")[0].src
+
     var woaPage = woaFrame.contentWindow.document
 
 
@@ -102,16 +113,7 @@ woaFrame.onload = function () {
 document.getElementById("overlay").style.display = "none";
 
 
-        let p_name = document.getElementById("profile_name")
-        let p_address = document.getElementById("profile_address")
-        let p_city = document.getElementById("profile_city")
-        let p_image = document.getElementById("profile_image")
 
-        let p_info = woaPage.getElementById("panel_acct_profile_ajax")
-        p_name.value = p_info.getElementsByTagName("div")[0].innerText
-        p_address.value = p_info.getElementsByTagName("div")[1].innerText
-        p_city.value = p_info.getElementsByTagName("div")[2].innerText
-        p_image.src = p_info.getElementsByTagName("img")[0].src
 
     
 }
