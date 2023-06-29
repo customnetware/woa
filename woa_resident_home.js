@@ -19,18 +19,11 @@ var woaFrame = document.getElementById("MyFrame");
 var inter = window.setInterval(function () {
     if (woaFrame.contentWindow.document.readyState === "complete") {
         window.clearInterval(inter);
-
-        if (woaFrame.contentWindow.attachEvent) { woaFrame.contentWindow.attachEvent('onload', memberProfile); }
-        else if (woaFrame.contentWindow.addEventListener) { woaFrame.contentWindow.addEventListener('load', memberProfile, false); }
-        else { woaFrame.contentWindow.document.addEventListener('load', memberProfile, false); }
-
-
-
-
+        memberProfile();
     }
 }, 100)
 function memberProfile() {
-        alert("loaded")
+
     document.getElementById("overlay").style.display = "none";
 
     var woaPage = woaFrame.contentWindow.document
