@@ -18,7 +18,7 @@ woaFrame.onload = function () {
 
 
     var woaPage = woaFrame.contentWindow.document
-    let p_info = woaPage.getElementById("panel_acct_profile_ajax")
+    var p_info = woaPage.getElementById("panel_acct_profile_ajax")
     var status01 = window.setInterval(function () {
         if (p_info !== null) {
             window.clearInterval(status01);
