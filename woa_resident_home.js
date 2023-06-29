@@ -19,9 +19,9 @@ var woaFrame = document.getElementById("MyFrame");
 var woaPage = woaFrame.contentWindow.document
 
 var inter = window.setInterval(function () {
-    if (woaPage.readyState === "complete") {
-        window.clearInterval(inter);
-        memberProfile();
+    if (document.readyState === "complete" && woaPage.readyState === "complete") {
+            window.clearInterval(inter);
+            memberProfile();
     }
 }, 100)
 function memberProfile() {
