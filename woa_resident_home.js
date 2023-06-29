@@ -21,7 +21,6 @@ var woaPage = woaFrame.contentWindow.document
 var inter = window.setInterval(function () {
     if (woaPage.readyState === "complete") {
         window.clearInterval(inter);
-        alert(woaPage.readyState)
         memberProfile();
     }
 }, 100)
