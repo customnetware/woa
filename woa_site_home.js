@@ -1,3 +1,6 @@
+var w_redirect = document.getElementById("woa_redirect");
+if (w_redirect !== null) { w_redirect.value = "https://ourwoodbridge.net/page/28118~1077903/welcome"; };
+
 var returnBtn = document.getElementById("btnReturn");
 if (returnBtn !== null) { returnBtn.style.display = "none"; };
 
