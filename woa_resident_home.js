@@ -1,10 +1,6 @@
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
 var woaFrame = document.getElementById("MyFrame");
 woaFrame.onload = function () {
-    var p_name = document.getElementById("profile_name")
-    var p_address = document.getElementById("profile_address")
-    var p_city = document.getElementById("profile_city")
-    var p_image = document.getElementById("profile_image")
     var loginStatus = document.getElementById("HeaderPublishAuthLogout");
     if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
 
@@ -100,24 +96,56 @@ woaFrame.onload = function () {
     profileData[6].appendChild(recentgroupsUL);
     document.getElementById("overlay").style.display = "none";
 
+    var p_info = woaPage.getElementById("panel_acct_profile_ajax")
+    if (p_info !== null) {
 
+        let img01div = document.createElement('div');
+        let img01 = document.createElement('img');
+        img01div.style.float = "left"
+        img01.src = p_info.getElementsByTagName("img")[0].src
+        img01.style.width = "110px"
+        img01.style.float = "left"
+        img01div.appendChild(img01)
 
+        let profileDiv = document.createElement('div');
+        profileDiv.style.float = "left"
 
-        var p_info = woaPage.getElementById("panel_acct_profile_ajax")
-        if (p_info !== null) {
-            p_name.innerText = p_info.getElementsByTagName("div")[0].innerText
-            p_address.innerText = p_info.getElementsByTagName("div")[1].innerText
-            p_city.innerText = p_info.getElementsByTagName("div")[2].innerText
-            document.getElementById("profile_edit_link").href = p_info.getElementsByTagName("div")[3].getElementsByTagName("a")[0].href
-            p_image.src = p_info.getElementsByTagName("img")[0].src
+        let nameDiv = document.createElement('div');
+        nameDiv.className = "btn-block"
+        nameDiv.innerText = p_info.getElementsByTagName("div")[0].innerText
 
-        }
+        let addressDiv = document.createElement('div');
+        addressDiv.className = "btn-block"
+        addressDiv.innerText = p_info.getElementsByTagName("div")[1].innerText
 
+        let cityDiv = document.createElement('div');
+        cityDiv.className = "btn-block"
+        cityDiv.innerText = p_info.getElementsByTagName("div")[2].innerText
 
+        profileDiv.appendChild(nameDiv)
+        profileDiv.appendChild(addressDiv)
+        profileDiv.appendChild(cityDiv)
 
+        let img02div = document.createElement('div');
+        img01div.style.float = "left"
+
+        let img02link = document.createElement('a');
+        img02link.href = p_info.getElementsByTagName("div")[3].getElementsByTagName("a")[0].href
+
+        let img02 = document.createElement('img');
+        img02.src = "https://customnetware.github.io/woa/edit_text.png"
+        img02.style.width = "50px"
+        img02.style.float = "right"
+
+        img02link.appendChild(img02)
+        img02div.appendChild(img02link)
+
+        profileData[3].appendChild(img01div)
+        profileData[3].appendChild(profileDiv)
+        profileData[3].appendChild(img02div)
+
+    }
     )
-
-
 }
 
 
