@@ -14,10 +14,10 @@ woaFrame.onload = function () {
     var p_address = document.getElementById("profile_address")
     var p_city = document.getElementById("profile_city")
     var p_image = document.getElementById("profile_image")
-    p_name.innerText ="Resident's Name"
+    p_name.innerText = "Resident's Name"
     p_address.innerText = "Resident's Address"
     p_city.innerText = "Resident City"
-    p_image.src ="https://customnetware.github.io/woa/profile_avatar.png"
+    p_image.src = "https://customnetware.github.io/woa/profile_avatar.png"
 
     var woaPage = woaFrame.contentWindow.document
     var p_info_btn = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
@@ -26,13 +26,16 @@ woaFrame.onload = function () {
 
     var status01 = window.setInterval(function () {
         if (p_info_btn !== null) {
-            window.clearInterval(status01);
             p_info_btn.setAttribute("class", "x-tab-strip-active");
             var p_info = woaPage.getElementById("panel_acct_profile_ajax")
-            p_name.innerText = p_info.getElementsByTagName("div")[0].innerText
-            p_address.innerText = p_info.getElementsByTagName("div")[1].innerText
-            p_city.innerText = p_info.getElementsByTagName("div")[2].innerText
-            p_image.src = p_info.getElementsByTagName("img")[0].src
+            if (p_info !== null) {
+
+                p_name.innerText = p_info.getElementsByTagName("div")[0].innerText
+                p_address.innerText = p_info.getElementsByTagName("div")[1].innerText
+                p_city.innerText = p_info.getElementsByTagName("div")[2].innerText
+                p_image.src = p_info.getElementsByTagName("img")[0].src
+                window.clearInterval(status01);
+            }
         };
     }, 100)
 
