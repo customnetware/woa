@@ -100,11 +100,10 @@ woaFrame.onload = function () {
 
 
     var inter = window.setInterval(function () {
-    var p_info_div = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
-    p_info_div.className ="p_info_div"
+        var p_info_div = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
         var p_info = woaPage.getElementById("panel_acct_profile_ajax")
-
-        if (p_info !== null && p_info_div && p_info.getElementsByTagName("div").length > 3 && p_info.getElementsByTagName("img").length > 0) {
+        if (p_info_div !== null) { p_info_div.className = "p_info_div" }
+        if (p_info !== null && p_info_div !== null && p_info.getElementsByTagName("div").length > 3 && p_info.getElementsByTagName("img").length > 0) {
             window.clearInterval(inter);
             getProfileInfo(p_info);
         }
@@ -118,7 +117,7 @@ function getProfileInfo(profileElem) {
     img01.src = profileElem.getElementsByTagName("img")[0].src
     img01.style.width = "110px"
     img01.style.float = "left"
-    img01.style.marginRight="25px"
+    img01.style.marginRight = "25px"
     img01div.appendChild(img01)
 
     let profileDiv = document.createElement('div');
