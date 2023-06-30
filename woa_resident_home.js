@@ -15,12 +15,13 @@ function getCookie(cname) {
 }
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    let expires = expires = "Thu, 01 Jan 1970 00:00:00 GMT";
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+
+    document.cookie = cname + "=" + cvalue + ";path=/";
 }
 let profile_check = getCookie("profile_loaded");
+
 if (profile_check == "") {
+    alert(profile_check);
 
 
 var woaFrame = document.getElementById("MyFrame");
@@ -148,8 +149,4 @@ if (m_loginStatus !== null && m_loginStatus.length == 2) { m_loginStatus[1].href
 }
 } else {
     document.getElementById("overlay").style.display = "none";
-
 }
-
-
-
