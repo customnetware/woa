@@ -14,10 +14,10 @@ woaFrame.onload = function () {
     var p_address = document.getElementById("profile_address")
     var p_city = document.getElementById("profile_city")
     var p_image = document.getElementById("profile_image")
-    p_name.innerText=""
-    p_address.innerText = ""
-    p_city.innerText = ""
-    p_image.src=""
+    p_name.innerText ="Resident's Name"
+    p_address.innerText = "Resident's Address"
+    p_city.innerText = "Resident City"
+    p_image.src ="https://customnetware.github.io/woa/profile_avatar.png"
 
     var woaPage = woaFrame.contentWindow.document
     var p_info_btn = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
