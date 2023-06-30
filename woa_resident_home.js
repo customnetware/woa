@@ -125,15 +125,15 @@ function getProfileInfo(profileElem) {
     profileDiv.style.float = "left"
 
     let nameDiv = document.createElement('div');
-    nameDiv.className = "btn-block"
+    nameDiv.className = "btn-sm btn-block"
     nameDiv.innerText = profileElem.getElementsByTagName("div")[0].innerText;
 
     let addressDiv = document.createElement('div');
-    addressDiv.className = "btn-block"
+    addressDiv.className = "btn-sm btn-block"
     addressDiv.innerText = profileElem.getElementsByTagName("div")[1].innerText;
 
     let cityDiv = document.createElement('div');
-    cityDiv.className = "btn-block"
+    cityDiv.className = "btn-sm btn-block"
     cityDiv.innerText = profileElem.getElementsByTagName("div")[2].innerText;
 
     profileDiv.appendChild(nameDiv);
