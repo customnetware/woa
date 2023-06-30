@@ -1,3 +1,14 @@
+
+var p_name = document.getElementById("profile_name")
+var p_address = document.getElementById("profile_address")
+var p_city = document.getElementById("profile_city")
+var p_image = document.getElementById("profile_image")
+p_name.innerText = "Resident's Name"
+p_address.innerText = "Resident's Address"
+p_city.innerText = "Resident City"
+p_image.src = "https://customnetware.github.io/woa/profile_avatar.png"
+
+
 var woaFrame = document.getElementById("MyFrame");
 woaFrame.onload = function () {
 
@@ -10,14 +21,7 @@ woaFrame.onload = function () {
     var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
     if (m_loginStatus !== null && m_loginStatus.length == 2) { m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
 
-    var p_name = document.getElementById("profile_name")
-    var p_address = document.getElementById("profile_address")
-    var p_city = document.getElementById("profile_city")
-    var p_image = document.getElementById("profile_image")
-    p_name.innerText = "Resident's Name"
-    p_address.innerText = "Resident's Address"
-    p_city.innerText = "Resident City"
-    p_image.src = "https://customnetware.github.io/woa/profile_avatar.png"
+
 
     var woaPage = woaFrame.contentWindow.document
 
@@ -108,10 +112,13 @@ woaFrame.onload = function () {
     }
     profileData[6].appendChild(recentgroupsUL);
 
+
+
     var p_info_btn = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
+    p_info_btn.setAttribute("class", "x-tab-strip-active");
     var status01 = window.setInterval(function () {
         if (p_info_btn !== null) {
-            p_info_btn.setAttribute("class", "x-tab-strip-active");
+
             var p_info = woaPage.getElementById("panel_acct_profile_ajax")
             if (p_info !== null) {
 
