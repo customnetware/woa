@@ -1,3 +1,4 @@
+window.location.reload(true)
 var woaFrame = document.getElementById("MyFrame");
 woaFrame.onload = function () {
 
