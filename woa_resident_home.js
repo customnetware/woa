@@ -19,12 +19,14 @@ woaFrame.onload = function () {
 
     var woaPage = woaFrame.contentWindow.document
     var p_info_btn = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
-    p_info_btn.setAttribute("class", "x-tab-strip-active");
 
-    var p_info = woaPage.getElementById("panel_acct_profile_ajax")
+
+
     var status01 = window.setInterval(function () {
-        if (p_info !== null) {
+        if (p_info_btn !== null) {
             window.clearInterval(status01);
+            p_info_btn.setAttribute("class", "x-tab-strip-active");
+            var p_info = woaPage.getElementById("panel_acct_profile_ajax")
             p_name.innerText = p_info.getElementsByTagName("div")[0].innerText
             p_address.innerText = p_info.getElementsByTagName("div")[1].innerText
             p_city.innerText = p_info.getElementsByTagName("div")[2].innerText
