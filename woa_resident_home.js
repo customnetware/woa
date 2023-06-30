@@ -1,4 +1,5 @@
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
+var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
 var woaFrame = document.getElementById("MyFrame");
 woaFrame.onload = function () {
     var loginStatus = document.getElementById("HeaderPublishAuthLogout");
@@ -9,7 +10,7 @@ woaFrame.onload = function () {
 
     var woaPage = woaFrame.contentWindow.document
     var profileTitle = document.getElementsByClassName("clsHeader")[0]
-    var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
+
     if (profileTitle.getElementsByTagName("a").length > 0) {
         profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
     } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
