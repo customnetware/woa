@@ -94,7 +94,7 @@ woaFrame.onload = function () {
         recentgroupsUL.appendChild(contentLI);
     }
     profileData[6].appendChild(recentgroupsUL);
-    document.getElementById("overlay").style.display = "none";
+
 
     var p_info = woaPage.getElementById("panel_acct_profile_ajax")
     if (p_info !== null) {
@@ -144,6 +144,7 @@ woaFrame.onload = function () {
         profileData[3].appendChild(profileDiv)
         profileData[3].appendChild(img02div)
     }
+    document.getElementById("overlay").style.display = "none";
 }
 
 
