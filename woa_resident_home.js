@@ -20,27 +20,6 @@ woaFrame.onload = function () {
     p_image.src = "https://customnetware.github.io/woa/profile_avatar.png"
 
     var woaPage = woaFrame.contentWindow.document
-    var p_info_btn = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
-
-
-
-    var status01 = window.setInterval(function () {
-        if (p_info_btn !== null) {
-            p_info_btn.setAttribute("class", "x-tab-strip-active");
-            var p_info = woaPage.getElementById("panel_acct_profile_ajax")
-            if (p_info !== null) {
-
-                p_name.innerText = p_info.getElementsByTagName("div")[0].innerText
-                p_address.innerText = p_info.getElementsByTagName("div")[1].innerText
-                p_city.innerText = p_info.getElementsByTagName("div")[2].innerText
-                p_image.src = p_info.getElementsByTagName("img")[0].src
-                window.clearInterval(status01);
-            }
-        };
-    }, 100)
-
-
-
 
 
     var profileTitle = document.getElementsByClassName("clsHeader")[0]
@@ -128,6 +107,22 @@ woaFrame.onload = function () {
         recentgroupsUL.appendChild(contentLI);
     }
     profileData[6].appendChild(recentgroupsUL);
+
+    var p_info_btn = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
+    var status01 = window.setInterval(function () {
+        if (p_info_btn !== null) {
+            p_info_btn.setAttribute("class", "x-tab-strip-active");
+            var p_info = woaPage.getElementById("panel_acct_profile_ajax")
+            if (p_info !== null) {
+
+                p_name.innerText = p_info.getElementsByTagName("div")[0].innerText
+                p_address.innerText = p_info.getElementsByTagName("div")[1].innerText
+                p_city.innerText = p_info.getElementsByTagName("div")[2].innerText
+                p_image.src = p_info.getElementsByTagName("img")[0].src
+                window.clearInterval(status01);
+            }
+        };
+    }, 100)
     document.getElementById("overlay").style.display = "none";
 
 
