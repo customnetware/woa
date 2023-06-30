@@ -100,20 +100,20 @@ woaFrame.onload = function () {
     profileData[6].appendChild(recentgroupsUL);
     document.getElementById("overlay").style.display = "none";
 
-    var p_info_btn = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
-    var status01 = window.setInterval(function () {
-        if (p_info_btn !== null) {
-            var p_info = woaPage.getElementById("panel_acct_profile_ajax")
-            if (p_info !== null) {
-                p_name.innerText = p_info.getElementsByTagName("div")[0].innerText
-                p_address.innerText = p_info.getElementsByTagName("div")[1].innerText
-                p_city.innerText = p_info.getElementsByTagName("div")[2].innerText
-                document.getElementById("profile_edit_link").href = p_info.getElementsByTagName("div")[3].getElementsByTagName("a")[0].href
-                p_image.src = p_info.getElementsByTagName("img")[0].src
-                window.clearInterval(status01);
-            }
-        };
-    }, 100
+
+
+
+        var p_info = woaPage.getElementById("panel_acct_profile_ajax")
+        if (p_info !== null) {
+            p_name.innerText = p_info.getElementsByTagName("div")[0].innerText
+            p_address.innerText = p_info.getElementsByTagName("div")[1].innerText
+            p_city.innerText = p_info.getElementsByTagName("div")[2].innerText
+            document.getElementById("profile_edit_link").href = p_info.getElementsByTagName("div")[3].getElementsByTagName("a")[0].href
+            p_image.src = p_info.getElementsByTagName("img")[0].src
+
+        }
+
+
 
     )
 
