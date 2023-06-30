@@ -1,7 +1,7 @@
 var loginStatus = document.getElementById("HeaderPublishAuthLogout");
 
 if (loginStatus !== null) {
-    if (loginStatus.href !== "https://ourwoodbridge.net/page/28118~1094081/logging-out"{ 
+    if (loginStatus.href !== "https://ourwoodbridge.net/page/28118~1094081/logging-out"){ 
 
 var p_name = document.getElementById("profile_name")
 var p_address = document.getElementById("profile_address")
