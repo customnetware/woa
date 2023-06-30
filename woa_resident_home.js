@@ -99,14 +99,13 @@ woaFrame.onload = function () {
 
     var p_info = woaPage.getElementById("panel_acct_profile_ajax")
     var inter = window.setInterval(function () {
-        if (p_info !== null) {
+        if (p_info !== null && p_info.getElementsByTagName("div").length > 3 && p_info.getElementsByTagName("img").length > 0) {
             window.clearInterval(inter);
             getProfileInfo(p_info);
         }
     }, 100)
     document.getElementById("overlay").style.display = "none";
 }
-
 function getProfileInfo(profileElem) {
     let img01div = document.createElement('div');
     let img01 = document.createElement('img');
