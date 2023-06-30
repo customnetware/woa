@@ -125,6 +125,7 @@ woaFrame.onload = function () {
                 p_name.innerText = p_info.getElementsByTagName("div")[0].innerText
                 p_address.innerText = p_info.getElementsByTagName("div")[1].innerText
                 p_city.innerText = p_info.getElementsByTagName("div")[2].innerText
+                document.getElementById("profile_edit_link").href = p_info.getElementsByTagName("div")[3].getElementsByTagName("a")[0].href
                 p_image.src = p_info.getElementsByTagName("img")[0].src
                 window.clearInterval(status01);
             }
