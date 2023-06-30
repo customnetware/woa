@@ -96,9 +96,11 @@ woaFrame.onload = function () {
     }
     profileData[6].appendChild(recentgroupsUL);
 
+/*    var p_info_div = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")*/
 
-    var p_info = woaPage.getElementById("panel_acct_profile_ajax")
+
     var inter = window.setInterval(function () {
+        var p_info = woaPage.getElementById("panel_acct_profile_ajax")
         if (p_info !== null && p_info.getElementsByTagName("div").length > 3 && p_info.getElementsByTagName("img").length > 0) {
             window.clearInterval(inter);
             getProfileInfo(p_info);
