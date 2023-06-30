@@ -1,3 +1,26 @@
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    let expires = expires = "Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+let profile_check = getCookie("profile_loaded");
+if (profile_check != "") {
 
 
 var woaFrame = document.getElementById("MyFrame");
@@ -117,10 +140,16 @@ if (m_loginStatus !== null && m_loginStatus.length == 2) { m_loginStatus[1].href
                 window.clearInterval(status01);
             }
         };
-    }, 250)
+    }, 100
+
+    )
+    setCookie("profile_loaded", "loaded", 30);
     document.getElementById("overlay").style.display = "none";
 }
+} else {
+    document.getElementById("overlay").style.display = "none";
 
+}
 
 
 
