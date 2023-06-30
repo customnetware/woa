@@ -20,7 +20,7 @@ function setCookie(cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 let profile_check = getCookie("profile_loaded");
-if (profile_check != "") {
+if (profile_check !== "") {
 
 
 var woaFrame = document.getElementById("MyFrame");
