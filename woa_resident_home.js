@@ -100,17 +100,17 @@ woaFrame.onload = function () {
     var inter = window.setInterval(function () {
         if (p_info !== null) {
             window.clearInterval(inter);
-            getProfileInfo();
+            getProfileInfo(p_info);
         }
     }, 100)
     document.getElementById("overlay").style.display = "none";
 }
 
-function getProfileInfo() {
+function getProfileInfo(profileElem) {
     let img01div = document.createElement('div');
     let img01 = document.createElement('img');
     img01div.style.float = "left"
-    img01.src = p_info.getElementsByTagName("img")[0].src
+    img01.src = profileElem.getElementsByTagName("img")[0].src
     img01.style.width = "110px"
     img01.style.float = "left"
     img01div.appendChild(img01)
@@ -120,15 +120,15 @@ function getProfileInfo() {
 
     let nameDiv = document.createElement('div');
     nameDiv.className = "btn-block"
-    nameDiv.innerText = p_info.getElementsByTagName("div")[0].innerText;
+    nameDiv.innerText = profileElem.getElementsByTagName("div")[0].innerText;
 
     let addressDiv = document.createElement('div');
     addressDiv.className = "btn-block"
-    addressDiv.innerText = p_info.getElementsByTagName("div")[1].innerText;
+    addressDiv.innerText = profileElem.getElementsByTagName("div")[1].innerText;
 
     let cityDiv = document.createElement('div');
     cityDiv.className = "btn-block"
-    cityDiv.innerText = p_info.getElementsByTagName("div")[2].innerText;
+    cityDiv.innerText = profileElem.getElementsByTagName("div")[2].innerText;
 
     profileDiv.appendChild(nameDiv);
     profileDiv.appendChild(addressDiv);
@@ -138,7 +138,7 @@ function getProfileInfo() {
     img01div.style.float = "left";
 
     let img02link = document.createElement('a');
-    img02link.href = p_info.getElementsByTagName("div")[3].getElementsByTagName("a")[0].href;
+    img02link.href = profileElem.getElementsByTagName("div")[3].getElementsByTagName("a")[0].href;
 
     let img02 = document.createElement('img');
     img02.src = "https://customnetware.github.io/woa/edit_text.png";
