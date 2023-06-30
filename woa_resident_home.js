@@ -118,6 +118,7 @@ function getProfileInfo(profileElem) {
     img01.src = profileElem.getElementsByTagName("img")[0].src
     img01.style.width = "110px"
     img01.style.float = "left"
+    img01.style.marginRight="10px"
     img01div.appendChild(img01)
 
     let profileDiv = document.createElement('div');
