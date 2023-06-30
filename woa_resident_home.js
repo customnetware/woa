@@ -1,3 +1,7 @@
+var loginStatus = document.getElementById("HeaderPublishAuthLogout");
+
+if (loginStatus !== null) {
+    if (loginStatus.href !== "https://ourwoodbridge.net/page/28118~1094081/logging-out"{ 
 
 var p_name = document.getElementById("profile_name")
 var p_address = document.getElementById("profile_address")
@@ -8,25 +12,19 @@ p_address.innerText = "Resident's Address"
 p_city.innerText = "Resident City"
 p_image.src = "https://customnetware.github.io/woa/profile_avatar.png"
 
+document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
+
+
+if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
+
+var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
+if (m_loginStatus !== null && m_loginStatus.length == 2) { m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
 
 var woaFrame = document.getElementById("MyFrame");
 woaFrame.onload = function () {
-
-    document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
-    var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
-
-    var loginStatus = document.getElementById("HeaderPublishAuthLogout");
-    if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
-
-    var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
-    if (m_loginStatus !== null && m_loginStatus.length == 2) { m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
-
-
-
     var woaPage = woaFrame.contentWindow.document
-
-
     var profileTitle = document.getElementsByClassName("clsHeader")[0]
+    var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
     if (profileTitle.getElementsByTagName("a").length > 0) {
         profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
     } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
@@ -112,16 +110,12 @@ woaFrame.onload = function () {
     }
     profileData[6].appendChild(recentgroupsUL);
 
-
-
     var p_info_btn = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
     p_info_btn.setAttribute("class", "x-tab-strip-active");
     var status01 = window.setInterval(function () {
         if (p_info_btn !== null) {
-
             var p_info = woaPage.getElementById("panel_acct_profile_ajax")
             if (p_info !== null) {
-
                 p_name.innerText = p_info.getElementsByTagName("div")[0].innerText
                 p_address.innerText = p_info.getElementsByTagName("div")[1].innerText
                 p_city.innerText = p_info.getElementsByTagName("div")[2].innerText
@@ -130,11 +124,13 @@ woaFrame.onload = function () {
                 window.clearInterval(status01);
             }
         };
-    }, 100)
+    }, 250)
     document.getElementById("overlay").style.display = "none";
 
 
 
 
 
-}
+        }
+    }
+};
