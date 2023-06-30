@@ -143,9 +143,7 @@ woaFrame.onload = function () {
         profileData[3].appendChild(img01div)
         profileData[3].appendChild(profileDiv)
         profileData[3].appendChild(img02div)
-
     }
-    )
 }
 
 
