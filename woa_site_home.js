@@ -1,11 +1,6 @@
+
 var w_redirect = document.getElementById("woa_redirect");
 if (w_redirect !== null) { w_redirect.value = "https://ourwoodbridge.net/page/28118~1077903/welcome"; };
-
-var returnBtn = document.getElementById("btnReturn");
-if (returnBtn !== null) { returnBtn.style.display = "none"; };
-
-var editBtn = document.getElementById("btnEditNews");
-if (editBtn !== null) { editBtn.style.display = "none"; };
 
 var signinStatus = document.getElementById("HeaderPublishGuestSignIn");
 if (signinStatus !== null) {
@@ -21,6 +16,7 @@ if (loginStatus !== null) {
         if (loginStatus.innerText = "Sign Out") {
             profileTitle.innerText = "Your Status: Logged In";
             document.getElementById("login_div").style.display = "none";
+            document.getElementById("login_notice").style.display = "none";
             document.getElementById("loggedinDiv").style.display = "block";
         }
     }
