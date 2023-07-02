@@ -122,9 +122,19 @@ function getProfileInfo(profileElem) {
 
     let profileDiv = document.createElement('div');
     profileDiv.style.float = "left"
-    profileDiv.appendChild(document.createElement('div').appendChild(document.createTextNode(profileElem.getElementsByTagName("div")[0].innerText)));
-    profileDiv.appendChild(document.createElement('div').appendChild(document.createTextNode(profileElem.getElementsByTagName("div")[1].innerText)));
-    profileDiv.appendChild(document.createElement('div').appendChild(document.createTextNode(profileElem.getElementsByTagName("div")[2].innerText)));
+
+    let nameDiv = document.createElement('div');
+    nameDiv.innerText = profileElem.getElementsByTagName("div")[0].innerText;
+
+    let addressDiv = document.createElement('div');
+    addressDiv.innerText = profileElem.getElementsByTagName("div")[1].innerText;
+
+    let cityDiv = document.createElement('div');
+    cityDiv.innerText = profileElem.getElementsByTagName("div")[2].innerText;
+
+    profileDiv.appendChild(nameDiv);
+    profileDiv.appendChild(addressDiv);
+    profileDiv.appendChild(cityDiv);
 
     let img02div = document.createElement('div');
     img01div.style.float = "left";
