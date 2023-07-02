@@ -96,6 +96,9 @@ woaFrame.onload = function () {
     }
     profileData[6].appendChild(recentgroupsUL);
 
+
+
+
     var inter = window.setInterval(function () {
         var p_info_div = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
         var p_info = woaPage.getElementById("panel_acct_profile_ajax")
@@ -123,15 +126,23 @@ function getProfileInfo(profileElem) {
     profileDiv.appendChild(document.createElement('div').appendChild(document.createTextNode(profileElem.getElementsByTagName("div")[1].innerText)));
     profileDiv.appendChild(document.createElement('div').appendChild(document.createTextNode(profileElem.getElementsByTagName("div")[2].innerText)));
 
-    let img02div = document.createElement('div').createElement('a').setAttribute("href", profileElem.getElementsByTagName("div")[3].getElementsByTagName("a")[0].href);
+    let img02div = document.createElement('div');
     img01div.style.float = "left";
+
+    let img02link = document.createElement('a');
+    img02link.href = profileElem.getElementsByTagName("div")[3].getElementsByTagName("a")[0].href;
 
     let img02 = document.createElement('img');
     img02.src = "https://customnetware.github.io/woa/edit_text.png";
     img02.style.width = "50px";
     img02.style.float = "right";
 
+    img02link.appendChild(img02);
+    img02div.appendChild(img02link);
+
     profileData[3].appendChild(img01div);
     profileData[3].appendChild(profileDiv);
     profileData[3].appendChild(img02div);
 }
+
+
