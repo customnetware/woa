@@ -1,13 +1,26 @@
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
 var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
 var woaFrame = document.getElementById("MyFrame");
+
+var page_link = window.setInterval(function () {
+var loginStatus = document.getElementById("HeaderPublishAuthLogout");
+    if (loginStatus !== null) {
+        window.clearInterval(page_link);
+        loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out"
+    };
+}, 100)
+
+var mobile_link = window.setInterval(function () {
+var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
+    if (m_loginStatus !== null && m_loginStatus.length == 2) {
+        window.clearInterval(mobile_link);
+        m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out"
+    };
+
+}, 100)
+
+
 woaFrame.onload = function () {
-    var loginStatus = document.getElementById("HeaderPublishAuthLogout");
-    if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
-
-    var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
-    if (m_loginStatus !== null && m_loginStatus.length == 2) { m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" };
-
     var woaPage = woaFrame.contentWindow.document
     var profileTitle = document.getElementsByClassName("clsHeader")[0]
 
