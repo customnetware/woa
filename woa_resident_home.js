@@ -132,19 +132,11 @@ function getProfileInfo(profileElem) {
 
     let profileDiv = document.createElement('div');
     profileDiv.style.float = "left"
-
-    let nameDiv = document.createElement('div');
-    nameDiv.innerText = profileElem.getElementsByTagName("div")[0].innerText;
-
-    let addressDiv = document.createElement('div');
-    addressDiv.innerText = profileElem.getElementsByTagName("div")[1].innerText;
-
-    let cityDiv = document.createElement('div');
-    cityDiv.innerText = profileElem.getElementsByTagName("div")[2].innerText;
-
-    profileDiv.appendChild(nameDiv);
-    profileDiv.appendChild(addressDiv);
-    profileDiv.appendChild(cityDiv);
+    for (let p = 0; p < 3; p++) {
+        let divToAdd = document.createElement('div');
+        divToAdd.innerText = profileElem.getElementsByTagName("div")[p].innerText;
+        profileDiv.appendChild(divToAdd)
+    }
 
     let img02div = document.createElement('div');
     img01div.style.float = "left";
