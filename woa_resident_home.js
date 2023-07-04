@@ -97,7 +97,7 @@ woaFrame.onload = function () {
     profileData[5].appendChild(recentEventsUL);
     //=================  Display lastest discussion================================
     let recentgroupsName = woaPage.getElementById("panel_discuss_content").getElementsByClassName("discussion")
-    if (recentgroupsName[0].innerText)= "a. General") {
+    if (recentgroupsName[0].innerText == "a. General") {
         let recentgroupsText = woaPage.getElementById("panel_discuss_content").getElementsByClassName("post")
         let recentgroupsUL = document.createElement('ul');
         recentgroupsUL.setAttribute('style', 'padding: 0; margin: 0;');
