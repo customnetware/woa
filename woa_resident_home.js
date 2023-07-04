@@ -112,6 +112,7 @@ woaFrame.onload = function () {
         }
     } else {
         let contentLI = document.createElement('li');
+        contentLI.setAttribute('style', 'display: block; white-space:normal');
         contentLI.innerText = "Posts from the Woodbridge General group will appear here when available.";
         recentgroupsUL.appendChild(contentLI);
     }
