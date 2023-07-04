@@ -145,7 +145,7 @@ function getProfileInfo(profileElem) {
     img02link.href = profileElem.getElementsByTagName("div")[3].getElementsByTagName("a")[0].href;
 
     let img02 = document.createElement('img');
-    img02.src = "https://customnetware.github.io/woa/edit_text.png";
+    img02.src = "https://customnetware.github.io/woa/edit_text.jpg";
     img02.style.width = "50px";
     img02.style.float = "right";
 
