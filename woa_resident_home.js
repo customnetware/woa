@@ -3,7 +3,7 @@ var profileData = document.getElementById("profile_data").getElementsByClassName
 var woaFrame = document.getElementById("MyFrame");
 
 var page_link = window.setInterval(function () {
-var loginStatus = document.getElementById("HeaderPublishAuthLogout");
+    var loginStatus = document.getElementById("HeaderPublishAuthLogout");
     if (loginStatus !== null) {
         window.clearInterval(page_link);
         loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out"
@@ -11,7 +11,7 @@ var loginStatus = document.getElementById("HeaderPublishAuthLogout");
 }, 100)
 
 var mobile_link = window.setInterval(function () {
-var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
+    var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
     if (m_loginStatus !== null && m_loginStatus.length == 2) {
         window.clearInterval(mobile_link);
         m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out"
@@ -97,20 +97,20 @@ woaFrame.onload = function () {
     profileData[5].appendChild(recentEventsUL);
     //=================  Display lastest discussion================================
     let recentgroupsName = woaPage.getElementById("panel_discuss_content").getElementsByClassName("discussion")
-    alert(recentgroupsName[0].innerText);
-    let recentgroupsText = woaPage.getElementById("panel_discuss_content").getElementsByClassName("post")
-    let recentgroupsUL = document.createElement('ul');
-    recentgroupsUL.setAttribute('style', 'padding: 0; margin: 0;');
-    for (let p = 0; p < recentgroupsText.length; p++) {
-        let contentURL = recentgroupsText[p].getElementsByTagName("a")[0].href
-        let contentText = recentgroupsText[p].getElementsByTagName("a")[0].innerText;
-        let contentLI = document.createElement('li');
-        contentLI.innerHTML = "<a href=" + contentURL + ">" + contentText + "</a>";
-        contentLI.setAttribute('style', 'display: block;');
-        recentgroupsUL.appendChild(contentLI);
+    if (recentgroupsName[0].innerText)= "a. General") {
+        let recentgroupsText = woaPage.getElementById("panel_discuss_content").getElementsByClassName("post")
+        let recentgroupsUL = document.createElement('ul');
+        recentgroupsUL.setAttribute('style', 'padding: 0; margin: 0;');
+        for (let p = 0; p < recentgroupsText.length; p++) {
+            let contentURL = recentgroupsText[p].getElementsByTagName("a")[0].href
+            let contentText = recentgroupsText[p].getElementsByTagName("a")[0].innerText;
+            let contentLI = document.createElement('li');
+            contentLI.innerHTML = "<a href=" + contentURL + ">" + contentText + "</a>";
+            contentLI.setAttribute('style', 'display: block;');
+            recentgroupsUL.appendChild(contentLI);
+        }
+        profileData[6].appendChild(recentgroupsUL);
     }
-    profileData[6].appendChild(recentgroupsUL);
-
     var inter = window.setInterval(function () {
         var p_info_div = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
         var p_info = woaPage.getElementById("panel_acct_profile_ajax")
@@ -158,5 +158,3 @@ function getProfileInfo(profileElem) {
     profileData[3].appendChild(profileDiv);
     profileData[3].appendChild(img02div);
 }
-
-
