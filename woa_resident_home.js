@@ -96,6 +96,8 @@ woaFrame.onload = function () {
     }
     profileData[5].appendChild(recentEventsUL);
     //=================  Display lastest discussion================================
+    let recentgroupsName = woaPage.getElementById("panel_discuss_content").getElementsByClassName("discussion")
+    alert(recentgroupsName[0].innerText);
     let recentgroupsText = woaPage.getElementById("panel_discuss_content").getElementsByClassName("post")
     let recentgroupsUL = document.createElement('ul');
     recentgroupsUL.setAttribute('style', 'padding: 0; margin: 0;');
@@ -145,7 +147,7 @@ function getProfileInfo(profileElem) {
     img02link.href = profileElem.getElementsByTagName("div")[3].getElementsByTagName("a")[0].href;
 
     let img02 = document.createElement('img');
-    img02.src = "https://customnetware.github.io/woa/edit_text.jpg";
+    img02.src = "https://customnetware.github.io/woa/edit_text.png";
     img02.style.width = "50px";
     img02.style.float = "right";
 
