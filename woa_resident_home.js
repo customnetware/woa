@@ -23,6 +23,7 @@ var mobile_link = window.setInterval(function () {
 var test_link = window.setInterval(function () {
     let recentNewsText = woaFrame.contentWindow.document.getElementById("panel_news_content").getElementsByClassName("news");
     if (recentNewsText !== null) {
+        window.clearInterval(test_link);
         let recentNewsUL = document.createElement('ul');
         recentNewsUL.setAttribute('style', 'padding: 0; margin: 0;');
         for (let p = 0; p < recentNewsText.length; p++) {
