@@ -74,12 +74,15 @@ woaFrame.onload = function () {
     let recentDocsUL = document.createElement('ul');
     recentDocsUL.setAttribute('style', 'padding: 0; margin: 0;');
     for (let p = 0; p < recentDocsText.length; p++) {
-        let contentURL = recentDocsText[p].getElementsByTagName("a")[0].getAttribute("data-item-viewurl")
-        let contentText = recentDocsText[p].getElementsByTagName("a")[0].innerText
-        let contentLI = document.createElement('li');
-        contentLI.innerHTML = "<a href='" + contentURL + "'>" + contentText + "</a>";
-        contentLI.setAttribute('style', 'display: block;');
-        recentDocsUL.appendChild(contentLI);
+        let contentFolder = recentDocsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").indexOf("Board Room :")
+        if (contentFolder == 1) {
+            let contentURL = recentDocsText[p].getElementsByTagName("a")[0].getAttribute("data-item-viewurl")
+            let contentText = recentDocsText[p].getElementsByTagName("a")[0].innerText
+            let contentLI = document.createElement('li');
+            contentLI.innerHTML = "<a href='" + contentURL + "'>" + contentText + "</a>";
+            contentLI.setAttribute('style', 'display: block;');
+            recentDocsUL.appendChild(contentLI);
+        }
     }
     profileData[4].appendChild(recentDocsUL);
     //=================  Display last three calendar events================================
