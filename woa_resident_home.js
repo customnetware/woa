@@ -25,12 +25,13 @@ var recentNewswait = window.setInterval(function () {
     let recentNewsText = woaFrame.contentWindow.document.getElementById("panel_news_content");
     if (recentNewsText !== null) {
         window.clearInterval(recentNewswait);
+        let recentNewsList = recentNewsText.getElementsByClassName("news")
         let recentNewsUL = document.createElement('ul');
         recentNewsUL.setAttribute('style', 'padding: 0; margin: 0;');
-        for (let p = 0; p < recentNewsText.getElementsByClassName("news").length; p++) {
-            let contentURL = recentNewsText.getElementsByClassName("news")[p].getElementsByTagName("a")[0].href
-            let contentText = recentNewsText.getElementsByClassName("news")[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
-            let contentTitle = recentNewsText.getElementsByClassName("news")[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")
+        for (let p = 0; p < recentNewsList.length; p++) {
+            let contentURL = recentNewsList[p].getElementsByTagName("a")[0].href
+            let contentText = recentNewsList[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
+            let contentTitle = recentNewsList[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")
             let contentLI = document.createElement('li');
             contentLI.innerHTML = "<p><b>" + contentTitle + "</b><br />" + contentText + "<a href=" + contentURL + ">&nbsp;<i>Read More</i></a></p>";
             contentLI.setAttribute('style', 'display: block;');
@@ -45,13 +46,14 @@ var recentEmailswait = window.setInterval(function () {
     let recentEmailsText = woaFrame.contentWindow.document.getElementById("panel_messages_content");
     if (recentEmailsText !== null) {
         window.clearInterval(recentEmailswait);
+        let recentEmailsList = recentEmailsText.getElementsByClassName("message")
         let recentEmailsUL = document.createElement('ul');
         recentEmailsUL.setAttribute('style', 'padding: 0; margin: 0;');
-        for (let p = 0; p < recentEmailsText.getElementsByClassName("message").length; p++) {
+        for (let p = 0; p < recentEmailsList.length; p++) {
             let contentLI = document.createElement('li');
-            let contentURL = recentEmailsText.getElementsByClassName("message")[p].getElementsByTagName("a")[0].getAttribute("onclick");
-            let contentText = recentEmailsText.getElementsByClassName("message")[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").split("by");
-            let contentBody = recentEmailsText.getElementsByClassName("message")[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
+            let contentURL = recentEmailsList[p].getElementsByTagName("a")[0].getAttribute("onclick");
+            let contentText = recentEmailsList[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").split("by");
+            let contentBody = recentEmailsList[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
             contentLI.innerHTML = "<p><b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a></p>";
             contentLI.setAttribute('style', 'display: block; padding:bottom:10px;');
             recentEmailsUL.appendChild(contentLI);
