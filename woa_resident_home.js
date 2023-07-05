@@ -21,7 +21,7 @@ var mobile_link = window.setInterval(function () {
 }, 50)
 
 var test_link = window.setInterval(function () {
-        let recentNewsText = woaPage.getElementById("panel_news_content").getElementsByClassName("news");
+    let recentNewsText = woaPage.getElementById("panel_news_content").getElementsByClassName("news");
     if (recentNewsText !== null) {
         let recentNewsUL = document.createElement('ul');
         recentNewsUL.setAttribute('style', 'padding: 0; margin: 0;');
@@ -33,7 +33,8 @@ var test_link = window.setInterval(function () {
             contentLI.innerHTML = "<p><b>" + contentTitle + "</b><br />" + contentText + "<a href=" + contentURL + ">&nbsp;<i>Read More</i></a></p>";
             contentLI.setAttribute('style', 'display: block;');
             recentNewsUL.appendChild(contentLI);
-        }
+
+        } profileData[0].appendChild(recentNewsUL);
     }
 }, 50)
 
@@ -47,7 +48,7 @@ woaFrame.onload = function () {
     } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
     // =================== Display news articles uploaded to the Resource Center: ==================
 
-    profileData[0].appendChild(recentNewsUL);
+
     //=================  Display last three emails sent from Messenger================================
     let recentEmailsText = woaPage.getElementById("panel_messages_content").getElementsByClassName("message");
     let recentEmailsUL = document.createElement('ul');
