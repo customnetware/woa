@@ -1,3 +1,4 @@
+
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
 var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
 var woaFrame = document.getElementById("MyFrame");
@@ -8,7 +9,7 @@ var page_link = window.setInterval(function () {
         window.clearInterval(page_link);
         loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out"
     };
-}, 100)
+}, 50)
 
 var mobile_link = window.setInterval(function () {
     var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
@@ -17,7 +18,24 @@ var mobile_link = window.setInterval(function () {
         m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out"
     };
 
-}, 100)
+}, 50)
+
+var test_link = window.setInterval(function () {
+        let recentNewsText = woaPage.getElementById("panel_news_content").getElementsByClassName("news");
+    if (recentNewsText !== null) {
+        let recentNewsUL = document.createElement('ul');
+        recentNewsUL.setAttribute('style', 'padding: 0; margin: 0;');
+        for (let p = 0; p < recentNewsText.length; p++) {
+            let contentURL = recentNewsText[p].getElementsByTagName("a")[0].href
+            let contentText = recentNewsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
+            let contentTitle = recentNewsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")
+            let contentLI = document.createElement('li');
+            contentLI.innerHTML = "<p><b>" + contentTitle + "</b><br />" + contentText + "<a href=" + contentURL + ">&nbsp;<i>Read More</i></a></p>";
+            contentLI.setAttribute('style', 'display: block;');
+            recentNewsUL.appendChild(contentLI);
+        }
+    }
+}, 50)
 
 
 woaFrame.onload = function () {
@@ -28,18 +46,7 @@ woaFrame.onload = function () {
         profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
     } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
     // =================== Display news articles uploaded to the Resource Center: ==================
-    let recentNewsText = woaPage.getElementById("panel_news_content").getElementsByClassName("news");
-    let recentNewsUL = document.createElement('ul');
-    recentNewsUL.setAttribute('style', 'padding: 0; margin: 0;');
-    for (let p = 0; p < recentNewsText.length; p++) {
-        let contentURL = recentNewsText[p].getElementsByTagName("a")[0].href
-        let contentText = recentNewsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
-        let contentTitle = recentNewsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")
-        let contentLI = document.createElement('li');
-        contentLI.innerHTML = "<p><b>" + contentTitle + "</b><br />" + contentText + "<a href=" + contentURL + ">&nbsp;<i>Read More</i></a></p>";
-        contentLI.setAttribute('style', 'display: block;');
-        recentNewsUL.appendChild(contentLI);
-    }
+
     profileData[0].appendChild(recentNewsUL);
     //=================  Display last three emails sent from Messenger================================
     let recentEmailsText = woaPage.getElementById("panel_messages_content").getElementsByClassName("message");
@@ -75,7 +82,7 @@ woaFrame.onload = function () {
     recentDocsUL.setAttribute('style', 'padding: 0; margin: 0;');
     for (let p = 0; p < recentDocsText.length; p++) {
         let flds = recentDocsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")
-        if (flds.indexOf("Board Room") == 0 || flds.indexOf("Flyers (Events or Activities)") == 0 || flds.indexOf("Listening Post") == 0 ) {
+        if (flds.indexOf("Board Room") == 0 || flds.indexOf("Flyers (Events or Activities)") == 0 || flds.indexOf("Listening Post") == 0) {
             let contentURL = recentDocsText[p].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
             let contentText = recentDocsText[p].getElementsByTagName("a")[0].innerText;
             let contentLI = document.createElement('li');
