@@ -20,10 +20,11 @@ var mobile_link = window.setInterval(function () {
 
 }, 50)
 
-var test_link = window.setInterval(function () {
+// =================== Display news articles uploaded to the Resource Center: ==================
+var recentNewswait = window.setInterval(function () {
     let recentNewsText = woaFrame.contentWindow.document.getElementById("panel_news_content").getElementsByClassName("news");
     if (recentNewsText !== null) {
-        window.clearInterval(test_link);
+        window.clearInterval(recentNewswait);
         let recentNewsUL = document.createElement('ul');
         recentNewsUL.setAttribute('style', 'padding: 0; margin: 0;');
         for (let p = 0; p < recentNewsText.length; p++) {
@@ -39,6 +40,25 @@ var test_link = window.setInterval(function () {
     }
 }, 50)
 
+//=================  Display last three emails sent from Messenger================================
+var recentEmailswait = window.setInterval(function () {
+    let recentEmailsText = woaPage.getElementById("panel_messages_content").getElementsByClassName("message");
+    if (recentEmailsText !== null) {
+        window.clearInterval(recentEmailswait);
+        let recentEmailsUL = document.createElement('ul');
+        recentEmailsUL.setAttribute('style', 'padding: 0; margin: 0;');
+        for (let p = 0; p < recentEmailsText.length; p++) {
+            let contentLI = document.createElement('li');
+            let contentURL = recentEmailsText[p].getElementsByTagName("a")[0].getAttribute("onclick");
+            let contentText = recentEmailsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").split("by");
+            let contentBody = recentEmailsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
+            contentLI.innerHTML = "<p><b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a></p>";
+            contentLI.setAttribute('style', 'display: block; padding:bottom:10px;');
+            recentEmailsUL.appendChild(contentLI);
+        }
+        profileData[1].appendChild(recentEmailsUL);
+    }
+}, 50)
 
 woaFrame.onload = function () {
     var woaPage = woaFrame.contentWindow.document
@@ -47,23 +67,10 @@ woaFrame.onload = function () {
     if (profileTitle.getElementsByTagName("a").length > 0) {
         profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
     } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
-    // =================== Display news articles uploaded to the Resource Center: ==================
 
 
-    //=================  Display last three emails sent from Messenger================================
-    let recentEmailsText = woaPage.getElementById("panel_messages_content").getElementsByClassName("message");
-    let recentEmailsUL = document.createElement('ul');
-    recentEmailsUL.setAttribute('style', 'padding: 0; margin: 0;');
-    for (let p = 0; p < recentEmailsText.length; p++) {
-        let contentLI = document.createElement('li');
-        let contentURL = recentEmailsText[p].getElementsByTagName("a")[0].getAttribute("onclick");
-        let contentText = recentEmailsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").split("by");
-        let contentBody = recentEmailsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
-        contentLI.innerHTML = "<p><b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a></p>";
-        contentLI.setAttribute('style', 'display: block; padding:bottom:10px;');
-        recentEmailsUL.appendChild(contentLI);
-    }
-    profileData[1].appendChild(recentEmailsUL);
+
+
     //=================  Display lastest classifieds================================
     let recentsellsText = woaPage.getElementById("panel_classifieds_content").getElementsByClassName("classified")
     let recentsellsUL = document.createElement('ul');
