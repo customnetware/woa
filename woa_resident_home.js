@@ -76,7 +76,7 @@ woaFrame.onload = function () {
     for (let p = 0; p < recentDocsText.length; p++) {
         let contentFolder = recentDocsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").indexOf("Board Room :");
         alert(contentFolder);
-        if (contentFolder == 1) {
+        if (contentFolder == 0) {
             let contentURL = recentDocsText[p].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
             let contentText = recentDocsText[p].getElementsByTagName("a")[0].innerText;
             let contentLI = document.createElement('li');
