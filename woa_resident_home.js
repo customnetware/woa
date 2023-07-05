@@ -42,7 +42,7 @@ var recentNewswait = window.setInterval(function () {
 
 //=================  Display last three emails sent from Messenger================================
 var recentEmailswait = window.setInterval(function () {
-    let recentEmailsText = woaPage.getElementById("panel_messages_content").getElementsByClassName("message");
+    let recentEmailsText = woaFrame.contentWindow.document.getElementById("panel_messages_content").getElementsByClassName("message");
     if (recentEmailsText !== null) {
         window.clearInterval(recentEmailswait);
         let recentEmailsUL = document.createElement('ul');
@@ -55,8 +55,8 @@ var recentEmailswait = window.setInterval(function () {
             contentLI.innerHTML = "<p><b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a></p>";
             contentLI.setAttribute('style', 'display: block; padding:bottom:10px;');
             recentEmailsUL.appendChild(contentLI);
-        }
-        profileData[1].appendChild(recentEmailsUL);
+        } profileData[1].appendChild(recentEmailsUL);
+       
     }
 }, 50)
 
