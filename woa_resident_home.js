@@ -75,7 +75,7 @@ woaFrame.onload = function () {
     recentDocsUL.setAttribute('style', 'padding: 0; margin: 0;');
     for (let p = 0; p < recentDocsText.length; p++) {
         let flds = recentDocsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")
-        if (flds.indexOf("Board Room") == 0 || flds.indexOf("Flyers (Events or Activities)") || flds.indexOf("Listening Post") ) {
+        if (flds.indexOf("Board Room") == 0 || flds.indexOf("Flyers (Events or Activities)") == 0 || flds.indexOf("Listening Post") == 0 ) {
             let contentURL = recentDocsText[p].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
             let contentText = recentDocsText[p].getElementsByTagName("a")[0].innerText;
             let contentLI = document.createElement('li');
