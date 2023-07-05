@@ -27,7 +27,7 @@ var recentNewswait = window.setInterval(function () {
         window.clearInterval(recentNewswait);
         let recentNewsUL = document.createElement('ul');
         recentNewsUL.setAttribute('style', 'padding: 0; margin: 0;');
-        for (let p = 0; p < recentNewsText.length; p++) {
+        for (let p = 0; p < recentNewsText.getElementsByClassName("news").length; p++) {
             let contentURL = recentNewsText.getElementsByClassName("news")[p].getElementsByTagName("a")[0].href
             let contentText = recentNewsText.getElementsByClassName("news")[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
             let contentTitle = recentNewsText.getElementsByClassName("news")[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")
@@ -47,7 +47,7 @@ var recentEmailswait = window.setInterval(function () {
         window.clearInterval(recentEmailswait);
         let recentEmailsUL = document.createElement('ul');
         recentEmailsUL.setAttribute('style', 'padding: 0; margin: 0;');
-        for (let p = 0; p < recentEmailsText.length; p++) {
+        for (let p = 0; p < recentEmailsText.getElementsByClassName("message").length; p++) {
             let contentLI = document.createElement('li');
             let contentURL = recentEmailsText.getElementsByClassName("message")[p].getElementsByTagName("a")[0].getAttribute("onclick");
             let contentText = recentEmailsText.getElementsByClassName("message")[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").split("by");
