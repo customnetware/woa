@@ -99,8 +99,9 @@ var recentDocswait = window.setInterval(function () {
                 recentDocsUL.appendChild(contentLI);
             }
         }
+
+        profileData[4].appendChild(recentDocsUL);
     }
-    profileData[4].appendChild(recentDocsUL);
 }, 50)
 
 woaFrame.onload = function () {
