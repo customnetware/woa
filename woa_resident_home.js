@@ -1,4 +1,3 @@
-
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
 var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
 var woaFrame = document.getElementById("MyFrame");
