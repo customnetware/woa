@@ -14,7 +14,7 @@ function checkContent(contentToCheck, classToCheck,contentDivNum) {
             let current_content_class = current_content.getElementsByClassName(classToCheck)
             let contentUL = document.createElement('ul');
             let contentLI = document.createElement('li');
-            contentLI.innerHTML = current_content_class[0]
+            contentLI.innerHTML = current_content_class[0].innerHTML
             contentUL.appendChild(contentLI);
             profileData[contentDivNum].appendChild(contentUL)
         }
