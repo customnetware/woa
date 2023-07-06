@@ -24,7 +24,7 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                     window.clearInterval(page_wait);
                     for (let i = 0; i < current_content_class.length; i++) {
                         let content_pp = document.createElement("p")
-                        content_pp.setAttribute('style', 'padding: 0; margin-top: 0; px; margin-bottom: 5px;');
+                        content_pp.setAttribute('style', 'padding: 0; margin-top: 0; px; margin-bottom: 3px;');
                         if (contentDivNum < 3) {
                             content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
                         } else if (contentDivNum > 3) {
