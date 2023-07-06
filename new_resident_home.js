@@ -27,7 +27,7 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                         if (contentDivNum < 3) {
                             content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
                         } else if (contentDivNum > 3) {
-                            content_pp.innerHTML = current_content_class[i].innerHTML + current_content_class[i].getElementsByTagName("a")[0].innerHTML
+                            content_pp.innerHTML =  current_content_class[i].getElementsByTagName("a")[0].innerHTML
                         } else {
                             content_pp.innerHTML = ""
                         }
