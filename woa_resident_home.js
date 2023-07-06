@@ -1,3 +1,4 @@
+
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
 var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
 var woaFrame = document.getElementById("MyFrame");
@@ -102,7 +103,6 @@ var recentDocswait = window.setInterval(function () {
     }
 }, 50)
 //=================  Display last three calendar events================================
-
 var recentEventswait = window.setInterval(function () {
     let recentEventsText = woaFrame.contentWindow.document.getElementById("panel_cal_content")
     if (recentEventsText !== null) {
@@ -123,7 +123,6 @@ var recentEventswait = window.setInterval(function () {
         }
     }
 }, 50)
-
 //=================  Display lastest discussion================================
 var recentgroupswait = window.setInterval(function () {
     let recentgroupsName = woaFrame.contentWindow.document.getElementById("panel_discuss_content")
@@ -151,22 +150,22 @@ var recentgroupswait = window.setInterval(function () {
         profileData[6].appendChild(recentgroupsUL);
     }
 }, 50)
+var inter = window.setInterval(function () {
+    var p_info_div = woaFrame.contentWindow.document.getElementById("panel_acct_tabs__panel_acct_profile")
+    var p_info = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax")
+    if (p_info_div !== null) { p_info_div.className = "x-tab-strip-active" }
+    if (p_info !== null && p_info_div !== null && p_info.getElementsByTagName("div").length > 3 && p_info.getElementsByTagName("img").length > 0) {
+        window.clearInterval(inter);
+        getProfileInfo(p_info);
+    }
+}, 50)
+
 woaFrame.onload = function () {
     var woaPage = woaFrame.contentWindow.document
     var profileTitle = document.getElementsByClassName("clsHeader")[0]
     if (profileTitle.getElementsByTagName("a").length > 0) {
         profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
     } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
-
-    var inter = window.setInterval(function () {
-        var p_info_div = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
-        var p_info = woaPage.getElementById("panel_acct_profile_ajax")
-        if (p_info_div !== null) { p_info_div.className = "x-tab-strip-active" }
-        if (p_info !== null && p_info_div !== null && p_info.getElementsByTagName("div").length > 3 && p_info.getElementsByTagName("img").length > 0) {
-            window.clearInterval(inter);
-            getProfileInfo(p_info);
-        }
-    }, 100)
     document.getElementById("overlay").style.display = "none";
 }
 function getProfileInfo(profileElem) {
