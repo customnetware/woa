@@ -22,10 +22,12 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                         } else {
                             content_pp.innerHTML = current_content_class[i].innerHTML
                         }
-                        profileData[contentDivNum].appendChild(contentUL)
+                        profileData[contentDivNum].appendChild(content_pp)
                     }
                 }
             }
         }
     }, 100)
 }
+
+
