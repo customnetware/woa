@@ -1,4 +1,3 @@
-
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
 var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
 var woaFrame = document.getElementById("MyFrame");
@@ -107,19 +106,21 @@ var recentDocswait = window.setInterval(function () {
 var recentEventswait = window.setInterval(function () {
     let recentEventsText = woaFrame.contentWindow.document.getElementById("panel_cal_content")
     if (recentEventsText !== null) {
-        window.clearInterval(recentEventswait);
         let recentEventsList = recentEventsText.getElementsByClassName("event")
-        let recentEventsUL = document.createElement('ul');
-        recentEventsUL.setAttribute('style', 'padding: 0; margin: 0;');
-        for (let p = 0; p < recentEventsList.length; p++) {
-            let contentURL = recentEventsList[p].getElementsByTagName("a")[0].href
-            let contentText = recentEventsList[p].getElementsByTagName("a")[0].innerText;
-            let contentLI = document.createElement('li');
-            contentLI.innerHTML = "<a href=" + contentURL + ">" + contentText + "</a>";
-            contentLI.setAttribute('style', 'display: block;');
-            recentEventsUL.appendChild(contentLI);
+        if (recentEventsList !== null) {
+            window.clearInterval(recentEventswait);
+            let recentEventsUL = document.createElement('ul');
+            recentEventsUL.setAttribute('style', 'padding: 0; margin: 0;');
+            for (let p = 0; p < recentEventsList.length; p++) {
+                let contentURL = recentEventsList[p].getElementsByTagName("a")[0].href
+                let contentText = recentEventsList[p].getElementsByTagName("a")[0].innerText;
+                let contentLI = document.createElement('li');
+                contentLI.innerHTML = "<a href=" + contentURL + ">" + contentText + "</a>";
+                contentLI.setAttribute('style', 'display: block;');
+                recentEventsUL.appendChild(contentLI);
+            }
+            profileData[5].appendChild(recentEventsUL);
         }
-        profileData[5].appendChild(recentEventsUL);
     }
 }, 50)
 
