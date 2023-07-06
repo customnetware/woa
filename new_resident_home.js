@@ -23,15 +23,10 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                     window.clearInterval(page_wait);
                     for (let i = 0; i < current_content_class.length; i++) {
                         let content_pp = document.createElement("p")
-                        content_pp.setAttribute('style', 'padding: 0px; margin-top: 0px; margin-bottom:5px');
                         if (contentDivNum < 3) {
                             content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
-                        } else if (contentDivNum > 4) {
-                            let content_a = document.createElement("a");
-                            var content_link = document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML);
-                            content_a.appendChild(content_link)
-                            content_a.href = current_content_class[i].getElementsByTagName("a")[0].href
-                            content_pp.appendChild(content_a)
+                        } else if (contentDivNum > 3) {
+                            content_pp.innerHTML = current_content_class[i].innerHTML
                         } else {
                             content_pp.innerHTML = ""
                         }
