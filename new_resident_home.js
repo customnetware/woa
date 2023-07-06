@@ -15,6 +15,7 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
             if (current_content_class !== null) {
                 window.clearInterval(page_wait);
                 let contentUL = document.createElement('ul');
+                contentUL.setAttribute('style', 'padding: 0; margin: 0;');
                 for (let i = 0; i < current_content_class.length; i++) {
                     let contentLI = document.createElement('li');
                     contentLI.setAttribute('style', 'display: block;');
