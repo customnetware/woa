@@ -10,8 +10,10 @@ function checkContent(contentToCheck,classToCheck) {
         let current_content = woaFrame.contentWindow.document.getElementById(contentToCheck);
         if (current_content !== null) {
             let current_content_class = current_content.getElementsByClassName(classToCheck)
-            alert(current_content_class.innerText)
+            alert(current_content_class[0].innerText)
             window.clearInterval(page_wait);
         }
     }, 50)
 }
+
+
