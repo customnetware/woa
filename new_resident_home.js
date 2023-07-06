@@ -4,6 +4,7 @@ const page_content = [
     ["panel_news_content", "news"],
     ["panel_messages_content", "message"],
     ["panel_classifieds_content", "classified"],
+    ["profile_content", "profile"],
     ["panel_resource_content", "document"],
     ["panel_cal_content", "event"],
     ["panel_discuss_content", "discussion"]
