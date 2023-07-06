@@ -5,20 +5,18 @@ var woaFrame = document.getElementById("MyFrame");
 
 var page_link = window.setInterval(function () {
     var loginStatus = document.getElementById("HeaderPublishAuthLogout");
-    if (loginStatus !== null) {
+    var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
+    if (loginStatus !== null && m_loginStatus !== null) {
         window.clearInterval(page_link);
         loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out"
+        if (m_loginStatus.length == 2) {
+            window.clearInterval(mobile_link);
+            m_loginStatus[1].href = loginStatus.href
+        };
     };
 }, 50)
 
-var mobile_link = window.setInterval(function () {
-    var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
-    if (m_loginStatus !== null && m_loginStatus.length == 2) {
-        window.clearInterval(mobile_link);
-        m_loginStatus[1].href = "https://ourwoodbridge.net/page/28118~1094081/logging-out"
-    };
 
-}, 50)
 
 // =================== Display news articles uploaded to the Resource Center: ==================
 var recentNewswait = window.setInterval(function () {
@@ -172,7 +170,7 @@ var nameWait = window.setInterval(function () {
 
 woaFrame.onload = function () {
 
-/*    document.getElementById("overlay").style.display = "none";*/
+    /*    document.getElementById("overlay").style.display = "none";*/
 }
 function getProfileInfo(profileElem) {
     let img01div = document.createElement('div');
