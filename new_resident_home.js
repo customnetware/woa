@@ -4,8 +4,9 @@ for (let i = 0; i < page_content.length; i++) {
     var page_wait = window.setInterval(function () {
         let current_content = woaFrame.contentWindow.document.getElementById(page_content[i]);
         if (current_content !== null) {
-            window.clearInterval(page_wait);
             alert(current_content.innerText)
+            window.clearInterval(page_wait);
+
         }
     }, 50)
 }
