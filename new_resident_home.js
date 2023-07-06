@@ -17,6 +17,7 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
 
             for (let i = 0; i < current_content_class.length; i++) {
                 let contentLI = document.createElement('li');
+                contentLI.setAttribute('style', 'display: block;');
                 contentLI.innerHTML = current_content_class[i].innerHTML
                 contentUL.appendChild(contentLI);
             }
