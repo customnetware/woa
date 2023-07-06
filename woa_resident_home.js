@@ -62,7 +62,7 @@ var recentEmailswait = window.setInterval(function () {
 
 //=================  Display lastest classifieds================================.getElementsByClassName("classified")
 var recentsellsWait = window.setInterval(function () {
-    let recentsellsText = woaPage.getElementById("panel_classifieds_content")
+    let recentsellsText = woaFrame.contentWindow.document.getElementById("panel_classifieds_content")
     if (recentsellsText !== null) {
         window.clearInterval(recentsellsWait);
         let recentsellsList = recentsellsText.getElementsByClassName("classified")
