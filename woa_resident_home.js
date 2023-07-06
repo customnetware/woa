@@ -59,8 +59,7 @@ var recentEmailswait = window.setInterval(function () {
         } profileData[1].appendChild(recentEmailsUL);
     }
 }, 50)
-
-//=================  Display lastest classifieds================================.getElementsByClassName("classified")
+//=================  Display lastest classifieds================================
 var recentsellsWait = window.setInterval(function () {
     let recentsellsText = woaFrame.contentWindow.document.getElementById("panel_classifieds_content")
     if (recentsellsText !== null) {
@@ -81,31 +80,37 @@ var recentsellsWait = window.setInterval(function () {
     }
 }, 50)
 
+// =================== Display last three documents uploaded to the Resource Center: ======.getElementsByClassName("document")
+var recentDocswait = window.setInterval(function () {
+    let recentDocsText = woaFrame.contentWindow.document.getElementById("panel_resource_content")
+    if (recentDocsText !== null) {
+        window.clearInterval(recentDocswait);
+        let recentDocsList = recentDocsText.getElementsByClassName("document")
+        let recentDocsUL = document.createElement('ul');
+        recentDocsUL.setAttribute('style', 'padding: 0; margin: 0;');
+        for (let p = 0; p < recentDocsList.length; p++) {
+            let flds = recentDocsList[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")
+            if (flds.indexOf("Board Room") == 0 || flds.indexOf("Flyers (Events or Activities)") == 0 || flds.indexOf("Listening Post") == 0) {
+                let contentURL = recentDocsList[p].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
+                let contentText = recentDocsList[p].getElementsByTagName("a")[0].innerText;
+                let contentLI = document.createElement('li');
+                contentLI.innerHTML = "<a href='" + contentURL + "'>" + contentText + "</a>";
+                contentLI.setAttribute('style', 'display: block;');
+                recentDocsUL.appendChild(contentLI);
+            }
+        }
+    }
+    profileData[4].appendChild(recentDocsUL);
+}, 50)
+
 woaFrame.onload = function () {
     var woaPage = woaFrame.contentWindow.document
     var profileTitle = document.getElementsByClassName("clsHeader")[0]
-
     if (profileTitle.getElementsByTagName("a").length > 0) {
         profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
     } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
 
 
-    // =================== Display last three documents uploaded to the Resource Center: ======
-    let recentDocsText = woaPage.getElementById("panel_resource_content").getElementsByClassName("document")
-    let recentDocsUL = document.createElement('ul');
-    recentDocsUL.setAttribute('style', 'padding: 0; margin: 0;');
-    for (let p = 0; p < recentDocsText.length; p++) {
-        let flds = recentDocsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")
-        if (flds.indexOf("Board Room") == 0 || flds.indexOf("Flyers (Events or Activities)") == 0 || flds.indexOf("Listening Post") == 0) {
-            let contentURL = recentDocsText[p].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
-            let contentText = recentDocsText[p].getElementsByTagName("a")[0].innerText;
-            let contentLI = document.createElement('li');
-            contentLI.innerHTML = "<a href='" + contentURL + "'>" + contentText + "</a>";
-            contentLI.setAttribute('style', 'display: block;');
-            recentDocsUL.appendChild(contentLI);
-        }
-    }
-    profileData[4].appendChild(recentDocsUL);
     //=================  Display last three calendar events================================
     let recentEventsText = woaPage.getElementById("panel_cal_content").getElementsByClassName("event")
     let recentEventsUL = document.createElement('ul');
