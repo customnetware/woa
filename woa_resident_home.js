@@ -79,8 +79,7 @@ var recentsellsWait = window.setInterval(function () {
         profileData[2].appendChild(recentsellsUL);
     }
 }, 50)
-
-// =================== Display last three documents uploaded to the Resource Center: ======.getElementsByClassName("document")
+// =================== Display last three documents uploaded to the Resource Center: ======
 var recentDocswait = window.setInterval(function () {
     let recentDocsText = woaFrame.contentWindow.document.getElementById("panel_resource_content")
     if (recentDocsText !== null) {
@@ -103,6 +102,28 @@ var recentDocswait = window.setInterval(function () {
         profileData[4].appendChild(recentDocsUL);
     }
 }, 50)
+//=================  Display last three calendar events================================
+
+var recentEventswait = window.setInterval(function () {
+    let recentEventsText = woaFrame.contentWindow.document.getElementById("panel_cal_content")
+    if (recentEventsText !== null) {
+        window.clearInterval(recentEventswait);
+        let recentEventsList = recentEventsText.getElementsByClassName("event")
+        let recentEventsUL = document.createElement('ul');
+        recentEventsUL.setAttribute('style', 'padding: 0; margin: 0;');
+        for (let p = 0; p < recentEventsList.length; p++) {
+            let contentURL = recentEventsList[p].getElementsByTagName("a")[0].href
+            let contentText = recentEventsList[p].getElementsByTagName("a")[0].innerText;
+            let contentLI = document.createElement('li');
+            contentLI.innerHTML = "<a href=" + contentURL + ">" + contentText + "</a>";
+            contentLI.setAttribute('style', 'display: block;');
+            recentEventsUL.appendChild(contentLI);
+        }
+        profileData[5].appendChild(recentEventsUL);
+    }
+}, 50)
+
+
 
 woaFrame.onload = function () {
     var woaPage = woaFrame.contentWindow.document
@@ -112,19 +133,7 @@ woaFrame.onload = function () {
     } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
 
 
-    //=================  Display last three calendar events================================
-    let recentEventsText = woaPage.getElementById("panel_cal_content").getElementsByClassName("event")
-    let recentEventsUL = document.createElement('ul');
-    recentEventsUL.setAttribute('style', 'padding: 0; margin: 0;');
-    for (let p = 0; p < recentEventsText.length; p++) {
-        let contentURL = recentEventsText[p].getElementsByTagName("a")[0].href
-        let contentText = recentEventsText[p].getElementsByTagName("a")[0].innerText;
-        let contentLI = document.createElement('li');
-        contentLI.innerHTML = "<a href=" + contentURL + ">" + contentText + "</a>";
-        contentLI.setAttribute('style', 'display: block;');
-        recentEventsUL.appendChild(contentLI);
-    }
-    profileData[5].appendChild(recentEventsUL);
+
     //=================  Display lastest discussion================================
     let recentgroupsName = woaPage.getElementById("panel_discuss_content").getElementsByClassName("discussion")
     let recentgroupsUL = document.createElement('ul');
