@@ -26,7 +26,7 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                         content_pp.setAttribute('style', 'padding: 0px; margin-top: 0px; margin-bottom:5px');
                         if (contentDivNum < 3) {
                             content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
-                        } else if (contentDivNum > 3) {
+                        } else if (contentDivNum > 4) {
                             let content_a = document.createElement("a");
                             var content_link = document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML);
                             content_a.appendChild(content_link)
