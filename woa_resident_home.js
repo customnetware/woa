@@ -123,39 +123,39 @@ var recentEventswait = window.setInterval(function () {
     }
 }, 50)
 
-
-
+//=================  Display lastest discussion================================
+var recentgroupswait = window.setInterval(function () {
+    let recentgroupsName = woaFrame.contentWindow.document.getElementById("panel_discuss_content")
+    if (recentgroupsName !== null) {
+        window.clearInterval(recentgroupswait);
+        let recentgroupsList = recentgroupsName.getElementsByClassName("discussion")
+        let recentgroupsUL = document.createElement('ul');
+        recentgroupsUL.setAttribute('style', 'padding: 0; margin: 0;');
+        if (recentgroupsList[0].innerText == "a. General") {
+            let recentgroupsText = recentgroupsName.getElementsByClassName("post")
+            for (let p = 0; p < recentgroupsText.length; p++) {
+                let contentURL = recentgroupsText[p].getElementsByTagName("a")[0].href
+                let contentText = recentgroupsText[p].getElementsByTagName("a")[0].innerText;
+                let contentLI = document.createElement('li');
+                contentLI.innerHTML = "<a href=" + contentURL + ">" + contentText + "</a>";
+                contentLI.setAttribute('style', 'display: block;');
+                recentgroupsUL.appendChild(contentLI);
+            }
+        } else {
+            let contentLI = document.createElement('li');
+            contentLI.setAttribute('style', 'display: block; white-space:normal');
+            contentLI.innerText = "Posts from the Woodbridge General group will appear here when available.";
+            recentgroupsUL.appendChild(contentLI);
+        }
+        profileData[6].appendChild(recentgroupsUL);
+    }
+}, 50)
 woaFrame.onload = function () {
     var woaPage = woaFrame.contentWindow.document
     var profileTitle = document.getElementsByClassName("clsHeader")[0]
     if (profileTitle.getElementsByTagName("a").length > 0) {
         profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
     } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
-
-
-
-    //=================  Display lastest discussion================================
-    let recentgroupsName = woaPage.getElementById("panel_discuss_content").getElementsByClassName("discussion")
-    let recentgroupsUL = document.createElement('ul');
-    recentgroupsUL.setAttribute('style', 'padding: 0; margin: 0;');
-
-    if (recentgroupsName[0].innerText == "a. General") {
-        let recentgroupsText = woaPage.getElementById("panel_discuss_content").getElementsByClassName("post")
-        for (let p = 0; p < recentgroupsText.length; p++) {
-            let contentURL = recentgroupsText[p].getElementsByTagName("a")[0].href
-            let contentText = recentgroupsText[p].getElementsByTagName("a")[0].innerText;
-            let contentLI = document.createElement('li');
-            contentLI.innerHTML = "<a href=" + contentURL + ">" + contentText + "</a>";
-            contentLI.setAttribute('style', 'display: block;');
-            recentgroupsUL.appendChild(contentLI);
-        }
-    } else {
-        let contentLI = document.createElement('li');
-        contentLI.setAttribute('style', 'display: block; white-space:normal');
-        contentLI.innerText = "Posts from the Woodbridge General group will appear here when available.";
-        recentgroupsUL.appendChild(contentLI);
-    }
-    profileData[6].appendChild(recentgroupsUL);
 
     var inter = window.setInterval(function () {
         var p_info_div = woaPage.getElementById("panel_acct_tabs__panel_acct_profile")
