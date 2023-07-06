@@ -20,7 +20,7 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                     for (let i = 0; i < current_content_class.length; i++) {
                         let contentLI = document.createElement('li');
                         contentLI.setAttribute('style', 'display: block;');
-                        if (contentDivNum == 0 || contentDivNum == 1) {
+                        if (contentDivNum < 3 ) {
                             contentLI.innerHTML = current_content_class[i].innerHTML + "<br />" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
                         } else { contentLI.innerHTML = current_content_class[i].innerHTML }
                         
