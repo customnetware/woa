@@ -40,7 +40,6 @@ var recentNewswait = window.setInterval(function () {
         } profileData[0].appendChild(recentNewsUL);
     }
 }, 50)
-
 //=================  Display last three emails sent from Messenger================================
 var recentEmailswait = window.setInterval(function () {
     let recentEmailsText = woaFrame.contentWindow.document.getElementById("panel_messages_content");
@@ -58,7 +57,27 @@ var recentEmailswait = window.setInterval(function () {
             contentLI.setAttribute('style', 'display: block; padding:bottom:10px;');
             recentEmailsUL.appendChild(contentLI);
         } profileData[1].appendChild(recentEmailsUL);
-       
+    }
+}, 50)
+
+//=================  Display lastest classifieds================================.getElementsByClassName("classified")
+var recentsellsWait = window.setInterval(function () {
+    let recentsellsText = woaPage.getElementById("panel_classifieds_content")
+    if (recentsellsText !== null) {
+        window.clearInterval(recentsellsWait);
+        let recentsellsList = recentsellsText.getElementsByClassName("classified")
+        let recentsellsUL = document.createElement('ul');
+        recentsellsUL.setAttribute('style', 'padding: 0; margin: 0;');
+        for (let p = 0; p < recentsellsList.length; p++) {
+            let contentURL = recentsellsList[p].getElementsByTagName("a")[0].href
+            let contentText = recentsellsList[p].getElementsByTagName("a")[0].innerText;
+            let contentTitle = recentsellsList[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
+            let contentLI = document.createElement('li');
+            contentLI.innerHTML = "<p><a href=" + contentURL + ">" + contentText + "</a><br />" + contentTitle + "</p>";
+            contentLI.setAttribute('style', 'display: block;');
+            recentsellsUL.appendChild(contentLI);
+        }
+        profileData[2].appendChild(recentsellsUL);
     }
 }, 50)
 
@@ -71,22 +90,6 @@ woaFrame.onload = function () {
     } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
 
 
-
-
-    //=================  Display lastest classifieds================================
-    let recentsellsText = woaPage.getElementById("panel_classifieds_content").getElementsByClassName("classified")
-    let recentsellsUL = document.createElement('ul');
-    recentsellsUL.setAttribute('style', 'padding: 0; margin: 0;');
-    for (let p = 0; p < recentsellsText.length; p++) {
-        let contentURL = recentsellsText[p].getElementsByTagName("a")[0].href
-        let contentText = recentsellsText[p].getElementsByTagName("a")[0].innerText;
-        let contentTitle = recentsellsText[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
-        let contentLI = document.createElement('li');
-        contentLI.innerHTML = "<p><a href=" + contentURL + ">" + contentText + "</a><br />" + contentTitle + "</p>";
-        contentLI.setAttribute('style', 'display: block;');
-        recentsellsUL.appendChild(contentLI);
-    }
-    profileData[2].appendChild(recentsellsUL);
     // =================== Display last three documents uploaded to the Resource Center: ======
     let recentDocsText = woaPage.getElementById("panel_resource_content").getElementsByClassName("document")
     let recentDocsUL = document.createElement('ul');
