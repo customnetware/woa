@@ -1,3 +1,4 @@
+
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
 var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
 var woaFrame = document.getElementById("MyFrame");
@@ -159,13 +160,19 @@ var inter = window.setInterval(function () {
     }
 }, 50)
 
-woaFrame.onload = function () {
-    var woaPage = woaFrame.contentWindow.document
+var nameWait = window.setInterval(function () {
     var profileTitle = document.getElementsByClassName("clsHeader")[0]
-    if (profileTitle.getElementsByTagName("a").length > 0) {
-        profileTitle.getElementsByTagName("a")[0].innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText
-    } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
-    document.getElementById("overlay").style.display = "none";
+    if (profileTitle !== null) {
+        window.clearInterval(nameWait);
+        if (profileTitle.getElementsByTagName("a").length > 0) {
+            profileTitle.getElementsByTagName("a")[0].innerText = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
+        } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
+    }
+}, 50)
+
+woaFrame.onload = function () {
+
+/*    document.getElementById("overlay").style.display = "none";*/
 }
 function getProfileInfo(profileElem) {
     let img01div = document.createElement('div');
