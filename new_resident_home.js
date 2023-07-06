@@ -13,19 +13,21 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
         if (current_content !== null) {
             let current_content_class = current_content.getElementsByClassName(classToCheck)
             if (current_content_class !== null) {
-                window.clearInterval(page_wait);
-                let contentUL = document.createElement('ul');
-                contentUL.setAttribute('style', 'padding: 0; margin: 0;');
-                for (let i = 0; i < current_content_class.length; i++) {
-                    let contentLI = document.createElement('li');
-                    contentLI.setAttribute('style', 'display: block;');
-                    contentLI.innerHTML = current_content_class[i].innerHTML
-                    contentUL.appendChild(contentLI);
+                if (current_content_class.length > 0) {
+                    window.clearInterval(page_wait);
+                    let contentUL = document.createElement('ul');
+                    contentUL.setAttribute('style', 'padding: 0; margin: 0;');
+                    for (let i = 0; i < current_content_class.length; i++) {
+                        let contentLI = document.createElement('li');
+                        contentLI.setAttribute('style', 'display: block;');
+                        contentLI.innerHTML = current_content_class[i].innerHTML
+                        contentUL.appendChild(contentLI);
+                    }
+                    profileData[contentDivNum].appendChild(contentUL)
                 }
-                profileData[contentDivNum].appendChild(contentUL)
             }
         }
-    }, 50)
+    }, 100)
 }
 
 
