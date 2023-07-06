@@ -5,7 +5,7 @@ for (let i = 0; i < page_content.length; i++) {
         let current_content = woaFrame.contentWindow.document.getElementById(page_content[i]);
         if (current_content !== null) {
             window.clearInterval(page_wait);
-            alert(current_content + " found!")
+            alert(current_content.innerText)
         }
     }, 50)
 }
