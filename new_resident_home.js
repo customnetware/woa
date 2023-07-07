@@ -17,6 +17,10 @@ for (let i = 0; i < page_content.length; i++) {
 function checkContent(contentToCheck, classToCheck, contentDivNum) {
     var page_wait = window.setInterval(function () {
         let current_content = woaFrame.contentWindow.document.getElementById(contentToCheck);
+        if (contentDivNum == 6) {
+            let recentgroupsList = current_content.getElementsByClassName("discussion")
+            if (recentgroupsList[0].innerText !== "a. General") { return }
+        }
         if (current_content !== null) {
             let current_content_class = current_content.getElementsByClassName(classToCheck)
             if (current_content_class !== null) {
@@ -33,16 +37,8 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                                 break;
                             case 4:
                             case 5:
-                                content_pp.appendChild(document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML));
-                                break;
                             case 6:
-                                let group_check = woaFrame.contentWindow.document.getElementById(contentToCheck);
-                                let recentgroupsList = group_check.getElementsByClassName("discussion")
-                                if (recentgroupsList[0].innerText == "a. General") {
-                                    content_pp.appendChild(document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML));
-                                } else {
-                                    content_pp.appendChild(document.createTextNode("Posts from the Woodbridge General group will appear here when available."));
-                                    { break}}
+                                content_pp.appendChild(document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML));
                                 break;
                             default:
                                 content_pp.innerHTML = ""
@@ -54,5 +50,3 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
         }
     }, 100)
 }
-
-
