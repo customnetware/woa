@@ -3,11 +3,12 @@ var profileData = document.getElementById("profile_data").getElementsByClassName
 const page_content = [
     ["panel_news_content", "news"],
     ["panel_messages_content", "message"],
+    ["panel_discuss_content", "post"],
     ["panel_classifieds_content", "classified"],
     ["profile_content", "profile"],
     ["panel_resource_content", "document"],
-    ["panel_cal_content", "event"],
-    ["panel_discuss_content", "post"]
+    ["panel_cal_content", "event"]
+
 ];
 
 for (let i = 0; i < page_content.length; i++) {
@@ -17,7 +18,7 @@ for (let i = 0; i < page_content.length; i++) {
 function checkContent(contentToCheck, classToCheck, contentDivNum) {
     var page_wait = window.setInterval(function () {
         let current_content = woaFrame.contentWindow.document.getElementById(contentToCheck);
-        if (contentDivNum == 6) {
+        if (contentDivNum == 2) {
             let recentgroupsList = current_content.getElementsByClassName("discussion")
             if (recentgroupsList[0].innerText !== "a. General") { return }
         }
@@ -32,10 +33,10 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                         switch (contentDivNum) {
                             case 0:
                             case 1:
-                            case 2:
+                            case 3:
                                 content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
                                 break;
-                            case 4:
+                            case 2:
                             case 5:
                             case 6:
                                 content_pp.appendChild(document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML));
