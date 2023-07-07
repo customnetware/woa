@@ -36,7 +36,8 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                                 content_pp.appendChild(document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML));
                                 break;
                             case 6:
-                                let recentgroupsList = contentToCheck.getElementsByClassName("discussion")
+                                let group_check = woaFrame.contentWindow.document.getElementById(contentToCheck);
+                                let recentgroupsList = group_check.getElementsByClassName("discussion")
                                 if (recentgroupsList[0].innerText == "a. General") {
                                     content_pp.appendChild(document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML));
                                 } else {
@@ -53,3 +54,5 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
         }
     }, 100)
 }
+
+
