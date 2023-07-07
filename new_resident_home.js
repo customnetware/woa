@@ -16,8 +16,7 @@ for (let i = 0; i < page_content.length; i++) {
 
 function checkContent(contentToCheck, classToCheck, contentDivNum) {
     var page_wait = window.setInterval(function () {
-        let current_con
-        tent = woaFrame.contentWindow.document.getElementById(contentToCheck);
+        let current_content = woaFrame.contentWindow.document.getElementById(contentToCheck);
         if (current_content !== null) {
             let current_content_class = current_content.getElementsByClassName(classToCheck)
             if (current_content_class !== null) {
