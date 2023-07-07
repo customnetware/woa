@@ -7,7 +7,7 @@ const page_content = [
     ["profile_content", "profile"],
     ["panel_resource_content", "document"],
     ["panel_cal_content", "event"],
-    ["panel_discuss_content", "posts"]
+    ["panel_discuss_content", "post"]
 ];
 
 for (let i = 0; i < page_content.length; i++) {
