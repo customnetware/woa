@@ -31,9 +31,9 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                             case 2:
                                 content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
                                 break;
-                            case4:
-                            case5:
-                            case6:
+                            case 4:
+                            case 5:
+                            case 6:
                                 content_pp.appendChild(document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML));
                                 break;
                             default:
