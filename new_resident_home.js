@@ -7,7 +7,7 @@ const page_content = [
     ["profile_content", "profile"],
     ["panel_resource_content", "document"],
     ["panel_cal_content", "event"],
-    ["panel_discuss_content", "discussion"]
+    ["panel_discuss_content", "posts"]
 ];
 
 for (let i = 0; i < page_content.length; i++) {
@@ -33,6 +33,8 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                                 break;
                             case 4:
                             case 5:
+                                content_pp.appendChild(document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML));
+                                break;
                             case 6:
                                 content_pp.appendChild(document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML));
                                 break;
