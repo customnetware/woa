@@ -36,7 +36,12 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                                 content_pp.appendChild(document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML));
                                 break;
                             case 6:
-                                content_pp.appendChild(document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML));
+                                let recentgroupsList = contentToCheck.getElementsByClassName("discussion")
+                                if (recentgroupsList[0].innerText == "a. General") {
+                                    content_pp.appendChild(document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML));
+                                } else {
+                                    content_pp.appendChild(document.createTextNode("Posts from the Woodbridge General group will appear here when available."));
+                                }
                                 break;
                             default:
                                 content_pp.innerHTML = ""
