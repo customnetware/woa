@@ -18,6 +18,10 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
     var page_wait = window.setInterval(function () {
         let current_content = woaFrame.contentWindow.document.getElementById(contentToCheck);
         if (current_content !== null) {
+            if (contentDivNum == 2) {
+                let recentgroupsList = current_content.getElementsByClassName("discussion")
+                if (recentgroupsList[0].innerText !== "a. General") { return }
+            }
             let current_content_class = current_content.getElementsByClassName(classToCheck)
             if (current_content_class !== null) {
                 if (current_content_class.length > 0) {
