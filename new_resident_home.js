@@ -27,7 +27,6 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
             let current_content_class = current_content.getElementsByClassName(classToCheck)
             if (current_content_class !== null) {
                 if (current_content_class.length > 0) {
-                    window.clearInterval(page_wait);
                     for (let i = 0; i < current_content_class.length; i++) {
                         let content_pp = document.createElement("p")
                         content_pp.setAttribute('style', 'padding: 0; margin-top: 0; px; margin-bottom: 3px;');
