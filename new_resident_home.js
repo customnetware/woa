@@ -40,10 +40,8 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                             case 3:
                                 content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
                                 break;
-                            case 5:
-                                content_pp.innerHTML = current_content_class[i].getElementsByTagName("a")[0].innerHTML;
-                                break;
                             case 2:
+                            case 5:
                             case 6:
                                 content_pp.innerHTML = current_content_class[i].getElementsByTagName("a")[0].innerHTML;
                                 break;
@@ -57,3 +55,5 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
         }
     }, 100)
 }
+
+
