@@ -6,7 +6,6 @@ const page_content = [
     ["panel_messages_content", "message"],
     ["panel_discuss_content", "post"],
     ["panel_classifieds_content", "classified"],
-    ["profile_content", "profile"],
     ["panel_resource_content", "document"],
     ["panel_cal_content", "event"]
 ];
@@ -58,7 +57,6 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                                 let eventURL = current_content_class[i].getElementsByTagName("a")[0].href
                                 let eventText = current_content_class[i].getElementsByTagName("a")[0].innerText;
                                 content_pp.innerHTML = "<a href=" + eventURL + ">" + eventText + "</a>";
-
                                 break;
                             default:
                         }
