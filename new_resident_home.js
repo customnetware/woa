@@ -1,3 +1,4 @@
+document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
 var woaFrame = document.getElementById("residentHome");
 var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
 const page_content = [
@@ -10,15 +11,13 @@ const page_content = [
     ["panel_cal_content", "event"]
 ];
 
-
 woaFrame.addEventListener("load", displayPage)
-
 function displayPage() {
     for (let i = 0; i < page_content.length; i++) {
         checkContent(page_content[i][0], page_content[i][1], i)
     }
+    document.getElementById("overlay").style.display = "none";
 }
-
 function checkContent(contentToCheck, classToCheck, contentDivNum) {
     var page_wait = window.setInterval(function () {
         let current_content = woaFrame.contentWindow.document.getElementById(contentToCheck);
@@ -62,6 +61,7 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                                 let eventURL = current_content_class[i].getElementsByTagName("a")[0].href
                                 let eventText = current_content_class[i].getElementsByTagName("a")[0].innerText;
                                 content_pp.innerHTML = "<a href=" + eventURL + ">" + eventText + "</a>";
+
                                 break;
                             default:
                         }
