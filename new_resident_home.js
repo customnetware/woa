@@ -46,8 +46,12 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                                 content_pp.innerHTML = "<a href='" + documentURL + "'>" + documentText + "</a>";
                                 break;
                             case 2:
-                            case 6:
                                 content_pp.innerHTML = current_content_class[i].getElementsByTagName("a")[0].innerHTML;
+                                break;
+                            case 6:
+                                let eventURL = current_content_class[i].getElementsByTagName("a")[0].href
+                                let eventText = current_content_class[i].getElementsByTagName("a")[0].innerText;
+                                content_pp.innerHTML = "<a href=" + eventURL + ">" + eventText + "</a>";
                                 break;
                             default:
                                 content_pp.innerHTML = ""
