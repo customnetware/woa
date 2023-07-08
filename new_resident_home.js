@@ -1,4 +1,4 @@
-var woaFrame = document.getElementById("MyFrame");
+var woaFrame = document.getElementById("residentHome");
 var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
 const page_content = [
     ["panel_news_content", "news"],
@@ -10,8 +10,13 @@ const page_content = [
     ["panel_cal_content", "event"]
 ];
 
-for (let i = 0; i < page_content.length; i++) {
-    checkContent(page_content[i][0], page_content[i][1], i)
+
+woaFrame.addEventListener("load", displayPage)
+
+function displayPage() {
+    for (let i = 0; i < page_content.length; i++) {
+        checkContent(page_content[i][0], page_content[i][1], i)
+    }
 }
 
 function checkContent(contentToCheck, classToCheck, contentDivNum) {
@@ -65,5 +70,5 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                 }
             }
         }
-    }, 500)
+    }, 100)
 }
