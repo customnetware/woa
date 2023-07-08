@@ -30,23 +30,28 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                         let content_pp = document.createElement("p")
                         content_pp.setAttribute('style', 'padding: 0; margin-top: 0; px; margin-bottom: 3px;');
                         switch (contentDivNum) {
+                            case 0:
+                                content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
+                                break;
                             case 1:
                                 let contentURL = current_content_class[i].getElementsByTagName("a")[0].getAttribute("onclick");
                                 let contentText = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").split("by");
                                 let contentBody = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
                                 content_pp.innerHTML = "<b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a>";
                                 break;
-                            case 0:
+                            case 2:
+                                content_pp.innerHTML = current_content_class[i].getElementsByTagName("a")[0].innerHTML;
+                                break;
                             case 3:
                                 content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
+                                break;
+                            case 4:
+                                return;
                                 break;
                             case 5:
                                 let documentURL = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
                                 let documentText = current_content_class[i].getElementsByTagName("a")[0].innerText;
                                 content_pp.innerHTML = "<a href='" + documentURL + "'>" + documentText + "</a>";
-                                break;
-                            case 2:
-                                content_pp.innerHTML = current_content_class[i].getElementsByTagName("a")[0].innerHTML;
                                 break;
                             case 6:
                                 let eventURL = current_content_class[i].getElementsByTagName("a")[0].href
@@ -54,7 +59,6 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                                 content_pp.innerHTML = "<a href=" + eventURL + ">" + eventText + "</a>";
                                 break;
                             default:
-                                content_pp.innerHTML = ""
                         }
                         profileData[contentDivNum].appendChild(content_pp)
                     }
