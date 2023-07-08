@@ -18,7 +18,6 @@ function displayPage() {
     document.getElementById("overlay").style.display = "none";
 }
 function checkContent(contentToCheck, classToCheck, contentDivNum) {
-    var page_wait = window.setInterval(function () {
         let current_content = woaFrame.contentWindow.document.getElementById(contentToCheck);
         if (current_content !== null) {
             if (contentDivNum == 2) {
@@ -65,5 +64,4 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                 }
             }
         }
-    }, 50)
 }
