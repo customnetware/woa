@@ -31,15 +31,20 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                         let content_pp = document.createElement("p")
                         content_pp.setAttribute('style', 'padding: 0; margin-top: 0; px; margin-bottom: 3px;');
                         switch (contentDivNum) {
-                            case 0:
+
                             case 1:
+                                let contentURL = current_content_class[i].getElementsByTagName("a")[0].getAttribute("onclick");
+                                let contentText = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").split("by");
+                                let contentBody = current_content_class[i]].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
+                                content_pp.innerHTML = "<b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a>";
+                            case 0:
                             case 3:
                                 content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
                                 break;
                             case 2:
                             case 5:
                             case 6:
-                                content_pp.appendChild(document.createTextNode(current_content_class[i].getElementsByTagName("a")[0].innerHTML));
+                                content_pp.innerHTML=current_content_class[i].getElementsByTagName("a")[0].innerHTML;
                                 break;
                             default:
                                 content_pp.innerHTML = ""
@@ -51,3 +56,5 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
         }
     }, 100)
 }
+
+
