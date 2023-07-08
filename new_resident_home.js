@@ -41,8 +41,8 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                                 content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
                                 break;
                             case 5:
-                                let documentURL = current_content_class[p].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
-                                let documentText = current_content_class[p].getElementsByTagName("a")[0].innerText;
+                                let documentURL = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
+                                let documentText = current_content_class[i].getElementsByTagName("a")[0].innerText;
                                 content_pp.innerHTML = "<a href='" + documentURL + "'>" + documentText + "</a>";
                                 break;
                             case 2:
