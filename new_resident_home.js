@@ -70,5 +70,5 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                 }
             }
         }
-    }, 100)
+    }, 50)
 }
