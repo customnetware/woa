@@ -8,7 +8,6 @@ const page_content = [
     ["profile_content", "profile"],
     ["panel_resource_content", "document"],
     ["panel_cal_content", "event"]
-
 ];
 
 for (let i = 0; i < page_content.length; i++) {
@@ -41,8 +40,12 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                             case 3:
                                 content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
                                 break;
-                            case 2:
                             case 5:
+                                let contentURL = current_content_class[p].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
+                                let contentText = current_content_class[p].getElementsByTagName("a")[0].innerText;
+                                content_pp.innerHTML =  "<a href='" + contentURL + "'>" + contentText + "</a>";
+                                break;
+                            case 2:
                             case 6:
                                 content_pp.innerHTML = current_content_class[i].getElementsByTagName("a")[0].innerHTML;
                                 break;
