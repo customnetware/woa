@@ -35,7 +35,7 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                             case 1:
                                 let contentURL = current_content_class[i].getElementsByTagName("a")[0].getAttribute("onclick");
                                 let contentText = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").split("by");
-                                let contentBody = current_content_class[i]].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
+                                let contentBody = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
                                 content_pp.innerHTML = "<b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a>";
                             case 0:
                             case 3:
