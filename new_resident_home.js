@@ -1,4 +1,11 @@
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
+
+var loginStatus = document.getElementById("HeaderPublishAuthLogout");
+if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" }
+
+var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
+if (m_loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" }
+
 var woaFrame = document.getElementById("residentHome");
 var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
 const page_content = [
@@ -18,15 +25,17 @@ function displayPage() {
     document.getElementById("overlay").style.display = "none";
 }
 function checkContent(contentToCheck, classToCheck, contentDivNum) {
+    var frameWait = window.setInterval(function () {
         let current_content = woaFrame.contentWindow.document.getElementById(contentToCheck);
         if (current_content !== null) {
             if (contentDivNum == 2) {
                 let recentgroupsList = current_content.getElementsByClassName("discussion")
-                if (recentgroupsList[0].innerText !== "a. General") { return }
+                if (recentgroupsList[0].innerText !== "a. General") { window.clearInterval(frameWait); return }
             }
             let current_content_class = current_content.getElementsByClassName(classToCheck)
             if (current_content_class !== null) {
                 if (current_content_class.length > 0) {
+                    window.clearInterval(frameWait);
                     for (let i = 0; i < current_content_class.length; i++) {
                         let content_pp = document.createElement("p")
                         content_pp.setAttribute('style', 'padding: 0; margin-top: 0; px; margin-bottom: 3px;');
@@ -63,4 +72,5 @@ function checkContent(contentToCheck, classToCheck, contentDivNum) {
                 }
             }
         }
+    }, 50)
 }
