@@ -1,212 +1,86 @@
-
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
+document.getElementById("overlay").style.display = "block";
+
+var loginStatus = document.getElementById("HeaderPublishAuthLogout");
+if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" }
+
+var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
+if (m_loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" }
+
+var woaFrame = document.getElementById("residentHome");
 var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
-var woaFrame = document.getElementById("MyFrame");
+const page_content = [
+    ["panel_news_content", "news"],
+    ["panel_messages_content", "message"],
+    ["panel_discuss_content", "post"],
+    ["panel_classifieds_content", "classified"],
+    ["panel_resource_content", "document"],
+    ["panel_cal_content", "event"]
+];
 
-var page_link = window.setInterval(function () {
-    var loginStatus = document.getElementById("HeaderPublishAuthLogout");
-    var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
-    if (loginStatus !== null && m_loginStatus !== null) {
-        window.clearInterval(page_link);
-        loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out"
-        if (m_loginStatus.length == 2) {
-            window.clearInterval(mobile_link);
-            m_loginStatus[1].href = loginStatus.href
-        };
-    };
-}, 50)
-
-
-
-// =================== Display news articles uploaded to the Resource Center: ==================
-var recentNewswait = window.setInterval(function () {
-    let recentNewsText = woaFrame.contentWindow.document.getElementById("panel_news_content");
-    if (recentNewsText !== null) {
-        window.clearInterval(recentNewswait);
-        let recentNewsList = recentNewsText.getElementsByClassName("news")
-        let recentNewsUL = document.createElement('ul');
-        recentNewsUL.setAttribute('style', 'padding: 0; margin: 0;');
-        for (let p = 0; p < recentNewsList.length; p++) {
-            let contentURL = recentNewsList[p].getElementsByTagName("a")[0].href
-            let contentText = recentNewsList[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
-            let contentTitle = recentNewsList[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")
-            let contentLI = document.createElement('li');
-            contentLI.innerHTML = "<p><b>" + contentTitle + "</b><br />" + contentText + "<a href=" + contentURL + ">&nbsp;<i>Read More</i></a></p>";
-            contentLI.setAttribute('style', 'display: block;');
-            recentNewsUL.appendChild(contentLI);
-
-        } profileData[0].appendChild(recentNewsUL);
-    }
-}, 50)
-//=================  Display last three emails sent from Messenger================================
-var recentEmailswait = window.setInterval(function () {
-    let recentEmailsText = woaFrame.contentWindow.document.getElementById("panel_messages_content");
-    if (recentEmailsText !== null) {
-        window.clearInterval(recentEmailswait);
-        let recentEmailsList = recentEmailsText.getElementsByClassName("message")
-        let recentEmailsUL = document.createElement('ul');
-        recentEmailsUL.setAttribute('style', 'padding: 0; margin: 0;');
-        for (let p = 0; p < recentEmailsList.length; p++) {
-            let contentLI = document.createElement('li');
-            let contentURL = recentEmailsList[p].getElementsByTagName("a")[0].getAttribute("onclick");
-            let contentText = recentEmailsList[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").split("by");
-            let contentBody = recentEmailsList[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
-            contentLI.innerHTML = "<p><b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a></p>";
-            contentLI.setAttribute('style', 'display: block; padding:bottom:10px;');
-            recentEmailsUL.appendChild(contentLI);
-        } profileData[1].appendChild(recentEmailsUL);
-    }
-}, 50)
-//=================  Display lastest classifieds================================
-var recentsellsWait = window.setInterval(function () {
-    let recentsellsText = woaFrame.contentWindow.document.getElementById("panel_classifieds_content")
-    if (recentsellsText !== null) {
-        window.clearInterval(recentsellsWait);
-        let recentsellsList = recentsellsText.getElementsByClassName("classified")
-        let recentsellsUL = document.createElement('ul');
-        recentsellsUL.setAttribute('style', 'padding: 0; margin: 0;');
-        for (let p = 0; p < recentsellsList.length; p++) {
-            let contentURL = recentsellsList[p].getElementsByTagName("a")[0].href
-            let contentText = recentsellsList[p].getElementsByTagName("a")[0].innerText;
-            let contentTitle = recentsellsList[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
-            let contentLI = document.createElement('li');
-            contentLI.innerHTML = "<p><a href=" + contentURL + ">" + contentText + "</a><br />" + contentTitle + "</p>";
-            contentLI.setAttribute('style', 'display: block;');
-            recentsellsUL.appendChild(contentLI);
+woaFrame.addEventListener("load", displayPage)
+function displayPage() {
+    var nameWait = window.setInterval(function () {
+        var profileTitle = document.getElementsByClassName("clsHeader")[0]
+        if (profileTitle !== null) {
+            window.clearInterval(nameWait);
+            if (profileTitle.getElementsByTagName("a").length > 0) {
+                profileTitle.getElementsByTagName("a")[0].innerText = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
+            } else { profileTitle.innerText = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText }
         }
-        profileData[2].appendChild(recentsellsUL);
+    }, 50)
+    for (let i = 0; i < page_content.length; i++) {
+        checkContent(page_content[i][0], page_content[i][1], i)
     }
-}, 50)
-// =================== Display last three documents uploaded to the Resource Center: ======
-var recentDocswait = window.setInterval(function () {
-    let recentDocsText = woaFrame.contentWindow.document.getElementById("panel_resource_content")
-    if (recentDocsText !== null) {
-        window.clearInterval(recentDocswait);
-        let recentDocsList = recentDocsText.getElementsByClassName("document")
-        let recentDocsUL = document.createElement('ul');
-        recentDocsUL.setAttribute('style', 'padding: 0; margin: 0;');
-        for (let p = 0; p < recentDocsList.length; p++) {
-            let flds = recentDocsList[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")
-            if (flds.indexOf("Board Room") == 0 || flds.indexOf("Flyers (Events or Activities)") == 0 || flds.indexOf("Listening Post") == 0) {
-                let contentURL = recentDocsList[p].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
-                let contentText = recentDocsList[p].getElementsByTagName("a")[0].innerText;
-                let contentLI = document.createElement('li');
-                contentLI.innerHTML = "<a href='" + contentURL + "'>" + contentText + "</a>";
-                contentLI.setAttribute('style', 'display: block;');
-                recentDocsUL.appendChild(contentLI);
-            }
-        }
-
-        profileData[4].appendChild(recentDocsUL);
-    }
-}, 50)
-//=================  Display last three calendar events================================
-var recentEventswait = window.setInterval(function () {
-    let recentEventsText = woaFrame.contentWindow.document.getElementById("panel_cal_content")
-    if (recentEventsText !== null) {
-        let recentEventsList = recentEventsText.getElementsByClassName("event")
-        if (recentEventsList !== null) {
-            window.clearInterval(recentEventswait);
-            let recentEventsUL = document.createElement('ul');
-            recentEventsUL.setAttribute('style', 'padding: 0; margin: 0;');
-            for (let p = 0; p < recentEventsList.length; p++) {
-                let contentURL = recentEventsList[p].getElementsByTagName("a")[0].href
-                let contentText = recentEventsList[p].getElementsByTagName("a")[0].innerText;
-                let contentLI = document.createElement('li');
-                contentLI.innerHTML = "<a href=" + contentURL + ">" + contentText + "</a>";
-                contentLI.setAttribute('style', 'display: block;');
-                recentEventsUL.appendChild(contentLI);
-            }
-            profileData[5].appendChild(recentEventsUL);
-        }
-    }
-}, 50)
-//=================  Display lastest discussion================================
-var recentgroupswait = window.setInterval(function () {
-    let recentgroupsName = woaFrame.contentWindow.document.getElementById("panel_discuss_content")
-    if (recentgroupsName !== null) {
-        window.clearInterval(recentgroupswait);
-        let recentgroupsList = recentgroupsName.getElementsByClassName("discussion")
-        let recentgroupsUL = document.createElement('ul');
-        recentgroupsUL.setAttribute('style', 'padding: 0; margin: 0;');
-        if (recentgroupsList[0].innerText == "a. General") {
-            let recentgroupsText = recentgroupsName.getElementsByClassName("post")
-            for (let p = 0; p < recentgroupsText.length; p++) {
-                let contentURL = recentgroupsText[p].getElementsByTagName("a")[0].href
-                let contentText = recentgroupsText[p].getElementsByTagName("a")[0].innerText;
-                let contentLI = document.createElement('li');
-                contentLI.innerHTML = "<a href=" + contentURL + ">" + contentText + "</a>";
-                contentLI.setAttribute('style', 'display: block;');
-                recentgroupsUL.appendChild(contentLI);
-            }
-        } else {
-            let contentLI = document.createElement('li');
-            contentLI.setAttribute('style', 'display: block; white-space:normal');
-            contentLI.innerText = "Posts from the Woodbridge General group will appear here when available.";
-            recentgroupsUL.appendChild(contentLI);
-        }
-        profileData[6].appendChild(recentgroupsUL);
-    }
-}, 50)
-var inter = window.setInterval(function () {
-    var p_info_div = woaFrame.contentWindow.document.getElementById("panel_acct_tabs__panel_acct_profile")
-    var p_info = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax")
-    if (p_info_div !== null) { p_info_div.className = "x-tab-strip-active" }
-    if (p_info !== null && p_info_div !== null && p_info.getElementsByTagName("div").length > 3 && p_info.getElementsByTagName("img").length > 0) {
-        window.clearInterval(inter);
-        getProfileInfo(p_info);
-    }
-}, 50)
-
-var nameWait = window.setInterval(function () {
-    var profileTitle = document.getElementsByClassName("clsHeader")[0]
-    if (profileTitle !== null) {
-        window.clearInterval(nameWait);
-        if (profileTitle.getElementsByTagName("a").length > 0) {
-            profileTitle.getElementsByTagName("a")[0].innerText = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
-        } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
-    }
-}, 50)
-
-woaFrame.onload = function () {
-
-    /*    document.getElementById("overlay").style.display = "none";*/
+    document.getElementById("overlay").style.display = "none";
 }
-function getProfileInfo(profileElem) {
-    let img01div = document.createElement('div');
-    let img01 = document.createElement('img');
-    img01div.style.float = "left"
-    img01.src = profileElem.getElementsByTagName("img")[0].src
-    img01.style.width = "110px"
-    img01.style.float = "left"
-    img01.style.marginRight = "25px"
-    img01div.appendChild(img01)
-
-    let profileDiv = document.createElement('div');
-    profileDiv.style.float = "left"
-    for (let p = 0; p < 3; p++) {
-        let divToAdd = document.createElement('div');
-        divToAdd.innerText = profileElem.getElementsByTagName("div")[p].innerText;
-        profileDiv.appendChild(divToAdd)
-    }
-
-    let img02div = document.createElement('div');
-    img01div.style.float = "left";
-
-    let img02link = document.createElement('a');
-    img02link.href = profileElem.getElementsByTagName("div")[3].getElementsByTagName("a")[0].href;
-
-    let img02 = document.createElement('img');
-    img02.src = "https://customnetware.github.io/woa/edit_text.png";
-    img02.style.width = "50px";
-    img02.style.float = "right";
-
-    img02link.appendChild(img02);
-    img02div.appendChild(img02link);
-
-    profileData[3].appendChild(img01div);
-    profileData[3].appendChild(profileDiv);
-    profileData[3].appendChild(img02div);
+function checkContent(contentToCheck, classToCheck, contentDivNum) {
+    var frameWait = window.setInterval(function () {
+        let current_content = woaFrame.contentWindow.document.getElementById(contentToCheck);
+        if (current_content !== null) {
+            if (contentDivNum == 2) {
+                let recentgroupsList = current_content.getElementsByClassName("discussion")
+                if (recentgroupsList[0].innerText !== "a. General") { window.clearInterval(frameWait); return }
+            }
+            let current_content_class = current_content.getElementsByClassName(classToCheck)
+            if (current_content_class !== null) {
+                if (current_content_class.length > 0) {
+                    window.clearInterval(frameWait);
+                    for (let i = 0; i < current_content_class.length; i++) {
+                        let content_pp = document.createElement("p")
+                        content_pp.setAttribute('style', 'padding: 0; margin-top: 0; px; margin-bottom: 3px;');
+                        switch (contentDivNum) {
+                            case 0:
+                                content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
+                                break;
+                            case 1:
+                                let contentURL = current_content_class[i].getElementsByTagName("a")[0].getAttribute("onclick");
+                                let contentText = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").split("by");
+                                let contentBody = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")
+                                content_pp.innerHTML = "<b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a>";
+                                break;
+                            case 2:
+                                content_pp.innerHTML = current_content_class[i].getElementsByTagName("a")[0].innerHTML;
+                                break;
+                            case 3:
+                                content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
+                                break;
+                            case 4:
+                                let documentURL = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
+                                let documentText = current_content_class[i].getElementsByTagName("a")[0].innerText;
+                                content_pp.innerHTML = "<a href='" + documentURL + "'>" + documentText + "</a>";
+                                break;
+                            case 5:
+                                let eventURL = current_content_class[i].getElementsByTagName("a")[0].href
+                                let eventText = current_content_class[i].getElementsByTagName("a")[0].innerText;
+                                content_pp.innerHTML = "<a href=" + eventURL + ">" + eventText + "</a>";
+                                break;
+                            default:
+                        }
+                        profileData[contentDivNum].appendChild(content_pp)
+                    }
+                }
+            }
+        }
+    }, 50)
 }
-
-
