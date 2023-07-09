@@ -1,4 +1,5 @@
 document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
+document.getElementById("overlay").style.display = "block";
 
 var loginStatus = document.getElementById("HeaderPublishAuthLogout");
 if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" }
@@ -18,9 +19,6 @@ const page_content = [
 ];
 
 woaFrame.addEventListener("load", displayPage)
-
-
-
 function displayPage() {
     var nameWait = window.setInterval(function () {
         var profileTitle = document.getElementsByClassName("clsHeader")[0]
