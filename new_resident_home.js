@@ -17,21 +17,20 @@ const page_content = [
     ["panel_cal_content", "event"]
 ];
 
-
-
-
 woaFrame.addEventListener("load", displayPage)
-var nameWait = window.setInterval(function () {
-    var profileTitle = document.getElementsByClassName("clsHeader")[0]
-    if (profileTitle !== null) {
-        window.clearInterval(nameWait);
-        if (profileTitle.getElementsByTagName("a").length > 0) {
-            profileTitle.getElementsByTagName("a")[0].innerText = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
-        } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
-    }
-}, 50)
+
+
 
 function displayPage() {
+    var nameWait = window.setInterval(function () {
+        var profileTitle = document.getElementsByClassName("clsHeader")[0]
+        if (profileTitle !== null) {
+            window.clearInterval(nameWait);
+            if (profileTitle.getElementsByTagName("a").length > 0) {
+                profileTitle.getElementsByTagName("a")[0].innerText = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
+            } else { profileTitle.innerText = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText }
+        }
+    }, 50)
     for (let i = 0; i < page_content.length; i++) {
         checkContent(page_content[i][0], page_content[i][1], i)
     }
