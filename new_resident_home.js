@@ -17,6 +17,17 @@ const page_content = [
     ["panel_cal_content", "event"]
 ];
 
+var nameWait = window.setInterval(function () {
+    var profileTitle = document.getElementsByClassName("clsHeader")[0]
+    if (profileTitle !== null) {
+        window.clearInterval(nameWait);
+        if (profileTitle.getElementsByTagName("a").length > 0) {
+            profileTitle.getElementsByTagName("a")[0].innerText = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
+        } else { profileTitle.innerText = woaPage.getElementsByClassName("clsHeader")[0].innerText }
+    }
+}, 50)
+
+
 woaFrame.addEventListener("load", displayPage)
 function displayPage() {
     for (let i = 0; i < page_content.length; i++) {
