@@ -17,6 +17,10 @@ const page_content = [
     ["panel_cal_content", "event"]
 ];
 
+
+
+
+woaFrame.addEventListener("load", displayPage)
 var nameWait = window.setInterval(function () {
     var profileTitle = document.getElementsByClassName("clsHeader")[0]
     if (profileTitle !== null) {
@@ -27,8 +31,6 @@ var nameWait = window.setInterval(function () {
     }
 }, 50)
 
-
-woaFrame.addEventListener("load", displayPage)
 function displayPage() {
     for (let i = 0; i < page_content.length; i++) {
         checkContent(page_content[i][0], page_content[i][1], i)
