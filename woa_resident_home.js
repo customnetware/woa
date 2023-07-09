@@ -5,7 +5,7 @@ var loginStatus = document.getElementById("HeaderPublishAuthLogout");
 if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" }
 
 var m_loginStatus = document.getElementById("head-mobile").getElementsByClassName("mobile-menu-word-link");
-if (m_loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" }
+if (m_loginStatus !== null) { m_loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" }
 
 var woaFrame = document.getElementById("residentHome");
 var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
