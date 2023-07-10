@@ -34,13 +34,12 @@ if (hostCheck == "ourwoodbridge.net") {
         document.getElementById("overlay").style.display = "none";
     }
     function checkContent(contentToCheck, classToCheck, contentDivNum) {
-        var frameWait = window.setInterval(function () {
+
             let current_content = woaFrame.contentWindow.document.getElementById(contentToCheck);
             if (current_content !== null) {
                 let current_content_class = current_content.getElementsByClassName(classToCheck)
                 if (current_content_class !== null) {
                     if (current_content_class.length > 0) {
-                        window.clearInterval(frameWait);
                         for (let i = 0; i < current_content_class.length; i++) {
                             let content_pp = document.createElement("p")
                             content_pp.setAttribute('style', 'padding: 0; margin-top: 0; px; margin-bottom: 3px;');
@@ -82,6 +81,6 @@ if (hostCheck == "ourwoodbridge.net") {
                     }
                 }
             }
-        }, 50)
+
     }
 }
