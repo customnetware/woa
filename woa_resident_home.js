@@ -108,7 +108,7 @@ if (hostCheck == "ourwoodbridge.net") {
                 let p_Address = p_info.getElementsByTagName("div")[1].innerText;
                 let p_City = p_info.getElementsByTagName("div")[2].innerText;
                 let p_Image = p_info.getElementsByTagName("img")[0].src
-                alert("This is a test")
+                alert(p_Image)
             }
         }, 50)
     }
