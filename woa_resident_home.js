@@ -32,8 +32,8 @@ if (hostCheck == "ourwoodbridge.net") {
                 } else { profileTitle.innerText = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText }
             }
         }, 50);
-        var profileImg = document.getElementById("profileImage")
-        alert(profileInformation())
+       
+  
 
         for (let i = 0; i < page_content.length; i++) {
             checkContent(page_content[i][0], page_content[i][1], i)
@@ -103,8 +103,9 @@ if (hostCheck == "ourwoodbridge.net") {
                 let p_Name = p_info.getElementsByTagName("div")[0].innerText;
                 let p_Address = p_info.getElementsByTagName("div")[1].innerText;
                 let p_City = p_info.getElementsByTagName("div")[2].innerText;
-                let p_Image = p_info.getElementsByTagName("img")[0].src
-                return p_Image;
+      
+                 var profileImg = document.getElementById("profileImage");
+              profileImg.src = p_info.getElementsByTagName("img")[0].src;
             }
         }, 100)
     }
