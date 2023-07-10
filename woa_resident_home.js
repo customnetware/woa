@@ -33,7 +33,7 @@ if (hostCheck == "ourwoodbridge.net") {
             }
         }, 50);
         var profileImg = document.getElementById("profileImage")
-profileImg.src = profileInformation()
+        profileImg.src = profileInformation()
 
         for (let i = 0; i < page_content.length; i++) {
             checkContent(page_content[i][0], page_content[i][1], i)
