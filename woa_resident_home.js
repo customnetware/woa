@@ -40,7 +40,7 @@ if (hostCheck == "ourwoodbridge.net") {
     }
     function checkContent(contentToCheck, classToCheck, contentDivNum) {
         if (contentDivNum == 4) {
-            alert(profileInformation())
+            profileInformation();
             //var profileImg = document.getElementById("profileImage")
             //profileImg.src = profileInformation()
             return
@@ -108,7 +108,7 @@ if (hostCheck == "ourwoodbridge.net") {
                 let p_Address = p_info.getElementsByTagName("div")[1].innerText;
                 let p_City = p_info.getElementsByTagName("div")[2].innerText;
                 let p_Image = p_info.getElementsByTagName("img")[0].src
-                return "This is a test"
+                alert("This is a test")
             }
         }, 50)
     }
