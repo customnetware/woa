@@ -1,3 +1,4 @@
+var woaFrame = document.getElementById("residentHome");
 var testWait = setInterval(function () {
     let current_content = woaFrame.contentWindow.document.getElementById("panel_messages_content");
     if (current_content !== null) {
