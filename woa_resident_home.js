@@ -106,6 +106,6 @@ if (hostCheck == "ourwoodbridge.net") {
                 let p_Image = p_info.getElementsByTagName("img")[0].src
                 return p_Image;
             }
-        }, 50)
+        }, 100)
     }
 }
