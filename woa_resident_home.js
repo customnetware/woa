@@ -69,8 +69,6 @@ if (hostCheck == "ourwoodbridge.net") {
                                     content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
                                     break;
                                 case 4:
-                                    var profileImg = document.getElementById("profileImage");
-                                    profileImg.src = current_content.getElementsByTagName("img")[0].src;
                                     break;
                                 case 5:
                                     let documentURL = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
