@@ -40,7 +40,7 @@ if (hostCheck == "ourwoodbridge.net") {
     }
     function checkContent(contentToCheck, classToCheck, contentDivNum) {
         if (contentDivNum == 4) {
-            var profileImg = document.getElementsByClassName("profileImage")[0]
+            var profileImg = document.getElementById("profileImage")
             profileImg.src = profileInformation()
             return
         }
