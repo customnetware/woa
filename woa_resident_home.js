@@ -17,7 +17,7 @@ if (hostCheck == "ourwoodbridge.net") {
         ["panel_messages_content", "message"],
         ["panel_discuss_content", "post"],
         ["panel_classifieds_content", "classified"],
-        ["profile_placeholder", "profile"],
+        ["panel_acct_profile_ajax", "single"],
         ["panel_resource_content", "document"],
         ["panel_cal_content", "event"]
     ];
@@ -32,8 +32,8 @@ if (hostCheck == "ourwoodbridge.net") {
                 } else { profileTitle.innerText = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText }
             }
         }, 50);
-       
-  profileInformation()
+
+        profileInformation()
 
         for (let i = 0; i < page_content.length; i++) {
             checkContent(page_content[i][0], page_content[i][1], i)
@@ -44,10 +44,6 @@ if (hostCheck == "ourwoodbridge.net") {
         var frameWait = window.setInterval(function () {
             let current_content = woaFrame.contentWindow.document.getElementById(contentToCheck);
             if (current_content !== null) {
-                if (contentDivNum == 2) {
-                    let recentgroupsList = current_content.getElementsByClassName("discussion")
-                    if (recentgroupsList[0].innerText !== "a. General") { window.clearInterval(frameWait); return }
-                }
                 let current_content_class = current_content.getElementsByClassName(classToCheck)
                 if (current_content_class !== null) {
                     if (current_content_class.length > 0) {
@@ -66,12 +62,17 @@ if (hostCheck == "ourwoodbridge.net") {
                                     content_pp.innerHTML = "<b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a>";
                                     break;
                                 case 2:
-                                    content_pp.innerHTML = current_content_class[i].getElementsByTagName("a")[0].innerHTML;
+                                    let recentgroupsList = current_content.getElementsByClassName("discussion")
+                                    if (recentgroupsList[0].innerText == "a. General") {
+                                        content_pp.innerHTML = current_content_class[i].getElementsByTagName("a")[0].innerHTML;
+                                    }
                                     break;
                                 case 3:
                                     content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
                                     break;
                                 case 4:
+                                    var profileImg = document.getElementById("profileImage");
+                                    profileImg.src = current_content.getElementsByTagName("img")[0].src;
                                     break;
                                 case 5:
                                     let documentURL = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
@@ -91,22 +92,5 @@ if (hostCheck == "ourwoodbridge.net") {
                 }
             }
         }, 50)
-    }
-    function profileInformation() {
-        var inter = window.setInterval(function () {
-            var p_info_div = woaFrame.contentWindow.document.getElementById("panel_acct_tabs__panel_acct_profile")
-            var p_info = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax")
-            if (p_info_div !== null) { p_info_div.className = "x-tab-strip-active" }
-            if (p_info !== null && p_info_div !== null && p_info.getElementsByTagName("div").length > 3 && p_info.getElementsByTagName("img").length > 0) {
-                window.clearInterval(inter);
-
-                let p_Name = p_info.getElementsByTagName("div")[0].innerText;
-                let p_Address = p_info.getElementsByTagName("div")[1].innerText;
-                let p_City = p_info.getElementsByTagName("div")[2].innerText;
-      
-                 var profileImg = document.getElementById("profileImage");
-              profileImg.src = p_info.getElementsByTagName("img")[0].src;
-            }
-        }, 100)
     }
 }
