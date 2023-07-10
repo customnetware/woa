@@ -17,6 +17,7 @@ if (hostCheck == "ourwoodbridge.net") {
         ["panel_messages_content", "message"],
         ["panel_discuss_content", "post"],
         ["panel_classifieds_content", "classified"],
+        ["profile_placeholder", "profile"],
         ["panel_resource_content", "document"],
         ["panel_cal_content", "event"]
     ];
@@ -38,6 +39,9 @@ if (hostCheck == "ourwoodbridge.net") {
         document.getElementById("overlay").style.display = "none";
     }
     function checkContent(contentToCheck, classToCheck, contentDivNum) {
+        if (contentDivNum == 4) {
+            return;
+        }
         var frameWait = window.setInterval(function () {
             let current_content = woaFrame.contentWindow.document.getElementById(contentToCheck);
             if (current_content !== null) {
@@ -69,11 +73,14 @@ if (hostCheck == "ourwoodbridge.net") {
                                     content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
                                     break;
                                 case 4:
+                                    content_pp.innerHTML = current_content_class[i].getElementsByTagName("a")[0].innerHTML;
+                                    break;
+                                case 5:
                                     let documentURL = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
                                     let documentText = current_content_class[i].getElementsByTagName("a")[0].innerText;
                                     content_pp.innerHTML = "<a href='" + documentURL + "'>" + documentText + "</a>";
                                     break;
-                                case 5:
+                                case 6:
                                     let eventURL = current_content_class[i].getElementsByTagName("a")[0].href
                                     let eventText = current_content_class[i].getElementsByTagName("a")[0].innerText;
                                     content_pp.innerHTML = "<a href=" + eventURL + ">" + eventText + "</a>";
