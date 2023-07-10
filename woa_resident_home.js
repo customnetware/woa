@@ -34,7 +34,7 @@ if (hostCheck == "ourwoodbridge.net") {
         }, 50);
 
         for (let i = 0; i < page_content.length; i++) {
-            checkContent(page_content[i][0], page_content[i][1], i)
+            if (i !== 4) {checkContent(page_content[i][0], page_content[i][1], i)}
         }
         document.getElementById("overlay").style.display = "none";
     }
