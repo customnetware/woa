@@ -1,4 +1,5 @@
 var woaFrame = document.getElementById("residentHome");
+var profileData = document.getElementById("profile_data").getElementsByClassName("card-body");
 var testWait = setInterval(function () {
     let current_content = woaFrame.contentWindow.document.getElementById("panel_messages_content");
     if (current_content !== null) {
@@ -12,7 +13,7 @@ var testWait = setInterval(function () {
                 let contentText = current_content_class[0].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").split("by");
                 let contentBody = current_content_class[0].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
                 content_pp.innerHTML = "<b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a>";
-                profileData[1].appendChild(content_pp)
+                profileData[1].appendChild(content_pp);
             }
         }
     }
