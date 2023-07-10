@@ -33,8 +33,6 @@ if (hostCheck == "ourwoodbridge.net") {
             }
         }, 50);
 
-        profileInformation()
-
         for (let i = 0; i < page_content.length; i++) {
             checkContent(page_content[i][0], page_content[i][1], i)
         }
