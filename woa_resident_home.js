@@ -40,7 +40,8 @@ if (hostCheck == "ourwoodbridge.net") {
     }
     function checkContent(contentToCheck, classToCheck, contentDivNum) {
         if (contentDivNum == 4) {
-            return;
+            profileImage.src = profileInformation()
+            return
         }
         var frameWait = window.setInterval(function () {
             let current_content = woaFrame.contentWindow.document.getElementById(contentToCheck);
@@ -73,7 +74,6 @@ if (hostCheck == "ourwoodbridge.net") {
                                     content_pp.innerHTML = current_content_class[i].innerHTML + "<br>" + current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
                                     break;
                                 case 4:
-                                    content_pp.innerHTML = current_content_class[i].getElementsByTagName("a")[0].innerHTML;
                                     break;
                                 case 5:
                                     let documentURL = current_content_class[i].getElementsByTagName("a")[0].getAttribute("data-item-viewurl");
