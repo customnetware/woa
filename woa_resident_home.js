@@ -1,4 +1,4 @@
-    document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
+
     var loginStatus = document.getElementById("HeaderPublishAuthLogout");
 
 if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" }
@@ -26,7 +26,7 @@ if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/2
         for (let i = 0; i < page_content.length; i++) {
             if (i !== 4) { checkContent(page_content[i][0], page_content[i][1], i) }
         }
-        document.getElementById("overlay").style.display = "none";
+
     }
     function checkContent(contentToCheck, classToCheck, contentDivNum) {
 
@@ -78,4 +78,3 @@ if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/2
             }
 
     }
-
