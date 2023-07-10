@@ -1,7 +1,7 @@
 var hostCheck = window.location.host
 if (hostCheck == "ourwoodbridge.net") {
     document.getElementById("overlay").addEventListener("click", function () { document.getElementById("overlay").style.display = "none"; }, false);
-    document.getElementById("overlay").style.display = "block";
+
 
     var loginStatus = document.getElementById("HeaderPublishAuthLogout");
     if (loginStatus !== null) { loginStatus.href = "https://ourwoodbridge.net/page/28118~1094081/logging-out" }
