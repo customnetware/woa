@@ -102,10 +102,10 @@ if (hostCheck == "ourwoodbridge.net") {
             if (p_info !== null && p_info_div !== null && p_info.getElementsByTagName("div").length > 3 && p_info.getElementsByTagName("img").length > 0) {
                 window.clearInterval(inter);
 
-                p_Name = p_info.getElementsByTagName("div")[0].innerText;
-                p_Address = p_info.getElementsByTagName("div")[1].innerText;
-                p_City = p_info.getElementsByTagName("div")[2].innerText;
-                p_Image = p_info.getElementsByTagName("img")[0].src
+                let p_Name = p_info.getElementsByTagName("div")[0].innerText;
+                let p_Address = p_info.getElementsByTagName("div")[1].innerText;
+                let p_City = p_info.getElementsByTagName("div")[2].innerText;
+                let p_Image = p_info.getElementsByTagName("img")[0].src
                 return p_Image
             }
         }, 50)
