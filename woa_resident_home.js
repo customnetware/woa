@@ -1,5 +1,4 @@
- var woaFrame = document.getElementById("residentHome");
-woaFrame.addEventListener("load", displayPage)
-function displayPage() {
+var woaFrame = document.getElementById("residentHome");
+woaFrame.onload = function () {
     alert("Page Loaded")
 }
