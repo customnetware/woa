@@ -12,8 +12,8 @@ var testWait = setInterval(function () {
                 let contentURL = current_content_class[0].getElementsByTagName("a")[0].getAttribute("onclick");
                 let contentText = current_content_class[0].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").split("by");
                 let contentBody = current_content_class[0].getElementsByTagName("a")[0].getAttribute("data-tooltip-text");
-                content_pp.innerHTML = "<b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a>";
-                profileData[1].appendChild(content_pp);
+            
+                profileData[1].innerHTML = "<b>" + contentText[0] + "</b><br />" + contentBody + "<a onclick=" + contentURL + " href='#'>&nbsp;<i>Read More</i></a>";
             }
         }
     }
