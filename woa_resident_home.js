@@ -1,4 +1,5 @@
  woaFrame.onload = (function () {
+    var woaFrame = document.getElementById("residentHome");
                 displayContent("panel_news_content", "news", "data-tooltip-text", 0)
                 displayContent("panel_messages_content", "message", "data-tooltip-text", 1)
                 displayContent("panel_discuss_content", "post", "data-tooltip-text", 2)
