@@ -33,6 +33,7 @@
                 getFrameContent("panel_classifieds_content", "classified", 3)
                 getFrameContent("panel_resource_content", "document", 5)
                 getFrameContent("panel_cal_content", "event", 6)
+                document.getElementsByClassName("clsHeader")[0].innerHTML = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
             }
             if (woaFrame.attachEvent) { woaFrame.attachEvent("onload", getContents); }
             else if (woaFrame.addEventListener) { woaFrame.addEventListener("load", getContents); }
