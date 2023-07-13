@@ -46,7 +46,7 @@ function getContents() {
                 clearInterval(findImage);
                 let displayImage = document.createElement("img")
                 displayImage.src = profileImage[0].src
-                displayImage.setAttribute("style", "float:left")
+                displayImage.setAttribute("style", "float:left;padding:5px")
                 contentDisplay[4].insertBefore(displayImage, contentDisplay[4].firstChild);
             }
         }
