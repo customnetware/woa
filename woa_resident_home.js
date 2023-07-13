@@ -39,13 +39,17 @@ function getContents() {
     if (residentName.getElementsByTagName("a").length > 0) {
         residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
     } else { residentName.innerText = residentNameFrm }
-
-    let profileImage = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img")
-    if (profileImage.length > 0) {
-        let displayImage = document.createElement("img")
-        displayImage.src = profileImage[0].src
-        contentDisplay[4].appendChild(displayImage)
-    }
+    findImage = setInterval(function () {
+        let profileImage = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img")
+        if (profileImage !== null) {
+            if (profileImage.length > 0) {
+                clearInterval(findImage);
+                let displayImage = document.createElement("img")
+                displayImage.src = profileImage[0].src
+                contentDisplay[4].appendChild(displayImage)
+            }
+        }
+    }, 200);
 
 }
 if (woaFrame.attachEvent) { woaFrame.attachEvent("onload", getContents); }
