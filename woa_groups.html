@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <style>
+        #listTable td {
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+    </style>
+    <div id="FrameMessage">Please wait...</div>
+    <table id="listTable"></table>
+    <iframe id="MyFrame" src="https://ourwoodbridge.net/GroupPage/List/28118/Group-Pages" style="visibility:hidden;"></iframe>
+    <script type="text/javascript">
+
+        const groupPageURL = "https://ourwoodbridge.net/GroupPage/28118~"
+        var previousPageUrl = document.referrer;
+        var groupPageID = previousPageUrl.substr(previousPageUrl.length - 4);
+        var groupPage = previousPageUrl.substring(0, 42);
+        var groupMembers = document.getElementById("listTable");
+        const woaFrame = document.getElementById("MyFrame");
+        if (groupPageURL !== groupPage) { location.replace("https://ourwoodbridge.net/GroupPage/List/28118/Group-Pages"); }
+
+        window.addEventListener("load", memberListing);
+        function memberListing() {
+            while (groupMembers.hasChildNodes()) { groupMembers.removeChild(groupMembers.firstChild); }
+            document.getElementById("FrameMessage").innerHTML = "Please wait while member list is loaded..."
+            woaFrame.src = groupPageURL + groupPageID
+            woaFrame.addEventListener("load", getMemberList);
+        }
+        function getMemberList() {
+
+
+            let editButton = woaFrame.contentWindow.document.getElementById("editGroupMembersBtn");
+            if (editButton !== null) { editButton.click(); }
+            setTimeout(function () {
+                let PageLinks = woaFrame.contentWindow.document.getElementsByClassName("k-pager-nav");
+                let totalPages = PageLinks[3].getAttribute("data-page");
+                for (let p = 0; p < totalPages; p++) {
+                    if (p > 0) { PageLinks[2].click(); }
+                    let myTable = woaFrame.contentWindow.document.getElementsByClassName("k-grid-content");
+                    let myTableRows = myTable[0].getElementsByTagName("tr");
+                    for (let k = 0; k < myTableRows.length; k++) {
+                        myTableCells = myTableRows[k].getElementsByTagName("td");
+                        let row = groupMembers.insertRow();
+                        let cell1 = row.insertCell(0);
+                        let cell2 = row.insertCell(1);
+                        let cell3 = row.insertCell(2);
+                        let cell4 = row.insertCell(3);
+                        const myArray = myTableCells[0].innerText.split(",");
+                        cell1.innerText = myArray[1] + " " + myArray[0];
+                        cell2.innerText = myTableCells[1].innerText;
+                        cell3.innerText = myTableCells[2].innerText;
+                    }
+                } document.getElementById("FrameMessage").innerHTML = ""
+                woaFrame.contentWindow.document.getElementById("ext-gen37").click();
+                window.removeEventListener("load", memberListing);
+                woaFrame.removeEventListener("load", getMemberList);
+                getMembersPhone();
+
+            }, 2500);
+        }
+        function getMembersPhone() {
+            woaFrame.src = "https://ourwoodbridge.net/Member/CustomSearch/28118/Directory-Guest-List"
+            woaFrame.addEventListener("load", getPhoneList);
+        }
+        function getPhoneList() {
+
+            var k = 0
+            getPhone(k);
+            var testWait = setInterval(function () {
+
+                if (document.getElementById("listTable").rows[k].cells[3].innerText.length > 0) {
+                    k++
+
+                    if (k < document.getElementById("listTable").rows.length) { getPhone(k); }
+
+                }
+                if (k == document.getElementById("listTable").rows.length) { clearInterval(testWait) }
+            }, 500);
+        }
+        function getPhone(currentRow) {
+            var groupMember = groupMembers.rows[currentRow].cells[0].innerText.split(" ")
+            var firstName = woaFrame.contentWindow.document.getElementsByName("fname")
+            var lastName = woaFrame.contentWindow.document.getElementsByName("lname")
+            var streetName = woaFrame.contentWindow.document.getElementsByName("street")
+            if (groupMember.length === 2) {
+                firstName[0].value = groupMember[0]
+                lastName[0].value = groupMember[1]
+            }
+            if (groupMember.length === 3) {
+                firstName[0].value = groupMember[0] + ' ' + groupMember[1]
+                lastName[0].value = groupMember[2]
+            }
+            streetName[0].value = groupMembers.rows[currentRow].cells[2].innerText
+            var searchArea = woaFrame.contentWindow.document.getElementsByClassName("margin_t_10");
+            var searchLinks = searchArea[0].getElementsByTagName("a");
+            searchLinks[0].click();
+            searchWait = setInterval(function () {
+                try {
+                    let searchResults = woaFrame.contentWindow.document.getElementById("div_search_results");
+                    if (searchResults !== null) {
+                        var addressInfo = woaFrame.contentWindow.document.getElementsByClassName("clsGridData")
+                        for (i = 3; i < addressInfo.length; i++) {
+                            if (addressInfo[i].getElementsByTagName("strong").length > 0 && addressInfo[i].getElementsByTagName("strong")[0].innerText.trim() == groupMembers.rows[currentRow].cells[0].innerText) {
+                                clearInterval(searchWait);
+                                var myTable = addressInfo[i].getElementsByTagName("table");
+                                if (myTable.length > 0) {
+                                    var myRows = myTable[0].getElementsByTagName("tr");
+                                    if (myRows.length > 0) {
+                                        groupMembers.rows[currentRow].cells[3].innerText = myRows[0].getElementsByTagName("td")[2].innerText;
+                                    } else { groupMembers.rows[currentRow].cells[3].innerText = '000-000-0000'; }
+                                } else { groupMembers.rows[currentRow].cells[3].innerText = '000-000-0000'; }
+                            }
+                        }
+                    }
+                }
+                catch (err) {
+                    groupMembers.rows[currentRow].cells[3].innerText = '000-000-0000';
+                    clearInterval(searchWait);
+                }
+            }, 250);
+        }
+    </script>
+</body>
+</html>

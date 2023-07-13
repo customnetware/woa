@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <meta http-equiv="Access-Control-Allow-Headers" content="X-Requested-With" />
+    <title></title>
+</head>
+<body>
+    <div id="groupList"></div>
+    <iframe id="MyFrame" src="https://ourwoodbridge.net/GroupPage/List/28118/Group-Pages" style="visibility:hidden; width:100%"></iframe>
+    <script>
+        var woaFrame = document.getElementById('MyFrame');
+        var groupListing = document.getElementById('groupList');
+
+        woaFrame.addEventListener("load", function () {
+            setTimeout(function () {
+                let PageList = woaFrame.contentWindow.document.getElementById("bodyMainRow").getElementsByClassName("groupName");
+                for (let p = 0; p < PageList.length; p++) {
+               let groupURL = PageList[p].getElementsByTagName("a")
+                    groupListing.innerHTML += '<a href=https://ourwoodbridge.net/page/28118~1088241/test_groups_page?group=' + groupURL[0].href.split("~")[1]+'>'+PageList[p].innerText + '</a><br>'
+                }
+            }, 1000);
+        });
+
+    </script>
+
+</body>
+</html>

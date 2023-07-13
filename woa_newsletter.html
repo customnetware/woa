@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div id="messageDiv">Please wait...finding latest newsletter</div>
+    <iframe id="MyFrame" src="https://ourwoodbridge.net/ResourceCenter/28118~951754/Woodbridge-Newsletters" style="visibility:hidden; width:100%"></iframe>
+    <script type="text/javascript">
+        var woaFrame = document.getElementById('MyFrame');
+        var docID = "";
+        woaFrame.addEventListener("load", function () {
+            setTimeout(function () {
+                let myList = woaFrame.contentWindow.document.getElementById("contents951754");
+                testNL = myList.getElementsByTagName("a");
+                for (let k = 0; k < testNL.length; k++) {
+                    if (testNL[k].href.substring(0, 23) == "javascript:loadDownload") { docID = testNL[k].href.replace(/\D/g, '') ; }                 
+                }
+                window.location ='https://ourwoodbridge.net/ResourceCenter/Download/?doc_id='+docID+'&view=1';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

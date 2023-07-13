@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <style>
+        #listTable td {
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+    </style>
+    <div style="width:100%">
+        <div id="FrameMessage" style="float:left" class="k-button">Please wait...</div>&nbsp;&nbsp;
+        <input id="phoneButton" type="button" value="Add Phone Numbers To Member List" class="k-button" disabled />&nbsp;
+        <input id="copyButton" type="button" value="Copy Member List" class="k-button" disabled />&nbsp;
+    </div>
+    <table id="listTable" style="float:left"></table>
+    <iframe id="MyFrame" src="https://ourwoodbridge.net/GroupPage/List/28118/Group-Pages" style="visibility:hidden; "></iframe>
+    <script type="text/javascript">
+        var groupPageURL = "https://ourwoodbridge.net/GroupPage/28118~"
+        var previousPageUrl = document.referrer;
+        var groupPageID = previousPageUrl.substr(previousPageUrl.length - 4);
+        var groupPage = previousPageUrl.substring(0, 42);
+        var groupMembers = document.getElementById("listTable");
+        var woaFrame = document.getElementById("MyFrame");
+
+        document.getElementById("copyButton").addEventListener("click", selectElementContents, false);
+        document.getElementById("phoneButton").addEventListener("click", getMembersPhone, false);
+        if (groupPageURL !== groupPage) {
+            document.getElementById("FrameMessage").innerHTML = "You must access this page from your groups page";
+        } else {
+            try { memberListing(); } catch (err) { document.getElementById("FrameMessage").innerHTML = err.message; }
+
+        }
+        function testView() {
+            var frameDoc = woaFrame.contentWindow.document
+            frameDoc.getElementById("bodyHeaderColPublish").style.display = "none";
+            frameDoc.getElementById("bodyHeader").style.display = "none";
+            frameDoc.getElementById("bodyHeaderCol").style.display = "none";
+            frameDoc.getElementById("bodyHeaderRowAlerts").style.display = "none";
+            frameDoc.getElementById("bodyHeaderRowImage").style.display = "none";
+            frameDoc.getElementById("bodyFooter").style.display = "none";
+            document.getElementById("MyFrame").style.visibility = "visible";
+            document.getElementById("MyFrame").style.width = "100%";
+            document.getElementById("MyFrame").style.height = "600px;";
+        }
+        function memberListing() {
+            while (groupMembers.hasChildNodes()) { groupMembers.removeChild(groupMembers.firstChild); }
+            document.getElementById("FrameMessage").innerHTML = "Please wait while member list is loaded..."
+            woaFrame.src = groupPageURL + groupPageID
+            woaFrame.addEventListener("load", getMemberList);
+        }
+
+        function editButtonClick() {
+            var editWait = setInterval(function () {
+                editButton = woaFrame.contentWindow.document.getElementById("editGroupMembersBtn");
+                if (editButton !== null) {
+                    if (editButton.getAttribute("style") !== null) {
+                        document.getElementById("FrameMessage").innerHTML = "You must be a group leader to view the groups members";
+                    } else {
+                        editButton.click();
+                    }
+                    clearInterval(editWait);
+                }
+            }, 250);
+        }
+
+
+        function getMemberList() {
+            editButtonClick()
+            var startTime = new Date().getTime();
+            var timerId = setTimeout(function tick() {
+                var PageLinks = woaFrame.contentWindow.document.getElementsByClassName("k-pager-nav");
+                if (PageLinks.length !== null) {
+                    if (PageLinks.length > 0) {
+                        let myTitle = woaFrame.contentWindow.document.getElementsByClassName("clubName clsHeader");
+                        document.getElementById("FrameMessage").innerHTML = myTitle[0].innerText;
+                        totalPages = PageLinks[3].getAttribute("data-page");
+                        for (let p = 0; p < totalPages; p++) {
+                            if (p > 0) { PageLinks[2].click(); }
+                            let myTable = woaFrame.contentWindow.document.getElementsByClassName("k-grid-content");
+                            let myTableRows = myTable[0].getElementsByTagName("tr");
+                            for (let k = 0; k < myTableRows.length; k++) {
+                                myTableCells = myTableRows[k].getElementsByTagName("td");
+                                let row = groupMembers.insertRow();
+                                let cell1 = row.insertCell(0);
+                                let cell2 = row.insertCell(1);
+                                let cell3 = row.insertCell(2);
+                                let cell4 = row.insertCell(3);
+                                var myArray = myTableCells[0].innerText.split(",");
+                                cell1.innerText = myArray[1] + ' ' + myArray[0];
+                                cell2.innerText = myTableCells[1].innerText;
+                                cell3.innerText = myTableCells[2].innerText;
+                            }
+                        }
+                        clearTimeout(timerId)
+                        woaFrame.contentWindow.document.getElementById("ext-gen38").click();
+                        document.getElementById("copyButton").disabled = false;
+                        document.getElementById("phoneButton").disabled = false
+
+                    }
+                    if (PageLinks.length == 0) { setTimeout(tick, 500); }
+                }
+            }, 500);
+
+        }
+        function getMembersPhone() {
+            woaFrame.src = "https://ourwoodbridge.net/Member/CustomSearch/28118/Directory-Guest-List"
+            woaFrame.addEventListener("load", getPhoneList);
+        }
+        function getPhoneList() {
+            var k = 0;
+            var tableRows = document.getElementById("listTable").rows;
+            testWait = setInterval(function () {
+                if (tableRows[k].cells[3].innerText.length > 0) { k++ }
+                if (k < tableRows.length && tableRows[k].cells[3].innerText.length == 0) { getPhone(k); }
+                if (k == tableRows.length) { clearInterval(testWait); }
+            }, 750);
+        }
+        function getPhone(currentRow) {
+            woaFrame.contentWindow.document.getElementsByName("street")[0].value = groupMembers.rows[currentRow].cells[2].innerText
+            var searchArea = woaFrame.contentWindow.document.getElementsByClassName("margin_t_10");
+            var searchLinks = searchArea[0].getElementsByTagName("a");
+            searchLinks[0].click();
+            var searchWait = setInterval(function () {
+                try {
+                    let searchResults = woaFrame.contentWindow.document.getElementById("div_search_results");
+                    if (searchResults !== null) {
+                        if (searchResults.getElementsByClassName(" clsBodyItalic").length > 0) {
+                            var recordsFound = searchResults.getElementsByClassName(" clsBodyItalic")[0].innerText.split(" ")[1];
+                            var addressInfo = woaFrame.contentWindow.document.getElementsByClassName("clsGridData");
+                            if (recordsFound == 1) {
+                                clearInterval(searchWait);
+                                for (i = 3; i < addressInfo.length; i++) {
+                                    if (addressInfo[i].getElementsByTagName("strong")[0].innerText.trim() == groupMembers.rows[currentRow].cells[0].innerText) {
+                                        var myTable = addressInfo[i].getElementsByTagName("table");
+                                        if (myTable.length > 0) {
+                                            var myRows = myTable[0].getElementsByTagName("tr");
+                                            if (myRows.length > 0) {
+                                                groupMembers.rows[currentRow].cells[3].innerText = myRows[0].getElementsByTagName("td")[2].innerText;
+                                            } else { groupMembers.rows[currentRow].cells[3].innerText = '000-000-0000'; }
+                                        } else { groupMembers.rows[currentRow].cells[3].innerText = '000-000-0000'; }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (err) {
+                    groupMembers.rows[currentRow].cells[3].innerText = '000-000-0000';
+                    currentRow = groupMembers.rows.length;
+                    clearInterval(searchWait);
+                }
+            }, 500);
+        }
+        function selectElementContents() {
+            var body = document.body, range, sel;
+            if (document.createRange && window.getSelection) {
+                range = document.createRange();
+                sel = window.getSelection();
+                sel.removeAllRanges();
+                try {
+                    range.selectNodeContents(document.getElementById('listTable'));
+                    sel.addRange(range);
+                } catch (e) {
+                    range.selectNode(document.getElementById('listTable'));
+                    sel.addRange(range);
+                }
+                document.execCommand("copy");
+            } else if (body.createTextRange) {
+                range = body.createTextRange();
+                range.moveToElementText(document.getElementById('listTable'));
+                range.select();
+                range.execCommand("Copy");
+            }
+        }
+    </script>
+</body>
+</html>
