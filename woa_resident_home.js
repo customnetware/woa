@@ -38,7 +38,7 @@
                 var residentNameFrm=woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
                 if (residentName.getElementsByTagName("a").length > 0) {
                     residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
-                } else {residentName.innerText = residentNameFrm
+                } else { residentName.innerText = residentNameFrm }
              
             }
             if (woaFrame.attachEvent) { woaFrame.attachEvent("onload", getContents); }
