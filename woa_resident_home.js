@@ -35,7 +35,7 @@
                 getFrameContent("panel_cal_content", "event", 6)
 
                 var residentName = document.getElementsByClassName("clsHeader")[0]
-                var residentNameFrm=woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
+                var residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
                 if (residentName.getElementsByTagName("a").length > 0) {
                     residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
                 } else { residentName.innerText = residentNameFrm }
