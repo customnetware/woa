@@ -46,6 +46,7 @@ function getContents() {
                 clearInterval(findImage);
                 let displayImage = document.createElement("img")
                 displayImage.src = profileImage[0].src
+                displayImage.setAttribute("style","float:left")
                 contentDisplay[4].appendChild(displayImage)
             }
         }
