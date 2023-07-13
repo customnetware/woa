@@ -41,9 +41,9 @@ function getContents() {
     } else { residentName.innerText = residentNameFrm }
 
     let profileImage = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img")
-    if (profileImage.length > 2) {
+    if (profileImage.length > 0) {
         let displayImage = document.createElement("img")
-        displayImage.src = profileImage[2].src
+        displayImage.src = profileImage[0].src
         contentDisplay[4].appendChild(displayImage)
     }
 
