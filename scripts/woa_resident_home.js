@@ -1,5 +1,5 @@
 const woaFrame = document.getElementById("residentHome");
-function getFrameContent(contentID, contentClass, ContentPos,ProfileID) {
+function getFrameContent(contentID, contentClass, ProfileID) {
     let selectedContent = woaFrame.contentWindow.document.getElementById(contentID).getElementsByClassName(contentClass)
     for (let p = 0; p < selectedContent.length; p++) {
         let selectedLink = selectedContent[p].getElementsByTagName("a")[0];
@@ -10,22 +10,22 @@ function getFrameContent(contentID, contentClass, ContentPos,ProfileID) {
         let attr_viewurl = selectedLink.getAttribute("data-item-viewurl");
         let contentParagraph = document.createElement("p")
         contentParagraph.setAttribute('style', 'padding: 0; margin-top: 0; px; margin-bottom: 3px;');
-        if (ContentPos == 0) { contentParagraph.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
-        if (ContentPos == 1) { contentParagraph.innerHTML = "<b>" + attr_title.split("by")[0] + "</b><br />" + attr_text + "<a onclick=" + attr_onclick + " href='#'>&nbsp;<i class='fa fa-external-link'></i></a>"; }
-        if (ContentPos == 2) { contentParagraph.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
-        if (ContentPos == 3) { contentParagraph.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
-        if (ContentPos == 5) { contentParagraph.innerHTML = "<a href=" + attr_viewurl + ">" + selectedLink.innerHTML + "</a>";}
-        if (ContentPos == 6) { contentParagraph.innerHTML = "<a href=" + attr_href + ">" + selectedLink.innerHTML + "</a>"; }
+        if (ProfileID == "newsList") { contentParagraph.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
+        if (ProfileID == "emailList") { contentParagraph.innerHTML = "<b>" + attr_title.split("by")[0] + "</b><br />" + attr_text + "<a onclick=" + attr_onclick + " href='#'>&nbsp;<i class='fa fa-external-link'></i></a>"; }
+        if (ProfileID == "sellList") { contentParagraph.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
+        if (ProfileID == "groupList") { contentParagraph.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
+        if (ProfileID == "docList") { contentParagraph.innerHTML = "<a href=" + attr_viewurl + ">" + selectedLink.innerHTML + "</a>";}
+        if (ProfileID == "eventList") { contentParagraph.innerHTML = "<a href=" + attr_href + ">" + selectedLink.innerHTML + "</a>"; }
         document.getElementById(ProfileID).appendChild(contentParagraph)
     }
 }
 function getContents() {
-    getFrameContent("panel_news_content", "news", 0, "newsList")
-    getFrameContent("panel_messages_content", "message", 1,"emailList")
-    getFrameContent("panel_discuss_content", "post", 2,"groupList")
-    getFrameContent("panel_classifieds_content", "classified", 3,"sellList")
-    getFrameContent("panel_resource_content", "document", 5,"docList")
-    getFrameContent("panel_cal_content", "event", 6,"eventList")
+    getFrameContent("panel_news_content", "news", "newsList")
+    getFrameContent("panel_messages_content", "message", "emailList")
+    getFrameContent("panel_discuss_content", "post", "groupList")
+    getFrameContent("panel_classifieds_content", "classified", "sellList")
+    getFrameContent("panel_resource_content", "document", "docList")
+    getFrameContent("panel_cal_content", "event", "eventList")
 
     let residentName = document.getElementsByClassName("clsHeader")[0]
     let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
