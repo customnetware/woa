@@ -16,6 +16,30 @@
                 color: white;
                 padding: 5px;
             }
+
+            #bodyHeaderColAlerts {
+                display: none !important;
+            }
+
+            #bodyHeader {
+                display: none !important;
+            }
+
+            #HeaderPublishGuestSignIn {
+                display: none !important;
+            }
+
+            #contentInner {
+                margin-top: 0px !important;
+                padding-top: 0px !important;
+                padding-left: 3% !important;
+                padding-top: 3% !important;
+            }
+
+            .content-inner {
+                padding-top: 0px !important;
+                margin-top: 0px !important
+            }
         </style>
         <div class="row" style="font-size:15px !important">
             <div class="col-lg-3">
@@ -110,17 +134,7 @@
 
             </div>
         </div>
-        <script>
-            function fixWindow() {
-                var headerRow = document.getElementById("bodyHeader");
-                var signinStatus = document.getElementById("HeaderPublishGuestSignIn");
-                headerRow.style.display = "none";
-                signinStatus.style.display = "none";
-            }
-            if (window.attachEvent) { window.attachEvent("onload", fixWindow); }
-            else if (window.addEventListener) { window.addEventListener("load", fixWindow); }
-            else { document.addEventListener("load", fixWindow); }
-        </script>
+
     </div>
 </body>
 
