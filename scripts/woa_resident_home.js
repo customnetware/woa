@@ -17,9 +17,9 @@ function getFrameContent(contentID, contentClass, ContentPos,ProfileID) {
         if (ContentPos == 6) { contentParagraph.innerHTML = "<a href=" + attr_href + ">" + selectedLink.innerText + "</a>"; }
         if (ContentPos == 5) {
             if (selectedLink.innerText.indexOf(".doc") >= 0) {
-                contentParagraph.innerHTML = "<i class='fa fa-file-word-o'></i>&nbsp;<a href=" + attr_viewurl + ">" + selectedLink.innerText + "</a>";
+                contentParagraph.innerHTML = "<i class='fa fa-file-word-o'></i>&nbsp;<a href=" + attr_viewurl + ">" + attr_text + "</a>";
             } else {
-                contentParagraph.innerHTML = "<i class='fa fa-file-pdf-o'></i>&nbsp;<a href=" + attr_viewurl + ">" + selectedLink.innerText + "</a>";
+                contentParagraph.innerHTML = "<i class='fa fa-file-pdf-o'></i>&nbsp;<a href=" + attr_viewurl + ">" + attr_text + "</a>";
             }
         }
 
