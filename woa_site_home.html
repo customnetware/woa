@@ -17,7 +17,7 @@
                 padding: 5px;
             }
         </style>
-        <div class="row">
+        <div class="row" style="font-size:15px !important">
             <div class="col-lg-3">
                 <div class="card border-success mb-3 ">
                     <div id="login_header" class="card-header border-success formatHeader">Resident Log-in</div>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="card border-success mb-3">
-                    <div class="card-header border-success formatHeader">Forgot Sign-In Name or Password?</div>
+                    <div class="card-header border-success formatHeader">Problems Signing In?</div>
                     <div class="card-body text-muted" style="padding-left:10px;">
                         If you have forgotten your sign-in information, <a href="/Account/ForgotPassword/28118"><i>click here to retrieve your sign-in name and/or reset your password</i></a>. Please note that you will need access to the email address listed on your Site Profile to receive your sign-in name and/or password reset instructions.  If you need to <b>set up your website account</b>, or have questions, please contact the Woodbridge Clubhouse Office using the contact information below or you can also visit the office in person.
                     </div>
@@ -77,7 +77,7 @@
                 <div class="card border-success mb-3">
                     <div class="card-header border-success formatHeader">About Woodbridge</div><img src="https://www.ourwoodbridge.net/HOA/assn28118/images/woodbridge_top.jpg" style="width:100%" />
                     <div class="card-body text-muted" style="padding:10px;">
-                        
+
                         <p>The construction of Woodbridge began in 2006 and was completed in 2017. The community consists of 1,425 single-family ranch homes. All of these homes are available for resale only. The homes come in 14 floor plans from 1,312-2,618 square feet, with either 2 or 3 bedrooms, 2 or 2.5 bathrooms, and an attached 2 to 3-car garage. Del Webb's signature big rooms and open layouts make these homes perfect for active adults looking for a low-maintenance, charming home in Manteca. </p>Woodbridge Active Adult community is situated in a desirable area with a variety of recreational activities nearby. The area is home to a variety of golf courses, both private and public, and is the site of one of California's largest bowling centers. The region's regional parks provide a variety of fishing and boating opportunities in the Delta waterways, as well as RV and tent camping, picnic areas, barbecue pits, horseshoes pits, and child's play areas, making these parks ideal and cost-effective options for any time of year.   The City is also home to Bass Pro Shops and BIg League Dreams.  Woodbridge is also just a two-hour drive from the Bay Area, and it's only an hour drive to Sacramento and an hour to San Jose, where there's plenty of fun things to do, places to visit, and shopping to be done..
                     </div>
                 </div>
@@ -87,14 +87,14 @@
                             <div class="card-header border-success formatHeader">Mission Statement</div>
                             <img src="https://customnetware.github.io/woa/images/woa_mission.jpg" style="float:right; width:100%" />
                             <div class="card-body text-muted" style="padding:10px; float:left">
-                                <p>The Woodbridge Owners Association safeguards the common interests and physical assets of the association that afford members an enhanced and rewarding quality of life in a fiscally responsible manner.</p>  <p><img src="https://customnetware.github.io/woa/family_senior.jpg" style="float:right; width:145px" />Our vision is to create a proud, welcoming, and desirable 55+ Active Adult Community with a friendly and enjoyable lifestyle for its members, family, friends, and community.</p>  We will achieve our vision by treating all residents with honesty, integrity, respect, fairness and compassion. We will make our decisions with consistency, education, and common sense.<br />
+                                <p>The Woodbridge Owners Association safeguards the common interests and physical assets of the association that afford members an enhanced and rewarding quality of life in a fiscally responsible manner.</p>  <p><img src="https://www.ourwoodbridge.net/HOA/assn28118/images/family_senior.jpg" style="float:right; width:145px" />Our vision is to create a proud, welcoming, and desirable 55+ Active Adult Community with a friendly and enjoyable lifestyle for its members, family, friends, and community.</p>  We will achieve our vision by treating all residents with honesty, integrity, respect, fairness and compassion. We will make our decisions with consistency, education, and common sense.<br />
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="card border-success mb-3 h-100">
                             <div class="card-header border-success formatHeader">Association Goals</div>
-                            <img src="https://customnetware.github.io/woa/images/woodbridge_goals.jpg" style="float:right; width:100%" />
+                            <img src="https://www.ourwoodbridge.net/HOA/assn28118/images/woodbridge_goals.jpg" style="float:right; width:100%" />
                             <div class="card-body text-muted" style="padding:10px;">
                                 <ul>
                                     <li>Preserve the beauty, value and enjoyment of Woodbridge by maintaining/improving common areas/facilities and enforcing our governing documents.</li>
@@ -110,7 +110,17 @@
 
             </div>
         </div>
-
+        <script>
+            function fixWindow() {
+                var headerRow = document.getElementById("bodyHeader");
+                var signinStatus = document.getElementById("HeaderPublishGuestSignIn");
+                headerRow.style.display = "none";
+                signinStatus.style.display = "none";
+            }
+            if (window.attachEvent) { window.attachEvent("onload", fixWindow); }
+            else if (window.addEventListener) { window.addEventListener("load", fixWindow); }
+            else { document.addEventListener("load", fixWindow); }
+        </script>
     </div>
 </body>
 
