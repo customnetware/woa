@@ -1,6 +1,5 @@
 const woaFrame = document.getElementById("residentHome");
-const contentDisplay = document.getElementById("profile_data").getElementsByClassName("card-body");
-function getFrameContent(contentID, contentClass, ContentPos) {
+function getFrameContent(contentID, contentClass, ContentPos,ProfileID) {
     let selectedContent = woaFrame.contentWindow.document.getElementById(contentID).getElementsByClassName(contentClass)
     for (let p = 0; p < selectedContent.length; p++) {
         let selectedLink = selectedContent[p].getElementsByTagName("a")[0];
@@ -23,16 +22,16 @@ function getFrameContent(contentID, contentClass, ContentPos) {
             }
         }
         if (ContentPos == 6) { contentParagraph.innerHTML = "<a href=" + attr_href + ">" + selectedLink.innerText + "</a>"; }
-        contentDisplay[ContentPos].appendChild(contentParagraph)
+        document.getElementById(ProfileID).appendChild(contentParagraph)
     }
 }
 function getContents() {
-    getFrameContent("panel_news_content", "news", 0)
-    getFrameContent("panel_messages_content", "message", 1)
-    getFrameContent("panel_discuss_content", "post", 2)
-    getFrameContent("panel_classifieds_content", "classified", 3)
-    getFrameContent("panel_resource_content", "document", 5)
-    getFrameContent("panel_cal_content", "event", 6)
+    getFrameContent("panel_news_content", "news", 0, "newsList")
+    getFrameContent("panel_messages_content", "message", 1,"emailList")
+    getFrameContent("panel_discuss_content", "post", 2,"groupList")
+    getFrameContent("panel_classifieds_content", "classified", 3,"sellList")
+    getFrameContent("panel_resource_content", "document", 5,"docList")
+    getFrameContent("panel_cal_content", "event", 6,"eventList")
 
     let residentName = document.getElementsByClassName("clsHeader")[0]
     let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
@@ -47,7 +46,7 @@ function getContents() {
                 let displayImage = document.createElement("img")
                 displayImage.src = profileImage[0].src
                 displayImage.setAttribute("style", "float:left;padding:5px")
-                contentDisplay[4].insertBefore(displayImage, contentDisplay[4].firstChild);
+                document.getElementById("userProfile").insertBefore(displayImage, document.getElementById("userProfile").firstChild);
             }
         }
     }, 200);
