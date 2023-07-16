@@ -16,9 +16,6 @@ function getFrameContent(contentID, contentClass, ContentPos,ProfileID) {
         if (ContentPos == 3) { contentParagraph.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
         if (ContentPos == 5) { contentParagraph.innerHTML = "<a href=" + attr_viewurl + ">" + selectedLink.innerHTML + "</a>";}
         if (ContentPos == 6) { contentParagraph.innerHTML = "<a href=" + attr_href + ">" + selectedLink.innerHTML + "</a>"; }
-
-
-
         document.getElementById(ProfileID).appendChild(contentParagraph)
     }
 }
@@ -47,7 +44,6 @@ function getContents() {
             }
         }
     }, 200);
-
 }
 if (woaFrame.attachEvent) { woaFrame.attachEvent("onload", getContents); }
 else if (woaFrame.addEventListener) { woaFrame.addEventListener("load", getContents); }
