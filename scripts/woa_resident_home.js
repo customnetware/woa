@@ -32,6 +32,7 @@ function getContents() {
     if (residentName.getElementsByTagName("a").length > 0) {
         residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
     } else { residentName.innerText = residentNameFrm }
+
     findImage = setInterval(function () {
         let profileImage = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img")
         if (profileImage !== null) {
