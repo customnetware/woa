@@ -142,7 +142,7 @@
         </div>
         <div id="errText"></div>
         <iframe id="residentHome" src="/homepage/28118/resident-home-page" style="display:none; margin:0px; padding:0px"></iframe>
-        <script src="https://customnetware.github.io/woa/woa_resident_home.js"></script>
+        <script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>
         <script>
             function doesFileExist(urlToFile) {
                 var xhr = new XMLHttpRequest();
@@ -155,7 +155,7 @@
                 }
             }
             try {
-                var result = doesFileExist("https://customnetware.github.io/woa/woa_resident_home.js");
+                var result = doesFileExist("https://customnetware.github.io/woa/scripts/woa_resident_home.js");
                 if (result == false) { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
             } catch { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
 
