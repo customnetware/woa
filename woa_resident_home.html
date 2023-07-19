@@ -41,6 +41,7 @@
                 transform: translate(-50%,-50%);
                 -ms-transform: translate(-50%,-50%);
             }
+
             #contentInner {
                 padding-top: 1% !important;
                 padding-left: 2% !important;
@@ -52,7 +53,7 @@
                 <img src="/images/loading.gif" style="width: 25px; margin-right: 10px;" /> Please wait while page loads...
             </div>
         </div>
-        <div class="row" id="profile_data" style="font-size:15px !important">
+        <div class="row" id="profile_data" style="font-size:15px !important; color:black !important; font-weight:500 !important">
             <div class="col-md-8">
                 <div class="card border-success mb-3">
                     <div class="card-header border-success formatHeader"><span class="fa fa-newspaper-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/News/List/28118">Recent News Articles</a> </div>
@@ -76,6 +77,23 @@
 
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card border-success mb-3">
+                            <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-file-text-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">Latest Documents</a> </div>
+                            <div class="card-body text-muted" style="padding-left:10px;" id="docList">
+
+                            </div>
+                        </div>
+                    </div><div class="col-md-6">
+                        <div class="card border-success mb-3">
+                            <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-calendar" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events">Upcoming Events</a> </div>
+                            <div class="card-body text-muted" style="padding-left:10px;" id="eventList">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="card border-success mb-3">
@@ -85,14 +103,20 @@
                     </div>
                 </div>
                 <div class="card border-success mb-3">
-                    <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-file-text-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">Latest Documents</a> </div>
-                    <div class="card-body text-muted" style="padding-left:10px;" id="docList">
+                    <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-exclamation-circle" aria-hidden="true"></span>&nbsp;&nbsp;I want to...</div>
+                    <div class="card-body text-muted" style="padding-left:10px;" id="userProfile">
 
-                    </div>
-                </div>
-                <div class="card border-success mb-3">
-                    <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-calendar" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events">Upcoming Events</a> </div>
-                    <div class="card-body text-muted" style="padding-left:10px;" id="eventList">
+                        <div>
+                            <span class="fa fa-file-pdf-o" style="padding-right:10px"></span>
+                            <a href="https://ourwoodbridge.net/ResourceCenter/DocViewer/28118?doc_filename=HOPA_Fillable.pdf&doc_id=3165562&print=1">Complete the Resident and Age Survey Form</a>
+                        </div>
+                        <div><span class="fa fa-external-link" style="padding-right:10px"></span><a href="https://portal.sc-manage.com/Home_v2/Login">Pay WHOA assessment online and/or see balance</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~188049/Repair-or-Maintenance">File a WHOA maintenance request (Common Area)</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~188011/Complaint-or-CCRs-Rules-Violation">File a Complaint or CC&Rs Rules Violation</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~116540/Ask-A-Manager">Send a question or comment to management</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~317256/Community-Crime-Incident-Report">File A Community Crime Incident Report (non PD)</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~243363/Board-Agenda-Topic-Comment-or-Question">Send A Board Agenda Topic Comment or Question</a></div>
+
 
                     </div>
                 </div>
@@ -102,7 +126,7 @@
                         <strong>General Manager</strong>
                         <ul style="list-style-type:none;padding:0px;margin:0px;">
                             <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209) 824-7581 Ext 101</li>
-                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto:eugene@ourwoodbridge.net">eugene@ourwoodbridge.net</a></li>
+                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;</li>
                         </ul>
                     </div>
                     <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
@@ -147,7 +171,6 @@
         </div>
         <div id="errText"></div>
         <iframe id="residentHome" src="/homepage/28118/resident-home-page" style="display:none; margin:0px; padding:0px"></iframe>
-        <script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>
         <script>
             function doesFileExist(urlToCheck) {
                 var xhr = new XMLHttpRequest();
@@ -163,11 +186,8 @@
                 var result = doesFileExist("https://customnetware.github.io/woa/scripts/woa_resident_home.js");
                 if (result == false) { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
             } catch { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
-
-
         </script>
-
-
+        <script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>
     </div>
 </body>
 </html>

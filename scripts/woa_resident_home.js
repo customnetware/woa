@@ -9,7 +9,7 @@ function getFrameContent(contentID, contentClass, ProfileID) {
         let attr_title = selectedLink.getAttribute("data-tooltip-title");
         let attr_viewurl = selectedLink.getAttribute("data-item-viewurl");
         let contentParagraph = document.createElement("p")
-        contentParagraph.setAttribute('style', 'padding: 0; margin-top: 0; px; margin-bottom: 3px;');
+        contentParagraph.setAttribute('style', 'padding: 5px; margin-top: 0; px; margin-bottom: 3px;');
         if (ProfileID == "newsList") { contentParagraph.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
         if (ProfileID == "emailList") { contentParagraph.innerHTML = "<b>" + attr_title.split("by")[0] + "</b><br />" + attr_text + "<a onclick=" + attr_onclick + " href='#'>&nbsp;<i class='fa fa-external-link'></i></a>"; }
         if (ProfileID == "sellList") { contentParagraph.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
