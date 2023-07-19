@@ -8,8 +8,8 @@ function getFrameContent(contentID, contentClass, ProfileID) {
         let attr_text = selectedLink.getAttribute("data-tooltip-text");
         let attr_title = selectedLink.getAttribute("data-tooltip-title");
         let attr_viewurl = selectedLink.getAttribute("data-item-viewurl");
-        let contentParagraph = document.createElement("p")
-        contentParagraph.setAttribute('style', 'padding: 5px; margin-top: 0; px; margin-bottom: 3px;');
+        let contentParagraph = document.createElement("p");
+        contentParagraph.setAttribute("style", "padding-left: 5px; padding-right: 5px;  margin-top: 0; px; margin-bottom: 3px;");
         if (ProfileID == "newsList") { contentParagraph.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
         if (ProfileID == "emailList") { contentParagraph.innerHTML = "<b>" + attr_title.split("by")[0] + "</b><br />" + attr_text + "<a onclick=" + attr_onclick + " href='#'>&nbsp;<i class='fa fa-external-link'></i></a>"; }
         if (ProfileID == "sellList") { contentParagraph.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
@@ -17,6 +17,7 @@ function getFrameContent(contentID, contentClass, ProfileID) {
         if (ProfileID == "docList") { contentParagraph.innerHTML = "<a href=" + attr_viewurl + ">" + selectedLink.innerHTML + "</a>";}
         if (ProfileID == "eventList") { contentParagraph.innerHTML = "<a href=" + attr_href + ">" + selectedLink.innerHTML + "</a>"; }
         document.getElementById(ProfileID).appendChild(contentParagraph)
+        
     }
 }
 function getContents() {
