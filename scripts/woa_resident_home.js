@@ -9,8 +9,8 @@
                     let attr_title = selectedLink.getAttribute("data-tooltip-title");
                     let attr_viewurl = selectedLink.getAttribute("data-item-viewurl");
 
-                    let tRow = document.createElement("tr")
-                    let tCell = document.createElement("td")
+                    let tRow = document.createElement("tr");
+                    let tCell = document.createElement("td");
 
                     if (ProfileID == "newsList") { tCell.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
                     if (ProfileID == "emailList") { tCell.innerHTML = "<b>" + attr_title.split("by")[0] + "</b><br />" + attr_text + "<a onclick=" + attr_onclick + " href='#'>&nbsp;<i class='fa fa-external-link'></i></a>"; }
