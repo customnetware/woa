@@ -151,6 +151,16 @@
                 </div>
 
                 <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">Lakeview Clubhouse and Office Hours</div>
+                    <div id="userProfile" class="card-body" style="padding:10px">
+
+                        <ul><li>Monday - Saturday 7 a.m. to 9 p.m.</li><li>Sunday 8 a.m. to 6 p.m.</li><li>Clubhouse hours may vary seasonally</li></ul>
+
+                        <i>Clubhouse and Office closed: New Year's Day, Easter Sunday, Thanksgiving Day, Christmas Eve and Christmas Day.</i>
+
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-exclamation-circle" aria-hidden="true"></span>&nbsp;&nbsp;I want to...</div>
                     <div class="card-body text-muted" style="padding-left:10px;" id="userProfile">
 
@@ -242,6 +252,16 @@
                     document.getElementById("errText").innerHTML = err.message;
                 } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
             }
+            try {
+                if (window.location.hostname !== "localhost") {
+                    document.getElementById("resDisplayName").innerText = "My Woodbridge";
+                    document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
+                }
+
+            } catch {
+                if (window.location.hostname == "localhost") { document.getElementById("errText").innerHTML = err.message; }
+            }
+
         </script>
 
     </div>
