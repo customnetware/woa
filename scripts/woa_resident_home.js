@@ -2,7 +2,7 @@ const woaFrame = document.getElementById("residentHome");
 const serverUsed = window.location.hostname;
 const serverURL = window.location.href;
 document.getElementById("overlay").style.display = "block";
-alert(serverURL);
+alert(serverURL.slice(-4));
 function getFrameContent(contentID, contentClass, ProfileID) {
     let selectedContent = woaFrame.contentWindow.document.getElementById(contentID).getElementsByClassName(contentClass)
     for (let p = 0; p < selectedContent.length; p++) {
