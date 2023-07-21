@@ -1,4 +1,5 @@
 const woaFrame = document.getElementById("residentHome");
+document.getElementById("overlay").style.display = "block";
 function getFrameContent(contentID, contentClass, ProfileID) {
     let selectedContent = woaFrame.contentWindow.document.getElementById(contentID).getElementsByClassName(contentClass)
     for (let p = 0; p < selectedContent.length; p++) {
@@ -26,7 +27,7 @@ function getFrameContent(contentID, contentClass, ProfileID) {
 }
 function getContents() {
     try {
-        document.getElementById("overlay").style.display = "block";
+
         getFrameContent("panel_news_content", "news", "newsList");
         getFrameContent("panel_messages_content", "message", "emailList");
         getFrameContent("panel_discuss_content", "post", "groupList");
