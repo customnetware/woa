@@ -53,14 +53,14 @@ function getContents() {
                 }
             }
         }, 200);
-        document.getElementById("overlay").style.display = "none";
+
     }
     catch (err) {
         document.getElementById("overlay").style.display = "none";
         document.getElementById("errText").innerHTML = err.message;
         /*location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")*/
     }
-
+        document.getElementById("overlay").style.display = "none";
 }
 if (woaFrame.attachEvent) { woaFrame.attachEvent("onload", getContents); }
 else if (woaFrame.addEventListener) { woaFrame.addEventListener("load", getContents); }
