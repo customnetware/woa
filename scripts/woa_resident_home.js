@@ -1,5 +1,7 @@
 const woaFrame = document.getElementById("residentHome");
-document.getElementById("overlay").style.display = "block";
+const serverUsed = location.hostname
+document.getElementById("overlay").style.display = "block"
+alert(serverUsed)
 function getFrameContent(contentID, contentClass, ProfileID) {
     let selectedContent = woaFrame.contentWindow.document.getElementById(contentID).getElementsByClassName(contentClass)
     for (let p = 0; p < selectedContent.length; p++) {
