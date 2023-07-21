@@ -26,6 +26,7 @@ function getFrameContent(contentID, contentClass, ProfileID) {
 }
 function getContents() {
     try {
+        document.getElementById("overlay").style.display = "block"
         getFrameContent("panel_news_content", "news", "newsList")
         getFrameContent("panel_messages_content", "message", "emailList")
         getFrameContent("panel_discuss_content", "post", "groupList")
@@ -51,8 +52,10 @@ function getContents() {
                 }
             }
         }, 200);
+        document.getElementById("overlay").style.display = "none"
     }
     catch (err) {
+        document.getElementById("overlay").style.display = "none"
         documment.getElementById("errText").innerHTML = err.message;
         /*location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")*/
     }
