@@ -2,7 +2,7 @@ const woaFrame = document.getElementById("residentHome");
 const serverUsed = window.location.hostname;
 const serverURL = window.location.href;
 document.getElementById("overlay").style.display = "block";
-alert(serverURL.slice(-4));
+
 function getFrameContent(contentID, contentClass, ProfileID) {
     let selectedContent = woaFrame.contentWindow.document.getElementById(contentID).getElementsByClassName(contentClass)
     for (let p = 0; p < selectedContent.length; p++) {
@@ -60,7 +60,7 @@ function getContents() {
     }
     catch (err) {
         document.getElementById("overlay").style.display = "none";
-        if (serverUsed == "localhost") {
+        if (serverUsed == "localhost" || serverURL.slice(-4) == "test") {
             document.getElementById("errText").innerHTML = err.message;
         } else {
             location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
