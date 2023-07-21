@@ -26,37 +26,37 @@ function getFrameContent(contentID, contentClass, ProfileID) {
 }
 function getContents() {
     try {
-        document.getElementById("overlay").style.display = "block"
-        getFrameContent("panel_news_content", "news", "newsList")
-        getFrameContent("panel_messages_content", "message", "emailList")
-        getFrameContent("panel_discuss_content", "post", "groupList")
-        getFrameContent("panel_classifieds_content", "classified", "sellList")
-        getFrameContent("panel_resource_content", "document", "docList")
-        getFrameContent("panel_cal_content", "event", "eventList")
+        document.getElementById("overlay").style.display = "block";
+        getFrameContent("panel_news_content", "news", "newsList");
+        getFrameContent("panel_messages_content", "message", "emailList");
+        getFrameContent("panel_discuss_content", "post", "groupList");
+        getFrameContent("panel_classifieds_content", "classified", "sellList");
+        getFrameContent("panel_resource_content", "document", "docList");
+        getFrameContent("panel_cal_content", "event", "eventList");
 
-        let residentName = document.getElementsByClassName("clsHeader")[0]
-        let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
+        let residentName = document.getElementsByClassName("clsHeader")[0];
+        let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText;
         if (residentName.getElementsByTagName("a").length > 0) {
             residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
         } else { residentName.innerText = residentNameFrm }
 
         findImage = setInterval(function () {
-            let profileImage = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img")
+            let profileImage = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img");
             if (profileImage !== null) {
                 if (profileImage.length > 0) {
                     clearInterval(findImage);
-                    let displayImage = document.createElement("img")
+                    let displayImage = document.createElement("img");
                     displayImage.src = profileImage[0].src
                     displayImage.setAttribute("style", "float:left;padding:5px")
                     document.getElementById("userProfile").insertBefore(displayImage, document.getElementById("userProfile").firstChild);
                 }
             }
         }, 200);
-        document.getElementById("overlay").style.display = "none"
+        document.getElementById("overlay").style.display = "none";
     }
     catch (err) {
-        document.getElementById("overlay").style.display = "none"
-        documment.getElementById("errText").innerHTML = err.message;
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("errText").innerHTML = err.message;
         /*location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")*/
     }
 
