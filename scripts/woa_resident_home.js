@@ -53,7 +53,8 @@ function getContents() {
         }, 200);
     }
     catch (err) {
-        location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
+        documment.getElementById("errText").innerHTML= err.message
+        /*location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")*/
     }
 
 }
