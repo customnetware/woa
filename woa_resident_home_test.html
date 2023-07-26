@@ -1,0 +1,345 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="https://www.ourwoodbridge.net/Assets/Libs/BootStrap/4.0.0-alpha/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://www.ourwoodbridge.net/Assets/Libs/BootStrap/4.0.0-alpha/dist/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
+<body>
+    <br /><br />
+    <div class="container-fluid">
+        <style type="text/css">
+            .formatHeader {
+                background-color: #999999;
+                color: white;
+                padding: 5px;
+            }
+
+            .formatLink {
+                margin-left: 5px;
+            }
+
+            #overlay {
+                position: fixed; /* Sit on top of the page content */
+                /*display: none;  Hidden by default */
+                width: 100%; /* Full width (cover the whole page) */
+                height: 100%; /* Full height (cover the whole page) */
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0,0,0,0.1); /* Black background with opacity */
+                z-index: 4; /* Specify a stack order in case you're using a different order for other elements */
+                cursor: pointer; /* Add a pointer on hover */
+            }
+
+            #text {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                font-size: 18px;
+                color: white;
+                transform: translate(-50%,-50%);
+                -ms-transform: translate(-50%,-50%);
+            }
+
+            #contentInner {
+                padding-top: 1% !important;
+                padding-left: 2% !important;
+                padding-right: 2% !important;
+            }
+
+            .z-depth-3 {
+                -webkit-box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+                box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+            }
+        </style>
+        <div id="overlay" style="display:none">
+            <div id="text" class="text-opacity-50">
+                <img src="/images/loading.gif" style="width: 25px; margin-right: 10px;" /> Please wait while page loads...
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader"><span class="fa fa-newspaper-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/News/List/28118">Recent News Articles</a> </div>
+                    <div class="card-body">
+                        <table class="table table-hover table-striped">
+                            <tbody id="news">
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">Latest Emails</div>
+                    <div class="card-body">
+                        <table class="table table-hover table-striped">
+                            <tbody id="message">
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader"><span class="fa fa-comments-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Discussion/28118~8364">Latest Discussions </a></div>
+                    <div class="card-body">
+                        <table class="table table-hover table-striped">
+                            <tbody id="post">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader"><span class="fa fa-shopping-cart" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds">Classified Items</a></div>
+                    <div class="card-body">
+                        <table class="table table-hover table-striped">
+                            <tbody id="classified">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card z-depth-3 mb-3">
+                            <div class="card-header border-success formatHeader"><span class="fa fa-file-text-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">Latest Documents</a></div>
+                            <div class="card-body">
+                                <table class="table table-hover table-striped">
+                                    <tbody id="document">
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div><div class="col-md-6">
+                        <div class="card z-depth-3 mb-3">
+                            <div class="card-header border-success formatHeader"><span class="fa fa-calendar" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events">Upcoming Events</a></div>
+                            <div class="card-body">
+                                <table class="table table-hover table-striped">
+                                    <tbody id="event">
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">My Profile</div>
+                    <div id="userProfile" class="card-body" style="padding:10px">
+                        To make changes to your sign in name or password, phone number, email address, profile image or other personal information stored on this site, click the <b>My Profile</b> button at the top right of this page. (if you are using a mobile device, click or tap the <b>Profile</b> link at the top of the page).
+                    </div>
+                </div>
+
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">Lakeview Clubhouse and Office Hours</div>
+                    <div id="userProfile" class="card-body" style="padding:10px">
+                        <ul>
+                            <li>Monday - Saturday 7 a.m. to 9 p.m.</li>
+                            <li>Sunday 8 a.m. to 6 p.m.</li>
+                            <li>Clubhouse hours may vary seasonally</li>
+                        </ul>
+
+                        <i>Clubhouse and Office closed: New Year's Day, Easter Sunday, Thanksgiving Day, Christmas Eve and Christmas Day.</i>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-exclamation-circle" aria-hidden="true"></span>&nbsp;&nbsp;I want to...</div>
+                    <div class="card-body text-muted" style="padding-left:10px;" id="userProfile">
+
+                        <div>
+                            <span class="fa fa-file-pdf-o" style="padding-right:10px"></span>
+                            <a href="https://ourwoodbridge.net/ResourceCenter/DocViewer/28118?doc_filename=HOPA_Fillable.pdf&doc_id=3165562&print=1">Complete the Resident and Age Survey Form</a>
+                        </div>
+                        <div><span class="fa fa-external-link" style="padding-right:10px"></span><a href="https://portal.sc-manage.com/Home_v2/Login">Pay WHOA assessment online and/or see balance</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~188049/Repair-or-Maintenance">File a WHOA maintenance request (Common Area)</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~188011/Complaint-or-CCRs-Rules-Violation">File a Complaint or CC&Rs Rules Violation</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~116540/Ask-A-Manager">Send a question or comment to management</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~317256/Community-Crime-Incident-Report">File A Community Crime Incident Report (non PD)</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~243363/Board-Agenda-Topic-Comment-or-Question">Send A Board Agenda Topic Comment or Question</a></div>
+
+
+                    </div>
+                </div>
+
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-address-card-o" aria-hidden="true"></span>&nbsp;&nbsp;Silvercreek Management Contacts </div>
+                    <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
+                        <strong>General Manager</strong>
+                        <ul style="list-style-type:none;padding:0px;margin:0px;">
+                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209) 824-7581 Ext 101</li>
+                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;</li>
+                        </ul>
+                    </div>
+                    <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
+                        <strong>Office Manager - Jacquelynn Allen</strong>
+                        <ul style="list-style-type:none;padding:0px;margin:0px;">
+                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209) 824-7581 Ext 105</li>
+                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto:jallen@ourwoodbridge.net">jallen@ourwoodbridge.net</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
+                        <strong>Lifestyle Manager - Geri Lewis</strong>
+                        <ul style="list-style-type:none;padding:0px;margin:0px;">
+                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209) 824-7927</li>
+                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto:glewis@ourwoodbridge.net">glewis@ourwoodbridge.net</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
+                        <strong>Maintenance Lead - James Shirron</strong>
+                        <ul style="list-style-type:none;padding:0px;margin:0px;">
+                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (000) 000-0000</li>
+                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto:jshirron@ourwoodbridge.net">jshirron@ourwoodbridge.net</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
+                        <strong>Woodbridge Clubhouse - Front Desk</strong>
+                        <ul style="list-style-type:none;padding:0px;margin:0px;">
+                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; 209-824-7581</li>
+                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto:frontdesk@ourwoodbridge.net">frontdesk@ourwoodbridge.net</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-shield" aria-hidden="true"></span>&nbsp;&nbsp;Woodbridge On-Site Security </div>
+                    <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
+                        <strong>Alpine Protective Solutions</strong> <ul style="list-style-type:none;padding:0px;margin:0px;">
+                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209)495-5347</li>
+                            <li><span class="fa fa-globe" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://alpineprotect.com/"> https://alpineprotect.com/ </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="errText"></div>
+        <iframe id="residentHome" src="/homepage/28118/resident-home-page" style="display:none; margin:0px; padding:0px"></iframe>
+        <script>
+            function doesFileExist(urlToCheck) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('HEAD', urlToCheck, false);
+                xhr.send();
+                if (xhr.status == "200") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            try {
+                var result = doesFileExist("https://customnetware.github.io/woa/scripts/woa_resident_home.js");
+                if (result == false && window.location.hostname !== "localhost") {
+                    location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
+                }
+            } catch {
+                if (window.location.hostname == "localhost") {
+                    document.getElementById("errText").innerHTML = err.message;
+                } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
+            }
+
+        </script>
+        <script>
+            document.getElementById("overlay").style.display = "block";
+            document.getElementById("resDisplayName").innerText = "My Woodbridge";
+            document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
+
+
+            const woaFrame = document.getElementById("residentHome");
+            const bgImage = "this.style.backgroundImage='url(/images/icons/icon-message.png)';"
+            const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
+            const frameContent = [];
+            frameContent[0] = "panel_news_content,news";
+            frameContent[1] = "panel_messages_content,message";
+            frameContent[2] = "panel_discuss_content,post";
+            frameContent[3] = "panel_classifieds_content,classified";
+            frameContent[4] = "panel_resource_content,document";
+            frameContent[5] = "panel_cal_content,event";
+
+            function getFrameContent() {
+                try {
+
+
+                    for (let i = 0; i < frameContent.length; i++) {
+                        let contentID = frameContent[i].split(",")
+                        let selectedContent = woaFrame.contentWindow.document.getElementById(contentID[0]).getElementsByClassName(contentID[1]);
+                        let contentCheck = function () {
+                            if (contentID[1] == "post") {
+                                return woaFrame.contentWindow.document.getElementById(contentID[0]).getElementsByClassName("discussion")[0].getElementsByTagName("a")[0].innerHTML
+                            } else { return null }
+                        }
+                        for (let p = 0; p < selectedContent.length; p++) {
+                            let displayContent = document.getElementById(contentID[1])
+                            let displayLink = selectedContent[p].getElementsByTagName("a")[0]
+
+                            let tRow = document.createElement("tr")
+                            let tCell = document.createElement("td")
+                            let tLink = document.createElement("a")                 
+
+                            if (contentID[1] == "document" || contentID[1] == "event") {
+                                tLink.href = displayLink.href
+                                tLink.innerHTML = displayLink.innerHTML
+                                tCell.appendChild(tLink)
+                                tRow.appendChild(tCell)
+                                displayContent.appendChild(tRow)
+                            } else {
+                                if (contentID[1] !== "post" || (contentID[1] == "post" && contentCheck().indexOf("General") > -1)) {
+                                    let topSpan = document.createElement("span");
+                                    let btmSpan = document.createElement("span");
+                                    topSpan.setAttribute("style", "font-weight: bold; display: block;");
+                                    topSpan.appendChild(document.createTextNode(displayLink.getAttribute("data-tooltip-title").replace(sentBy, "")));
+                                    btmSpan.appendChild(document.createTextNode(displayLink.getAttribute("data-tooltip-text")));
+
+                                    tLink.href = displayLink.href;
+                                    tLink.className = "fa fa-external-link formatLink"
+
+                                    tCell.appendChild(topSpan);
+                                    tCell.appendChild(btmSpan);
+                                    tCell.appendChild(tLink)
+
+                                    tRow.appendChild(tCell)
+                                    displayContent.appendChild(tRow)
+                                }
+                            }
+                        }
+                    }
+
+                    findImage = setInterval(function () {
+                        let profileImage = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img");
+                        if (profileImage !== null) {
+                            if (profileImage.length > 0) {
+                                clearInterval(findImage);
+                                let displayImage = document.createElement("img");
+                                displayImage.src = profileImage[0].src
+                                displayImage.setAttribute("style", "float:left;padding:5px")
+                                document.getElementById("userProfile").insertBefore(displayImage, document.getElementById("userProfile").firstChild);
+                            }
+                        }
+                    }, 50);
+
+                    let residentName = document.getElementsByClassName("clsHeader")[0];
+                    let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText;
+                    if (residentName.getElementsByTagName("a").length > 0) {
+                        residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
+                    } else { residentName.innerText = residentNameFrm }
+
+                    document.getElementById("overlay").style.display = "none";
+
+                }
+                catch (err) {
+                    document.getElementById("overlay").style.display = "none";
+                    document.getElementById("errText").innerHTML = err.message;
+                }
+            }
+
+            if (woaFrame.attachEvent) { woaFrame.attachEvent("onload", getFrameContent); }
+            else if (woaFrame.addEventListener) { woaFrame.addEventListener("load", getFrameContent); }
+            else { woaFrame.contentWindow.document.addEventListener("load", getFrameContent); }
+        </script>
+
+
+    </div>
+</body>
+</html>
