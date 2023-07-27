@@ -38,7 +38,7 @@ function getFrameContent() {
                     tRow.appendChild(tCell)
                     displayContent.appendChild(tRow)
                 } else {
-                    if (contentID[1] !== "post" || (contentID[1] == "post" && selGrps.indexOf(contentCheck()) > -1)) {
+                    if (contentID[1] !== "post" || (contentID[1] == "post" && displayLink.href.split("~")[1] == "11315")) {
                         let topSpan = document.createElement("span");
                         let btmSpan = document.createElement("span");
                         topSpan.setAttribute("style", "font-weight: bold; display: block;");
