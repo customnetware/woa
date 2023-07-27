@@ -15,7 +15,13 @@
         fakeDelay = setInterval(function () {
             if (new Date().getTime() - startTime > 1000) { clearInterval(fakeDelay); }
         }, 1000);
+        const startTime = new Date().getTime();
+        fakeDelay = setInterval(function () {
+            if (new Date().getTime() - startTime > 1000) { clearInterval(fakeDelay); }
+        }, 1000);
+        setTimeout(function () {
 
+        }, 5000);
     </script>
     <div id="outer" style="opacity: 1;">
         <div id="container" class="container-fluid">
