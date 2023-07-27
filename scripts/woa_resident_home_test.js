@@ -1,6 +1,5 @@
 document.getElementById("overlay").style.display = "block";
-document.getElementById("resDisplayName").innerText = "My Woodbridge";
-document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
+
 
 
 const woaFrame = document.getElementById("residentHome");
@@ -61,7 +60,8 @@ function getFrameContent() {
                 }
             }
         }
-
+        document.getElementById("resDisplayName").innerText = "My Woodbridge";
+        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
         findImage = setInterval(function () {
             let profileImage = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img");
             if (profileImage !== null) {
