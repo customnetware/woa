@@ -17,12 +17,13 @@ function getFrameContent() {
         for (let i = 0; i < frameContent.length; i++) {
             let contentID = frameContent[i].split(",")
             let selectedContent = woaFrame.contentWindow.document.getElementById(contentID[0]).getElementsByClassName(contentID[1]);
-            let contentCheck = function () {
-                if (contentID[1] == "post") {
-                    return woaFrame.contentWindow.document.getElementById(contentID[0]).getElementsByClassName("discussion")[0].getElementsByTagName("a")[0].innerHTML
-                } else { return null }
-            }
+
             for (let p = 0; p < selectedContent.length; p++) {
+                let contentCheck = function () {
+                    if (contentID[1] == "post") {
+                        return woaFrame.contentWindow.document.getElementById(contentID[0]).getElementsByClassName("discussion")[0].getElementsByTagName("a")[0].innerHTML
+                    } else { return null }
+                }
                 let displayContent = document.getElementById(contentID[1])
                 let displayLink = selectedContent[p].getElementsByTagName("a")[0]
 
