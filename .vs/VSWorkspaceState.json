@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
+    "\\images",
     "\\scripts"
   ],
-  "SelectedNode": "\\woa_resident_home_test.html",
+  "SelectedNode": "\\scripts\\woa_resident_home_test.js",
   "PreviewInSolutionExplorer": false
 }

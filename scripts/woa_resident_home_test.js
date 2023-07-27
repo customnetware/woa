@@ -1,10 +1,9 @@
 document.getElementById("overlay").style.display = "block";
 
-
-
 const woaFrame = document.getElementById("residentHome");
 const bgImage = "this.style.backgroundImage='url(/images/icons/icon-message.png)';"
 const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
+const selGrps = "General"
 const frameContent = [];
 frameContent[0] = "panel_news_content,news";
 frameContent[1] = "panel_messages_content,message";
@@ -15,8 +14,6 @@ frameContent[5] = "panel_cal_content,event";
 
 function getFrameContent() {
     try {
-
-
         for (let i = 0; i < frameContent.length; i++) {
             let contentID = frameContent[i].split(",")
             let selectedContent = woaFrame.contentWindow.document.getElementById(contentID[0]).getElementsByClassName(contentID[1]);
@@ -40,7 +37,7 @@ function getFrameContent() {
                     tRow.appendChild(tCell)
                     displayContent.appendChild(tRow)
                 } else {
-                    if (contentID[1] !== "post" || (contentID[1] == "post" && contentCheck().indexOf("General") > -1)) {
+                    if (contentID[1] !== "post" || (contentID[1] == "post" && selGrps.indexOf(contentCheck()) > -1)) {
                         let topSpan = document.createElement("span");
                         let btmSpan = document.createElement("span");
                         topSpan.setAttribute("style", "font-weight: bold; display: block;");
@@ -74,7 +71,6 @@ function getFrameContent() {
                 }
             }
         }, 50);
-
         let residentName = document.getElementsByClassName("clsHeader")[0];
         let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText;
         if (residentName.getElementsByTagName("a").length > 0) {
