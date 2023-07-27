@@ -3,7 +3,7 @@ document.getElementById("overlay").style.display = "block";
 const woaFrame = document.getElementById("residentHome");
 const bgImage = "this.style.backgroundImage='url(/images/icons/icon-message.png)';"
 const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
-const selGrps = "GeneralTest_Group"
+const selGrps = [8364, 11315]
 const frameContent = [];
 frameContent[0] = "panel_news_content,news";
 frameContent[1] = "panel_messages_content,message";
@@ -38,7 +38,7 @@ function getFrameContent() {
                     tRow.appendChild(tCell)
                     displayContent.appendChild(tRow)
                 } else {
-                    if (contentID[1] !== "post" || (contentID[1] == "post" && displayLink.href.split("~")[1] == "11315")) {
+                    if (contentID[1] !== "post" || (contentID[1] == "post" && selGrps.indexOf(displayLink.href.split("~")[1]) > -1)) {
                         let topSpan = document.createElement("span");
                         let btmSpan = document.createElement("span");
                         topSpan.setAttribute("style", "font-weight: bold; display: block;");
