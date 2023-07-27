@@ -1,5 +1,5 @@
-document.getElementById("overlay").style.display = "block";
 
+const startTime = new Date().getTime();
 const woaFrame = document.getElementById("residentHome");
 const bgImage = "this.style.backgroundImage='url(/images/icons/icon-message.png)';"
 const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
@@ -14,16 +14,12 @@ frameContent[5] = "panel_cal_content,event";
 
 function getFrameContent() {
     try {
+        document.getElementById("overlay").style.display = "block";
         for (let i = 0; i < frameContent.length; i++) {
             let contentID = frameContent[i].split(",")
             let selectedContent = woaFrame.contentWindow.document.getElementById(contentID[0]).getElementsByClassName(contentID[1]);
 
             for (let p = 0; p < selectedContent.length; p++) {
-                let contentCheck = function () {
-                    if (contentID[1] == "post") {
-                        return woaFrame.contentWindow.document.getElementById(contentID[0]).getElementsByClassName("discussion")[0].getElementsByTagName("a")[0].innerHTML
-                    } else { return null }
-                }
                 let displayContent = document.getElementById(contentID[1])
                 let displayLink = selectedContent[p].getElementsByTagName("a")[0]
 
@@ -71,6 +67,7 @@ function getFrameContent() {
                     document.getElementById("userProfile").insertBefore(displayImage, document.getElementById("userProfile").firstChild);
                 }
             }
+            if (new Date().getTime() - startTime > 60000) { clearInterval(findImage); }
         }, 50);
         let residentName = document.getElementsByClassName("clsHeader")[0];
         let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText;
