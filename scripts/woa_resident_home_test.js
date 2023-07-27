@@ -3,7 +3,7 @@ document.getElementById("overlay").style.display = "block";
 const woaFrame = document.getElementById("residentHome");
 const bgImage = "this.style.backgroundImage='url(/images/icons/icon-message.png)';"
 const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
-const selGrps = "General"
+const selGrps = "GeneralTest_Group"
 const frameContent = [];
 frameContent[0] = "panel_news_content,news";
 frameContent[1] = "panel_messages_content,message";
