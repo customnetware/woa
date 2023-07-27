@@ -14,7 +14,6 @@ frameContent[5] = "panel_cal_content,event";
 
 function getFrameContent() {
     try {
-        document.getElementById("overlay").style.display = "block";
         for (let i = 0; i < frameContent.length; i++) {
             let contentID = frameContent[i].split(",")
             let selectedContent = woaFrame.contentWindow.document.getElementById(contentID[0]).getElementsByClassName(contentID[1]);
