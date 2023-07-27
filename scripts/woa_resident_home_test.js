@@ -57,8 +57,9 @@ function getFrameContent() {
         document.getElementById("resDisplayName").innerText = "My Woodbridge";
         document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
         findImage = setInterval(function () {
-            let profileImage = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img");
-            if (profileImage !== null) {
+            let profilePanel = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax");
+            if (profilePanel !== null) {
+                let profileImage = profilePanel.getElementsByTagName("img");
                 if (profileImage.length > 0) {
                     clearInterval(findImage);
                     let displayImage = document.createElement("img");
