@@ -13,7 +13,7 @@ frameContent[4] = "panel_resource_content,document";
 frameContent[5] = "panel_cal_content,event";
 
 function getFrameContent() {
-    try {
+ 
         //findImage = setInterval(function () {
         //    let profilePanel = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax");
         //    if (profilePanel !== null) {
@@ -80,11 +80,11 @@ function getFrameContent() {
 
         document.getElementById("overlay").style.display = "none";
 
-    }
-    catch (err) {
-        document.getElementById("overlay").style.display = "none";
-        document.getElementById("errText").innerHTML = err.message;
-    }
+    //try { }
+    //catch (err) {
+    //    document.getElementById("overlay").style.display = "none";
+    //    document.getElementById("errText").innerHTML = err.message;
+    //}
 }
 
 if (woaFrame.attachEvent) { woaFrame.attachEvent("onload", getFrameContent); }
