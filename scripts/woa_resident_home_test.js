@@ -14,27 +14,27 @@ frameContent[5] = "panel_cal_content,event";
 
 function getFrameContent() {
  
-        //findImage = setInterval(function () {
-        //    let profilePanel = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax");
-        //    if (profilePanel !== null) {
-        //        let profileImage = profilePanel.getElementsByTagName("img");
-        //        if (profileImage.length > 0) {
-        //            clearInterval(findImage);
-        //            document.getElementById("profileImage").src = profileImage[0].src
-        //        }
-        //    }
-        //    if (new Date().getTime() - startTime > 30000) { clearInterval(findImage); }
-        //}, 50);
+        findImage = setInterval(function () {
+            let profilePanel = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax");
+            if (profilePanel !== null) {
+                let profileImage = profilePanel.getElementsByTagName("img");
+                if (profileImage.length > 0) {
+                    clearInterval(findImage);
+                    document.getElementById("profileImage").src = profileImage[0].src
+                }
+            }
+            if (new Date().getTime() - startTime > 30000) { clearInterval(findImage); }
+        }, 50);
 
-        //document.getElementById("resDisplayName").innerText = "My Woodbridge";
-        //document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
+        document.getElementById("resDisplayName").innerText = "My Woodbridge";
+        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
 
 
-        //let residentName = document.getElementsByClassName("clsHeader")[0];
-        //let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText;
-        //if (residentName.getElementsByTagName("a").length > 0) {
-        //    residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
-        //} else { residentName.innerText = residentNameFrm }
+        let residentName = document.getElementsByClassName("clsHeader")[0];
+        let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText;
+        if (residentName.getElementsByTagName("a").length > 0) {
+            residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
+        } else { residentName.innerText = residentNameFrm }
 
 
         for (let i = 0; i < frameContent.length; i++) {
