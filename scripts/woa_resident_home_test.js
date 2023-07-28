@@ -13,72 +13,60 @@ frameContent[4] = "panel_resource_content,document";
 frameContent[5] = "panel_cal_content,event";
 
 function getFrameContent() {
- 
-        findImage = setInterval(function () {
-            let profilePanel = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax");
-            if (profilePanel !== null) {
-                let profileImage = profilePanel.getElementsByTagName("img");
-                if (profileImage.length > 0) {
-                    clearInterval(findImage);
-                    document.getElementById("profileImage").src = profileImage[0].src
-                }
-            }
-            if (new Date().getTime() - startTime > 30000) { clearInterval(findImage); }
-        }, 50);
-
-        document.getElementById("resDisplayName").innerText = "My Woodbridge";
-        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
+    document.getElementById("profileImage").src = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img")[0].src
+    document.getElementById("resDisplayName").innerText = "My Woodbridge";
+    document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
 
 
-        let residentName = document.getElementsByClassName("clsHeader")[0];
-        let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText;
-        if (residentName.getElementsByTagName("a").length > 0) {
-            residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
-        } else { residentName.innerText = residentNameFrm }
+    let residentName = document.getElementsByClassName("clsHeader")[0];
+    let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText;
+    if (residentName.getElementsByTagName("a").length > 0) {
+        residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
+    } else { residentName.innerText = residentNameFrm }
 
 
-        for (let i = 0; i < frameContent.length; i++) {
-            let contentID = frameContent[i].split(",")
-            let selectedContent = woaFrame.contentWindow.document.getElementById(contentID[0]).getElementsByClassName(contentID[1]);
+    for (let i = 0; i < frameContent.length; i++) {
+        let contentID = frameContent[i].split(",")
+        let selectedContent = woaFrame.contentWindow.document.getElementById(contentID[0]).getElementsByClassName(contentID[1]);
 
-            for (let p = 0; p < selectedContent.length; p++) {
-                let displayContent = document.getElementById(contentID[1])
-                let displayLink = selectedContent[p].getElementsByTagName("a")[0]
+        for (let p = 0; p < selectedContent.length; p++) {
+            let displayContent = document.getElementById(contentID[1])
+            let displayLink = selectedContent[p].getElementsByTagName("a")[0]
 
-                let tRow = document.createElement("tr")
-                let tCell = document.createElement("td")
-                let tLink = document.createElement("a")
+            let tRow = document.createElement("tr")
+            let tCell = document.createElement("td")
+            let tLink = document.createElement("a")
 
-                if (contentID[1] == "document" || contentID[1] == "event") {
-                    tLink.href = displayLink.href
-                    tLink.innerHTML = displayLink.innerHTML
+            if (contentID[1] == "document" || contentID[1] == "event") {
+                tLink.href = displayLink.href
+                tLink.innerHTML = displayLink.innerHTML
+                tCell.appendChild(tLink)
+                tRow.appendChild(tCell)
+                displayContent.appendChild(tRow)
+            } else {
+                if (contentID[1] !== "post" || (contentID[1] == "post" && selGrps.indexOf(displayLink.href.split("~")[1]) > -1)) {
+                    let topSpan = document.createElement("span");
+                    let btmSpan = document.createElement("span");
+                    topSpan.setAttribute("style", "font-weight: bold; display: block;");
+                    topSpan.appendChild(document.createTextNode(displayLink.getAttribute("data-tooltip-title").replace(sentBy, "")));
+                    btmSpan.appendChild(document.createTextNode(displayLink.getAttribute("data-tooltip-text")));
+
+                    tLink.href = displayLink.href;
+                    tLink.className = "fa fa-external-link formatLink"
+
+                    tCell.appendChild(topSpan);
+                    tCell.appendChild(btmSpan);
                     tCell.appendChild(tLink)
+
                     tRow.appendChild(tCell)
                     displayContent.appendChild(tRow)
-                } else {
-                    if (contentID[1] !== "post" || (contentID[1] == "post" && selGrps.indexOf(displayLink.href.split("~")[1]) > -1)) {
-                        let topSpan = document.createElement("span");
-                        let btmSpan = document.createElement("span");
-                        topSpan.setAttribute("style", "font-weight: bold; display: block;");
-                        topSpan.appendChild(document.createTextNode(displayLink.getAttribute("data-tooltip-title").replace(sentBy, "")));
-                        btmSpan.appendChild(document.createTextNode(displayLink.getAttribute("data-tooltip-text")));
-
-                        tLink.href = displayLink.href;
-                        tLink.className = "fa fa-external-link formatLink"
-
-                        tCell.appendChild(topSpan);
-                        tCell.appendChild(btmSpan);
-                        tCell.appendChild(tLink)
-
-                        tRow.appendChild(tCell)
-                        displayContent.appendChild(tRow)
-                    }
                 }
             }
         }
+    }
 
 
-        document.getElementById("overlay").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
 
     //try { }
     //catch (err) {
