@@ -14,17 +14,17 @@ frameContent[5] = "panel_cal_content,event";
 
 function getFrameContent() {
     try {
-        findImage = setInterval(function () {
-            let profilePanel = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax");
-            if (profilePanel !== null) {
-                let profileImage = profilePanel.getElementsByTagName("img");
-                if (profileImage.length > 0) {
-                    clearInterval(findImage);
-                    document.getElementById("profileImage").src = profileImage[0].src
-                }
-            }
-            if (new Date().getTime() - startTime > 30000) { clearInterval(findImage); }
-        }, 50);
+        //findImage = setInterval(function () {
+        //    let profilePanel = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax");
+        //    if (profilePanel !== null) {
+        //        let profileImage = profilePanel.getElementsByTagName("img");
+        //        if (profileImage.length > 0) {
+        //            clearInterval(findImage);
+        //            document.getElementById("profileImage").src = profileImage[0].src
+        //        }
+        //    }
+        //    if (new Date().getTime() - startTime > 30000) { clearInterval(findImage); }
+        //}, 50);
 
         //document.getElementById("resDisplayName").innerText = "My Woodbridge";
         //document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
