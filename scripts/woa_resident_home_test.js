@@ -16,6 +16,7 @@ function getFrameContent() {
     try {
         document.getElementById("resDisplayName").innerText = "My Woodbridge";
         document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
+        document.getElementById("profileImage").src = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img")[0].src
         for (let i = 0; i < frameContent.length; i++) {
             let contentID = frameContent[i].split(",")
             let selectedContent = woaFrame.contentWindow.document.getElementById(contentID[0]).getElementsByClassName(contentID[1]);
