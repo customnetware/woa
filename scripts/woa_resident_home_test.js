@@ -77,7 +77,6 @@ function getProfileInfo() {
             if (profilePanel !== null) {
                 let profileImage = profilePanel.getElementsByTagName("img");
                 if (profileImage.length > 0) {
-                    clearInterval(findImage);
                     document.getElementById("profileImage").src = profileImage[0].src
                     updateCnt[0] = 1
                 }
@@ -94,7 +93,6 @@ function getProfileInfo() {
                 document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
                 updateCnt[2] = 1
             }
-
         }
         if (updateCnt[3] == 0) {
             let residentName = document.getElementsByClassName("clsHeader")[0];
@@ -107,8 +105,9 @@ function getProfileInfo() {
                 updateCnt[3] = 1
             }
         }
+        if (updateCnt[0] == 1 && updateCnt[1] == 1 && updateCnt[2] == 1 && updateCnt[3] == 1) { clearInterval(findImage); }
     }, 50);
- }
+}
 if (woaFrame.attachEvent) { woaFrame.attachEvent("onload", getFrameContent); }
 else if (woaFrame.addEventListener) { woaFrame.addEventListener("load", getFrameContent); }
 else { woaFrame.contentWindow.document.addEventListener("load", getFrameContent); }
