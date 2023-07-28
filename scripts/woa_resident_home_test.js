@@ -13,21 +13,7 @@ frameContent[4] = "panel_resource_content,document";
 frameContent[5] = "panel_cal_content,event";
 
 function getFrameContent() {
-
-
-
-    document.getElementById("resDisplayName").innerText = "My Woodbridge";
-    document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
-
-
-    let residentName = document.getElementsByClassName("clsHeader")[0];
-    let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText;
-    if (residentName.getElementsByTagName("a").length > 0) {
-        residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
-    } else { residentName.innerText = residentNameFrm }
-
-
-    for (let i = 0; i < frameContent.length; i++) {
+for (let i = 0; i < frameContent.length; i++) {
         let contentID = frameContent[i].split(",")
         let selectedContent = woaFrame.contentWindow.document.getElementById(contentID[0]).getElementsByClassName(contentID[1]);
 
@@ -66,6 +52,7 @@ function getFrameContent() {
             }
         }
     }
+    document.getElementById("overlay").style.display = "none";
     findImage = setInterval(function () {
         let profilePanel = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax");
         if (profilePanel !== null) {
@@ -76,8 +63,17 @@ function getFrameContent() {
             }
         }
     }, 50);
+    document.getElementById("resDisplayName").innerText = "My Woodbridge";
+    document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
 
-    document.getElementById("overlay").style.display = "none";
+
+    let residentName = document.getElementsByClassName("clsHeader")[0];
+    let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText;
+    if (residentName.getElementsByTagName("a").length > 0) {
+        residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
+    } else { residentName.innerText = residentNameFrm }
+
+
 
     //try { }
     //catch (err) {
