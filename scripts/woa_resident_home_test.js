@@ -63,12 +63,18 @@ function getFrameContent() {
 }
 
 function getProfileInfo() {
-    if (woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax") !== null) {
-        document.getElementById("profileImage").src = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img")[0].src
-    }
+
+    findImage = setInterval(function () {
+        if (woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax") !== null) {
+            document.getElementById("profileImage").src = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img")[0].src;
+            clearInterval(findImage);
+        }
+    }, 50);
+
     if (document.getElementById("resDisplayName") !== null) {
         document.getElementById("resDisplayName").innerText = "My Woodbridge";
     }
+
     if (document.getElementsByClassName("association-name") !== null) {
         document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
     }
@@ -83,6 +89,8 @@ function getProfileInfo() {
         }
     }
 }
+
+
 if (window.attachEvent) { window.attachEvent("onload", getFrameContent); }
 else if (window.addEventListener) { window.addEventListener("load", getFrameContent); }
 else { window.contentWindow.document.addEventListener("load", getFrameContent); }
