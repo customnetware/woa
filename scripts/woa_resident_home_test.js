@@ -94,7 +94,7 @@ function getProfileInfo() {
 
 window.onload = function () {
     if (woaFrame.attachEvent) { woaFrame.attachEvent("onload", getFrameContent); }
-    else if (woaFrame.addEventListener) { woaFrame.addEventListener("load", getFrameContent, true); }
+    else if (woaFrame.addEventListener) { woaFrame.addEventListener("load", getFrameContent); }
     else { woaFrame.contentWindow.document.addEventListener("load", getFrameContent); }
 
 
