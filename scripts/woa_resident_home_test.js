@@ -105,9 +105,10 @@ function getProfileInfo() {
                 updateCnt[3] = 1
             }
         }
+        if (new Date().getTime() - startTime > 30000) { clearInterval(findImage); }
         if (updateCnt[0] == 1 && updateCnt[1] == 1 && updateCnt[2] == 1 && updateCnt[3] == 1) { clearInterval(findImage); }
     }, 50);
 }
-if (woaFrame.attachEvent) { woaFrame.attachEvent("onload", getFrameContent); }
-else if (woaFrame.addEventListener) { woaFrame.addEventListener("load", getFrameContent); }
-else { woaFrame.contentWindow.document.addEventListener("load", getFrameContent); }
+if (window.attachEvent) { window.attachEvent("onload", getFrameContent); }
+else if (window.addEventListener) { window.addEventListener("load", getFrameContent); }
+else { window.contentWindow.document.addEventListener("load", getFrameContent); }
