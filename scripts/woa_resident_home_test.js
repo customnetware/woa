@@ -93,14 +93,12 @@ function getProfileInfo() {
 
 
 window.onload = function () {
-    if (woaFrame.addEventListener) { woaFrame.addEventListener('load', getFrameContent, true); }
-    else if (woaFrame.attachEvent) { woaFrame.attachEvent('onload', getFrameContent); }
+    if (woaFrame.attachEvent) { woaFrame.attachEvent("onload", getFrameContent); }
+    else if (woaFrame.addEventListener) { woaFrame.addEventListener("load", getFrameContent, true); }
+    else { woaFrame.contentWindow.document.addEventListener("load", getFrameContent); }
 
 
 }
 
 
 
-//if (window.attachEvent) { window.attachEvent("onload", getFrameContent); }
-//else if (window.addEventListener) { window.addEventListener("load", getFrameContent, true); }
-//else { window.contentWindow.document.addEventListener("load", getFrameContent); }
