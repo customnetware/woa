@@ -55,13 +55,6 @@ function getFrameContent() {
     document.getElementById("overlay").style.display = "none";
     getProfileInfo()
 
-
-
-
-
-
-
-
     //try { }
     //catch (err) {
     //    document.getElementById("overlay").style.display = "none";
@@ -70,44 +63,25 @@ function getFrameContent() {
 }
 
 function getProfileInfo() {
-    const updateCnt = [0, 0, 0, 0];
-    findImage = setInterval(function () {
-        if (updateCnt[0] == 0) {
-            let profilePanel = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax");
-            if (profilePanel !== null) {
-                let profileImage = profilePanel.getElementsByTagName("img");
-                if (profileImage.length > 0) {
-                    document.getElementById("profileImage").src = profileImage[0].src
-                    updateCnt[0] = 1
-                }
-            }
+    if (woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax") !== null) {
+        document.getElementById("profileImage").src = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img")[0].src
+    }
+    if (document.getElementById("resDisplayName") !== null) {
+        document.getElementById("resDisplayName").innerText = "My Woodbridge";
+    }
+    if (document.getElementsByClassName("association-name") !== null) {
+        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
+    }
+
+    let residentName = document.getElementsByClassName("clsHeader")[0];
+    let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText;
+    if (residentNameFrm !== null && residentName !== null) {
+        if (residentName.getElementsByTagName("a").length > 0) {
+            residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
+        } else {
+            residentName.innerText = residentNameFrm
         }
-        if (updateCnt[1] == 0) {
-            if (document.getElementById("resDisplayName") !== null) {
-                document.getElementById("resDisplayName").innerText = "My Woodbridge";
-                updateCnt[1] = 1
-            }
-        }
-        if (updateCnt[2] == 0) {
-            if (document.getElementsByClassName("association-name") !== null) {
-                document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
-                updateCnt[2] = 1
-            }
-        }
-        if (updateCnt[3] == 0) {
-            let residentName = document.getElementsByClassName("clsHeader")[0];
-            let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText;
-            if (residentName.getElementsByTagName("a").length > 0) {
-                residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
-                updateCnt[3] = 1
-            } else {
-                residentName.innerText = residentNameFrm
-                updateCnt[3] = 1
-            }
-        }
-        if (new Date().getTime() - startTime > 30000) { clearInterval(findImage); }
-        if (updateCnt[0] == 1 && updateCnt[1] == 1 && updateCnt[2] == 1 && updateCnt[3] == 1) { clearInterval(findImage); }
-    }, 50);
+    }
 }
 if (window.attachEvent) { window.attachEvent("onload", getFrameContent); }
 else if (window.addEventListener) { window.addEventListener("load", getFrameContent); }
