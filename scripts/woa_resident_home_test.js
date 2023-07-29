@@ -68,6 +68,7 @@ function getProfileInfo() {
         if (woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax") !== null) {
             document.getElementById("profileImage").src = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img")[0].src;
             clearInterval(findImage);
+            if (new Date().getTime() - startTime > 15000) { clearInterval(findImage); }
         }
     }, 50);
 
@@ -91,6 +92,15 @@ function getProfileInfo() {
 }
 
 
-if (window.attachEvent) { window.attachEvent("onload", getFrameContent); }
-else if (window.addEventListener) { window.addEventListener("load", getFrameContent); }
-else { window.contentWindow.document.addEventListener("load", getFrameContent); }
+window.onload = function () {
+    if (woaFrame.addEventListener) { woaFrame.addEventListener('load', getFrameContent, true); }
+    else if (woaFrame.attachEvent) { woaFrame.attachEvent('onload', getFrameContent); }
+
+
+}
+
+
+
+//if (window.attachEvent) { window.attachEvent("onload", getFrameContent); }
+//else if (window.addEventListener) { window.addEventListener("load", getFrameContent, true); }
+//else { window.contentWindow.document.addEventListener("load", getFrameContent); }
