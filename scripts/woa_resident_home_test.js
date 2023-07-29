@@ -70,7 +70,10 @@ function getProfileInfo() {
             clearInterval(findImage);
             if (new Date().getTime() - startTime > 15000) { clearInterval(findImage); }
         }
-    }, 50);
+    }, 25);
+
+
+
 
     if (document.getElementById("resDisplayName") !== null) {
         document.getElementById("resDisplayName").innerText = "My Woodbridge";
