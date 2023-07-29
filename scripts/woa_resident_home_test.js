@@ -92,13 +92,13 @@ function getProfileInfo() {
 }
 
 
-window.onload = function () {
-    if (woaFrame.attachEvent) { woaFrame.attachEvent("onload", getFrameContent); }
-    else if (woaFrame.addEventListener) { woaFrame.addEventListener("load", getFrameContent); }
-    else { woaFrame.contentWindow.document.addEventListener("load", getFrameContent); }
+
+if (window.attachEvent) { window.attachEvent("onload", getFrameContent); }
+else if (window.addEventListener) { window.addEventListener("load", getFrameContent); }
+else { window.contentWindow.document.addEventListener("load", getFrameContent); }
 
 
-}
+
 
 
 
