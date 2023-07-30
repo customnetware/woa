@@ -5,7 +5,7 @@ const bgImage = "this.style.backgroundImage='url(/images/icons/icon-message.png)
 const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
 const selGrps = ["8364", "11315"]
 function getFrameContent() {
-    try {
+
         let woaDocument = woaFrame.contentWindow.document
         const pagePanel = {
             news: woaDocument.getElementById("panel_news_content").getElementsByClassName("news"),
@@ -54,11 +54,11 @@ function getFrameContent() {
         }
         document.getElementById("overlay").style.display = "none"
         getProfileInfo()
-    }
-    catch (err) {
-        document.getElementById("overlay").style.display = "none"
-        document.getElementById("errText").innerHTML = err.message
-    }
+    //try { }
+    //catch (err) {
+    //    document.getElementById("overlay").style.display = "none"
+    //    document.getElementById("errText").innerHTML = err.message
+    //}
 }
 function getProfileInfo() {
 
