@@ -235,35 +235,35 @@
         <iframe id="residentHome" src="/homepage/28118/resident-home-page" style="display:none; margin:0px; padding:0px" crossorigin="anonymous"></iframe>
         <script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>
         <script>
-                            //function doesFileExist(urlToCheck) {
-                            //    var xhr = new XMLHttpRequest();
-                            //    xhr.open('HEAD', urlToCheck, false);
-                            //    xhr.send();
-                            //    if (xhr.status == "200") {
-                            //        return true;
-                            //    } else {
-                            //        return false;
-                            //    }
-                            //}
-                            //try {
-                            //    var result = doesFileExist("https://customnetware.github.io/woa/scripts/woa_resident_home.js");
-                            //    if (result == false && window.location.hostname !== "localhost") {
-                            //        location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
-                            //    }
-                            //} catch {
-                            //    if (window.location.hostname == "localhost") {
-                            //        document.getElementById("errText").innerHTML = err.message;
-                            //    } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
-                            //}
-                            //try {
-                            //    if (window.location.hostname !== "localhost") {
-                            //        document.getElementById("resDisplayName").innerText = "My Woodbridge";
-                            //        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
-                            //    }
+            function doesFileExist(urlToCheck) {
+                var xhr = new XMLHttpRequest()
+                xhr.open('HEAD', urlToCheck, false)
+                xhr.send()
+                if (xhr.status == "200") {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            try {
+                var result = doesFileExist("https://customnetware.github.io/woa/scripts/woa_resident_home.js")
+                if (result == false && window.location.hostname !== "localhost") {
+                    location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
+                }
+            } catch {
+                if (window.location.hostname == "localhost") {
+                    document.getElementById("errText").innerHTML = err.message
+                } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
+            }
+            try {
+                if (window.location.hostname !== "localhost") {
+                    document.getElementById("resDisplayName").innerText = "My Woodbridge"
+                    document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
+                }
 
-                            //} catch {
-                            //    if (window.location.hostname == "localhost") { document.getElementById("errText").innerHTML = err.message; }
-                            //}
+            } catch {
+                if (window.location.hostname == "localhost") { document.getElementById("errText").innerHTML = err.message }
+            }
 
         </script>
 
