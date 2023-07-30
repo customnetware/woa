@@ -54,8 +54,10 @@ function getFrameContent() {
         getProfileInfo()
     }
     catch (err) {
-        document.getElementById("overlay").style.display = "none"
-        document.getElementById("errText").innerHTML = err.message
+      document.getElementById("overlay").style.display = "none"
+        if (window.location.hostname == "localhost") {
+            document.getElementById("errText").innerHTML = err.message
+        } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
     }
 }
 function getProfileInfo() {

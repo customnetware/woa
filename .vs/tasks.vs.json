@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-woa_cookie",
+      "appliesTo": "woa_cookie.html",
+      "type": "launch"
+    }
+  ]
+}
