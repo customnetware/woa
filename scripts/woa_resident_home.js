@@ -1,73 +1,93 @@
-const woaFrame = document.getElementById("residentHome");
-const serverUsed = window.location.hostname;
-const serverURL = window.location.href;
-document.getElementById("overlay").style.display = "block";
 
-function getFrameContent(contentID, contentClass, ProfileID) {
-    let selectedContent = woaFrame.contentWindow.document.getElementById(contentID).getElementsByClassName(contentClass)
-    for (let p = 0; p < selectedContent.length; p++) {
-        let selectedLink = selectedContent[p].getElementsByTagName("a")[0];
-        let attr_href = selectedLink.getAttribute("href");
-        let attr_onclick = selectedLink.getAttribute("onclick");
-        let attr_text = selectedLink.getAttribute("data-tooltip-text");
-        let attr_title = selectedLink.getAttribute("data-tooltip-title");
-        let attr_viewurl = selectedLink.getAttribute("data-item-viewurl");
-
-        let tRow = document.createElement("tr");
-        let tCell = document.createElement("td");
-
-        if (ProfileID == "newsList") { tCell.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
-        if (ProfileID == "emailList") { tCell.innerHTML = "<b>" + attr_title.split("by")[0] + "</b><br />" + attr_text + "<a onclick=" + attr_onclick + " href='#'>&nbsp;<i class='fa fa-external-link'></i></a>"; }
-        if (ProfileID == "sellList") { tCell.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
-        if (ProfileID == "groupList") { tCell.innerHTML = "<b>" + attr_title + "</b><br />" + attr_text + "<a href=" + attr_href + ">&nbsp;<i class='fa fa-external-link'></i></a>"; }
-        if (ProfileID == "docList") { tCell.innerHTML = "<a href=" + attr_viewurl + ">" + selectedLink.innerHTML + "</a>"; }
-        if (ProfileID == "eventList") { tCell.innerHTML = "<a href=" + attr_href + ">" + selectedLink.innerHTML + "</a>"; }
-        tRow.appendChild(tCell);
-
-        document.getElementById(ProfileID).getElementsByTagName("tbody")[0].appendChild(tRow)
-
-    }
-}
-function getContents() {
+const startTime = new Date().getTime()
+const woaFrame = document.getElementById("residentHome")
+const bgImage = "this.style.backgroundImage='url(/images/icons/icon-message.png)';"
+const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
+const selGrps = ["8364", "11315"]
+function getFrameContent() {
     try {
+        let woaDocument = woaFrame.contentWindow.document
+        const pagePanel = {
+            news: woaDocument.getElementById("panel_news_content").getElementsByClassName("news"),
+            message: woaDocument.getElementById("panel_messages_content").getElementsByClassName("message"),
+            post: woaDocument.getElementById("panel_discuss_content").getElementsByClassName("post"),
+            classified: woaDocument.getElementById("panel_classifieds_content").getElementsByClassName("classified"),
+            document: woaDocument.getElementById("panel_resource_content").getElementsByClassName("document"),
+            event: woaDocument.getElementById("panel_cal_content").getElementsByClassName("event")
+        }
+        for (const contentKey in pagePanel) {
+            const contentText = pagePanel[contentKey]
+            for (let p = 0; p < contentText.length; p++) {
+                let displayContent = document.getElementById(contentKey)
+                let displayLink = contentText[p].getElementsByTagName("a")[0]
 
-        getFrameContent("panel_news_content", "news", "newsList");
-        getFrameContent("panel_messages_content", "message", "emailList");
-        getFrameContent("panel_discuss_content", "post", "groupList");
-        getFrameContent("panel_classifieds_content", "classified", "sellList");
-        getFrameContent("panel_resource_content", "document", "docList");
-        getFrameContent("panel_cal_content", "event", "eventList");
+                let tRow = document.createElement("tr")
+                let tCell = document.createElement("td")
+                let tLink = document.createElement("a")
 
-        let residentName = document.getElementsByClassName("clsHeader")[0];
-        let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText;
-        if (residentName.getElementsByTagName("a").length > 0) {
-            residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
-        } else { residentName.innerText = residentNameFrm }
+                if (displayContent.id == "document" || displayContent.id == "event") {
+                    tLink.href = displayLink.href
+                    tLink.innerHTML = displayLink.innerHTML
+                    tCell.appendChild(tLink)
+                    tRow.appendChild(tCell)
+                } else {
+                    if (displayContent.id !== "post" || (displayContent.id == "post" && selGrps.indexOf(displayLink.href.split("~")[1]) > -1)) {
+                        let topSpan = document.createElement("span")
+                        let btmSpan = document.createElement("span")
+                        topSpan.setAttribute("style", "font-weight: bold; display: block;")
+                        topSpan.appendChild(document.createTextNode(displayLink.getAttribute("data-tooltip-title").replace(sentBy, "")))
+                        btmSpan.appendChild(document.createTextNode(displayLink.getAttribute("data-tooltip-text")))
 
-        findImage = setInterval(function () {
-            let profileImage = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img");
-            if (profileImage !== null) {
-                if (profileImage.length > 0) {
-                    clearInterval(findImage);
-                    let displayImage = document.createElement("img");
-                    displayImage.src = profileImage[0].src
-                    displayImage.setAttribute("style", "float:left;padding:5px")
-                    document.getElementById("userProfile").insertBefore(displayImage, document.getElementById("userProfile").firstChild);
+                        tLink.href = displayLink.href
+                        tLink.className = "fa fa-external-link formatLink"
+
+                        tCell.appendChild(topSpan)
+                        tCell.appendChild(btmSpan)
+                        tCell.appendChild(tLink)
+
+                        tRow.appendChild(tCell)
+                        displayContent.appendChild(tRow)
+                    }
                 }
+                displayContent.appendChild(tRow)
             }
-        }, 200);
-
+        }
+        document.getElementById("overlay").style.display = "none"
+        getProfileInfo()
     }
     catch (err) {
-        document.getElementById("overlay").style.display = "none";
-        if (serverUsed == "localhost" || serverURL.slice(-4) == "test") {
-            document.getElementById("errText").innerHTML = err.message;
-        } else {
-            location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
-        };
+        document.getElementById("overlay").style.display = "none"
+        document.getElementById("errText").innerHTML = err.message
     }
-    document.getElementById("overlay").style.display = "none";
 }
-if (woaFrame.attachEvent) { woaFrame.attachEvent("onload", getContents); }
-else if (woaFrame.addEventListener) { woaFrame.addEventListener("load", getContents); }
-else { woaFrame.contentWindow.document.addEventListener("load", getContents); }
+function getProfileInfo() {
+
+    findImage = setInterval(function () {
+        if (woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax") !== null) {
+            document.getElementById("profileImage").src = woaFrame.contentWindow.document.getElementById("panel_acct_profile_ajax").getElementsByTagName("img")[0].src
+            clearInterval(findImage)
+            if (new Date().getTime() - startTime > 15000) { clearInterval(findImage) }
+        }
+    }, 25)
+
+    if (document.getElementById("resDisplayName") !== null) {
+        document.getElementById("resDisplayName").innerText = "My Woodbridge"
+    }
+
+    if (document.getElementsByClassName("association-name") !== null) {
+        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
+    }
+
+    let residentName = document.getElementsByClassName("clsHeader")[0]
+    let residentNameFrm = woaFrame.contentWindow.document.getElementsByClassName("clsHeader")[0].innerText
+    if (residentNameFrm !== null && residentName !== null) {
+        if (residentName.getElementsByTagName("a").length > 0) {
+            residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
+        } else {
+            residentName.innerText = residentNameFrm
+        }
+    }
+}
+if (window.attachEvent) { window.attachEvent("onload", getFrameContent) }
+else if (window.addEventListener) { window.addEventListener("load", getFrameContent) }
+else { window.contentWindow.document.addEventListener("load", getFrameContent) }
