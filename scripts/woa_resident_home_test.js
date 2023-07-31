@@ -1,7 +1,8 @@
 $(document).ready(function () {
     const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
     const selGrps = ["8364", "11315"]
-    $.get("/homepage/28118/resident-home-page", function () { })
+    const residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page";
+    $.get(residentPage, function () { })
         .done(function (responseText) {
             var profileDoc = new DOMParser().parseFromString(responseText, "text/html")
 
@@ -77,7 +78,8 @@ $(document).ready(function () {
 function showProfile() {
     try {
         var profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
-        $.get("/Member/28118~" + profileID, function () {
+        var profilePage = (window.location.hostname == "localhost") ? "/Member/28118~" + profileID + ".html" : "/Member/28118~" + profileID;
+        $.get(profilePage, function () {
         }).done(function (responseText) {
             var profileDoc = new DOMParser().parseFromString(responseText, "text/html")
             document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
