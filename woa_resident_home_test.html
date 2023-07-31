@@ -20,6 +20,29 @@
         </a>
     </div>
     <div class="container-fluid">
+        <script>
+            function doesFileExist(urlToCheck) {
+                var xhr = new XMLHttpRequest()
+                xhr.open('HEAD', urlToCheck, false)
+                xhr.send()
+                if (xhr.status == "200") {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            try {
+                var result = doesFileExist("https://customnetware.github.io/woa/scripts/woa_resident_home_test.js")
+                if (result == false && window.location.hostname !== "localhost") {
+                    location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
+                }
+            } catch {
+                if (window.location.hostname == "localhost") {
+                    document.getElementById("errText").innerHTML = err.message
+                } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
+            }
+
+        </script>
         <style type="text/css">
             .formatHeader {
                 background-color: #999999;
@@ -233,29 +256,7 @@
         </div>
         <div id="errText"></div>
         <script src="https://customnetware.github.io/woa/scripts/woa_resident_home_test.js"></script>
-        <script>
-            function doesFileExist(urlToCheck) {
-                var xhr = new XMLHttpRequest()
-                xhr.open('HEAD', urlToCheck, false)
-                xhr.send()
-                if (xhr.status == "200") {
-                    return true
-                } else {
-                    return false
-                }
-            }
-            try {
-                var result = doesFileExist("https://customnetware.github.io/woa/scripts/woa_resident_home_test.js")
-                if (result == false && window.location.hostname !== "localhost") {
-                    location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
-                }
-            } catch {
-                if (window.location.hostname == "localhost") {
-                    document.getElementById("errText").innerHTML = err.message
-                } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
-            }
 
-        </script>
 
     </div>
 </body>
