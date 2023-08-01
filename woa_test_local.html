@@ -108,18 +108,16 @@
 
 
     <script>
-
-
-        window.onload = function () {
-            if (localStorage.UserName) {
-
-            } else {
-                localStorage.UserName = prompt("Please enter your name:", "");;
-            }
+        function saveUser(saveKey, saveValue) {
+            localStorage.setItem(saveKey, saveValue)
         }
+        function getUser(saveKey, saveValue) {
+            localStorage.setItem(saveKey, saveValue)
+        }
+
 
     </script>
 
     <script src="home.js"></script>
 </body>
-</html >
+</html>

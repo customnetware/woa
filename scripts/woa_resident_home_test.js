@@ -97,3 +97,9 @@ function showProfile() {
         document.getElementById("overlay").style.display = "none"
     }
 }
+function saveUser(saveKey, saveValue) {
+    localStorage.setItem(saveKey, saveValue)
+}
+function getUser(saveKey) {
+    localStorage.getItem(saveKey)
+}
