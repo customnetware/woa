@@ -2,6 +2,7 @@ $(document).ready(function () {
     const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
     const selGrps = ["8364", "11315"]
     const residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page";
+    try {
     $.get(residentPage, function () { })
         .done(function (responseText) {
             var profileDoc = new DOMParser().parseFromString(responseText, "text/html")
@@ -63,9 +64,7 @@ $(document).ready(function () {
                     residentName.innerText = residentNameFrm
                 }
             }
-
             showProfile()
-
         })
         .fail(function () {
             document.getElementById("overlay").style.display = "none"
@@ -73,6 +72,14 @@ $(document).ready(function () {
                 document.getElementById("errText").innerHTML = err.message
             } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
         })
+    }
+    catch (err) {
+   document.getElementById("overlay").style.display = "none"
+        if (window.location.hostname == "localhost") {
+            document.getElementById("errText").innerHTML = err.message
+        } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }     
+    }
+
 })
 
 function showProfile() {
