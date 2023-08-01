@@ -8,7 +8,7 @@ $(document).ready(function () {
                 var profileDoc = new DOMParser().parseFromString(responseText, "text/html")
 
                 const pagePanel = {
-                    news: profileDoc.getElementById("panel_news_content").getElementsByClassName("news"),
+                    news: profileDoc.$("#panel_news_content").getElementsByClassName("news"),
                     message: profileDoc.getElementById("panel_messages_content").getElementsByClassName("message"),
                     post: profileDoc.getElementById("panel_discuss_content").getElementsByClassName("post"),
                     classified: profileDoc.getElementById("panel_classifieds_content").getElementsByClassName("classified"),
