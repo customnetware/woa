@@ -99,7 +99,10 @@ function showProfile() {
     }
 }
 function saveUser(saveKey, saveValue) {
-    try { localStorage.setItem(saveKey, saveValue) } catch { }
+    try {
+        if (localStorage.getItem(saveKey) !== saveValue) { localStorage.setItem(saveKey, saveValue) }
+
+    } catch { }
 }
 function getUser(saveKey) {
     return localStorage.getItem(saveKey)
