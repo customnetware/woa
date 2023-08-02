@@ -79,9 +79,7 @@ $(document).ready(function () {
             document.getElementById("errText").innerHTML = err.message
         } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
     }
-
 })
-
 function showProfile() {
     try {
         var profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
@@ -101,7 +99,6 @@ function showProfile() {
 function saveUser(saveKey, saveValue) {
     try {
         if (localStorage.getItem(saveKey) !== saveValue) { localStorage.setItem(saveKey, saveValue) }
-
     } catch { }
 }
 function getUser(saveKey) {
