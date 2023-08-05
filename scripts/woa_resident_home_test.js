@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    const startTime = new Date().getTime()
+    const bgImage = "this.style.backgroundImage='url(/images/icons/icon-message.png)';"
     const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
     const selGrps = ["8364", "11315"]
     const residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
