@@ -1,11 +1,19 @@
 $(window).load(function () {
-    getContent()
-    showProfile()
-    if (document.getElementById("resDisplayName") !== null) {
-        document.getElementById("resDisplayName").innerText = "My Woodbridge"
+    try {
+        getContent()
+        showProfile()
+        if (document.getElementById("resDisplayName") !== null) {
+            document.getElementById("resDisplayName").innerText = "My Woodbridge"
+        }
+        if (document.getElementsByClassName("association-name") !== null) {
+            document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
+        }
     }
-    if (document.getElementsByClassName("association-name") !== null) {
-        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
+    catch (err) {
+        document.getElementById("overlay").style.display = "none"
+        if (window.location.hostname == "localhost") {
+            document.getElementById("errText").innerHTML = err.message
+        } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
     }
 })
 function getContent() {
