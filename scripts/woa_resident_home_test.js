@@ -44,9 +44,9 @@ $(document).ready(function () {
                     residentName.innerText = residentNameFrm
                 }
             }
-        })
+        }); showProfile()
 
-}); showProfile()
+})
 function showProfile() {
     try {
 
