@@ -3,8 +3,14 @@ $(document).ready(function () {
     const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
     const residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     const selGrps = ["8364", "11315"]
-showProfile()
-        
+
+    showProfile()
+    getContent()
+
+
+
+})
+function getContent() {
     $.get(residentPage, function () { })
         .done(function (responseText) {
             let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
@@ -45,10 +51,8 @@ showProfile()
                     residentName.innerText = residentNameFrm
                 }
             }
-            })
-
-
-})
+        })
+}
 function showProfile() {
     try {
 
