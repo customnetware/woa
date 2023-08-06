@@ -36,13 +36,14 @@ $(document).ready(function () {
                     clientDoc.appendChild(btmSpan)
                 }
             }
+            document.getElementById("overlay").style.display = "none"
             if (residentNameFrm !== null && residentName !== null) {
                 if (residentName.getElementsByTagName("a").length > 0) {
                     residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
                 } else {
                     residentName.innerText = residentNameFrm
                 }
-            } document.getElementById("overlay").style.display = "none"
+            }
         })
     showProfile()
 })
