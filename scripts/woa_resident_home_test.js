@@ -2,7 +2,7 @@ const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
 const residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
 const selGrps = ["8364", "11315"]
 
-$(document).ready(function () {
+$(window).load(function () {
     getContent()
     showProfile()
     if (document.getElementById("resDisplayName") !== null) {
