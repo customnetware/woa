@@ -1,21 +1,18 @@
-$(document).ready(function () {
-    const residentName = document.getElementsByClassName("clsHeader")[0]
-    const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
-    const residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
-    const selGrps = ["8364", "11315"]
+const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
+const residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
+const selGrps = ["8364", "11315"]
 
+$(document).ready(function () {
     showProfile()
     getContent()
-
-
-
-
+})
 function getContent() {
     $.get(residentPage, function () { })
         .done(function (responseText) {
             let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
             let windowDoc = document.getElementById("fromWOA").getElementsByClassName("card-body")
             let residentNameFrm = profileDoc.getElementsByClassName("clsHeader")[0].innerText
+            let residentName = document.getElementsByClassName("clsHeader")[0]
 
             for (let p = 0; p < windowDoc.length; p++) {
                 let clientDoc = windowDoc[p].getElementsByTagName("div")[0]
@@ -54,19 +51,16 @@ function getContent() {
         })
 }
 function showProfile() {
+    document.getElementById("resDisplayName").innerText = "My Woodbridge"
+    /*       document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"*/
+    let profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
+    let profilePage = (window.location.hostname == "localhost") ? "/Member/28118~" + profileID + ".html" : "/Member/28118~" + profileID
 
-
-        document.getElementById("resDisplayName").innerText = "My Woodbridge"
- /*       document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"*/
-        let profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
-        let profilePage = (window.location.hostname == "localhost") ? "/Member/28118~" + profileID + ".html" : "/Member/28118~" + profileID
-
-        $.get(profilePage, function () {
-        }).done(function (responseText) {
-            let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
-            document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
-        })
-
+    $.get(profilePage, function () {
+    }).done(function (responseText) {
+        let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
+        document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
+    })
 }
 function saveUser(saveKey, saveValue) {
     try {
@@ -75,5 +69,4 @@ function saveUser(saveKey, saveValue) {
 }
 function getUser(saveKey) {
     return localStorage.getItem(saveKey)
-    }
-})
+}
