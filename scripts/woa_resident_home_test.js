@@ -1,92 +1,59 @@
 $(document).ready(function () {
-    const startTime = new Date().getTime()
-    const bgImage = "this.style.backgroundImage='url(/images/icons/icon-message.png)';"
+    const residentName = document.getElementsByClassName("clsHeader")[0]
     const sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
-    const selGrps = ["8364", "11315"]
     const residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
-    try {
-        $.get(residentPage, function () { })
-            .done(function (responseText) {
-                var profileDoc = new DOMParser().parseFromString(responseText, "text/html")
+    const selGrps = ["8364", "11315"]
 
-                const pagePanel = {
-                    news: profileDoc.getElementById("panel_news_content").getElementsByClassName("news"),
-                    message: profileDoc.getElementById("panel_messages_content").getElementsByClassName("message"),
-                    post: profileDoc.getElementById("panel_discuss_content").getElementsByClassName("post"),
-                    classified: profileDoc.getElementById("panel_classifieds_content").getElementsByClassName("classified"),
-                    document: profileDoc.getElementById("panel_resource_content").getElementsByClassName("document"),
-                    event: profileDoc.getElementById("panel_cal_content").getElementsByClassName("event")
-                }
-                for (const contentKey in pagePanel) {
-                    const contentText = pagePanel[contentKey]
-                    for (let p = 0; p < contentText.length; p++) {
-                        let displayContent = document.getElementById(contentKey)
-                        let displayLink = contentText[p].getElementsByTagName("a")[0]
+    $.get(residentPage, function () { })
+        .done(function (responseText) {
+            let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
+            let windowDoc = document.getElementById("fromWOA").getElementsByClassName("card-body")
+            let residentNameFrm = profileDoc.getElementsByClassName("clsHeader")[0].innerText
 
-                        let tRow = document.createElement("tr")
-                        let tCell = document.createElement("td")
-                        let tLink = document.createElement("a")
-
-                        if (displayContent.id == "document" || displayContent.id == "event") {
-                            tLink.href = displayLink.href
-                            tLink.innerHTML = displayLink.innerHTML
-                            tCell.appendChild(tLink)
-                            tRow.appendChild(tCell)
-                        } else {
-                            if (displayContent.id !== "post" || (displayContent.id == "post" && selGrps.indexOf(displayLink.href.split("~")[1]) > -1)) {
-                                let topSpan = document.createElement("span")
-                                let btmSpan = document.createElement("span")
-                                topSpan.setAttribute("style", "font-weight: bold; display: block;")
-                                topSpan.appendChild(document.createTextNode(displayLink.getAttribute("data-tooltip-title").replace(sentBy, "")))
-                                btmSpan.appendChild(document.createTextNode(displayLink.getAttribute("data-tooltip-text")))
-
-                                tLink.href = displayLink.href
-                                tLink.className = "fa fa-external-link formatLink"
-
-                                tCell.appendChild(topSpan)
-                                tCell.appendChild(btmSpan)
-                                tCell.appendChild(tLink)
-
-                                tRow.appendChild(tCell)
-                                displayContent.appendChild(tRow)
-                            }
-                        }
-                        displayContent.appendChild(tRow)
+            for (let p = 0; p < windowDoc.length; p++) {
+                let clientDoc = windowDoc[p].getElementsByTagName("div")[0]
+                let currentDoc = profileDoc.getElementById(clientDoc.className).getElementsByClassName(clientDoc.id)
+                for (let i = 0; i < currentDoc.length; i++) {
+                    let selectedDoc = currentDoc[i].getElementsByTagName("a")[0]
+                    let topSpan = document.createElement("span")
+                    let btmSpan = document.createElement("span")
+                    let spanLink = document.createElement("a")
+                    if (currentDoc[i].className == "document" || currentDoc[i].className == "event") {
+                        spanLink.href = selectedDoc.href
+                        spanLink.innerHTML = selectedDoc.innerHTML
+                        topSpan.className = (i % 2 == 0) ? "btmEven" : "btmOdd"
+                        topSpan.appendChild(spanLink)
+                    } else if (currentDoc[i].className !== "post" || (currentDoc[i].className == "post" && selGrps.indexOf(selectedDoc.href.split("~")[1]) > -1)) {
+                        topSpan.className = (i % 2 == 0) ? "topEven" : "topOdd"
+                        btmSpan.className = (i % 2 == 0) ? "btmEven" : "btmOdd"
+                        topSpan.appendChild(document.createTextNode(selectedDoc.getAttribute("data-tooltip-title").replace(sentBy, "")))
+                        btmSpan.appendChild(document.createTextNode(selectedDoc.getAttribute("data-tooltip-text")))
+                        spanLink.href = selectedDoc.href
+                        spanLink.className = "fa fa-external-link formatLink"
+                        btmSpan.appendChild(spanLink)
                     }
+                    clientDoc.appendChild(topSpan)
+                    clientDoc.appendChild(btmSpan)
                 }
-                document.getElementById("overlay").style.display = "none"
-                document.getElementById("resDisplayName").innerText = "My Woodbridge"
-                document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
-                let residentName = document.getElementsByClassName("clsHeader")[0]
-                let residentNameFrm = profileDoc.getElementsByClassName("clsHeader")[0].innerText
-                if (residentNameFrm !== null && residentName !== null) {
-                    if (residentName.getElementsByTagName("a").length > 0) {
-                        residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
-                    } else {
-                        residentName.innerText = residentNameFrm
-                    }
+            }
+            if (residentNameFrm !== null && residentName !== null) {
+                if (residentName.getElementsByTagName("a").length > 0) {
+                    residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
+                } else {
+                    residentName.innerText = residentNameFrm
                 }
-                showProfile()
-            })
-            .fail(function () {
-                document.getElementById("overlay").style.display = "none"
-                if (window.location.hostname == "localhost") {
-                    document.getElementById("errText").innerHTML = err.message
-                } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
-            })
-    }
-    catch (err) {
-        document.getElementById("overlay").style.display = "none"
-        if (window.location.hostname == "localhost") {
-            document.getElementById("errText").innerHTML = err.message
-        } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
-    }
+            } document.getElementById("overlay").style.display = "none"
+        })
+    showProfile()
 })
 function showProfile() {
     try {
+
+        document.getElementById("resDisplayName").innerText = "My Woodbridge"
+        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
         var profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
         var profilePage = (window.location.hostname == "localhost") ? "/Member/28118~" + profileID + ".html" : "/Member/28118~" + profileID
-        saveUser("profileID", profileID)
+
         $.get(profilePage, function () {
         }).done(function (responseText) {
             var profileDoc = new DOMParser().parseFromString(responseText, "text/html")

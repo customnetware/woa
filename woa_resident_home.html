@@ -86,6 +86,38 @@
             .formatLink {
                 padding-left: 10px;
             }
+
+            #fromWOA .panel_news_content, .panel_messages_content, .panel_discuss_content, .panel_classifieds_content, .panel_resource_content, .panel_cal_content {
+                padding: 10px
+            }
+
+            .topEven {
+                font-weight: bold;
+                display: block;
+                padding: 0px 0px 0px 5px;
+                background-color: #eceeef;
+            }
+
+            .topOdd {
+                font-weight: bold;
+                display: block;
+                padding: 0px 0px 0px 5px;
+            }
+
+            .btmEven {
+                font-weight: normal;
+                display: block;
+                margin-bottom: 10px;
+                padding-left: 5px;
+                background-color: #eceeef
+            }
+
+            .btmOdd {
+                font-weight: normal;
+                display: block;
+                margin-bottom: 10px;
+                padding-left: 5px;
+            }
         </style>
         <div id="overlay" onclick="this.style.display='none'">
             <div id="text" class="text-opacity-50">
@@ -93,50 +125,32 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8">
+            <div id="fromWOA" class="col-md-8">
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader"><span class="fa fa-newspaper-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/News/List/28118">Recent News Articles</a> </div>
                     <div class="card-body">
-                        <div>
-                            <table class="table table-hover table-striped">
-                                <tbody id="news">
-                                </tbody>
-                            </table>
+                        <div id="news" class="panel_news_content">
                         </div>
                     </div>
                 </div>
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader"><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;Latest Emails</div>
                     <div class="card-body">
-                        <div>
-                            <table class="table table-hover table-striped">
-                                <tbody id="message">
-                                </tbody>
-                            </table>
+                        <div id="message" class="panel_messages_content">
                         </div>
                     </div>
                 </div>
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader"><span class="fa fa-comments-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Discussion/28118~8364">Latest Discussions </a></div>
                     <div class="card-body">
-                        <div>
-
-                            <table class="table table-hover table-striped">
-                                <tbody id="post">
-                                </tbody>
-                            </table>
+                        <div id="post" class="panel_discuss_content">
                         </div>
                     </div>
                 </div>
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader"><span class="fa fa-shopping-cart" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds">Classified Items</a></div>
                     <div class="card-body">
-                        <div>
-
-                            <table class="table table-hover table-striped">
-                                <tbody id="classified">
-                                </tbody>
-                            </table>
+                        <div id="classified" class="panel_classifieds_content">
                         </div>
                     </div>
                 </div>
@@ -145,25 +159,17 @@
                         <div class="card z-depth-3 mb-3">
                             <div class="card-header border-success formatHeader"><span class="fa fa-file-text-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">Latest Documents</a></div>
                             <div class="card-body">
-                                <div>
-
-                                    <table class="table table-hover table-striped">
-                                        <tbody id="document">
-                                        </tbody>
-                                    </table>
+                                <div id="document" class="panel_resource_content">
                                 </div>
                             </div>
                         </div>
-                    </div><div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
                         <div class="card z-depth-3 mb-3">
                             <div class="card-header border-success formatHeader"><span class="fa fa-calendar" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events">Upcoming Events</a></div>
                             <div class="card-body">
-                                <div>
+                                <div id="event" class="panel_cal_content">
 
-                                    <table class="table table-hover table-striped">
-                                        <tbody id="event">
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>
