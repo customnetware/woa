@@ -10,7 +10,7 @@ $(document).ready(function () {
     }
 
     if (document.getElementsByClassName("association-name") !== null) {
-        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
+        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
     }
 })
 function getContent() {
