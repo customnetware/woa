@@ -6,7 +6,7 @@ $(document).ready(function () {
     getContent()
     showProfile()
     if (document.getElementById("resDisplayName") !== null) { document.getElementById("resDisplayName").innerText = "My Woodbridge" }
-    if (document.getElementsByClassName("association-name") !== null) { document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge" }
+/*    if (document.getElementsByClassName("association-name") !== null) { document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge" }*/
 })
 function getContent() {
     $.get(residentPage, function () { })
