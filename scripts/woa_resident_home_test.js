@@ -54,23 +54,19 @@ function getContent() {
         })
 }
 function showProfile() {
-    try {
+
 
         document.getElementById("resDisplayName").innerText = "My Woodbridge"
         document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
-        var profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
-        var profilePage = (window.location.hostname == "localhost") ? "/Member/28118~" + profileID + ".html" : "/Member/28118~" + profileID
+        let profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
+        let profilePage = (window.location.hostname == "localhost") ? "/Member/28118~" + profileID + ".html" : "/Member/28118~" + profileID
 
         $.get(profilePage, function () {
         }).done(function (responseText) {
-            var profileDoc = new DOMParser().parseFromString(responseText, "text/html")
+            let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
             document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
         })
-    }
-    catch (err) {
-        document.getElementById("errText").innerHTML = err.message
-        document.getElementById("overlay").style.display = "none"
-    }
+
 }
 function saveUser(saveKey, saveValue) {
     try {
