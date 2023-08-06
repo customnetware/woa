@@ -3,8 +3,9 @@ const residentPage = (window.location.hostname == "localhost") ? "/homepage/2811
 const selGrps = ["8364", "11315"]
 
 $(document).ready(function () {
-    showProfile()
+
     getContent()
+    showProfile()
 })
 function getContent() {
     $.get(residentPage, function () { })
