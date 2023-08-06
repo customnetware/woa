@@ -118,6 +118,11 @@
                 margin-bottom: 10px;
                 padding-left: 5px;
             }
+            .dropShadow {
+                filter: drop-shadow(5px 5px 5px grey);
+                float:left;
+                padding-right:15px;
+            }
         </style>
         <div id="overlay" onclick="this.style.display='none'">
             <div id="text" class="text-opacity-50">
@@ -180,7 +185,7 @@
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader">My Personal Information</div>
                     <div id="userProfile" class="card-body" style="padding:10px">
-                        <img id="profileImage" width="110" src="" style="float:left; padding:5px;" />To make changes to your sign in name or password, phone number, email address, profile image or other personal information stored on this site, click the <b>My Profile</b> button at the top right of this page. (if you are using a mobile device, click or tap the <b>Profile</b> link at the top of the page).
+                        <img id="profileImage" width="110" src="" class="dropShadow" />To make changes to your sign in name or password, phone number, email address, profile image or other personal information stored on this site, click the <b>My Profile</b> button at the top right of this page. (if you are using a mobile device, click or tap the <b>Profile</b> link at the top of the page).
                     </div>
                 </div>
 
