@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 
 
-})
+
 function getContent() {
     $.get(residentPage, function () { })
         .done(function (responseText) {
@@ -79,4 +79,5 @@ function saveUser(saveKey, saveValue) {
 }
 function getUser(saveKey) {
     return localStorage.getItem(saveKey)
-}
+    }
+})
