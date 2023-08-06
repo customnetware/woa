@@ -4,7 +4,6 @@ $(window).load(function () {
     if (document.getElementById("resDisplayName") !== null) {
         document.getElementById("resDisplayName").innerText = "My Woodbridge"
     }
-
     if (document.getElementsByClassName("association-name") !== null) {
         document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
     }
@@ -54,6 +53,9 @@ function getContent() {
                     residentName.innerText = residentNameFrm
                 }
             }
+        })
+        .fail(function () {
+            if (window.location.hostname !== "localhost") { location.replace("/homepage/28118/resident-home-page") }
         })
 }
 function showProfile() {
