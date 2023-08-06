@@ -3,9 +3,10 @@ const residentPage = (window.location.hostname == "localhost") ? "/homepage/2811
 const selGrps = ["8364", "11315"]
 
 $(document).ready(function () {
-
     getContent()
     showProfile()
+    if (document.getElementById("resDisplayName") !== null) { document.getElementById("resDisplayName").innerText = "My Woodbridge" }
+    if (document.getElementsByClassName("association-name") !== null) { document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge" }
 })
 function getContent() {
     $.get(residentPage, function () { })
@@ -52,11 +53,8 @@ function getContent() {
         })
 }
 function showProfile() {
-    document.getElementById("resDisplayName").innerText = "My Woodbridge"
-    /*       document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"*/
     let profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
     let profilePage = (window.location.hostname == "localhost") ? "/Member/28118~" + profileID + ".html" : "/Member/28118~" + profileID
-
     $.get(profilePage, function () {
     }).done(function (responseText) {
         let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
