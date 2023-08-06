@@ -57,7 +57,7 @@ function showProfile() {
 
 
         document.getElementById("resDisplayName").innerText = "My Woodbridge"
-        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"
+ /*       document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerHTML = "My Woodbridge"*/
         let profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
         let profilePage = (window.location.hostname == "localhost") ? "/Member/28118~" + profileID + ".html" : "/Member/28118~" + profileID
 
