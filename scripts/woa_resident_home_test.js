@@ -43,8 +43,8 @@ $(document).ready(function () {
                 } else {
                     residentName.innerText = residentNameFrm
                 }
-            }
-        }); showProfile()
+            }showProfile()
+        })
 
 })
 function showProfile() {
