@@ -11,15 +11,15 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-    <div id="contentDiv"></div>
+    <div id="messageDiv">Please wait...finding latest newsletter</div>
     <script>
         $(window).load(function () {
-            let residentPage = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
-            $.get(residentPage, function () { })
+            let newsletterPage = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
+            $.get(newsletterPage, function () { })
                 .done(function (responseText) {
-                    let profileDoc = new DOMParser().parseFromString(responseText, "text/html");
-                    let newsletters = profileDoc.getElementById("contents951754").getElementsByClassName("clsTreeNde");
-                    alert(newsletters[0].href)
+                    let newsletterDoc = new DOMParser().parseFromString(responseText, "text/html")
+                    let newsletters = newsletterDoc.getElementById("contents951754").getElementsByClassName("clsTreeNde")
+                    window.location = 'https://ourwoodbridge.net/ResourceCenter/Download/?doc_id=' + newsletters[newsletters.length - 1].id.replace("d","") + '&view=1'
                 })
         })
     </script>

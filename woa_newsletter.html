@@ -3,23 +3,24 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+    <script src="https://www.ourwoodbridge.net/Assets/Libs/BootStrap/4.0.0-alpha/dist/js/bootstrap.min.js"></script>
+    <script src="https://www.ourwoodbridge.net/Assets/Libs/BootStrap/4.0.0-alpha/dist/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
     <div id="messageDiv">Please wait...finding latest newsletter</div>
-    <iframe id="MyFrame" src="https://ourwoodbridge.net/ResourceCenter/28118~951754/Woodbridge-Newsletters" style="visibility:hidden; width:100%"></iframe>
-    <script type="text/javascript">
-        var woaFrame = document.getElementById('MyFrame');
-        var docID = "";
-        woaFrame.addEventListener("load", function () {
-            setTimeout(function () {
-                let myList = woaFrame.contentWindow.document.getElementById("contents951754");
-                testNL = myList.getElementsByTagName("a");
-                for (let k = 0; k < testNL.length; k++) {
-                    if (testNL[k].href.substring(0, 23) == "javascript:loadDownload") { docID = testNL[k].href.replace(/\D/g, '') ; }                 
-                }
-                window.location ='https://ourwoodbridge.net/ResourceCenter/Download/?doc_id='+docID+'&view=1';
-            }, 1000);
-        });
+    <script>
+        $(window).load(function () {
+            let newsletterPage = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
+            $.get(newsletterPage, function () { })
+                .done(function (responseText) {
+                    let newsletterDoc = new DOMParser().parseFromString(responseText, "text/html")
+                    let newsletters = newsletterDoc.getElementById("contents951754").getElementsByClassName("clsTreeNde")
+                    window.location = 'https://ourwoodbridge.net/ResourceCenter/Download/?doc_id=' + newsletters[newsletters.length - 1].id.replace("d", "") + '&view=1'
+                })
+        })
     </script>
 </body>
 </html>
