@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\resourcecenter",
-    "\\resourcecenter\\28118"
+    "\\resourcecenter\\28118",
+    "\\scripts"
   ],
-  "SelectedNode": "\\resourcecenter",
+  "SelectedNode": "\\resourcecenter\\28118",
   "PreviewInSolutionExplorer": false
 }
