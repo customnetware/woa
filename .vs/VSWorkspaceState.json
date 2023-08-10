@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Member",
-    "\\scripts"
+    "\\resourcecenter",
+    "\\resourcecenter\\28118"
   ],
-  "SelectedNode": "\\scripts\\woa_resident_home.js",
+  "SelectedNode": "\\resourcecenter",
   "PreviewInSolutionExplorer": false
 }
