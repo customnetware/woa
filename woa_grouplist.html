@@ -10,19 +10,23 @@
     <div id="groupList"></div>
     <iframe id="MyFrame" src="https://ourwoodbridge.net/GroupPage/List/28118/Group-Pages" style="visibility:hidden; width:100%"></iframe>
     <script>
-        var woaFrame = document.getElementById('MyFrame');
-        var groupListing = document.getElementById('groupList');
+        $(window).load(function () {
+            try {
+                var groupListing = document.getElementById('groupList')
+                let groupPage = (window.location.hostname == "localhost") ? "/GroupPage/List/28118/Group-Pages" : "https://ourwoodbridge.net/GroupPage/List/28118/Group-Pages"
+                $.get(groupPage, function () { })
+                    .done(function (responseText) {
+                        let groupDoc = new DOMParser().parseFromString(responseText, "text/html")
+                        let groups = groupDoc.getElementById("bodyMainRow").getElementsByClassName("groupName")
+                        for (let p = 0; p < groups.length; p++) {
+                            let groupURL = groups[p].getElementsByTagName("a")
+                            groupListing.innerHTML += '<a href=https://ourwoodbridge.net/page/28118~1088241/test_groups_page?group=' + groupURL[0].href.split("~")[1] + '>' + groups[p].innerText + '</a><br>'
+                        }
+                    })
+            } catch {
 
-        woaFrame.addEventListener("load", function () {
-            setTimeout(function () {
-                let PageList = woaFrame.contentWindow.document.getElementById("bodyMainRow").getElementsByClassName("groupName");
-                for (let p = 0; p < PageList.length; p++) {
-               let groupURL = PageList[p].getElementsByTagName("a")
-                    groupListing.innerHTML += '<a href=https://ourwoodbridge.net/page/28118~1088241/test_groups_page?group=' + groupURL[0].href.split("~")[1]+'>'+PageList[p].innerText + '</a><br>'
-                }
-            }, 1000);
-        });
-
+            }
+        })
     </script>
 
 </body>
