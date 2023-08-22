@@ -24,14 +24,11 @@ function getContent() {
         .done(function (responseText) {
             let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
             let windowDoc = document.getElementById("fromWOA").getElementsByClassName("card-body")
-
             let residentNameFrm = profileDoc.getElementsByClassName("clsHeader")[0].innerText
             let residentName = document.getElementsByClassName("clsHeader")[0]
 
             for (let p = 0; p < windowDoc.length; p++) {
                 let clientDoc = windowDoc[p].getElementsByTagName("div")[0]
-
-
                 let currentDoc = profileDoc.getElementById(clientDoc.className).getElementsByClassName(clientDoc.id)
                 for (let i = 0; i < currentDoc.length; i++) {
                     let selectedDoc = currentDoc[i].getElementsByTagName("a")[0]
@@ -54,7 +51,6 @@ function getContent() {
                     }
                     clientDoc.appendChild(topSpan)
                     clientDoc.appendChild(btmSpan)
-
                 }
             }
             document.getElementById("overlay").style.display = "none"

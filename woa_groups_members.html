@@ -12,7 +12,6 @@
         }
     </style>
     <div style="width:100%">
-        <div id="FrameMessage" style="float:left" class="k-button">Please wait...</div>&nbsp;&nbsp;
         <input id="phoneButton" type="button" value="Add Phone Numbers To Member List" class="k-button" disabled />&nbsp;
         <input id="copyButton" type="button" value="Copy Member List" class="k-button" disabled />&nbsp;
     </div>
@@ -21,7 +20,7 @@
     <script type="text/javascript">
         var groupPageURL = "https://ourwoodbridge.net/GroupPage/28118~"
         var previousPageUrl = document.referrer;
-        var groupPageID = previousPageUrl.substr(previousPageUrl.length - 4);
+        var groupPageID = previousPageUrl.substring(previousPageUrl.length - 4);
         var groupPage = previousPageUrl.substring(0, 42);
         var groupMembers = document.getElementById("listTable");
         var woaFrame = document.getElementById("MyFrame");
@@ -34,18 +33,7 @@
             try { memberListing(); } catch (err) { document.getElementById("FrameMessage").innerHTML = err.message; }
 
         }
-        function testView() {
-            var frameDoc = woaFrame.contentWindow.document
-            frameDoc.getElementById("bodyHeaderColPublish").style.display = "none";
-            frameDoc.getElementById("bodyHeader").style.display = "none";
-            frameDoc.getElementById("bodyHeaderCol").style.display = "none";
-            frameDoc.getElementById("bodyHeaderRowAlerts").style.display = "none";
-            frameDoc.getElementById("bodyHeaderRowImage").style.display = "none";
-            frameDoc.getElementById("bodyFooter").style.display = "none";
-            document.getElementById("MyFrame").style.visibility = "visible";
-            document.getElementById("MyFrame").style.width = "100%";
-            document.getElementById("MyFrame").style.height = "600px;";
-        }
+
         function memberListing() {
             while (groupMembers.hasChildNodes()) { groupMembers.removeChild(groupMembers.firstChild); }
             document.getElementById("FrameMessage").innerHTML = "Please wait while member list is loaded..."
