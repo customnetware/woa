@@ -100,13 +100,20 @@ function showPosts() {
                         topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
                         btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
                         let replyLink = forumPostreply[p].getElementsByTagName("a")
+
                         let spanLink = document.createElement("a")
-                        spanLink.href = replyLink[1].href
-                        spanLink.innerHTML = replyLink[1].innerHTML
+                        let spanLink2 = document.createElement("a")
+
+                        spanLink.href = replyLink[0].href
+                        spanLink.innerHTML = replyLink[0].innerHTML
+
+                        spanLink2.href = replyLink[1].href
+                        spanLink2.innerHTML = replyLink[1].innerHTML
 
                         topSpan.appendChild(document.createTextNode(forumPostheaders[p].innerText + forumPostdate[p].innerText.split("-")[0] + " -" + forumPostdate[p].innerText.split("-")[1]))
                         btmSpan.appendChild(document.createTextNode(postContent.trim()))
                         btmSpan.appendChild(spanLink)
+                        btmSpan.appendChild(spanLink2)
 
 
                         forumPosts.appendChild(topSpan)
