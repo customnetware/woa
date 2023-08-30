@@ -102,10 +102,11 @@ function showPosts() {
                         let replyLink = forumPostreply[p].getElementsByTagName("a")
                         let spanLink = document.createElement("a")
                         spanLink.href = replyLink[1].href
-                        spanLink.innerHTML = forumPostheaders[p].innerText + forumPostdate[p].innerText.split("-")[0] + " -" + forumPostdate[p].innerText.split("-")[1]
+                        spanLink.innerHTML = replyLink[1].innerHTML
 
-                        topSpan.appendChild(spanLink)
+                        topSpan..appendChild(document.createTextNode(forumPostheaders[p].innerText + forumPostdate[p].innerText.split("-")[0] + " -" + forumPostdate[p].innerText.split("-")[1]))
                         btmSpan.appendChild(document.createTextNode(postContent.trim()))
+                        btmSpan.appendChild(spanLink)
 
 
                         forumPosts.appendChild(topSpan)
