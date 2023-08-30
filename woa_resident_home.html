@@ -266,7 +266,7 @@
         <script>
             function showDocuments() {
                 let documentList = document.getElementById("document")
-                let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"             
+                let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
                 $.get(fileLocation, function () { })
                     .done(function (responseText) {
                         let documents = new DOMParser().parseFromString(responseText, "text/html")
@@ -285,7 +285,9 @@
 
                     })
             }
-            showDocuments()
+            $(window).load(function () {
+                showDocuments()
+            })
         </script>
     </div>
 </body>
