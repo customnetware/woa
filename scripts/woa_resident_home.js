@@ -113,6 +113,7 @@ function showPosts() {
                         topSpan.appendChild(document.createTextNode(forumPostheaders[p].innerText + forumPostdate[p].innerText.split("-")[0] + " -" + forumPostdate[p].innerText.split("-")[1]))
                         btmSpan.appendChild(document.createTextNode(postContent.trim()))
                         btmSpan.appendChild(spanLink)
+                        btmSpan.appendChild(document.createTextNode(" | "))
                         btmSpan.appendChild(spanLink2)
 
 
