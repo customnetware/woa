@@ -36,13 +36,12 @@ function getContent() {
                     let topSpan = document.createElement("span")
                     let btmSpan = document.createElement("span")
                     let spanLink = document.createElement("a")
-                    if (currentDoc[i].className == "document" || currentDoc[i].className == "event") {
-
+                    if (currentDoc[i].className == "event") {
                         spanLink.href = selectedDoc.href
                         spanLink.innerHTML = selectedDoc.innerHTML
                         topSpan.className = (i % 2 == 0) ? "btmEven" : "btmOdd"
                         topSpan.appendChild(spanLink)
-                    } else if (currentDoc[i].className !== "post") {
+                    } else if (currentDoc[i].className !== "post" && currentDoc[i].className !== "document") {
                         topSpan.className = (i % 2 == 0) ? "topEven" : "topOdd"
                         btmSpan.className = (i % 2 == 0) ? "btmEven" : "btmOdd"
                         topSpan.appendChild(document.createTextNode(selectedDoc.getAttribute("data-tooltip-title").replace(sentBy, "")))
