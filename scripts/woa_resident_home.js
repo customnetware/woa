@@ -40,7 +40,7 @@ function getContent() {
                         spanLink.innerHTML = selectedDoc.innerHTML
                         topSpan.className = (i % 2 == 0) ? "btmEven" : "btmOdd"
                         topSpan.appendChild(spanLink)
-                    } else if (currentDoc[i].className !== "post" || (currentDoc[i].className == "post" && selGrps.indexOf(selectedDoc.href.split("~")[1]) > -1)) {
+                    } else if (currentDoc[i].className !== "post") {
                         topSpan.className = (i % 2 == 0) ? "topEven" : "topOdd"
                         btmSpan.className = (i % 2 == 0) ? "btmEven" : "btmOdd"
                         topSpan.appendChild(document.createTextNode(selectedDoc.getAttribute("data-tooltip-title").replace(sentBy, "")))
