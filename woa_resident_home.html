@@ -162,7 +162,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card z-depth-3 mb-3">
-                            <div class="card-header border-success formatHeader"><span class="fa fa-file-text-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">Latest Documents</a></div>
+                            <div class="card-header border-success formatHeader"><span class="fa fa-file-text-o" aria-hidden="true"></span>&nbsp;&nbsp;Activities & Event Flyers <a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">(Resource Center)</a></div>
                             <div class="card-body">
                                 <div id="document" class="panel_resource_content">
                                 </div>
@@ -263,7 +263,30 @@
         </div>
         <div id="errText"></div>
         <script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>
+        <script>
+            function showDocuments() {
+                let documentList = document.getElementById("document")
+                let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"             
+                $.get(fileLocation, function () { })
+                    .done(function (responseText) {
+                        let documents = new DOMParser().parseFromString(responseText, "text/html")
+                        let documentName = documents.getElementById("contents540434").getElementsByClassName("clsTreeNde")
+                        let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
+                        documentList.innerHTML = ""
+                        for (let p = 0; p < documentName.length; p++) {
+                            let topSpan = document.createElement("span")
+                            topSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
+                            let selectedDoc = document.createElement("a")
+                            selectedDoc.innerHTML = documentName[p].innerHTML
+                            selectedDoc.href = documentLink[p].href
+                            topSpan.appendChild(selectedDoc)
+                            documentList.appendChild(topSpan)
+                        }
 
+                    })
+            }
+            showDocuments()
+        </script>
     </div>
 </body>
 </html>

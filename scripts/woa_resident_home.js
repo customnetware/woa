@@ -36,8 +36,8 @@ function getContent() {
                     let topSpan = document.createElement("span")
                     let btmSpan = document.createElement("span")
                     let spanLink = document.createElement("a")
-                    if (currentDoc[i].className == "document" || currentDoc[i].className == "event") {
-                        spanLink.href = (currentDoc[i].className == "document") ? selectedDoc.getAttribute("data-item-viewurl") : selectedDoc.href
+                    if (currentDoc[i].event == "event") {
+                        spanLink.href =  selectedDoc.href
                         spanLink.innerHTML = selectedDoc.innerHTML
                         topSpan.className = (i % 2 == 0) ? "btmEven" : "btmOdd"
                         topSpan.appendChild(spanLink)

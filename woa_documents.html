@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+    <script src="https://www.ourwoodbridge.net/Assets/Libs/BootStrap/4.0.0-alpha/dist/js/bootstrap.min.js"></script>
+    <link href="https://www.ourwoodbridge.net/Assets/Libs/BootStrap/4.0.0-alpha/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
+<body>
+    <div id="testDate"></div>
+    <div id="document"></div>
+    <script>
+        function showDocuments() {
+            let documentList = document.getElementById("document")
+            let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
+            $.get(fileLocation, function () { })
+                .done(function (responseText) {               
+                    let documents = new DOMParser().parseFromString(responseText, "text/html")
+                    let documentName = documents.getElementById("contents540434").getElementsByClassName("clsTreeNde")
+                    let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
+                    for (let p = 0; p < documentName.length; p++) {
+                        let selectedDoc = document.createElement("a")
+                        let docBreak = document.createElement("br")
+
+                        selectedDoc.innerHTML = documentName[p].innerHTML
+                        selectedDoc.href = documentLink[p].href
+                        documentList.appendChild(selectedDoc)                    
+                        documentList.appendChild(docBreak)
+                    }
+                })
+        }
+        $(window).load(function () {
+            showDocuments()
+        })
+    </script>
+
+</body>
+</html>
