@@ -3,6 +3,7 @@ $(window).load(function () {
         getContent()
         showProfile()
         showPosts()
+        showDocuments()
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
         }
@@ -126,6 +127,29 @@ function showPosts() {
     } catch (error) {
     }
 
+}
+function showDocuments() {
+    try {
+        let documentList = document.getElementById("document")
+        let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
+        $.get(fileLocation, function () { })
+            .done(function (responseText) {
+                let documents = new DOMParser().parseFromString(responseText, "text/html")
+                let documentName = documents.getElementById("contents540434").getElementsByClassName("clsTreeNde")
+                let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
+                for (let p = 0; p < documentName.length; p++) {
+                    let topSpan = document.createElement("span")
+                    topSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
+                    let selectedDoc = document.createElement("a")
+                    selectedDoc.innerHTML = documentName[p].innerHTML
+                    selectedDoc.href = documentLink[p].href
+                    topSpan.appendChild(selectedDoc)
+                    documentList.appendChild(topSpan)
+                }
+
+            })
+    } catch (error) {
+    }
 }
 function saveUser(saveKey, saveValue) {
     try {
