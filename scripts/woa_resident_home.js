@@ -104,7 +104,7 @@ function showPosts() {
                         spanLink.href = replyLink[1].href
                         spanLink.innerHTML = replyLink[1].innerHTML
 
-                        topSpan..appendChild(document.createTextNode(forumPostheaders[p].innerText + forumPostdate[p].innerText.split("-")[0] + " -" + forumPostdate[p].innerText.split("-")[1]))
+                        topSpan.appendChild(document.createTextNode(forumPostheaders[p].innerText + forumPostdate[p].innerText.split("-")[0] + " -" + forumPostdate[p].innerText.split("-")[1]))
                         btmSpan.appendChild(document.createTextNode(postContent.trim()))
                         btmSpan.appendChild(spanLink)
 
