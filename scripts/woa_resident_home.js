@@ -20,7 +20,7 @@ $(window).load(function () {
 function getContent() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     let sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
-    let selGrps = ["8364", "11315","8030"]
+    let selGrps = ["8364", "11315", "8030"]
     $.get(residentPage, function () { })
         .done(function (responseText) {
             let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
@@ -79,50 +79,53 @@ function showProfile() {
 function showPosts() {
     let currentDate = new Date()
     let selGrps = ["8030", "8364", "11315"]
-    for (let p = 0; p < selGrps.length; p++) {
-        let forumPage = (window.location.hostname == "localhost") ? "/Discussion/28118~" + selGrps[p] + ".html" : "/Discussion/28118~" + selGrps[p]
-        $.get(forumPage, function () { })
-            .done(function (responseText) {
-                let forumPosts = document.getElementById("post")
-                let forum = new DOMParser().parseFromString(responseText, "text/html")
-                let forumPostheaders = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("MsgHeader")
-                let forumPostcontent = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("clsBodyText")
-                let forumPostreply = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("respReplyWrapper")
-                let forumPostdate = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("respAuthorWrapper")
-                for (let p = 0; p < forumPostheaders.length; p++) {
-                    let postDate = new Date(forumPostdate[p].innerText.split("-")[1])
-                    let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
+    try {
+        for (let p = 0; p < selGrps.length; p++) {
+            let forumPage = (window.location.hostname == "localhost") ? "/Discussion/28118~" + selGrps[p] + ".html" : "/Discussion/28118~" + selGrps[p]
+            $.get(forumPage, function () { })
+                .done(function (responseText) {
+                    let forumPosts = document.getElementById("post")
+                    let forum = new DOMParser().parseFromString(responseText, "text/html")
+                    let forumPostheaders = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("MsgHeader")
+                    let forumPostcontent = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("clsBodyText")
+                    let forumPostreply = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("respReplyWrapper")
+                    let forumPostdate = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("respAuthorWrapper")
+                    for (let p = 0; p < forumPostheaders.length; p++) {
+                        let postDate = new Date(forumPostdate[p].innerText.split("-")[1])
+                        let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
 
-                    if (dayDiff < 100) {
-                        let topSpan = document.createElement("span")
-                        let btmSpan = document.createElement("span")
-                        let postContent = forumPostcontent[p].innerText.replace(/\r?\n|\r/g, " ")
-                        topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
-                        btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
-                        let replyLink = forumPostreply[p].getElementsByTagName("a")
+                        if (dayDiff < 32) {
+                            let topSpan = document.createElement("span")
+                            let btmSpan = document.createElement("span")
+                            let postContent = forumPostcontent[p].innerText.replace(/\r?\n|\r/g, " ")
+                            topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
+                            btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
+                            let replyLink = forumPostreply[p].getElementsByTagName("a")
 
-                        let spanLink = document.createElement("a")
-                        let spanLink2 = document.createElement("a")
+                            let spanLink = document.createElement("a")
+                            let spanLink2 = document.createElement("a")
 
-                        spanLink.href = replyLink[0].href
-                        spanLink.innerHTML = replyLink[0].innerHTML
+                            spanLink.href = replyLink[0].href
+                            spanLink.innerHTML = replyLink[0].innerHTML
 
-                        spanLink2.href = replyLink[1].href
-                        spanLink2.innerHTML = replyLink[1].innerHTML
+                            spanLink2.href = replyLink[1].href
+                            spanLink2.innerHTML = replyLink[1].innerHTML
 
-                        topSpan.appendChild(document.createTextNode(forumPostheaders[p].innerText + forumPostdate[p].innerText.split("-")[0] + " -" + forumPostdate[p].innerText.split("-")[1]))
-                        btmSpan.appendChild(document.createTextNode(postContent.trim()))
-                        btmSpan.appendChild(spanLink)
-                        btmSpan.appendChild(document.createTextNode(" | "))
-                        btmSpan.appendChild(spanLink2)
+                            topSpan.appendChild(document.createTextNode(forumPostheaders[p].innerText + forumPostdate[p].innerText.split("-")[0] + " -" + forumPostdate[p].innerText.split("-")[1]))
+                            btmSpan.appendChild(document.createTextNode(postContent.trim()))
+                            btmSpan.appendChild(spanLink)
+                            btmSpan.appendChild(document.createTextNode(" | "))
+                            btmSpan.appendChild(spanLink2)
 
-
-                        forumPosts.appendChild(topSpan)
-                        forumPosts.appendChild(btmSpan)
+                            forumPosts.appendChild(topSpan)
+                            forumPosts.appendChild(btmSpan)
+                        }
                     }
-                }
-            })
+                })
+        }
+    } catch (error) {
     }
+
 }
 function saveUser(saveKey, saveValue) {
     try {
