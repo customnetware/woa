@@ -10,24 +10,39 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-    <div id="posts"></div>
+    <div id="testDate"></div>
+    <div id="post"></div>
     <script>
-        $(window).load(function () {
-            let forumPage = (window.location.hostname == "localhost") ? "/Discussion/28118~8030.html" : "/Discussion/28118~8030"
+        var currentDate = new Date().getFullYear()
+        function showProfile(forumID) {
+            let forumPage = (window.location.hostname == "localhost") ? "/Discussion/28118~" + forumID + ".html" : "/Discussion/28118~" + forumID
+
+
             $.get(forumPage, function () { })
                 .done(function (responseText) {
-                    let testPosts = document.getElementById("posts")
+                    let testPosts = document.getElementById("post")
                     let forum = new DOMParser().parseFromString(responseText, "text/html")
                     let forumPostheaders = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("MsgHeader")
                     let forumPostcontent = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("clsBodyText")
                     let forumPostdate = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("respAuthorWrapper")
-                
+
+
                     for (let p = 0; p < forumPostheaders.length; p++) {
-                        let currentPost = document.createElement("div")               
-                        currentPost.innerHTML = forumPostheaders[p].innerHTML + forumPostdate[p].innerText.split("-")[0] + " -" + forumPostdate[p].innerText.split("-")[1] 
-                        testPosts.appendChild(currentPost)
+                        var postDate = new Date(forumPostdate[p].innerText.split("-")[1]).getFullYear()
+
+                        if (currentDate == postDate) {
+                            let currentPost = document.createElement("div")
+                            currentPost.innerHTML = forumPostheaders[p].innerHTML + forumPostdate[p].innerText.split("-")[0] + " -" + forumPostdate[p].innerText.split("-")[1]
+                            testPosts.appendChild(currentPost)
+                        }
                     }
                 })
+        }
+        $(window).load(function () {
+            let selGrps = ["8030", "8364", "11315"]
+            for (let p = 0; p < selGrps.length; p++) {
+                showProfile(selGrps[p])
+            }
         })
     </script>
 
