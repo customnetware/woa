@@ -105,7 +105,7 @@ function showPosts() {
                             forumPosts.appendChild(topSpan)
                             for (let p = 0; p < messageTexts.length; p++) {
                                 let btmSpan = document.createElement("span")
-
+                 
                                 btmSpan.className = (g % 2 == 0) ? "btmEven" : "btmOdd"
                                 btmSpan.innerText = messageTexts[p].innerText.trim() + messageAuthor[p].innerText
 
@@ -121,7 +121,7 @@ function showPosts() {
                                 btmSpan.appendChild(contactLink)
                                 btmSpan.appendChild(contactLink1)
                                 forumPosts.appendChild(btmSpan)
-
+                               
                             }
                         }
                     }

@@ -21,7 +21,7 @@ $(window).load(function () {
 function getContent() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     let sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
-    let selGrps = ["8364", "11315", "8030"]
+
     $.get(residentPage, function () { })
         .done(function (responseText) {
             let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
@@ -37,20 +37,21 @@ function getContent() {
                     let topSpan = document.createElement("span")
                     let btmSpan = document.createElement("span")
                     let spanLink = document.createElement("a")
+
+                    topSpan.className = (i % 2 == 0) ? "topEven" : "topOdd"
+                    btmSpan.className = (i % 2 == 0) ? "btmEven" : "btmOdd"
+            
+                    spanLink.href = selectedDoc.href
+
+
                     if (currentDoc[i].className == "event") {
-                        spanLink.href = selectedDoc.href
                         spanLink.innerHTML = selectedDoc.innerHTML
-                        topSpan.className = (i % 2 == 0) ? "btmEven" : "btmOdd"
-                        topSpan.appendChild(spanLink)
                     } else if (currentDoc[i].className !== "post" && currentDoc[i].className !== "document") {
-                        topSpan.className = (i % 2 == 0) ? "topEven" : "topOdd"
-                        btmSpan.className = (i % 2 == 0) ? "btmEven" : "btmOdd"
                         topSpan.appendChild(document.createTextNode(selectedDoc.getAttribute("data-tooltip-title").replace(sentBy, "")))
                         btmSpan.appendChild(document.createTextNode(selectedDoc.getAttribute("data-tooltip-text")))
-                        spanLink.href = selectedDoc.href
                         spanLink.className = "fa fa-external-link formatLink"
-                        btmSpan.appendChild(spanLink)
                     }
+                    btmSpan.appendChild(spanLink)
                     clientDoc.appendChild(topSpan)
                     clientDoc.appendChild(btmSpan)
                 }
@@ -81,53 +82,48 @@ function showPosts() {
     let currentDate = new Date()
     let selGrps = ["8030", "8364", "11315"]
     try {
-        for (let g = 0; g < selGrps.length; g++) {
-            let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + selGrps[g] + ".html" : "/Discussion/28118~" + selGrps[g]
-            $.get(selectedPost, function () { })
+        for (let p = 0; p < selGrps.length; p++) {
+            let forumPage = (window.location.hostname == "localhost") ? "/Discussion/28118~" + selGrps[p] + ".html" : "/Discussion/28118~" + selGrps[p]
+            $.get(forumPage, function () { })
                 .done(function (responseText) {
                     let forumPosts = document.getElementById("post")
                     let forum = new DOMParser().parseFromString(responseText, "text/html")
-                    let msgHeaderText = forum.querySelectorAll("[id^=msgHeader]")
-                    let messageText = forum.querySelectorAll("[id^=contents]")
-
-                    for (let k = 0; k < messageText.length; k++) {
-                        let messageTexts = messageText[k].getElementsByClassName("clsBodyText")
-                        let messageAuthor = messageText[k].getElementsByClassName("respAuthorWrapper")
-                        let messageContacts = messageText[k].getElementsByClassName("respReplyWrapper")
-
-                        let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
+                    let forumPostheaders = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("MsgHeader")
+                    let forumPostcontent = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("clsBodyText")
+                    let forumPostreply = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("respReplyWrapper")
+                    let forumPostdate = forum.getElementsByClassName("ThreadContainer")[0].getElementsByClassName("respAuthorWrapper")
+                    for (let p = 0; p < forumPostheaders.length; p++) {
+                        let postDate = new Date(forumPostdate[p].innerText.split("-")[1])
                         let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-                        let topSpan = document.createElement("span")
-                        topSpan.className = (g % 2 == 0) ? "topEven" : "topOdd"
 
                         if (dayDiff < 32) {
-                            topSpan.innerHTML = msgHeaderText[k].innerText.trim()
+                            let topSpan = document.createElement("span")
+                            let btmSpan = document.createElement("span")
+                            let postContent = forumPostcontent[p].innerText.replace(/\r?\n|\r/g, " ")
+                            topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
+                            btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
+                            let replyLink = forumPostreply[p].getElementsByTagName("a")
+
+                            let spanLink = document.createElement("a")
+                            let spanLink2 = document.createElement("a")
+
+                            spanLink.href = replyLink[0].href
+                            spanLink.innerHTML = replyLink[0].innerHTML
+
+                            spanLink2.href = replyLink[1].href
+                            spanLink2.innerHTML = replyLink[1].innerHTML
+
+                            topSpan.appendChild(document.createTextNode(forumPostheaders[p].innerText + forumPostdate[p].innerText.split("-")[0] + " -" + forumPostdate[p].innerText.split("-")[1]))
+                            btmSpan.appendChild(document.createTextNode(postContent.trim()))
+                            btmSpan.appendChild(spanLink)
+                            btmSpan.appendChild(document.createTextNode(" | "))
+                            btmSpan.appendChild(spanLink2)
+
                             forumPosts.appendChild(topSpan)
-                            for (let p = 0; p < messageTexts.length; p++) {
-                                let btmSpan = document.createElement("span")
-
-                                btmSpan.className = (g % 2 == 0) ? "btmEven" : "btmOdd"
-                                btmSpan.innerText = messageTexts[p].innerText.trim() + messageAuthor[p].innerText
-
-                                let contactLink = document.createElement("a")
-                                contactLink.innerText = "Reply | "
-                                contactLink.href = messageContacts[p].getElementsByTagName("a")[0].href
-
-                                let contactLink1 = document.createElement("a")
-                                contactLink1.innerText = "Email Author"
-                                contactLink1.href = messageContacts[p].getElementsByTagName("a")[1].href
-
-
-                                btmSpan.appendChild(contactLink)
-                                btmSpan.appendChild(contactLink1)
-                                forumPosts.appendChild(btmSpan)
-
-                            }
+                            forumPosts.appendChild(btmSpan)
                         }
                     }
-
                 })
-
         }
     } catch (error) {
     }

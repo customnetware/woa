@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+    <script src="https://www.ourwoodbridge.net/Assets/Libs/BootStrap/4.0.0-alpha/dist/js/bootstrap.min.js"></script>
+    <link href="https://www.ourwoodbridge.net/Assets/Libs/BootStrap/4.0.0-alpha/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <style>
+        @import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css);
+        @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
+    </style>
+</head>
+<body>
+    <style type="text/css">
+        .postDisplay {
+            padding-left: 22px;
+            margin-bottom: 5px;
+        }
+
+        .formatHeader {
+            background-color: #999999;
+            color: white;
+            padding: 5px;
+        }
+
+        #overlay {
+            position: fixed; /* Sit on top of the page content */
+            /*display: none;  Hidden by default */
+            width: 100%; /* Full width (cover the whole page) */
+            height: 100%; /* Full height (cover the whole page) */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.1); /* Black background with opacity */
+            z-index: 4; /* Specify a stack order in case you're using a different order for other elements */
+            cursor: pointer; /* Add a pointer on hover */
+        }
+
+        #text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 18px;
+            color: white;
+            transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+        }
+
+        #contentInner {
+            padding-top: 1% !important;
+            padding-left: 2% !important;
+            padding-right: 2% !important;
+        }
+
+        .z-depth-3 {
+            -webkit-box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+            box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+        }
+
+        .formatLink {
+            padding-left: 10px;
+        }
+
+        #fromWOA .panel_news_content, .panel_messages_content, .panel_discuss_content, .panel_classifieds_content, .panel_resource_content, .panel_cal_content {
+            padding: 10px
+        }
+
+        .topEven {
+            font-weight: bold;
+            display: block;
+            padding: 0px 0px 0px 5px;
+            background-color: #eceeef;
+        }
+
+        .topOdd {
+            font-weight: bold;
+            display: block;
+            padding: 0px 0px 0px 5px;
+        }
+
+        .btmEven {
+            font-weight: normal;
+            display: block;
+            margin-bottom: 10px;
+            padding-left: 5px;
+            background-color: #eceeef
+        }
+
+        .btmOdd {
+            font-weight: normal;
+            display: block;
+            margin-bottom: 10px;
+            padding-left: 5px;
+        }
+
+        .dropShadow {
+            filter: drop-shadow(5px 5px 5px grey);
+            float: left;
+            padding-right: 15px;
+        }
+    </style>
+    <div id="post"></div>
+    <script>
+        let currentDate = new Date()
+        let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~8364.html" : "/Discussion/28118~8364"
+        $.get(selectedPost, function () { })
+            .done(function (responseText) {
+                let forumPosts = document.getElementById("post")
+                let forum = new DOMParser().parseFromString(responseText, "text/html")
+                let msgHeaderText = forum.querySelectorAll("[id^=msgHeader]")
+                let messageText = forum.querySelectorAll("[id^=contents]")
+
+                for (let k = 0; k < messageText.length; k++) {
+                    let messageTexts = messageText[k].getElementsByClassName("clsBodyText")
+                    let messageAuthor = messageText[k].getElementsByClassName("respAuthorWrapper")
+
+                    let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
+                    let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
+
+                    if (dayDiff < 32) {
+                        let topSpan = document.createElement("span")
+                        topSpan.className = (k % 2 == 0) ? "topEven" : "topOdd"
+
+                        topSpan.style.paddingLeft = "22px"
+                        topSpan.innerHTML = msgHeaderText[k].innerText.trim()
+                        forumPosts.appendChild(topSpan)
+                        for (let p = 0; p < messageTexts.length; p++) {
+                            let btmSpan = document.createElement("div")
+                            btmSpan.className = (k % 2 == 0) ? "btmEven" : "btmOdd"
+
+                            btmSpan.innerText = messageTexts[p].innerText.trim() + messageAuthor[p].innerText
+                            forumPosts.appendChild(btmSpan)
+                        }
+                    }
+                }
+
+            })
+    </script>
+</body>
+</html>

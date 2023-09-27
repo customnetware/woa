@@ -17,18 +17,30 @@
             let documentList = document.getElementById("document")
             let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
             $.get(fileLocation, function () { })
-                .done(function (responseText) {               
+                .done(function (responseText, responseStatus, request) {
+
+                    let d = new Date()
+                    alert(request.getResponseHeader("Last-Modified"))
+                    var currentMonth = d.getMonth()
+                    var currentDay = d.getDate()
                     let documents = new DOMParser().parseFromString(responseText, "text/html")
                     let documentName = documents.getElementById("contents540434").getElementsByClassName("clsTreeNde")
                     let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
                     for (let p = 0; p < documentName.length; p++) {
                         let selectedDoc = document.createElement("a")
                         let docBreak = document.createElement("br")
+                        let dateCheck = documentName[p].innerHTML.trim().split(" ")
+                        let docMonth = dateCheck[0].split("/")[0]
+                        let docDay = dateCheck[0].split("/")[1]
+                        let testDay = new Date("2023," + dateCheck[0].split("/")[0] + "," + dateCheck[0].split("/")[1])
+                       
 
-                        selectedDoc.innerHTML = documentName[p].innerHTML
-                        selectedDoc.href = documentLink[p].href
-                        documentList.appendChild(selectedDoc)                    
-                        documentList.appendChild(docBreak)
+                        if ((currentMonth + 1 == docMonth && currentDay <= docDay) || (currentMonth + 1 < docMonth)) { 
+                            selectedDoc.innerHTML = documentName[p].innerHTML
+                            selectedDoc.href = documentLink[p].href
+                            documentList.appendChild(selectedDoc)
+                            documentList.appendChild(docBreak)
+                        }
                     }
                 })
         }
@@ -36,6 +48,5 @@
             showDocuments()
         })
     </script>
-
 </body>
 </html>
