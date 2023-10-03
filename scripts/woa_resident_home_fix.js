@@ -2,7 +2,7 @@ $(window).load(function () {
     try {
         getContent()
         showProfile()
-        showPosts()
+        showPosts(document.getElementById("ViewCriteria").value,document.getElementById("SelectedGroup").value)
         showDocuments()
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
@@ -21,7 +21,6 @@ $(window).load(function () {
 function getContent() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     let sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
-    let selGrps = ["8364", "11315", "8030"]
     $.get(residentPage, function () { })
         .done(function (responseText) {
             let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
@@ -77,30 +76,28 @@ function showProfile() {
         document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
     })
 }
-function showPosts() {
+function showPosts(viewCriteria,selectedGroup) {
     let backGroundID = 0
     let currentDate = new Date()
-    let selGrps = ["8030", "8364", "11315"]
     try {
-        for (let g = 0; g < selGrps.length; g++) {
-            let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + selGrps[g] + ".html" : "/Discussion/28118~" + selGrps[g]
+        let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + selectedGroup + ".html" : "/Discussion/28118~" + selectedGroup
             $.get(selectedPost, function () { })
                 .done(function (responseText) {
                     let forumPosts = document.getElementById("post")
                     let forum = new DOMParser().parseFromString(responseText, "text/html")
-                    let msgHeaderText = forum.querySelectorAll("[id^=msgHeader]")
-                    let messageText = forum.querySelectorAll("[id^=contents]")
+                    let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
+                    let postContents = forum.querySelectorAll("[id^=contents]")
 
-                    for (let k = 0; k < messageText.length; k++) {
-                        let messageTexts = messageText[k].getElementsByClassName("clsBodyText")
-                        let messageAuthor = messageText[k].getElementsByClassName("respAuthorWrapper")
-                        let messageContacts = messageText[k].getElementsByClassName("respReplyWrapper")
+                    for (let k = 0; k < postContents.length; k++) {
+                        let messageTexts = postContents[k].getElementsByClassName("clsBodyText")
+                        let messageAuthor = postContents[k].getElementsByClassName("respAuthorWrapper")
+                        let messageContacts = postContents[k].getElementsByClassName("respReplyWrapper")
 
                         let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
                         let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
 
 
-                        if (dayDiff < 32) {
+                        if (dayDiff < viewCriteria) {
                             let topSpan = document.createElement("div")
                             let midSpan = document.createElement("div")
                             let btmSpan = document.createElement("div")
@@ -109,7 +106,7 @@ function showPosts() {
                             midSpan.className = (backGroundID % 2 == 0) ? "btmEven" : "btmOdd"
                             btmSpan.className = (backGroundID % 2 == 0) ? "btmEven classHide" : "btmOdd classHide"
 
-                            topSpan.appendChild(document.createTextNode(msgHeaderText[k].innerText))
+                            topSpan.appendChild(document.createTextNode(postHeaders[k].innerText))
 
                             for (let p = 0; p < messageTexts.length; p++) {
 
@@ -142,11 +139,9 @@ function showPosts() {
                             forumPosts.appendChild(btmSpan)
                             backGroundID++
                         }
-
                     }
-
                 })
-        }
+      
     } catch (error) {
     }
 
