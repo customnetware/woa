@@ -2,8 +2,9 @@ $(window).load(function () {
     try {
         getContent()
         showProfile()
-        showPosts(document.getElementById("ViewCriteria").value,document.getElementById("SelectedGroup").value)
+        showPosts(document.getElementById("ViewCriteria").value, document.getElementById("SelectedGroup").value)
         showDocuments()
+        showPhotos()
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
         }
@@ -76,72 +77,75 @@ function showProfile() {
         document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
     })
 }
-function showPosts(viewCriteria,selectedGroup) {
+function showPosts(viewCriteria, selectedGroup) {
     let backGroundID = 0
     let currentDate = new Date()
     try {
         let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + selectedGroup + ".html" : "/Discussion/28118~" + selectedGroup
-            $.get(selectedPost, function () { })
-                .done(function (responseText) {
-                    let forumPosts = document.getElementById("post")
-                    let forum = new DOMParser().parseFromString(responseText, "text/html")
-                    let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
-                    let postContents = forum.querySelectorAll("[id^=contents]")
+        $.get(selectedPost, function () { })
+            .done(function (responseText) {
+                let forumPosts = document.getElementById("post")
+                let forum = new DOMParser().parseFromString(responseText, "text/html")
+                let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
+                let postContents = forum.querySelectorAll("[id^=contents]")
 
-                    for (let k = 0; k < postContents.length; k++) {
-                        let messageTexts = postContents[k].getElementsByClassName("clsBodyText")
-                        let messageAuthor = postContents[k].getElementsByClassName("respAuthorWrapper")
-                        let messageContacts = postContents[k].getElementsByClassName("respReplyWrapper")
+                for (let k = 0; k < postContents.length; k++) {
+                    let messageTexts = postContents[k].getElementsByClassName("clsBodyText")
+                    let messageAuthor = postContents[k].getElementsByClassName("respAuthorWrapper")
+                    let messageContacts = postContents[k].getElementsByClassName("respReplyWrapper")
 
-                        let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
-                        let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
+                    let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
+                    let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
 
 
-                        if (dayDiff < viewCriteria) {
-                            let topSpan = document.createElement("div")
-                            let midSpan = document.createElement("div")
-                            let btmSpan = document.createElement("div")
+                    if (dayDiff < viewCriteria) {
+                        let topSpan = document.createElement("div")
+                        let midSpan = document.createElement("div")
+                        let btmSpan = document.createElement("div")
 
-                            topSpan.className = (backGroundID % 2 == 0) ? "topEven" : "topOdd"
-                            midSpan.className = (backGroundID % 2 == 0) ? "btmEven" : "btmOdd"
-                            btmSpan.className = (backGroundID % 2 == 0) ? "btmEven classHide" : "btmOdd classHide"
+                        topSpan.className = (backGroundID % 2 == 0) ? "topEven" : "topOdd"
+                        midSpan.className = (backGroundID % 2 == 0) ? "btmEven" : "btmOdd"
+                        btmSpan.className = (backGroundID % 2 == 0) ? "btmEven classHide" : "btmOdd classHide"
 
-                            topSpan.appendChild(document.createTextNode(postHeaders[k].innerText))
+                        topSpan.appendChild(document.createTextNode(postHeaders[k].innerText))
 
-                            for (let p = 0; p < messageTexts.length; p++) {
+                        for (let p = 0; p < messageTexts.length; p++) {
 
-                                let replyLink = document.createElement("a")
-                                replyLink.innerText = "Reply"
-                                replyLink.href = messageContacts[p].getElementsByTagName("a")[0].href
+                            let replyLink = document.createElement("a")
+                            replyLink.innerText = "Reply"
+                            replyLink.href = messageContacts[p].getElementsByTagName("a")[0].href
 
-                                let emailLink = document.createElement("a")
-                                emailLink.innerText = "Email Author"
-                                emailLink.href = messageContacts[p].getElementsByTagName("a")[1].href
+                            let emailLink = document.createElement("a")
+                            emailLink.innerText = "Email Author"
+                            emailLink.href = messageContacts[p].getElementsByTagName("a")[1].href
 
-                                spanToUse = (p == 0) ? midSpan : btmSpan
-                                spanToUse.appendChild(document.createTextNode(messageTexts[p].innerText))
-                                spanToUse.appendChild(document.createElement("br"))
-                                spanToUse.appendChild(document.createTextNode(messageAuthor[p].innerText))
-                                spanToUse.appendChild(replyLink)
-                                spanToUse.appendChild(document.createTextNode(" | "))
-                                spanToUse.appendChild(emailLink)
-                                spanToUse.appendChild(document.createTextNode(" | "))
-                                if (messageTexts.length > 1 && p == 0) {
-                                    let testLink = document.createElement("a")
-                                    testLink.innerText = "View Replies"
-                                    testLink.href = "javascript:showReplies(" + backGroundID + ")"
+                            spanToUse = (p == 0) ? midSpan : btmSpan
+                            spanToUse.appendChild(document.createTextNode(messageTexts[p].innerText))
+                            spanToUse.appendChild(document.createElement("br"))
+                            spanToUse.appendChild(document.createTextNode(messageAuthor[p].innerText))
+                            spanToUse.appendChild(replyLink)
+                            spanToUse.appendChild(document.createTextNode(" | "))
+                            spanToUse.appendChild(emailLink)
+                            spanToUse.appendChild(document.createTextNode(" | "))
+                            if (messageTexts.length > 1 && p == 0) {
+                                let viewLink = document.createElement("a")
+                                viewLink.innerText = "View Replies"
+                                viewLink.href = "javascript:showReplies(" + backGroundID + ")"
 
-                                    spanToUse.appendChild(testLink)
-                                }
+                                spanToUse.appendChild(viewLink)
+                            
                             }
-                            forumPosts.appendChild(topSpan)
-                            forumPosts.appendChild(midSpan)
-                            forumPosts.appendChild(btmSpan)
-                            backGroundID++
+                                spanToUse.appendChild(document.createElement("br"))
+                                spanToUse.appendChild(document.createElement("br"))
                         }
+                        forumPosts.appendChild(topSpan)
+                        forumPosts.appendChild(midSpan)
+                        forumPosts.appendChild(btmSpan)
+                        backGroundID++
                     }
-                })
-      
+                }
+            })
+
     } catch (error) {
     }
 
@@ -177,6 +181,29 @@ function showDocuments() {
             })
     } catch (error) {
     }
+}
+function showPhotos() {
+    let photoDisplay = document.getElementById("photo")
+    let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
+    $.get(residentPage, function () { })
+        .done(function (responseText) {
+            let photos = new DOMParser().parseFromString(responseText, "text/html")
+            let photoList = photos.querySelectorAll("[id^=gallery_link_]")
+            let galleryLink = photos.querySelectorAll("[class^=gallery_txt_sub]")
+
+
+            photoDisplay.appendChild(document.createElement("br"))
+            for (let k = 0; k < photoList.length; k++) {
+                let pic = document.createElement("img")
+                pic.src = photoList[k].src
+                pic.style.height = "100px"
+                pic.style.paddingRight = "20px"
+                photoDisplay.appendChild(pic)
+
+            }
+            photoDisplay.appendChild(document.createTextNode(galleryLink[0].getElementsByTagName("a")[0].href))
+
+        })
 }
 function saveUser(saveKey, saveValue) {
     try {
