@@ -12,44 +12,39 @@
     <style>
         @import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css);
         @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
-
-        #event div {
-            float: left;
-            width:50%;
-            white-space:nowrap;
-           
-        }
     </style>
 </head>
 <body>
     <div id="event"></div>
     <script>
+      
         $(window).load(function () {
-            let documentList = document.getElementById("event")
+            getGroups()
+        })
+
+
+        function getGroups() {
+            let selectedGroups = []
             let fileLocation = (window.location.hostname == "localhost") ? "/Discussion/list/28118/discussion-groups.html" : "/Discussion/list/28118/discussion-groups"
             $.get(fileLocation, function () { })
                 .done(function (responseText) {
                     let forums = new DOMParser().parseFromString(responseText, "text/html")
                     let forumName = forums.getElementsByClassName("clsBodyText")
-                    let forumDates = forums.getElementsByClassName("clsBodyItalic")
-                    let dateCount = 0
-                    for (let p = 1; p < forumName.length; p += 2) {
-                        let currentForum = document.createElement("div")
-                        let currentPostdate = document.createElement("div")
-                        currentForum.innerHTML = (forumName[p].innerText.includes(".")) ? forumName[p].innerText.trim().split(".")[1] : forumName[p].innerText.trim()
-                        currentPostdate.innerHTML = forumDates[dateCount].innerText.trim()
-                        documentList.appendChild(currentForum)
-                        documentList.appendChild(currentPostdate)
-                        dateCount++
+                    let groupCheck = "(Group is included on My Woodbridge)"
+                    for (let p = 2; p < forumName.length; p += 2) {
+                        let includeGroup = forumName[p].innerText.includes(groupCheck)
+                        if (includeGroup == true) {
+                            let groupID = forumName[p - 1].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
+                            let groupName = forumName[p - 1].innerText
+                            selectedGroups.push(groupID+"|"+groupName)
+                        }
                     }
+                    testFunction(selectedGroups)
                 })
-        })
-                                //    $("#event").load("/Calendar/28118~19555/", function (responseTxt, statusTxt, xhr) {
-                                //        if (statusTxt == "success")
-                                //            alert("External content loaded successfully!")
-                                //        if (statusTxt == "error")
-                                //            alert("Error: " + xhr.status + ": " + xhr.statusText)clsBodyItalic
-                                //    })clsBodyText
+        }
+
+
+        function testFunction(groups) { alert(groups[0]) }
     </script>
 </body>
-</html>
+</html>      

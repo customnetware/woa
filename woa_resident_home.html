@@ -156,23 +156,9 @@
                 </div>
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader">
-                        <span class="fa fa-comments-o" aria-hidden="true" style="float: left; padding: 3px;cursor: pointer; margin-right:5px"></span>&nbsp;&nbsp;
-                        <select id="SelectedGroup" style="float: left; padding: 3px; margin-right: 5px; cursor: pointer; background: transparent; color: #0275d8">
-                            <option value="99999">Selected Posts - All Groups</option>
-                            <option value="8364" selected>General Discussion</option>
-                            <option value="8030">Neighbor Recommendations</option>
-                            <option value="8343">Neighbors Helping Neighbors</option>
-                            <option value="6427">Upcoming Resident Events</option>
-                        </select>
-                        <select id="ViewCriteria" style="float: right; padding: 3px; cursor: pointer; background: transparent; color: #0275d8">
-                            <option value="30">View 30 Days</option>
-                            <option value="60">View 60 Days</option>
-                            <option value="90" selected>View 90 Days</option>
-                            <option value="120">View 120 Days</option>
-                            <option value="150">View 150 Days</option>
-                            <option value="365">View 365 Days</option>
-                            <option value="5000">View Last Post</option>
-                        </select>
+                        <span class="fa fa-comments-o" aria-hidden="true"></span>&nbsp;&nbsp;
+                        Recent Disscussion Group Posts
+
 
                     </div>
                     <div class="card-body">
@@ -240,11 +226,11 @@
                     <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-exclamation-circle" aria-hidden="true"></span>&nbsp;&nbsp;I want to...</div>
                     <div class="card-body text-muted" style="padding-left:10px;" id="userProfile">
                         <div><span class="fa fa-external-link" style="padding-right:10px"></span><a href="https://portal.sc-manage.com/Home_v2/Login">Pay WHOA assessment online and/or see balance</a></div>
-                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~188049/Repair-or-Maintenance">File a WHOA maintenance request (Common Area)</a></div>
-                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~188011/Complaint-or-CCRs-Rules-Violation">File a Complaint or CC&Rs Rules Violation</a></div>
-                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~116540/Ask-A-Manager">Send a question or comment to management</a></div>
-                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~317256/Community-Crime-Incident-Report">File A Community Crime Incident Report (non PD)</a></div>
-                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="https://ourwoodbridge.net/Form/28118~243363/Board-Agenda-Topic-Comment-or-Question">Send A Board Agenda Topic Comment or Question</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="/Form/28118~188049/Repair-or-Maintenance">File a WHOA maintenance request (Common Area)</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="/Form/28118~188011/Complaint-or-CCRs-Rules-Violation">File a Complaint or CC&Rs Rules Violation</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="/Form/28118~116540/Ask-A-Manager">Send a question or comment to management</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="/Form/28118~317256/Community-Crime-Incident-Report">File A Community Crime Incident Report (non PD)</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="/Form/28118~243363/Board-Agenda-Topic-Comment-or-Question">Send A Board Agenda Topic Comment or Question</a></div>
                     </div>
                 </div>
 
@@ -297,16 +283,8 @@
                 </div>
             </div>
         </div>
-
         <div id="errText"></div>
-        <script>
-            $("#ViewCriteria").change(GroupDisplay)
-            $("#SelectedGroup").change(GroupDisplay)
-            function GroupDisplay() {
-                document.getElementById("post").innerHTML = ""
-                showPosts(document.getElementById("ViewCriteria").value, document.getElementById("SelectedGroup").value)
-            }
-        </script>
+
         <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
         <script src="/scripts/woa_resident_home_fix.js"></script>
     </div>
