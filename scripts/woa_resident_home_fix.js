@@ -29,17 +29,7 @@ function getContent() {
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
 
-            let recentEmails = myWoodbridge.getElementsByClassName("message")
-            for (let p = 0; p < recentEmails.length; p++) {
-                let topSpan = document.createElement("span")
-                let btmSpan = document.createElement("span")
-                topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
-                btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
-                topSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").replace(sentBy, "")))
-                btmSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))
-                messageDisplay.appendChild(topSpan)
-                messageDisplay.appendChild(btmSpan)
-            }
+
             let recentAds = myWoodbridge.getElementsByClassName("classified")
             for (let p = 0; p < recentAds.length; p++) {
                 let topSpan = document.createElement("span")

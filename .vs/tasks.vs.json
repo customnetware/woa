@@ -5,6 +5,11 @@
       "taskLabel": "task-woa_cookie",
       "appliesTo": "woa_cookie.html",
       "type": "launch"
+    },
+    {
+      "taskLabel": "task-woa_resident_home_fix",
+      "appliesTo": "scripts/woa_resident_home_fix.js",
+      "type": "launch"
     }
   ]
 }
