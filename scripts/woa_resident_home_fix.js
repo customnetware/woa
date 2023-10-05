@@ -11,7 +11,7 @@ $(window).load(function () {
         if (document.getElementsByClassName("association-name") !== null) {
             document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
         }
-        document.getElementById("overlay").style.display = "none"
+
     }
     catch (err) {
         document.getElementById("overlay").style.display = "none"
@@ -53,55 +53,6 @@ function getContent() {
             }
 
         })
-
-
-
-    //$.get(residentPage, function () { })
-    //    .done(function (responseText) {
-
-    //        let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
-    //        let windowDoc = document.getElementById("fromWOA").getElementsByClassName("card-body")
-    //        let residentNameFrm = profileDoc.getElementsByClassName("clsHeader")[0].innerText
-    //        let residentName = document.getElementsByClassName("clsHeader")[0]
-
-    //        for (let p = 0; p < windowDoc.length; p++) {
-    //            let clientDoc = windowDoc[p].getElementsByTagName("div")[0]
-    //            let currentDoc = profileDoc.getElementById(clientDoc.className).getElementsByClassName(clientDoc.id)
-    //            for (let i = 0; i < currentDoc.length; i++) {
-    //                let selectedDoc = currentDoc[i].getElementsByTagName("a")[0]
-    //                let topSpan = document.createElement("span")
-    //                let btmSpan = document.createElement("span")
-    //                let spanLink = document.createElement("a")
-    //                if (currentDoc[i].className == "event") {
-    //                    spanLink.href = selectedDoc.href
-    //                    spanLink.innerHTML = selectedDoc.innerHTML
-    //                    topSpan.className = (i % 2 == 0) ? "btmEven" : "btmOdd"
-    //                    topSpan.appendChild(spanLink)
-    //                } else if (currentDoc[i].className !== "post" && currentDoc[i].className !== "document") {
-    //                    topSpan.className = (i % 2 == 0) ? "topEven" : "topOdd"
-    //                    btmSpan.className = (i % 2 == 0) ? "btmEven" : "btmOdd"
-    //                    topSpan.appendChild(document.createTextNode(selectedDoc.getAttribute("data-tooltip-title").replace(sentBy, "")))
-    //                    btmSpan.appendChild(document.createTextNode(selectedDoc.getAttribute("data-tooltip-text")))
-    //                    spanLink.href = selectedDoc.href
-    //                    spanLink.className = "fa fa-external-link formatLink"
-    //                    btmSpan.appendChild(spanLink)
-    //                }
-    //                clientDoc.appendChild(topSpan)
-    //                clientDoc.appendChild(btmSpan)
-    //            }
-    //        }
-    //        document.getElementById("overlay").style.display = "none"
-    //        if (residentNameFrm !== null && residentName !== null) {
-    //            if (residentName.getElementsByTagName("a").length > 0) {
-    //                residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
-    //            } else {
-    //                residentName.innerText = residentNameFrm
-    //            }
-    //        }
-    //    })
-    //    .fail(function () {
-    //        if (window.location.hostname !== "localhost") { location.replace("/homepage/28118/resident-home-page") }
-    //    })
 }
 function showProfile() {
     let profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
