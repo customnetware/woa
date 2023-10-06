@@ -6,7 +6,6 @@ $(window).load(function () {
         showDocuments()
         showPhotos()
 
-        document.getElementById("overlay").style.display = "none"
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
         }
