@@ -47,7 +47,7 @@ function getContent() {
                 let btmSpan = document.createElement("span")
                 topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
                 btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
-                topSpan.appendChild(document.createTextNode(recentAds[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").replace(sentBy, "")))
+                topSpan.appendChild(document.createTextNode(recentAds[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")))
                 btmSpan.appendChild(document.createTextNode(recentAds[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))
                 classifiedDisplay.appendChild(topSpan)
                 classifiedDisplay.appendChild(btmSpan)
