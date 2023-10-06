@@ -5,6 +5,7 @@ $(window).load(function () {
         getGroups()
         showDocuments()
         showPhotos()
+
         document.getElementById("overlay").style.display = "none"
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
@@ -12,7 +13,7 @@ $(window).load(function () {
         if (document.getElementsByClassName("association-name") !== null) {
             document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
         }
-        document.getElementById("overlay").style.display = "none"
+        loadDone()
     }
     catch (err) {
         document.getElementById("overlay").style.display = "none"
@@ -212,6 +213,7 @@ function showPhotos() {
 
         })
 }
+function loadDone() {document.getElementById("overlay").style.display = "none" }
 function saveUser(saveKey, saveValue) {
     try {
         if (localStorage.getItem(saveKey) !== saveValue) { localStorage.setItem(saveKey, saveValue) }
