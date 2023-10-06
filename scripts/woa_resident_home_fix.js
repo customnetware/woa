@@ -5,13 +5,14 @@ $(window).load(function () {
         getGroups()
         showDocuments()
         showPhotos()
+        document.getElementById("overlay").style.display = "none"
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
         }
         if (document.getElementsByClassName("association-name") !== null) {
             document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
         }
-
+        document.getElementById("overlay").style.display = "none"
     }
     catch (err) {
         document.getElementById("overlay").style.display = "none"
