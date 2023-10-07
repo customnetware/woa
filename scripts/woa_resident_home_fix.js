@@ -1,10 +1,10 @@
 $(window).load(function () {
+
     try {
         getContent()
         showProfile()
         getGroups()
         showDocuments()
-        showPhotos()
 
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
@@ -26,10 +26,11 @@ function getContent() {
     let sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
     let messageDisplay = document.getElementById("message")
     let classifiedDisplay = document.getElementById("classified")
+    let photoDisplay = document.getElementById("photo")
     $.get(residentPage, function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
-                
+
             let recentEmails = myWoodbridge.getElementsByClassName("message")
             for (let p = 0; p < recentEmails.length; p++) {
                 let topSpan = document.createElement("span")
@@ -52,6 +53,17 @@ function getContent() {
                 classifiedDisplay.appendChild(topSpan)
                 classifiedDisplay.appendChild(btmSpan)
             }
+            let photoList = myWoodbridge.querySelectorAll("[id^=gallery_link_]")
+            let galleryLink = myWoodbridge.querySelectorAll("[class^=gallery_txt_sub]")
+            for (let k = 0; k < photoList.length; k++) {
+                let pic = document.createElement("img")
+                pic.src = photoList[k].src
+                pic.style.height = "100px"
+                pic.style.paddingRight = "20px"
+                photoDisplay.appendChild(pic)
+
+            }
+  
 
         })
 }
@@ -189,30 +201,7 @@ function showDocuments() {
     } catch (error) {
     }
 }
-function showPhotos() {
-    let photoDisplay = document.getElementById("photo")
-    let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
-    $.get(residentPage, function () { })
-        .done(function (responseText) {
-            let photos = new DOMParser().parseFromString(responseText, "text/html")
-            let photoList = photos.querySelectorAll("[id^=gallery_link_]")
-            let galleryLink = photos.querySelectorAll("[class^=gallery_txt_sub]")
-
-
-            photoDisplay.appendChild(document.createElement("br"))
-            for (let k = 0; k < photoList.length; k++) {
-                let pic = document.createElement("img")
-                pic.src = photoList[k].src
-                pic.style.height = "100px"
-                pic.style.paddingRight = "20px"
-                photoDisplay.appendChild(pic)
-
-            }
-            photoDisplay.appendChild(document.createTextNode(galleryLink[0].getElementsByTagName("a")[0].href))
-
-        })
-}
-function loadDone() {document.getElementById("overlay").style.display = "none" }
+function loadDone() { document.getElementById("overlay").style.display = "none" }
 function saveUser(saveKey, saveValue) {
     try {
         if (localStorage.getItem(saveKey) !== saveValue) { localStorage.setItem(saveKey, saveValue) }
