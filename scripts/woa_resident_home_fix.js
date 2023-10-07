@@ -1,7 +1,10 @@
 $(window).load(function () {
 
     try {
-        getContent()
+        showProfile()
+        getGroups()
+        showDocuments()
+      /*  getContent()*/
 
 
         if (document.getElementById("resDisplayName") !== null) {
@@ -61,9 +64,7 @@ function getContent() {
                 photoDisplay.appendChild(pic)
 
             }
-            showProfile()
-            getGroups()
-            showDocuments()
+
   
 
         })
