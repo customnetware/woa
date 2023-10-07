@@ -2,9 +2,7 @@ $(window).load(function () {
 
     try {
         getContent()
-        showProfile()
-        getGroups()
-        showDocuments()
+
 
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
@@ -63,6 +61,9 @@ function getContent() {
                 photoDisplay.appendChild(pic)
 
             }
+            showProfile()
+            getGroups()
+            showDocuments()
   
 
         })
