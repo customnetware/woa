@@ -2,8 +2,8 @@ $(window).load(function () {
 
     try {
         showProfile()
-        getGroups()
-        showDocuments()
+        //getGroups()
+        //showDocuments()
       /*  getContent()*/
 
 
