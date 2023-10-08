@@ -9,7 +9,7 @@ $(window).load(function () {
         }
         if (document.getElementsByClassName("association-name") !== null) {
             document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
-        }  
+        }
 
 
     }
@@ -63,7 +63,7 @@ function getContent() {
                 pic.style.paddingRight = "20px"
                 photoDisplay.appendChild(pic)
 
-            } 
+            }
 
         })
 }
@@ -73,8 +73,13 @@ function showProfile() {
     $.get(profilePage, function () {
     }).done(function (responseText) {
         let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
+        let residentNameText = profileDoc.getElementsByTagName("h2")[0].innerText
+        let residentName = document.getElementsByClassName("clsHeader")[0]
+
         document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
-        document.getElementsByClassName("clsHeader")[0].firstChild.innerText = profileDoc.getElementsByTagName("h2")[0].innerText
+        if (residentName.hasChildNodes == true) { residentName.firstChild.innerText = residentNameText }
+        else { residentName.innerText = residentNameText }
+
     })
 }
 function getGroups() {
