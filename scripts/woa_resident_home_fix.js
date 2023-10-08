@@ -10,6 +10,8 @@ $(window).load(function () {
         if (document.getElementsByClassName("association-name") !== null) {
             document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
         }  
+
+
     }
     catch (err) {
         if (window.location.hostname == "localhost") {
@@ -72,6 +74,7 @@ function showProfile() {
     }).done(function (responseText) {
         let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
         document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
+        document.getElementsByClassName("clsHeader")[0].innerText = profileDoc.getElementsByTagName("h2")[0].innerText
     })
 }
 function getGroups() {
