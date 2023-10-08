@@ -43,6 +43,7 @@ function getContent() {
                 spanLink.href = recentEmails[p].getElementsByTagName("a")[0].href
                 messageDisplay.appendChild(topSpan)
                 messageDisplay.appendChild(btmSpan)
+                messageDisplay.appendChild(spanLink)
             }
             let recentAds = myWoodbridge.getElementsByClassName("classified")
             if (recentAds.length > 0) { classifiedDisplay.innerHTML = "" }
