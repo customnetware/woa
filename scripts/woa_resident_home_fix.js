@@ -77,8 +77,17 @@ function showProfile() {
         let residentName = document.getElementsByClassName("clsHeader")[0]
 
         document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
-        if (residentName.hasChildNodes == true) { residentName.firstChild.innerText = residentNameText }
-        else { residentName.innerText = residentNameText }
+
+
+        if (residentName.getElementsByTagName("a").length > 0) {
+            residentName.getElementsByTagName("a")[0].innerText = residentNameText
+        } else {
+            residentName.innerText = residentNameText
+        }
+
+
+
+
 
     })
 }
