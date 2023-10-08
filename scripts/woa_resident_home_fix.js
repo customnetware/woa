@@ -33,6 +33,7 @@ function getContent() {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
 
             let recentEmails = myWoodbridge.getElementsByClassName("message")
+            if (recentEmails.length > 0) { messageDisplay.innerHTML = "" }
             for (let p = 0; p < recentEmails.length; p++) {
                 let topSpan = document.createElement("span")
                 let btmSpan = document.createElement("span")

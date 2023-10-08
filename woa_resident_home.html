@@ -22,7 +22,7 @@
                 var fileRequest = new XMLHttpRequest()
                 fileRequest.open('HEAD', urlToCheck, false)
                 fileRequest.send()
-                if (xhr.status == "200") {
+                if (fileRequest.status == '200') {
                     return true
                 } else {
                     return false
@@ -143,6 +143,7 @@
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader"><span class="fa fa-newspaper-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/News/List/28118">Recent News Articles</a> </div>
                     <div class="card-body">
+                      
                         <div id="news" class="panel_news_content">
                         </div>
                     </div>
@@ -151,6 +152,7 @@
                     <div class="card-header border-success formatHeader"><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;Latest Emails</div>
                     <div class="card-body">
                         <div id="message" class="panel_messages_content">
+                            <span class="fa fa-spinner fa-pulse fa-fw"></span>
                         </div>
                     </div>
                 </div>
