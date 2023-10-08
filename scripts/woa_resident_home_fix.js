@@ -2,9 +2,9 @@ $(window).load(function () {
 
     try {
         showProfile()
-        //getGroups()
-        //showDocuments()
-      /*  getContent()*/
+        getGroups()
+        showDocuments()
+        getContent()
 
 
         if (document.getElementById("resDisplayName") !== null) {
@@ -13,7 +13,7 @@ $(window).load(function () {
         if (document.getElementsByClassName("association-name") !== null) {
             document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
         }
-        loadDone()
+   
     }
     catch (err) {
         document.getElementById("overlay").style.display = "none"
@@ -64,7 +64,7 @@ function getContent() {
                 photoDisplay.appendChild(pic)
 
             }
-
+            loadDone()
   
 
         })

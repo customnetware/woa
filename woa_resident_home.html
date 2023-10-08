@@ -19,9 +19,9 @@
     <div class="container-fluid">
         <script>
             function doesFileExist(urlToCheck) {
-                var xhr = new XMLHttpRequest()
-                xhr.open('HEAD', urlToCheck, false)
-                xhr.send()
+                var fileRequest = new XMLHttpRequest()
+                fileRequest.open('HEAD', urlToCheck, false)
+                fileRequest.send()
                 if (xhr.status == "200") {
                     return true
                 } else {
