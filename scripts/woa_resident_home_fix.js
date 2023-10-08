@@ -34,10 +34,13 @@ function getContent() {
             for (let p = 0; p < recentEmails.length; p++) {
                 let topSpan = document.createElement("span")
                 let btmSpan = document.createElement("span")
+                let spanLink = document.createElement("a")
+                spanLink.className = "fa fa-external-link formatLink"
                 topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
                 btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
                 topSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").replace(sentBy, "")))
                 btmSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))
+                spanLink.href = recentEmails[p].getElementsByTagName("a")[0].href
                 messageDisplay.appendChild(topSpan)
                 messageDisplay.appendChild(btmSpan)
             }
