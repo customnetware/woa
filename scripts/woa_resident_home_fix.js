@@ -74,7 +74,7 @@ function showProfile() {
     }).done(function (responseText) {
         let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
         document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
-        document.getElementsByClassName("clsHeader")[0].innerText = profileDoc.getElementsByTagName("h2")[0].innerText
+        document.getElementsByClassName("clsHeader")[0].firstChild.innerText = profileDoc.getElementsByTagName("h2")[0].innerText
     })
 }
 function getGroups() {
