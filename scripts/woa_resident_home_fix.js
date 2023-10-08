@@ -41,9 +41,10 @@ function getContent() {
                 topSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").replace(sentBy, "")))
                 btmSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))
                 spanLink.href = recentEmails[p].getElementsByTagName("a")[0].href
+                btmSpan.appendChild(spanLink)
                 messageDisplay.appendChild(topSpan)
                 messageDisplay.appendChild(btmSpan)
-                messageDisplay.appendChild(spanLink)
+           
             }
             let recentAds = myWoodbridge.getElementsByClassName("classified")
             if (recentAds.length > 0) { classifiedDisplay.innerHTML = "" }
