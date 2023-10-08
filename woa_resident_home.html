@@ -52,8 +52,15 @@
                 padding: 5px;
             }
 
-
-
+            .z-depth-3 {
+                -webkit-box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+                box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+            }
+            #contentInner {
+                padding-top: 1% !important;
+                padding-left: 2% !important;
+                padding-right: 2% !important;
+            }
             .formatLink {
                 padding-left: 10px;
             }
@@ -100,7 +107,6 @@
                 display: none
             }
         </style>
-
         <div class="row">
             <div id="fromWOA" class="col-md-8">
                 <div class="card z-depth-3 mb-3">
@@ -135,6 +141,7 @@
                     <div class="card-header border-success formatHeader"><span class="fa fa-shopping-cart" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds">Classified Items</a></div>
                     <div class="card-body">
                         <div id="classified" class="panel_classifieds_content">
+                            <span class="fa fa-spinner fa-pulse fa-fw"></span>
                         </div>
                     </div>
                 </div>
@@ -160,7 +167,8 @@
                         <div class="card z-depth-3 mb-3">
                             <div class="card-header border-success formatHeader"><span class="fa fa-calendar" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events">Latest Event Photos</a></div>
                             <div class="card-body">
-                                <div id="photo" class="panel_cal_content">
+                                <div id="photo" class="photo_content">
+                                    <span class="fa fa-spinner fa-pulse fa-fw"></span>
 
                                 </div>
                             </div>

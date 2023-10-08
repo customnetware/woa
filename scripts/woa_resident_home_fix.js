@@ -45,6 +45,7 @@ function getContent() {
                 messageDisplay.appendChild(btmSpan)
             }
             let recentAds = myWoodbridge.getElementsByClassName("classified")
+            if (recentAds.length > 0) { classifiedDisplay.innerHTML = "" }
             for (let p = 0; p < recentAds.length; p++) {
                 let topSpan = document.createElement("span")
                 let btmSpan = document.createElement("span")
@@ -57,6 +58,7 @@ function getContent() {
             }
             let photoList = myWoodbridge.querySelectorAll("[id^=gallery_link_]")
             let galleryLink = myWoodbridge.querySelectorAll("[class^=gallery_txt_sub]")
+            if (photoList.length > 0) { photoDisplay.innerHTML = "" }
             for (let k = 0; k < photoList.length; k++) {
                 let pic = document.createElement("img")
                 pic.src = photoList[k].src
