@@ -35,7 +35,7 @@ function getContent() {
                 let topSpan = document.createElement("span")
                 let btmSpan = document.createElement("span")
                 let spanLink = document.createElement("a")
-                spanLink.className = "fa-arrow-right formatLink"
+                spanLink.className = "fa fa-arrow-right formatLink"
                 topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
                 btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
                 topSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").replace(sentBy, "")))
