@@ -64,9 +64,7 @@ function getContent() {
                 pic.style.paddingRight = "20px"
                 photoDisplay.appendChild(pic)
 
-            }
-            loadDone()
-  
+            } 
 
         })
 }
@@ -204,7 +202,7 @@ function showDocuments() {
     } catch (error) {
     }
 }
-function loadDone() { document.getElementById("overlay").style.display = "none" }
+
 function saveUser(saveKey, saveValue) {
     try {
         if (localStorage.getItem(saveKey) !== saveValue) { localStorage.setItem(saveKey, saveValue) }

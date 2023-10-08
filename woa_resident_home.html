@@ -52,40 +52,7 @@
                 padding: 5px;
             }
 
-            #overlay {
-                position: fixed; /* Sit on top of the page content */
-                /*display: none;  Hidden by default */
-                width: 100%; /* Full width (cover the whole page) */
-                height: 100%; /* Full height (cover the whole page) */
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: rgba(0,0,0,0.1); /* Black background with opacity */
-                z-index: 4; /* Specify a stack order in case you're using a different order for other elements */
-                cursor: pointer; /* Add a pointer on hover */
-            }
 
-            #text {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                font-size: 18px;
-                color: white;
-                transform: translate(-50%,-50%);
-                -ms-transform: translate(-50%,-50%);
-            }
-
-            #contentInner {
-                padding-top: 1% !important;
-                padding-left: 2% !important;
-                padding-right: 2% !important;
-            }
-
-            .z-depth-3 {
-                -webkit-box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
-                box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
-            }
 
             .formatLink {
                 padding-left: 10px;
@@ -133,11 +100,7 @@
                 display: none
             }
         </style>
-        <div id="overlay" onclick="this.style.display='none'">
-            <div id="text" class="text-opacity-50">
-                <span class="fa fa-spinner fa-pulse fa-fw"></span>Updating recent emails, documents...
-            </div>
-        </div>
+
         <div class="row">
             <div id="fromWOA" class="col-md-8">
                 <div class="card z-depth-3 mb-3">
@@ -288,7 +251,7 @@
         <div id="errText"></div>
 
         <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
-        <script src="/scripts/woa_resident_home_fix.js"></script>
+        <script src="https://customnetware.github.io/woa/scripts/woa_resident_home_fix.js"></script>
     </div>
 </body>
 </html>
