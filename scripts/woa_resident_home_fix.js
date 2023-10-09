@@ -64,7 +64,7 @@ function getContent() {
             }
 
             let recentNews = myWoodbridge.getElementsByClassName("news")
-            if (recentNews.length > 0) { newsDisplay.innerHTML = "" }
+            if (recentNews.length > 0) { newsDisplay.innerHTML = "" } else { newsDisplay.innerHTML = "No News articles found" }
             for (let p = 0; p < recentNews.length; p++) {
                 let topSpan = document.createElement("span")
                 let btmSpan = document.createElement("span")
