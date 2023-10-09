@@ -131,6 +131,7 @@ function getGroups() {
 }
 function showPosts(selectedGroup) {
     let backGroundID = 0
+    document.getElementById("post").innerHTML=""
     try {
         for (let g = 0; g < selectedGroup.length; g++) {
             let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + selectedGroup[g].split("|")[0] + ".html" : "/Discussion/28118~" + selectedGroup[g].split("|")[0]
@@ -141,7 +142,7 @@ function showPosts(selectedGroup) {
                     let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
                     let postContents = forum.querySelectorAll("[id^=contents]")
                     let numOfPosts = 0
-                    forumPosts.innerText=""
+                    
                     for (let k = 0; k < postContents.length; k++) {
                         let messageTexts = postContents[k].getElementsByClassName("clsBodyText")
                         let messageAuthor = postContents[k].getElementsByClassName("respAuthorWrapper")
