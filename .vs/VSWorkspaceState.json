@@ -1,8 +1,12 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Member",
+    "\\news",
+    "\\news\\list",
+    "\\news\\list\\28118",
     "\\scripts"
   ],
-  "SelectedNode": "\\scripts\\woa_resident_home_fix.js",
+  "SelectedNode": "\\news\\list\\28118\\news-announcements",
   "PreviewInSolutionExplorer": false
 }

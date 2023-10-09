@@ -25,6 +25,7 @@ function getContent() {
     let messageDisplay = document.getElementById("message")
     let classifiedDisplay = document.getElementById("classified")
     let photoDisplay = document.getElementById("photo")
+    let newsDisplay = document.getElementById("news")
     $.get(residentPage, function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
@@ -35,13 +36,16 @@ function getContent() {
                 let topSpan = document.createElement("span")
                 let btmSpan = document.createElement("span")
                 let spanLink = document.createElement("a")
-                spanLink.className = "fa fa-arrow-right formatLink"
+
                 topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
                 btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
-                topSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").replace(sentBy, "")))
-                btmSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))
+                spanLink.className = "fa fa-arrow-right formatLink"
                 spanLink.href = recentEmails[p].getElementsByTagName("a")[0].href
+
+                topSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").replace(sentBy, "")))
+                btmSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))                
                 btmSpan.appendChild(spanLink)
+
                 messageDisplay.appendChild(topSpan)
                 messageDisplay.appendChild(btmSpan)
            
@@ -58,6 +62,21 @@ function getContent() {
                 classifiedDisplay.appendChild(topSpan)
                 classifiedDisplay.appendChild(btmSpan)
             }
+
+            let recentNews = myWoodbridge.getElementsByClassName("news")
+            if (recentNews.length > 0) { newsDisplay.innerHTML = "" }
+            for (let p = 0; p < recentNews.length; p++) {
+                let topSpan = document.createElement("span")
+                let btmSpan = document.createElement("span")
+                topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
+                btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
+                topSpan.appendChild(document.createTextNode(recentNews[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")))
+                btmSpan.appendChild(document.createTextNode(recentNews[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))
+                newsDisplay.appendChild(topSpan)
+                newsDisplay.appendChild(btmSpan)
+            }
+
+
             let photoList = myWoodbridge.querySelectorAll("[id^=gallery_link_]")
             let galleryLink = myWoodbridge.querySelectorAll("[class^=gallery_txt_sub]")
             if (photoList.length > 0) { photoDisplay.innerHTML = "" }
@@ -89,11 +108,6 @@ function showProfile() {
         } else {
             residentName.innerText = residentNameText
         }
-
-
-
-
-
     })
 }
 function getGroups() {
