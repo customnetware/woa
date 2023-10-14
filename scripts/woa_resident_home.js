@@ -128,8 +128,9 @@ function showPosts() {
                                 spanToUse.appendChild(replyLink)
                                 spanToUse.appendChild(document.createTextNode(" | "))
                                 spanToUse.appendChild(emailLink)
-                                spanToUse.appendChild(document.createTextNode(" | "))
+
                                 if (messageTexts.length > 1 && p == 0) {
+                                    spanToUse.appendChild(document.createTextNode(" | "))
                                     let viewLink = document.createElement("a")
                                     viewLink.innerText = "View Replies - (" + (messageAuthor.length - 1) + ")"
                                     viewLink.href = "javascript:showReplies(" + backGroundID + ")"
