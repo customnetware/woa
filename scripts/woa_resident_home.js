@@ -130,12 +130,13 @@ function showPosts() {
                                 spanToUse.appendChild(emailLink)
                                 spanToUse.appendChild(document.createTextNode(" | "))
                                 if (messageTexts.length > 1 && p == 0) {
-                                    let testLink = document.createElement("a")
-                                    testLink.innerText = "View Replies"
-                                    testLink.href = "javascript:showReplies(" + backGroundID + ")"
+                                    let viewLink = document.createElement("a")
+                                    viewLink.innerText = "View Replies"
+                                    viewLink.href = "javascript:showReplies(" + backGroundID + ")"
 
-                                    spanToUse.appendChild(testLink)
+                                    spanToUse.appendChild(viewLink)
                                 }
+                                spanToUse.appendChild(document.createElement("hr"))
                             }
                             forumPosts.appendChild(topSpan)
                             forumPosts.appendChild(midSpan)
