@@ -183,7 +183,7 @@ function showPosts(selectedGroup) {
                             spanToUse.appendChild(document.createTextNode(" | "))
                             if (messageTexts.length > 1 && p == 0) {
                                 let viewLink = document.createElement("a")
-                                viewLink.innerText = "View Replies" + messageAuthor.length-1
+                                viewLink.innerText = "View Replies - (" + messageAuthor.length + ")"
                                 viewLink.href = "javascript:showReplies(" + backGroundID + ")"
 
                                 spanToUse.appendChild(viewLink)
