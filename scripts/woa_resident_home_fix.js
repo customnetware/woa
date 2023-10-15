@@ -22,58 +22,37 @@ $(window).load(function () {
 function getContent() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     let sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
-    let messageDisplay = document.getElementById("message")
+ 
     let classifiedDisplay = document.getElementById("classified")
     let photoDisplay = document.getElementById("photo")
     let newsDisplay = document.getElementById("news")
     $.get(residentPage, function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
+            let displayDivs = ["message","classified","news"]
+            for (let d = 0; d < displayDivs.length; d++) {
+                let recentEmails = myWoodbridge.getElementsByClassName(displayDivs[d])
+                let messageDisplay = document.getElementById(displayDivs[d])
+                if (recentEmails.length > 0) { messageDisplay.innerHTML = "" }
+                for (let p = 0; p < recentEmails.length; p++) {
+                    let topSpan = document.createElement("span")
+                    let btmSpan = document.createElement("span")
+                    let spanLink = document.createElement("a")
 
-            let recentEmails = myWoodbridge.getElementsByClassName("message")
-            if (recentEmails.length > 0) { messageDisplay.innerHTML = "" }
-            for (let p = 0; p < recentEmails.length; p++) {
-                let topSpan = document.createElement("span")
-                let btmSpan = document.createElement("span")
-                let spanLink = document.createElement("a")
+                    topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
+                    btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
+                    spanLink.className = "fa fa-arrow-right formatLink"
+                    spanLink.href = recentEmails[p].getElementsByTagName("a")[0].href
 
-                topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
-                btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
-                spanLink.className = "fa fa-arrow-right formatLink"
-                spanLink.href = recentEmails[p].getElementsByTagName("a")[0].href
+                    topSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").replace(sentBy, "")))
+                    btmSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))
+                    btmSpan.appendChild(spanLink)
 
-                topSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").replace(sentBy, "")))
-                btmSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))                
-                btmSpan.appendChild(spanLink)
+                    messageDisplay.appendChild(topSpan)
+                    messageDisplay.appendChild(btmSpan)
 
-                messageDisplay.appendChild(topSpan)
-                messageDisplay.appendChild(btmSpan)
-           
-            }
-            let recentAds = myWoodbridge.getElementsByClassName("classified")
-            if (recentAds.length > 0) { classifiedDisplay.innerHTML = "" }
-            for (let p = 0; p < recentAds.length; p++) {
-                let topSpan = document.createElement("span")
-                let btmSpan = document.createElement("span")
-                topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
-                btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
-                topSpan.appendChild(document.createTextNode(recentAds[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")))
-                btmSpan.appendChild(document.createTextNode(recentAds[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))
-                classifiedDisplay.appendChild(topSpan)
-                classifiedDisplay.appendChild(btmSpan)
-            }
+                }
 
-            let recentNews = myWoodbridge.getElementsByClassName("news")
-            if (recentNews.length > 0) { newsDisplay.innerHTML = "" } else { newsDisplay.innerHTML = "No News articles found" }
-            for (let p = 0; p < recentNews.length; p++) {
-                let topSpan = document.createElement("span")
-                let btmSpan = document.createElement("span")
-                topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
-                btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
-                topSpan.appendChild(document.createTextNode(recentNews[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title")))
-                btmSpan.appendChild(document.createTextNode(recentNews[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))
-                newsDisplay.appendChild(topSpan)
-                newsDisplay.appendChild(btmSpan)
             }
 
 
