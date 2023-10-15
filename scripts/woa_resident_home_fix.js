@@ -22,10 +22,8 @@ $(window).load(function () {
 function getContent() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     let sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
- 
-    let classifiedDisplay = document.getElementById("classified")
     let photoDisplay = document.getElementById("photo")
-    let newsDisplay = document.getElementById("news")
+
     $.get(residentPage, function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
@@ -33,7 +31,7 @@ function getContent() {
             for (let d = 0; d < displayDivs.length; d++) {
                 let recentEmails = myWoodbridge.getElementsByClassName(displayDivs[d])
                 let messageDisplay = document.getElementById(displayDivs[d])
-                if (recentEmails.length > 0) { messageDisplay.innerHTML = "" }
+                if (recentEmails.length > 0) { messageDisplay.innerHTML = "" } else messageDisplay.innerHTML = "No recent items found."
                 for (let p = 0; p < recentEmails.length; p++) {
                     let topSpan = document.createElement("span")
                     let btmSpan = document.createElement("span")
