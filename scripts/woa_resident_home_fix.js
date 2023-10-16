@@ -10,8 +10,6 @@ $(window).load(function () {
         if (document.getElementsByClassName("association-name") !== null) {
             document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
         }
-
-
     }
     catch (err) {
         if (window.location.hostname == "localhost") {
@@ -29,31 +27,26 @@ function getContent() {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
             let displayDivs = ["message","classified","news"]
             for (let d = 0; d < displayDivs.length; d++) {
-                let recentEmails = myWoodbridge.getElementsByClassName(displayDivs[d])
-                let messageDisplay = document.getElementById(displayDivs[d])
-                if (recentEmails.length > 0) { messageDisplay.innerHTML = "" } else messageDisplay.innerHTML = "No recent items found."
-                for (let p = 0; p < recentEmails.length; p++) {
+                let recentItems = myWoodbridge.getElementsByClassName(displayDivs[d])
+                let itemText = document.getElementById(displayDivs[d])
+                if (recentItems.length > 0) { itemText.innerHTML = "" } else itemText.innerHTML = "No recent items found."
+                for (let p = 0; p < recentItems.length; p++) {
                     let topSpan = document.createElement("span")
                     let btmSpan = document.createElement("span")
                     let spanLink = document.createElement("a")
-
                     topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
                     btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
                     spanLink.className = "fa fa-arrow-right formatLink"
-                    spanLink.href = recentEmails[p].getElementsByTagName("a")[0].href
+                    spanLink.href = recentItems[p].getElementsByTagName("a")[0].href
+                    saveUser(recentItems[p].getElementsByTagName("a")[0].id, spanLink.href)
 
-                    topSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").replace(sentBy, "")))
-                    btmSpan.appendChild(document.createTextNode(recentEmails[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))
+                    topSpan.appendChild(document.createTextNode(recentItems[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").replace(sentBy, "")))
+                    btmSpan.appendChild(document.createTextNode(recentItems[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))
                     btmSpan.appendChild(spanLink)
-
-                    messageDisplay.appendChild(topSpan)
-                    messageDisplay.appendChild(btmSpan)
-
+                    itemText.appendChild(topSpan)
+                    itemText.appendChild(btmSpan)
                 }
-
             }
-
-
             let photoList = myWoodbridge.querySelectorAll("[id^=gallery_link_]")
             let galleryLink = myWoodbridge.querySelectorAll("[class^=gallery_txt_sub]")
             if (photoList.length > 0) { photoDisplay.innerHTML = "" }
