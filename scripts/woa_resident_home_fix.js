@@ -1,3 +1,4 @@
+ var postHistoryLen = 32
 $(window).load(function () {
     try {
         getContent()
@@ -152,6 +153,24 @@ function showPosts(selectedGroup, NumOfDays) {
         }
     } catch (error) {
     }
+}
+function showHistory() {
+    let k = 2
+    let emails = document.getElementById("message").getElementsByTagName("p")
+    for (var i = 0; i < localStorage.length; ++i) {
+        if (document.getElementById(localStorage.key(i)) == null) {
+            let t_message = localStorage.getItem(localStorage.key(i)).split("|")
+            emails[k].innerHTML = "<a href='" + t_message[2] + "'><b>" + t_message[0] + "</b></a><br />" + t_message[1]
+            emails[k].id = localStorage.key(i)
+            if (k == 0) { break } else { --k }
+        }
+    }
+}
+function showPostHistory() {
+    if (postHistoryLen < 90) { postHistoryLen = postHistoryLen + 30 } else { postHistoryLen = postHistoryLen + 90 }
+
+    document.getElementById("post").innerHTML = ""
+    getGroups(postHistoryLen)
 }
 function showReplies(selectedP) {
     let currentForum = document.getElementById("post").getElementsByTagName("p")

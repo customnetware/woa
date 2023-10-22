@@ -18,6 +18,8 @@
     </div>
     <div class="container-fluid">
         <script>
+            
+            alert(doesFileExist("https://customnetware.github.io/woa/scripts/woa_resident_home.js"))
             function doesFileExist(urlToCheck) {
                 var fileRequest = new XMLHttpRequest()
                 fileRequest.open('HEAD', urlToCheck, false)
@@ -38,6 +40,7 @@
                     document.getElementById("errText").innerHTML = err.message
                 } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
             }
+            
 
         </script>
         <style type="text/css">
@@ -276,28 +279,8 @@
         </div>
         <div id="errText"></div>
         <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
-        <script src="scripts/woa_resident_home_fix.js"></script>
-        <script>
-            var postHistoryLen = 32
-            function showHistory() {
-                let k = 2
-                let emails = document.getElementById("message").getElementsByTagName("p")
-                for (var i = 0; i < localStorage.length; ++i) {
-                    if (document.getElementById(localStorage.key(i)) == null) {
-                        let t_message = localStorage.getItem(localStorage.key(i)).split("|")
-                        emails[k].innerHTML = "<a href='" + t_message[2] + "'><b>" + t_message[0] + "</b></a><br />" + t_message[1]
-                        emails[k].id = localStorage.key(i)
-                        if (k == 0) { break } else { --k }
-                    }
-                }
-            }
-            function showPostHistory() {
-                if (postHistoryLen < 90) { postHistoryLen = postHistoryLen + 30 } else { postHistoryLen = postHistoryLen + 90 }
+        <script src="https://customnetware.github.io/woa/scripts/woa_resident_home_fix.js"></script>
 
-                document.getElementById("post").innerHTML = ""
-                getGroups(postHistoryLen)
-            }
-        </script>
     </div>
 
 </body>
