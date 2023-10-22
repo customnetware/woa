@@ -138,7 +138,7 @@ function showPosts(selectedGroup, NumOfDays) {
                                 replys.href = "javascript:showReplies(" + forumPosts.getElementsByTagName("p").length + ")"
                                 currentPost.appendChild(replys)
                             }
-                            currentPost.appendChild(document.createElement("br"))
+                      
                             for (let p = 0; p < messageTexts.length; p++) {
                                 let postContent = document.createElement("span")
                                 if (p > 0) { postContent.className = "classHide" }
