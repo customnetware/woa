@@ -122,7 +122,15 @@ function showPosts(selectedGroup, NumOfDays) {
                             currentPost.className = (forumPosts.getElementsByTagName("p").length % 2 == 0) ? "btmEven" : "btmOdd"
                             let postHeader = document.createElement("b")
                             postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
+
+                                let postReply = document.createElement("a")
+                                postReply.className = "fa fa-reply fa-lg formatLink"
+                                postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
+                            postHeader.appendChild(postReply)
+
                             currentPost.appendChild(postHeader)
+
+
 
                             if (messageTexts.length > 1) {
                                 let replys = document.createElement("a")
@@ -138,11 +146,8 @@ function showPosts(selectedGroup, NumOfDays) {
                                 postContent.appendChild(document.createElement("br"))
                                 postContent.appendChild(document.createTextNode(messageAuthor[p].innerText))
 
-                                let postReply = document.createElement("a")
-                                postReply.className = "fa fa-reply fa-lg formatLink"
-                                postReply.href = messageContacts[p].getElementsByTagName("a")[0].href
-                                postContent.appendChild(postReply)
-                                postContent.appendChild(document.createElement("hr"))
+
+                                currentPost.appendChild(document.createElement("hr"))
                                 currentPost.appendChild(postContent)
 
                             }
