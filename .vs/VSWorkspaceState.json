@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Discussion",
+    "\\Discussion\\list",
+    "\\Discussion\\list\\28118",
     "\\homepage",
     "\\homepage\\28118",
     "\\Meesenger",
@@ -8,6 +11,6 @@
     "\\Member",
     "\\scripts"
   ],
-  "SelectedNode": "\\homepage\\28118",
+  "SelectedNode": "\\woa_resident_home.html",
   "PreviewInSolutionExplorer": false
 }

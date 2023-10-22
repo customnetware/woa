@@ -15,36 +15,31 @@
     </style>
 </head>
 <body>
-    <div id="event"></div>
+    <div id="post"></div>
     <script>
-      
+
         $(window).load(function () {
-            getGroups()
+            let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~8364.html" : "/Discussion/28118~8364"
+            $.get(selectedPost, function () { })
+                .done(function (responseText) {
+                    let forumPosts = document.getElementById("post")
+                    let forum = new DOMParser().parseFromString(responseText, "text/html")
+                    let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
+                    let postContents = forum.querySelectorAll("[id^=contents]")
+                    let messageTexts = postContents[0].getElementsByClassName("clsBodyText")
+                    let messageAuthor = postContents[0].getElementsByClassName("respAuthorWrapper")
+                    let messageContacts = postContents[0].getElementsByClassName("respReplyWrapper")
+                    var testString = postContents[0].innerText.replace(/[\[\]']+/g, '')
+
+  
+
+
+                })
         })
 
 
-        function getGroups() {
-            let selectedGroups = []
-            let fileLocation = (window.location.hostname == "localhost") ? "/Discussion/list/28118/discussion-groups.html" : "/Discussion/list/28118/discussion-groups"
-            $.get(fileLocation, function () { })
-                .done(function (responseText) {
-                    let forums = new DOMParser().parseFromString(responseText, "text/html")
-                    let forumName = forums.getElementsByClassName("clsBodyText")
-                    let groupCheck = "(Group is included on My Woodbridge)"
-                    for (let p = 2; p < forumName.length; p += 2) {
-                        let includeGroup = forumName[p].innerText.includes(groupCheck)
-                        if (includeGroup == true) {
-                            let groupID = forumName[p - 1].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
-                            let groupName = forumName[p - 1].innerText
-                            selectedGroups.push(groupID+"|"+groupName)
-                        }
-                    }
-                    testFunction(selectedGroups)
-                })
-        }
+  
 
-
-        function testFunction(groups) { alert(groups[0]) }
     </script>
 </body>
 </html>      

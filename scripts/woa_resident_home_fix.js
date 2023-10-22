@@ -2,7 +2,7 @@ $(window).load(function () {
     try {
         getContent()
         showProfile()
-        getGroups()
+        getGroups(32)
         showDocuments()
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
@@ -25,26 +25,22 @@ function getContent() {
     $.get(residentPage, function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
-            let displayDivs = ["message","classified","news"]
+            let displayDivs = ["message", "classified", "news"]
             for (let d = 0; d < displayDivs.length; d++) {
                 let recentItems = myWoodbridge.getElementsByClassName(displayDivs[d])
-                let itemText = document.getElementById(displayDivs[d])
-                if (recentItems.length > 0) { itemText.innerHTML = "" } else itemText.innerHTML = "No recent items found."
-                for (let p = 0; p < recentItems.length; p++) {
-                    let topSpan = document.createElement("span")
-                    let btmSpan = document.createElement("span")
-                    let spanLink = document.createElement("a")
-                    topSpan.className = (p % 2 == 0) ? "topEven" : "topOdd"
-                    btmSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
-                    spanLink.className = "fa fa-arrow-right formatLink"
-                    spanLink.href = recentItems[p].getElementsByTagName("a")[0].href
-                    saveUser(recentItems[p].getElementsByTagName("a")[0].id, spanLink.href)
+                let itemText = document.getElementById(displayDivs[d]).getElementsByTagName("p")
 
-                    topSpan.appendChild(document.createTextNode(recentItems[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-title").replace(sentBy, "")))
-                    btmSpan.appendChild(document.createTextNode(recentItems[p].getElementsByTagName("a")[0].getAttribute("data-tooltip-text")))
-                    btmSpan.appendChild(spanLink)
-                    itemText.appendChild(topSpan)
-                    itemText.appendChild(btmSpan)
+                document.getElementById(displayDivs[d]).removeChild(document.getElementById(displayDivs[d]).firstElementChild)
+                if (recentItems.length == 0) { document.getElementById(displayDivs[d]).innerHTML = "No recent items found." }
+                for (let p = 0; p < recentItems.length; p++) {
+                    let itemContent = recentItems[p].getElementsByTagName("a")[0]
+                    itemText[p].id = itemContent.id.replace("link_", "")
+                    itemText[p].innerHTML = "<a href='" + itemContent.href + "'><b>" + itemContent.getAttribute("data-tooltip-title").replace(sentBy, "") + "</b></a><br />" + itemContent.getAttribute("data-tooltip-text")
+                    if (displayDivs[d] == "message") {
+                        let m_id = itemText[p].id
+                        let m_content = itemContent.getAttribute("data-tooltip-title").replace(sentBy, "") + "|" + itemContent.getAttribute("data-tooltip-text") + "|" + itemContent.href
+                        saveContent(m_id, m_content)
+                    }
                 }
             }
             let photoList = myWoodbridge.querySelectorAll("[id^=gallery_link_]")
@@ -80,107 +76,88 @@ function showProfile() {
         }
     })
 }
-function getGroups() {
-    let selectedGroups = []
-    let fileLocation = (window.location.hostname == "localhost") ? "/Discussion/list/28118/discussion-groups.html" : "/Discussion/list/28118/discussion-groups"
-    $.get(fileLocation, function () { })
-        .done(function (responseText) {
-            let forums = new DOMParser().parseFromString(responseText, "text/html")
-            let forumName = forums.getElementsByClassName("clsBodyText")
-            let groupCheck = "(Group is included on My Woodbridge)"
-            for (let p = 2; p < forumName.length; p += 2) {
-                let includeGroup = forumName[p].innerText.includes(groupCheck)
-                if (includeGroup == true) {
-                    let groupID = forumName[p - 1].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
-                    let groupName = forumName[p - 1].innerText
-                    selectedGroups.push(groupID + "|" + groupName)
-                }
-            }
-            showPosts(selectedGroups)
-        })
-}
-function showPosts(selectedGroup) {
-    let backGroundID = 0
-    document.getElementById("post").innerHTML=""
+function getGroups(NumOfDays) {
     try {
+        let selectedGroups = []
+        let fileLocation = (window.location.hostname == "localhost") ? "/Discussion/list/28118/discussion-groups.html" : "/Discussion/list/28118/discussion-groups"
+        $.get(fileLocation, function () { })
+            .done(function (responseText) {
+                let forums = new DOMParser().parseFromString(responseText, "text/html")
+                let forumName = forums.getElementsByClassName("clsBodyText")
+                let groupCheck = "(Group is included on My Woodbridge)"
+                for (let p = 2; p < forumName.length; p += 2) {
+                    let includeGroup = forumName[p].innerText.includes(groupCheck)
+                    if (includeGroup == true) {
+                        let groupID = forumName[p - 1].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
+                        let groupName = forumName[p - 1].innerText
+                        selectedGroups.push(groupID + "|" + groupName)
+                    }
+                }
+                showPosts(selectedGroups, NumOfDays)
+            })
+    } catch { }
+}
+function showPosts(selectedGroup, NumOfDays) {
+    try {
+        let currentDate = new Date()
         for (let g = 0; g < selectedGroup.length; g++) {
             let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + selectedGroup[g].split("|")[0] + ".html" : "/Discussion/28118~" + selectedGroup[g].split("|")[0]
+
             $.get(selectedPost, function () { })
                 .done(function (responseText) {
                     let forumPosts = document.getElementById("post")
                     let forum = new DOMParser().parseFromString(responseText, "text/html")
                     let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
                     let postContents = forum.querySelectorAll("[id^=contents]")
-                    let numOfPosts = 0
-                    
-                    for (let k = 0; k < postContents.length; k++) {
-                        let messageTexts = postContents[k].getElementsByClassName("clsBodyText")
-                        let messageAuthor = postContents[k].getElementsByClassName("respAuthorWrapper")
-                        let messageContacts = postContents[k].getElementsByClassName("respReplyWrapper")
+                    for (let h = 0; h < postHeaders.length; h++) {
+                        let messageTexts = postContents[h].getElementsByClassName("clsBodyText")
+                        let messageAuthor = postContents[h].getElementsByClassName("respAuthorWrapper")
+                        let messageContacts = postContents[h].getElementsByClassName("respReplyWrapper")
+                        let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
+                        let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
+                        if (dayDiff < NumOfDays) {
 
-                        //let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
+                            let currentPost = document.createElement("p")
+                            currentPost.className = (forumPosts.getElementsByTagName("p").length % 2 == 0) ? "btmEven" : "btmOdd"
+                            let postHeader = document.createElement("b")
+                            postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
+                            currentPost.appendChild(postHeader)
 
+                            if (messageTexts.length > 1) {
+                                let replys = document.createElement("a")
+                                replys.className = "fa fa-commenting-o fa-lg formatLink"
+                                replys.href = "javascript:showReplies(" + forumPosts.getElementsByTagName("p").length + ")"
+                                currentPost.appendChild(replys)
+                            }
+                            currentPost.appendChild(document.createElement("br"))
+                            for (let p = 0; p < messageTexts.length; p++) {
+                                let postContent = document.createElement("span")
+                                if (p > 0) { postContent.className = "classHide" }
+                                postContent.appendChild(document.createTextNode(messageTexts[p].innerText))
+                                postContent.appendChild(document.createElement("br"))
+                                postContent.appendChild(document.createTextNode(messageAuthor[p].innerText))
 
-
-
-                        let topSpan = document.createElement("div")
-                        let midSpan = document.createElement("div")
-                        let btmSpan = document.createElement("div")
-
-                        topSpan.className = (backGroundID % 2 == 0) ? "topEven" : "topOdd"
-                        midSpan.className = (backGroundID % 2 == 0) ? "btmEven" : "btmOdd"
-                        btmSpan.className = (backGroundID % 2 == 0) ? "btmEven classHide" : "btmOdd classHide"
-
-                        topSpan.appendChild(document.createTextNode(postHeaders[k].innerText + "(" + selectedGroup[g].split("|")[1] + ")"))
-
-                        for (let p = 0; p < messageTexts.length; p++) {
-
-                            let replyLink = document.createElement("a")
-                            replyLink.innerText = "Reply"
-                            replyLink.href = messageContacts[p].getElementsByTagName("a")[0].href
-
-                            let emailLink = document.createElement("a")
-                            emailLink.innerText = "Email Author"
-                            emailLink.href = messageContacts[p].getElementsByTagName("a")[1].href
-
-                            spanToUse = (p == 0) ? midSpan : btmSpan
-                            spanToUse.appendChild(document.createTextNode(messageTexts[p].innerText))
-                            spanToUse.appendChild(document.createElement("br"))
-                            spanToUse.appendChild(document.createTextNode(messageAuthor[p].innerText))
-                            spanToUse.appendChild(replyLink)
-                            spanToUse.appendChild(document.createTextNode(" | "))
-                            spanToUse.appendChild(emailLink)
-                            spanToUse.appendChild(document.createTextNode(" | "))
-                            if (messageTexts.length > 1 && p == 0) {
-                                let viewLink = document.createElement("a")
-                                viewLink.innerText = "View Replies - (" + (messageAuthor.length-1) + ")"
-                                viewLink.href = "javascript:showReplies(" + backGroundID + ")"
-
-                                spanToUse.appendChild(viewLink)
+                                let postReply = document.createElement("a")
+                                postReply.className = "fa fa-reply fa-lg formatLink"
+                                postReply.href = messageContacts[p].getElementsByTagName("a")[0].href
+                                postContent.appendChild(postReply)
+                                postContent.appendChild(document.createElement("hr"))
+                                currentPost.appendChild(postContent)
 
                             }
-                            spanToUse.appendChild(document.createElement("hr"))
+                            forumPosts.appendChild(currentPost)
                         }
-                        forumPosts.appendChild(topSpan)
-                        forumPosts.appendChild(midSpan)
-                        forumPosts.appendChild(btmSpan)
-                        backGroundID++
-                        numOfPosts++
-                        if (numOfPosts === 2) { break }
                     }
                 })
         }
     } catch (error) {
     }
-
 }
-function showReplies(clsToShow) {
-    let currentForum = document.getElementById("post")
-    let forumPosts = currentForum.getElementsByClassName("classHide")
-    for (let p = 0; p < forumPosts.length; p++) {
-        if (clsToShow !== p || (clsToShow == p && forumPosts[p].style.display == "block")) {
-            forumPosts[p].style.display = "none"
-        } else { forumPosts[clsToShow].style.display = "block" }
+function showReplies(selectedP) {
+    let currentForum = document.getElementById("post").getElementsByTagName("p")
+    let hiddenItems = currentForum[(selectedP)].getElementsByClassName("classHide")
+    for (let p = 0; p < hiddenItems.length; p++) {
+        if (hiddenItems[p].style.display == "inline") { hiddenItems[p].style.display = "none" } else { hiddenItems[p].style.display = "inline" }
     }
 }
 function showDocuments() {
@@ -201,17 +178,12 @@ function showDocuments() {
                     topSpan.appendChild(selectedDoc)
                     documentList.appendChild(topSpan)
                 }
-
             })
     } catch (error) {
     }
 }
-
-function saveUser(saveKey, saveValue) {
+function saveContent(saveKey, saveValue) {
     try {
-        if (localStorage.getItem(saveKey) !== saveValue) { localStorage.setItem(saveKey, saveValue) }
+        if (localStorage.getItem(saveKey) == null) { localStorage.setItem(saveKey, saveValue) }
     } catch { }
-}
-function getUser(saveKey) {
-    return localStorage.getItem(saveKey)
 }
