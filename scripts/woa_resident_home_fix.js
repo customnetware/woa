@@ -133,7 +133,7 @@ function showPosts(selectedGroup, NumOfDays) {
 
                             if (messageTexts.length > 1) {
                                 let replys = document.createElement("a")
-                                replys.className = "fa fa-commenting-o fa-lg formatLink"
+                                replys.className = "fa fa-comments fa-lg formatLink"
                                 replys.href = "javascript:showReplies(" + forumPosts.getElementsByTagName("p").length + ")"
                                 currentPost.appendChild(replys)
                             }
