@@ -1,4 +1,4 @@
- var postHistoryLen = 32
+var postHistoryLen = 32
 $(window).load(function () {
     try {
         getContent()
@@ -122,10 +122,9 @@ function showPosts(selectedGroup, NumOfDays) {
                             currentPost.className = (forumPosts.getElementsByTagName("p").length % 2 == 0) ? "btmEven" : "btmOdd"
                             let postHeader = document.createElement("b")
                             postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
-
-                                let postReply = document.createElement("a")
-                                postReply.className = "fa fa-reply fa-lg formatLink"
-                                postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
+                            let postReply = document.createElement("a")
+                            postReply.className = "fa fa-reply fa-lg formatLink"
+                            postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
                             postHeader.appendChild(postReply)
 
                             currentPost.appendChild(postHeader)
@@ -138,10 +137,17 @@ function showPosts(selectedGroup, NumOfDays) {
                                 replys.href = "javascript:showReplies(" + forumPosts.getElementsByTagName("p").length + ")"
                                 currentPost.appendChild(replys)
                             }
-                      
+
+                            currentPost.appendChild(document.createElement("br"))
                             for (let p = 0; p < messageTexts.length; p++) {
                                 let postContent = document.createElement("span")
-                                if (p > 0) { postContent.className = "classHide" }
+                                if (p > 0) {
+                                    postContent.className = "classHide"
+                                    let pSpace = document.createElement("hr")
+                                    pSpace.style.margin="5px"
+                                    postContent.appendChild(pSpace)
+                                }
+                               
                                 postContent.appendChild(document.createTextNode(messageTexts[p].innerText))
                                 postContent.appendChild(document.createElement("br"))
                                 postContent.appendChild(document.createTextNode(messageAuthor[p].innerText))
