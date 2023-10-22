@@ -145,9 +145,6 @@ function showPosts(selectedGroup, NumOfDays) {
                                 postContent.appendChild(document.createTextNode(messageTexts[p].innerText))
                                 postContent.appendChild(document.createElement("br"))
                                 postContent.appendChild(document.createTextNode(messageAuthor[p].innerText))
-
-
-                                currentPost.appendChild(document.createElement("hr"))
                                 currentPost.appendChild(postContent)
 
                             }
