@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Discussion",
-    "\\Discussion\\list",
-    "\\Discussion\\list\\28118",
-    "\\homepage",
-    "\\homepage\\28118",
+    "\\HOA",
+    "\\HOA\\assn28118",
+    "\\HOA\\assn28118\\images",
+    "\\HOA\\assn28118\\images\\gallery58961",
+    "\\HOA\\assn28118\\images\\gallery58961\\thumbs",
     "\\Meesenger",
     "\\Meesenger\\MessageView",
     "\\Member",
     "\\scripts"
   ],
-  "SelectedNode": "\\scripts\\woa_resident_home_fix.js",
+  "SelectedNode": "\\scripts\\woa_resident_home.js",
   "PreviewInSolutionExplorer": false
 }

@@ -38,14 +38,9 @@
                     document.getElementById("errText").innerHTML = err.message
                 } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
             }
-            
+
         </script>
         <style type="text/css">
-            .postDisplay {
-                padding-left: 22px;
-                margin-bottom: 5px;
-            }
-
             .formatHeader {
                 background-color: #999999;
                 color: white;
@@ -74,56 +69,72 @@
                 text-decoration: none !important;
             }
 
-            
-
-            .topEven {
-                font-weight: bold;
-                display: block;
-                padding: 0px 0px 0px 5px;
-                background-color: #eceeef;
-            }
-
-            .topOdd {
-                font-weight: bold;
-                display: block;
-                padding: 0px 0px 0px 5px;
-            }
-
-            .btmEven {
-                font-weight: normal;
-                display: block;
-                margin-bottom: 10px;
-                padding-left: 5px;
-                background-color: #eceeef
-            }
-
-            .btmOdd {
-                font-weight: normal;
-                display: block;
-                margin-bottom: 10px;
-                padding-left: 5px;
-            }
-
             .dropShadow {
                 filter: drop-shadow(5px 5px 5px grey);
                 float: left;
                 padding-right: 15px;
             }
 
-            .classHide {
-                display: none
+            #document span {
+                padding-left: 10px;
+                padding-bottom: 5px;
+                padding-top: 5px;
+                font-weight: 600;
+                display:block;
+                
+            }
+
+                #document span:nth-child(even) {
+                    background-color: #eceeef
+                }
+
+
+            #post p:nth-child(even), #message p:nth-child(even), #classified p:nth-child(even), #news p:nth-child(even) {
+                background-color: #eceeef
+            }
+
+            #post p, #message p, #classified p, #news p {
+                margin: 0px;
+                padding: 10px !important
+            }
+
+                #post p span {
+                    display: none;
+                }
+
+                    #post p span:first-child, #message p span:first-child, #classified p span:first-child, #news p span:first-child {
+                        font-weight: 700;
+                        display: block
+                    }
+
+                    #post p span:nth-child(2) {
+                        display: block
+                    }
+
+                    #post p span:nth-child(3) {
+                        display: block
+                    }
+
+                    #post p span:nth-child(2n+4) {
+                        margin-top: 5px;
+                    }
+
+            .recentPic {
+                height: 100px;
+                width: 33%;
+                padding-right: 10px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                padding-left: 10px
             }
         </style>
         <div class="row">
-            <div id="fromWOA" class="col-md-8">
+            <div class="col-md-8">
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader"><span class="fa fa-newspaper-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/News/List/28118"></a>Recent News Articles </div>
                     <div class="card-body">
                         <div id="news" class="panel_news_content">
-                            <span class="fa fa-spinner fa-pulse fa-fw"></span>
-                            <p class="btmOdd"></p>
-                            <p class="btmEven"></p>
-                            <p class="btmOdd"></p>
+                            <p class="fa fa-spinner fa-pulse fa-fw"></p>
                         </div>
                     </div>
                 </div>
@@ -131,11 +142,7 @@
                     <div class="card-header border-success formatHeader"><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;Latest Emails<a href="javascript:showHistory()" class="fa fa-history formatRight"></a></div>
                     <div class="card-body">
                         <div id="message" class="panel_messages_content">
-                            <span class="fa fa-spinner fa-pulse fa-fw"></span>
-                            <p class="btmOdd"></p>
-                            <p class="btmEven"></p>
-                            <p class="btmOdd"></p>
-                            <span></span>
+                            <p class="fa fa-spinner fa-pulse fa-fw"></p>
                         </div>
                     </div>
                 </div>
@@ -146,7 +153,7 @@
                     </div>
                     <div class="card-body">
                         <div id="post" class="panel_discuss_content">
-
+                            <span class="fa fa-spinner fa-pulse fa-fw"></span>
                         </div>
                     </div>
                 </div>
@@ -156,6 +163,7 @@
                             <div class="card-header border-success formatHeader"><span class="fa fa-file-text-o" aria-hidden="true"></span>&nbsp;&nbsp;Activities & Event Flyers <a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">(Resource Center)</a></div>
                             <div class="card-body">
                                 <div id="document" class="panel_resource_content">
+                                    <span class="fa fa-spinner fa-pulse fa-fw"></span>
                                 </div>
                             </div>
                         </div>
@@ -174,9 +182,6 @@
                             <div class="card-body">
                                 <div id="classified" class="panel_classifieds_content">
                                     <span class="fa fa-spinner fa-pulse fa-fw"></span>
-                                    <p class="btmOdd"></p>
-                                    <p class="btmEven"></p>
-                                    <p class="btmOdd"></p>
                                 </div>
                             </div>
                         </div>
@@ -274,8 +279,7 @@
         </div>
         <div id="errText"></div>
         <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
-        <script src="https://customnetware.github.io/woa/scripts/woa_resident_home_fix.js"></script>
-
+        <script src="scripts/woa_resident_home_fix.js"></script>
     </div>
 
 </body>

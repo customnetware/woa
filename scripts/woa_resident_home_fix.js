@@ -1,9 +1,9 @@
-var postHistoryLen = 32
+var postHistoryLen = 31
 $(window).load(function () {
     try {
         getContent()
         showProfile()
-        getGroups(32)
+        showPosts(8364, 31)
         showDocuments()
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
@@ -25,20 +25,33 @@ function getContent() {
 
     $.get(residentPage, function () { })
         .done(function (responseText) {
-            let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
             let displayDivs = ["message", "classified", "news"]
-            for (let d = 0; d < displayDivs.length; d++) {
-                let recentItems = myWoodbridge.getElementsByClassName(displayDivs[d])
-                let itemText = document.getElementById(displayDivs[d]).getElementsByTagName("p")
+            let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
 
-                document.getElementById(displayDivs[d]).removeChild(document.getElementById(displayDivs[d]).firstElementChild)
-                if (recentItems.length == 0) { document.getElementById(displayDivs[d]).innerHTML = "No recent items found." }
+            for (let d = 0; d < displayDivs.length; d++) {
+                let recentList = document.getElementById(displayDivs[d])
+                let recentItems = myWoodbridge.getElementsByClassName(displayDivs[d])
+                recentList.removeChild(recentList.firstElementChild)
                 for (let p = 0; p < recentItems.length; p++) {
+                    let recentItem = document.createElement("p")
                     let itemContent = recentItems[p].getElementsByTagName("a")[0]
-                    itemText[p].id = itemContent.id.replace("link_", "")
-                    itemText[p].innerHTML = "<a href='" + itemContent.href + "'><b>" + itemContent.getAttribute("data-tooltip-title").replace(sentBy, "") + "</b></a><br />" + itemContent.getAttribute("data-tooltip-text")
+                    let itemTitle = document.createElement("span")
+
+
+                    recentItem.id = itemContent.id.replace("link_", "")
+
+                    itemTitle.appendChild(document.createTextNode(itemContent.getAttribute("data-tooltip-title").replace(sentBy, "")))
+                    recentItem.appendChild(itemTitle)
+                    recentItem.appendChild(document.createTextNode(itemContent.getAttribute("data-tooltip-text")))
+                    recentList.appendChild(recentItem)
+
+
+                    let emailText = document.createElement("a")
+                    emailText.className = "fa fa-share formatLink"
+                    emailText.href = itemContent.href
+                    recentItem.appendChild(emailText)
                     if (displayDivs[d] == "message") {
-                        let m_id = itemText[p].id
+                        let m_id = recentItem.id
                         let m_content = itemContent.getAttribute("data-tooltip-title").replace(sentBy, "") + "|" + itemContent.getAttribute("data-tooltip-text") + "|" + itemContent.href
                         saveContent(m_id, m_content)
                     }
@@ -48,12 +61,13 @@ function getContent() {
             let galleryLink = myWoodbridge.querySelectorAll("[class^=gallery_txt_sub]")
             if (photoList.length > 0) { photoDisplay.innerHTML = "" }
             for (let k = 0; k < photoList.length; k++) {
+                let picLink = document.createElement("a")
+                picLink.href = galleryLink[k].getElementsByTagName("a")[0].href
                 let pic = document.createElement("img")
                 pic.src = photoList[k].src
-                pic.style.height = "100px"
-                pic.style.paddingRight = "20px"
-                photoDisplay.appendChild(pic)
-
+                pic.className = "recentPic"
+                picLink.appendChild(pic)
+                photoDisplay.appendChild(picLink)
             }
 
         })
@@ -98,70 +112,68 @@ function getGroups(NumOfDays) {
             })
     } catch { }
 }
-function showPosts(selectedGroup, NumOfDays) {
+
+function showPosts(groupID, NumOfDays) {
     try {
+        let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + groupID + ".html" : "/Discussion/28118~8364"
         let currentDate = new Date()
-        for (let g = 0; g < selectedGroup.length; g++) {
-            let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + selectedGroup[g].split("|")[0] + ".html" : "/Discussion/28118~" + selectedGroup[g].split("|")[0]
+        $.get(selectedPost, function () { })
+            .done(function (responseText) {
+                let forumPosts = document.getElementById("post")
+                forumPosts.innerHTML = ""
+                let forum = new DOMParser().parseFromString(responseText, "text/html")
+                let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
+                let postContents = forum.querySelectorAll("[id^=contents]")
+                for (let h = 0; h < postHeaders.length; h++) {
+                    let messageTexts = postContents[h].getElementsByClassName("clsBodyText")
+                    let messageAuthor = postContents[h].getElementsByClassName("respAuthorWrapper")
+                    let messageContacts = postContents[h].getElementsByClassName("respReplyWrapper")
 
-            $.get(selectedPost, function () { })
-                .done(function (responseText) {
-                    let forumPosts = document.getElementById("post")
-                    let forum = new DOMParser().parseFromString(responseText, "text/html")
-                    let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
-                    let postContents = forum.querySelectorAll("[id^=contents]")
-                    for (let h = 0; h < postHeaders.length; h++) {
-                        let messageTexts = postContents[h].getElementsByClassName("clsBodyText")
-                        let messageAuthor = postContents[h].getElementsByClassName("respAuthorWrapper")
-                        let messageContacts = postContents[h].getElementsByClassName("respReplyWrapper")
-                        let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
-                        let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-                        if (dayDiff < NumOfDays) {
+                    let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
+                    let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
 
-                            let currentPost = document.createElement("p")
-                            currentPost.className = (forumPosts.getElementsByTagName("p").length % 2 == 0) ? "btmEven" : "btmOdd"
-                            let postHeader = document.createElement("b")
-                            postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
-                            let postReply = document.createElement("a")
-                            postReply.className = "fa fa-reply fa-lg formatLink"
-                            postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
-                            postHeader.appendChild(postReply)
+                    if (dayDiff < NumOfDays) {
+                        let currentPost = document.createElement("p")
+                        let postHeader = document.createElement("span")
+                        let postMessage = document.createElement("span")
+                        let postAuthor = document.createElement("span")
 
-                            currentPost.appendChild(postHeader)
+                        postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
 
+                        let postReply = document.createElement("a")
+                        postReply.className = "fa fa-reply fa-lg formatLink"
+                        postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
+                        postHeader.appendChild(postReply)
 
-
-                            if (messageTexts.length > 1) {
-                                let replys = document.createElement("a")
-                                replys.className = "fa fa-comments fa-lg formatLink"
-                                replys.href = "javascript:showReplies(" + forumPosts.getElementsByTagName("p").length + ")"
-                                currentPost.appendChild(replys)
-                            }
-
-                            currentPost.appendChild(document.createElement("br"))
-                            for (let p = 0; p < messageTexts.length; p++) {
-                                let postContent = document.createElement("span")
-                                if (p > 0) {
-                                    postContent.className = "classHide"
-                                    let pSpace = document.createElement("hr")
-                                    pSpace.style.margin="5px"
-                                    postContent.appendChild(pSpace)
-                                }
-                               
-                                postContent.appendChild(document.createTextNode(messageTexts[p].innerText))
-                                postContent.appendChild(document.createElement("br"))
-                                postContent.appendChild(document.createTextNode(messageAuthor[p].innerText))
-                                currentPost.appendChild(postContent)
-
-                            }
-                            forumPosts.appendChild(currentPost)
+                        if (messageTexts.length > 1) {
+                            let replys = document.createElement("a")
+                            replys.className = "fa fa-comments fa-lg formatLink"
+                            replys.href = "javascript:showReplies(" + document.getElementById("post").getElementsByTagName("p").length + ")"
+                            postHeader.appendChild(replys)
                         }
+
+                        postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
+                        postAuthor.appendChild(document.createTextNode(messageAuthor[0].innerText))
+                        currentPost.appendChild(postHeader)
+                        currentPost.appendChild(postMessage)
+                        currentPost.appendChild(postAuthor)
+                        for (let p = 1; p < messageTexts.length; p++) {
+                            let replyMessage = document.createElement("span")
+                            let replyAuthor = document.createElement("span")
+                            replyMessage.appendChild(document.createTextNode(messageTexts[p].innerText))
+                            replyAuthor.appendChild(document.createTextNode(messageAuthor[p].innerText))
+                            currentPost.appendChild(replyMessage)
+                            currentPost.appendChild(replyAuthor)
+                        }
+                        forumPosts.appendChild(currentPost)
                     }
-                })
-        }
+                }
+            })
     } catch (error) {
+        alert(error.message)
     }
 }
+
 function showHistory() {
     let k = 2
     let emails = document.getElementById("message").getElementsByTagName("p")
@@ -175,21 +187,20 @@ function showHistory() {
     }
 }
 function showPostHistory() {
-    if (postHistoryLen < 90) { postHistoryLen = postHistoryLen + 30 } else { postHistoryLen = postHistoryLen + 90 }
-
-    document.getElementById("post").innerHTML = ""
-    getGroups(postHistoryLen)
+    document.getElementById("post").innerHTML = "Loading history"
+    postHistoryLen += 90
+    showPosts(8364, postHistoryLen)
 }
-function showReplies(selectedP) {
-    let currentForum = document.getElementById("post").getElementsByTagName("p")
-    let hiddenItems = currentForum[(selectedP)].getElementsByClassName("classHide")
-    for (let p = 0; p < hiddenItems.length; p++) {
-        if (hiddenItems[p].style.display == "inline") { hiddenItems[p].style.display = "none" } else { hiddenItems[p].style.display = "inline" }
+function showReplies(p_id) {
+    var testSpans = document.getElementById("post").getElementsByTagName("p")[p_id].getElementsByTagName("span")
+    for (let p = 3; p < testSpans.length; p++) {
+        if (testSpans[p].style.display == "block") { testSpans[p].style.display = "none" } else { testSpans[p].style.display = "block" }
     }
 }
 function showDocuments() {
     try {
         let documentList = document.getElementById("document")
+        documentList.innerHTML = ""
         let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
         $.get(fileLocation, function () { })
             .done(function (responseText) {
@@ -197,13 +208,12 @@ function showDocuments() {
                 let documentName = documents.getElementById("contents540434").getElementsByClassName("clsTreeNde")
                 let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
                 for (let p = 0; p < documentName.length; p++) {
-                    let topSpan = document.createElement("span")
-                    topSpan.className = (p % 2 == 0) ? "btmEven" : "btmOdd"
+                    let resourceItem = document.createElement("span")
                     let selectedDoc = document.createElement("a")
                     selectedDoc.innerHTML = documentName[p].innerHTML
                     selectedDoc.href = documentLink[p].href
-                    topSpan.appendChild(selectedDoc)
-                    documentList.appendChild(topSpan)
+                    resourceItem.appendChild(selectedDoc)
+                    documentList.appendChild(resourceItem)
                 }
             })
     } catch (error) {
