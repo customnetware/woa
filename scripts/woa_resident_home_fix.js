@@ -58,8 +58,9 @@ function getContent() {
                     recentItem.appendChild(itemLink)
                     saveContent(recentItem.id, (itemContentTitle + "|" + itemContentText + "|" + itemContent.href), itemListID[d])
                 }
-                currentList.className = successClassName
+              /*  currentList.className = successClassName*/
             }
+
             for (let k = 0; k < photoList.length; k++) {
                 let picLink = document.createElement("a")
                 picLink.href = galleryLink[k].getElementsByTagName("a")[0].href
