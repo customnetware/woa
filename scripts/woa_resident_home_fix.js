@@ -25,10 +25,9 @@ function getContent() {
     let sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
     let photoDisplay = document.getElementById("photo")
     let itemListID = ["message", "classified", "news"]
-
-    document.getElementById("message").parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-spinner fa-pulse fa-fw"
-    document.getElementById("classified").parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-spinner fa-pulse fa-fw"
-    document.getElementById("news").parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-spinner fa-pulse fa-fw"
+    let itemListIcon = ["fa fa-envelope-o", "fa fa-shopping-cart", "fa fa-newspaper-o"]
+    for (let i = 0; i < itemListID.length; i++) { document.getElementById(itemListID[i]).parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-spinner fa-pulse fa-fw" }
+    
     $.get(residentPage, function () { })
 
         .done(function (responseText) {
@@ -38,9 +37,7 @@ function getContent() {
 
             for (let d = 0; d < itemListID.length; d++) {
                 let recentList = document.getElementById(itemListID[d])
-                let recentItems = myWoodbridge.getElementsByClassName(itemListID[d])
-                let successClassName = recentList.parentElement.parentElement.getElementsByTagName("span")[0].className
-             
+                let recentItems = myWoodbridge.getElementsByClassName(itemListID[d])                    
 
                 for (let p = 0; p < recentItems.length; p++) {
                     let recentItem = document.createElement("p")
@@ -61,7 +58,7 @@ function getContent() {
                     recentItem.appendChild(itemLink)
                     saveContent(recentItem.id, (itemContentTitle + "|" + itemContentText + "|" + itemContent.href), itemListID[d])
                 }
-                currentList.className = successClassName
+                recentList.parentElement.parentElement.getElementsByTagName("span")[0].className = itemListIcon[d]
             }
 
             for (let k = 0; k < photoList.length; k++) {
