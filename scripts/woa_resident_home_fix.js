@@ -24,20 +24,23 @@ function getContent() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     let sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
     let photoDisplay = document.getElementById("photo")
+    let itemListID = ["message", "classified", "news"]
 
+    document.getElementById("message").parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-spinner fa-pulse fa-fw"
+    document.getElementById("classified").parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-spinner fa-pulse fa-fw"
+    document.getElementById("news").parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-spinner fa-pulse fa-fw"
     $.get(residentPage, function () { })
+
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
-            let itemListID = ["message", "classified", "news"]
             let photoList = myWoodbridge.querySelectorAll("[id^=gallery_link_]")
             let galleryLink = myWoodbridge.querySelectorAll("[class^=gallery_txt_sub]")
 
             for (let d = 0; d < itemListID.length; d++) {
                 let recentList = document.getElementById(itemListID[d])
                 let recentItems = myWoodbridge.getElementsByClassName(itemListID[d])
-                let currentList = recentList.parentElement.parentElement.getElementsByTagName("span")[0]
-                let successClassName = currentList.className
-                currentList.className = "fa fa-spinner fa-pulse fa-fw"
+                let successClassName = recentList.parentElement.parentElement.getElementsByTagName("span")[0].className
+             
 
                 for (let p = 0; p < recentItems.length; p++) {
                     let recentItem = document.createElement("p")
@@ -58,7 +61,7 @@ function getContent() {
                     recentItem.appendChild(itemLink)
                     saveContent(recentItem.id, (itemContentTitle + "|" + itemContentText + "|" + itemContent.href), itemListID[d])
                 }
-              /*  currentList.className = successClassName*/
+                currentList.className = successClassName
             }
 
             for (let k = 0; k < photoList.length; k++) {

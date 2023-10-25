@@ -1,14 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Discussion",
     "\\Discussion\\list",
     "\\Discussion\\list\\28118",
-    "\\Meesenger",
     "\\Meesenger\\MessageView",
-    "\\Member",
     "\\scripts"
   ],
-  "SelectedNode": "\\forum.html",
+  "SelectedNode": "\\scripts\\woa_resident_home_fix.js",
   "PreviewInSolutionExplorer": false
 }
