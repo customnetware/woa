@@ -27,7 +27,7 @@ function getContent() {
     let itemListID = ["message", "classified", "news"]
     let itemListIcon = ["fa fa-envelope-o", "fa fa-shopping-cart", "fa fa-newspaper-o"]
     for (let i = 0; i < itemListID.length; i++) { document.getElementById(itemListID[i]).parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-spinner fa-pulse fa-fw" }
-    
+
     $.get(residentPage, function () { })
 
         .done(function (responseText) {
@@ -37,7 +37,7 @@ function getContent() {
 
             for (let d = 0; d < itemListID.length; d++) {
                 let recentList = document.getElementById(itemListID[d])
-                let recentItems = myWoodbridge.getElementsByClassName(itemListID[d])                    
+                let recentItems = myWoodbridge.getElementsByClassName(itemListID[d])
 
                 for (let p = 0; p < recentItems.length; p++) {
                     let recentItem = document.createElement("p")
@@ -114,10 +114,12 @@ function showPosts(groupID, NumOfDays) {
     try {
         let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + groupID + ".html" : "/Discussion/28118~8364"
         let currentDate = new Date()
+        let forumPosts = document.getElementById("post")
+        forumPosts.parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-spinner fa-pulse fa-fw"
+
         $.get(selectedPost, function () { })
             .done(function (responseText) {
-                let forumPosts = document.getElementById("post")
-                forumPosts.parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-spinner fa-pulse fa-fw"
+
                 let forum = new DOMParser().parseFromString(responseText, "text/html")
                 let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
                 let postContents = forum.querySelectorAll("[id^=contents]")
