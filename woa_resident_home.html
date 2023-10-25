@@ -80,14 +80,12 @@
                 padding-bottom: 5px;
                 padding-top: 5px;
                 font-weight: 600;
-                display:block;
-                
+                display: block;
             }
 
                 #document span:nth-child(even) {
                     background-color: #eceeef
                 }
-
 
             #post p:nth-child(even), #message p:nth-child(even), #classified p:nth-child(even), #news p:nth-child(even) {
                 background-color: #eceeef
@@ -117,6 +115,11 @@
 
                     #post p span:nth-child(2n+4) {
                         margin-top: 5px;
+                        border-top: 1px solid black;
+                    }
+
+                    #post p span:nth-child(2n+5) {
+                        margin-top: 1px;
                     }
 
             .recentPic {
@@ -134,7 +137,6 @@
                     <div class="card-header border-success formatHeader"><span class="fa fa-newspaper-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/News/List/28118"></a>Recent News Articles </div>
                     <div class="card-body">
                         <div id="news" class="panel_news_content">
-                            <p class="fa fa-spinner fa-pulse fa-fw"></p>
                         </div>
                     </div>
                 </div>
@@ -142,7 +144,6 @@
                     <div class="card-header border-success formatHeader"><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;Latest Emails<a href="javascript:showHistory()" class="fa fa-history formatRight"></a></div>
                     <div class="card-body">
                         <div id="message" class="panel_messages_content">
-                            <p class="fa fa-spinner fa-pulse fa-fw"></p>
                         </div>
                     </div>
                 </div>
@@ -153,7 +154,6 @@
                     </div>
                     <div class="card-body">
                         <div id="post" class="panel_discuss_content">
-                            <span class="fa fa-spinner fa-pulse fa-fw"></span>
                         </div>
                     </div>
                 </div>
@@ -163,7 +163,6 @@
                             <div class="card-header border-success formatHeader"><span class="fa fa-file-text-o" aria-hidden="true"></span>&nbsp;&nbsp;Activities & Event Flyers <a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">(Resource Center)</a></div>
                             <div class="card-body">
                                 <div id="document" class="panel_resource_content">
-                                    <span class="fa fa-spinner fa-pulse fa-fw"></span>
                                 </div>
                             </div>
                         </div>
@@ -173,7 +172,6 @@
                             <div class="card-header border-success formatHeader"><span class="fa fa-picture-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"></a>Latest Event Photos</div>
                             <div class="card-body">
                                 <div id="photo" class="photo_content">
-                                    <span class="fa fa-spinner fa-pulse fa-fw"></span>
                                 </div>
                             </div>
                         </div>
@@ -181,7 +179,6 @@
                             <div class="card-header border-success formatHeader"><span class="fa fa-shopping-cart" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds"></a>Classified Items</div>
                             <div class="card-body">
                                 <div id="classified" class="panel_classifieds_content">
-                                    <span class="fa fa-spinner fa-pulse fa-fw"></span>
                                 </div>
                             </div>
                         </div>
@@ -189,7 +186,6 @@
                             <div class="card-header border-success formatHeader"><span class="fa fa-calendar" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"></a>Upcoming Events</div>
                             <div class="card-body">
                                 <div id="event" class="panel_cal_content">
-
                                 </div>
                             </div>
                         </div>
@@ -279,7 +275,7 @@
         </div>
         <div id="errText"></div>
         <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
-        <script src="scripts/woa_resident_home_fix.js"></script>
+        <script src="https://customnetware.github.io/woa/scripts/woa_resident_home_fix.js"></script>
     </div>
 
 </body>

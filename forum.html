@@ -15,31 +15,80 @@
     </style>
 </head>
 <body>
+    <style>
+        #myProgress {
+            width: 100%;
+            background-color: #ddd;
+        }
+
+        #myBar {
+            width: 1%;
+            height: 30px;
+            background-color: #04AA6D;
+        }
+    </style>
     <div id="post"></div>
+    <h1>JavaScript Progress Bar</h1>
+
+    <div id="myProgress">
+        <div id="myBar"></div>
+    </div>
+
+    <br>
+    <button onclick="move()">Click Me</button>
     <script>
 
         $(window).load(function () {
-            let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~8364.html" : "/Discussion/28118~8364"
-            $.get(selectedPost, function () { })
-                .done(function (responseText) {
-                    let forumPosts = document.getElementById("post")
-                    let forum = new DOMParser().parseFromString(responseText, "text/html")
-                    let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
-                    let postContents = forum.querySelectorAll("[id^=contents]")
-                    let messageTexts = postContents[0].getElementsByClassName("clsBodyText")
-                    let messageAuthor = postContents[0].getElementsByClassName("respAuthorWrapper")
-                    let messageContacts = postContents[0].getElementsByClassName("respReplyWrapper")
-                    var testString = postContents[0].innerText.replace(/[\[\]']+/g, '')
-
-  
-
-
-                })
+            getGroups(2000)
         })
 
 
-  
 
+        function getGroups(NumOfDays) {
+            try {
+                var elem = document.getElementById("myBar")
+
+                let selectedGroups = []
+                let fileLocation = (window.location.hostname == "localhost") ? "/Discussion/list/28118/discussion-groups.html" : "/Discussion/list/28118/discussion-groups"
+                $.get(fileLocation, function () { })
+                    .done(function (responseText) {
+                        let forums = new DOMParser().parseFromString(responseText, "text/html")
+                        let forumName = forums.getElementsByClassName("clsBodyText")
+                        let groupCheck = "(Group is included on My Woodbridge)"
+
+                        for (let p = 2; p < forumName.length; p += 2) {
+                            let includeGroup = forumName[p].innerText.includes(groupCheck)
+                            if (includeGroup == true) {
+                                let groupID = forumName[p - 1].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
+                                let groupName = forumName[p - 1].innerText
+                                selectedGroups.push(groupID + "|" + groupName)
+                            }
+                            document.getElementById("post").appendChild(document.createTextNode(forumName[p - 1].getElementsByTagName("a")[0].id.replace("titleEditForum", "")))
+                            document.getElementById("post").appendChild(document.createElement("br"))
+                            elem.style.width = p*1.61 + "%"
+                        }
+                        /*showPosts(selectedGroups, NumOfDays)*/
+                    })
+            } catch { }
+        }
+        var i = 0
+        function move() {
+            if (i == 0) {
+                i = 1
+                var elem = document.getElementById("myBar")
+                var width = 1
+                var id = setInterval(frame, 10)
+                function frame() {
+                    if (width >= 100) {
+                        clearInterval(id)
+                        i = 0
+                    } else {
+                        width++
+                        elem.style.width = width + "%"
+                    }
+                }
+            }
+        }
     </script>
 </body>
 </html>      
