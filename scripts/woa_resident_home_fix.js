@@ -56,7 +56,7 @@ function getContent() {
                         itemLink.href = itemContent.href
                         recentItem.appendChild(itemLink)
                         recentList.appendChild(recentItem)
-
+                        saveContent(recentItem.id, (itemContentTitle + "|" + itemContentText + "|" + itemContent.href), itemListID[d])
                     }
                 }
                 document.getElementById(itemListID[d] + "xIconx").className = itemListIcon[d]
