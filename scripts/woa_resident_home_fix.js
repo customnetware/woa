@@ -225,12 +225,13 @@ function showDocuments() {
 function saveContent(saveKey, saveValue, saveType) {
     try {
         if (saveType == "message") {
+            var newEmail = saveValue.split("|")
             var retrievedData = localStorage.getItem("emails")
             if (retrievedData !== null) {
                 if (retrievedData.includes(saveKey)) { return }
                 var emailData = JSON.parse(retrievedData)
-                var newEmail = saveValue.split("|")
-            } else {var emailData=[] }
+
+            } else { var emailData = [] }
             emailData.push([saveKey, newEmail[0], newEmail[1], newEmail[2]])
             let currentEmails = JSON.stringify(emailData)
             localStorage.setItem("emails", currentEmails)
