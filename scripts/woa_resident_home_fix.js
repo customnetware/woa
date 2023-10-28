@@ -56,7 +56,7 @@ function getContent() {
                         itemLink.href = itemContent.href
                         recentItem.appendChild(itemLink)
                         recentList.appendChild(recentItem)
-                        saveContent(recentItem.id, (itemContentTitle + "|" + itemContentText + "|" + itemContent.href), itemListID[d])
+
                     }
                 }
                 document.getElementById(itemListID[d] + "xIconx").className = itemListIcon[d]
@@ -93,43 +93,16 @@ function showProfile() {
 }
 function getGroups(NumOfDays) {
     try {
-        var k = 1
-        let selectedGroups = []
-        let fileLocation = (window.location.hostname == "localhost") ? "/Discussion/list/28118/discussion-groups.html" : "/Discussion/list/28118/discussion-groups"
-        $.get(fileLocation, function () { })
-            .done(function (responseText) {
-                let forums = new DOMParser().parseFromString(responseText, "text/html")
-                let forumName = forums.getElementsByClassName("clsBodyText")
-                let dateCheck = forums.getElementsByClassName("clsBodyItalic")
-                let currentDate = new Date()
-                for (let p = 2; p < forumName.length; p += 2) {
+        let selectedGroups = [8030, 8364]
+        for (let h = 0; h < selectedGroups.length; h++) { showPosts(selectedGroups[h], NumOfDays) }
 
-                    let dateText = dateCheck[k].innerText
-                    let dateNum = dateText.indexOf("Last Post:")
-                    if (dateNum > -1) {
-                        let postDate = new Date(dateText.substr(dateNum + 10, 18))
-                        let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-                        if (dayDiff <= NumOfDays) {
-
-                            let groupID = forumName[p - 1].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
-                            let groupName = forumName[p - 1].innerText
-                            selectedGroups.push(groupID + "|" + groupName)
-                          
-                           
-                        }
-                       
-                    }
-                    
-                k++}
-                for (let h = 0; h < selectedGroups.length; h++) { showPosts(selectedGroups[h].split("|")[0], NumOfDays) }
-            })
-            .fail(fileLocation, function () {return })
-    } catch {alert(error.message) }
+    } catch { alert(error.message) }
 }
 
 function showPosts(groupID, NumOfDays) {
     try {
         let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + groupID + ".html" : "/Discussion/28118~" + groupID
+
         let currentDate = new Date()
         let forumPosts = document.getElementById("post")
         $.get(selectedPost, function () { })
@@ -185,25 +158,12 @@ function showPosts(groupID, NumOfDays) {
                 }
                 document.getElementById(forumPosts.id + "xIconx").className = "fa fa-comments-o"
             })
-          
-     
+
+
     } catch (error) {
         alert(error.message)
     }
-}
-function showHistory() {
-    let k = 2
-    let emails = document.getElementById("message").getElementsByTagName("p")
-    for (var i = 0; i < localStorage.length; ++i) {
-        if (document.getElementById(localStorage.key(i)) == null) {
-            let t_message = localStorage.getItem(localStorage.key(i)).split("|")
-            emails[k].innerHTML = "<a href='" + t_message[2] + "'><b>" + t_message[0] + "</b></a><br />" + t_message[1]
-            emails[k].id = localStorage.key(i)
-            if (k == 0) { break } else { --k }
-        }
-    }
-}
-function showPostHistory() {
+} function showPostHistory() {
     document.getElementById("post").innerHTML = ""
     postHistoryLen += 90
     getGroups(postHistoryLen)
@@ -213,6 +173,32 @@ function showReplies(p_id) {
     for (let p = 3; p < testSpans.length; p++) {
         if (testSpans[p].style.display == "block") { testSpans[p].style.display = "none" } else { testSpans[p].style.display = "block" }
     }
+}
+function showHistory() {
+    let updateNum = 0
+    let retrievedData = localStorage.getItem("emails")
+    let emailData = JSON.parse(retrievedData)
+    let emails = document.getElementById("message").getElementsByTagName("p")
+    for (let p = 0; p < emailData.length; p++) {
+        if (document.getElementById(emailData[p][0]) == null) {
+            emails[updateNum].innerHTML = ""
+            let t_span = document.createElement("span")
+            t_span.innerText = emailData[p][1]
+            emails[updateNum].appendChild(t_span)
+
+            let t_Link = document.createElement("a")
+            t_Link.className = "fa fa-share fa-lg formatLink"
+            t_Link.href = emailData[p][3]
+            emails[updateNum].appendChild(document.createTextNode(emailData[p][2]))
+            emails[updateNum].appendChild(t_Link)
+            emails[updateNum].id = emailData[p][0]
+
+            if (updateNum == 2) { break } else { updateNum++ }
+        }
+    }
+
+
+
 }
 function showDocuments() {
     try {
@@ -238,6 +224,16 @@ function showDocuments() {
 }
 function saveContent(saveKey, saveValue, saveType) {
     try {
-        if (localStorage.getItem(saveKey) == null && saveType == "message") { localStorage.setItem(saveKey, saveValue) }
+        if (saveType == "message") {
+            var retrievedData = localStorage.getItem("emails")
+            if (retrievedData !== null) {
+                if (retrievedData.includes(saveKey)) { return }
+                var emailData = JSON.parse(retrievedData)
+                var newEmail = saveValue.split("|")
+            } else {var emailData=[] }
+            emailData.push([saveKey, newEmail[0], newEmail[1], newEmail[2]])
+            let currentEmails = JSON.stringify(emailData)
+            localStorage.setItem("emails", currentEmails)
+        }
     } catch { }
 }
