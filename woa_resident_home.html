@@ -75,7 +75,7 @@
                 padding-right: 15px;
             }
 
-            #document span {
+            #document span, #event span {
                 padding-left: 10px;
                 padding-bottom: 5px;
                 padding-top: 5px;
@@ -83,7 +83,7 @@
                 display: block;
             }
 
-                #document span:nth-child(even) {
+                #document span:nth-child(even), #event span:nth-child(even) {
                     background-color: #eceeef
                 }
 
@@ -132,16 +132,16 @@
             }
         </style>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8" >
                 <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-newspaper-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/News/List/28118"></a>Recent News Articles </div>
+                    <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="newsxIconx"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/News/List/28118"></a>Recent News Articles </div>
                     <div class="card-body">
                         <div id="news" class="panel_news_content">
                         </div>
                     </div>
                 </div>
                 <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;Latest Emails<a href="javascript:showHistory()" class="fa fa-history formatRight"></a></div>
+                    <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="messagexIconx"></span>&nbsp;&nbsp;Latest Emails<a href="javascript:showHistory()" class="fa fa-history formatRight"></a></div>
                     <div class="card-body">
                         <div id="message" class="panel_messages_content">
                         </div>
@@ -149,8 +149,7 @@
                 </div>
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader">
-                        <span class="fa fa-comments-o" aria-hidden="true"></span>&nbsp;&nbsp;
-                        Recent Disscussion Group Posts<a href="javascript:showPostHistory()" class="fa fa-history formatRight"></a>
+                        <span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="postxIconx"></span>&nbsp;&nbsp;Recent Disscussion Group Posts<a href="javascript:showPostHistory()" class="fa fa-history formatRight"></a>
                     </div>
                     <div class="card-body">
                         <div id="post" class="panel_discuss_content">
@@ -160,7 +159,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card z-depth-3 mb-3">
-                            <div class="card-header border-success formatHeader"><span class="fa fa-file-text-o" aria-hidden="true"></span>&nbsp;&nbsp;Activities & Event Flyers <a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">(Resource Center)</a></div>
+                            <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="documentxIconx"></span>&nbsp;&nbsp;Activities & Event Flyers <a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">(Resource Center)</a></div>
                             <div class="card-body">
                                 <div id="document" class="panel_resource_content">
                                 </div>
@@ -169,21 +168,21 @@
                     </div>
                     <div class="col-md-6">
                         <div class="card z-depth-3 mb-3">
-                            <div class="card-header border-success formatHeader"><span class="fa fa-picture-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"></a>Latest Event Photos</div>
+                            <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="photoxIconx"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"></a>Latest Event Photos</div>
                             <div class="card-body">
                                 <div id="photo" class="photo_content">
                                 </div>
                             </div>
                         </div>
                         <div class="card z-depth-3 mb-3">
-                            <div class="card-header border-success formatHeader"><span class="fa fa-shopping-cart" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds"></a>Classified Items</div>
+                            <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="classifiedxIconx"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds"></a>Classified Items</div>
                             <div class="card-body">
                                 <div id="classified" class="panel_classifieds_content">
                                 </div>
                             </div>
                         </div>
                         <div class="card z-depth-3 mb-3">
-                            <div class="card-header border-success formatHeader"><span class="fa fa-calendar" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"></a>Upcoming Events</div>
+                            <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="eventxIconx"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"></a>Upcoming Events</div>
                             <div class="card-body">
                                 <div id="event" class="panel_cal_content">
                                 </div>
@@ -223,7 +222,6 @@
                         <div><span class="fa fa-list" style="padding-right:10px"></span><a href="/Form/28118~243363/Board-Agenda-Topic-Comment-or-Question">Send A Board Agenda Topic Comment or Question</a></div>
                     </div>
                 </div>
-
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-address-card-o" aria-hidden="true"></span>&nbsp;&nbsp;Silvercreek Management Contacts </div>
                     <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
@@ -273,7 +271,7 @@
                 </div>
             </div>
         </div>
-        <div id="errText"></div>
+        <div id="errText"></div>  
         <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
         <script src="scripts/woa_resident_home_fix.js"></script>
     </div>

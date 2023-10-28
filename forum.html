@@ -15,80 +15,45 @@
     </style>
 </head>
 <body>
-    <style>
-        #myProgress {
-            width: 100%;
-            background-color: #ddd;
-        }
-
-        #myBar {
-            width: 1%;
-            height: 30px;
-            background-color: #04AA6D;
-        }
-    </style>
     <div id="post"></div>
-    <h1>JavaScript Progress Bar</h1>
 
-    <div id="myProgress">
-        <div id="myBar"></div>
-    </div>
-
-    <br>
-    <button onclick="move()">Click Me</button>
     <script>
 
         $(window).load(function () {
-            getGroups(2000)
+            getGroups(365)
         })
-
-
-
+       
         function getGroups(NumOfDays) {
             try {
-                var elem = document.getElementById("myBar")
-
+                var k = 0                                                                                                                                                   
                 let selectedGroups = []
                 let fileLocation = (window.location.hostname == "localhost") ? "/Discussion/list/28118/discussion-groups.html" : "/Discussion/list/28118/discussion-groups"
                 $.get(fileLocation, function () { })
                     .done(function (responseText) {
                         let forums = new DOMParser().parseFromString(responseText, "text/html")
                         let forumName = forums.getElementsByClassName("clsBodyText")
-                        let groupCheck = "(Group is included on My Woodbridge)"
-
+                        let dateCheck = forums.getElementsByClassName("clsBodyItalic")
+                        let currentDate = new Date()
                         for (let p = 2; p < forumName.length; p += 2) {
-                            let includeGroup = forumName[p].innerText.includes(groupCheck)
-                            if (includeGroup == true) {
-                                let groupID = forumName[p - 1].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
-                                let groupName = forumName[p - 1].innerText
-                                selectedGroups.push(groupID + "|" + groupName)
+                            let dateText = dateCheck[k].innerText
+                            let dateNum = dateText.indexOf("Last Post:")
+                            if (dateNum > -1) {
+                                let postDate = new Date(dateText.substr(dateNum + 10, 18))
+                                let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
+                                if (dayDiff < NumOfDays) {
+                                    let groupID = forumName[p - 1].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
+                                    let groupName = forumName[p - 1].innerText
+                                    selectedGroups.push(groupID + "|" + groupName)
+                                    document.getElementById("post").appendChild(document.createTextNode(groupName))
+                                    document.getElementById("post").appendChild(document.createElement("br"))
+                                }
                             }
-                            document.getElementById("post").appendChild(document.createTextNode(forumName[p - 1].getElementsByTagName("a")[0].id.replace("titleEditForum", "")))
-                            document.getElementById("post").appendChild(document.createElement("br"))
-                            elem.style.width = p*1.61 + "%"
-                        }
+                            k++ }
                         /*showPosts(selectedGroups, NumOfDays)*/
                     })
             } catch { }
         }
-        var i = 0
-        function move() {
-            if (i == 0) {
-                i = 1
-                var elem = document.getElementById("myBar")
-                var width = 1
-                var id = setInterval(frame, 10)
-                function frame() {
-                    if (width >= 100) {
-                        clearInterval(id)
-                        i = 0
-                    } else {
-                        width++
-                        elem.style.width = width + "%"
-                    }
-                }
-            }
-        }
+
     </script>
 </body>
 </html>      

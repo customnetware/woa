@@ -1,12 +1,11 @@
-var postHistoryLen = 31
+var postHistoryLen = 60
 $(window).load(function () {
     try {
-
-
         getContent()
         showProfile()
-        showPosts(8364, 31)
+        getGroups(61)
         showDocuments()
+
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
         }
@@ -24,12 +23,9 @@ function getContent() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     let sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
     let photoDisplay = document.getElementById("photo")
-    let itemListID = ["message", "classified", "news"]
-    let itemListIcon = ["fa fa-envelope-o", "fa fa-shopping-cart", "fa fa-newspaper-o"]
-    for (let i = 0; i < itemListID.length; i++) { document.getElementById(itemListID[i]).parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-spinner fa-pulse fa-fw" }
-
+    let itemListID = ["message", "classified", "news", "event"]
+    let itemListIcon = ["fa fa-envelope-o", "fa fa-shopping-cart", "fa fa-newspaper-o", "fa fa-calendar"]
     $.get(residentPage, function () { })
-
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
             let photoList = myWoodbridge.querySelectorAll("[id^=gallery_link_]")
@@ -40,25 +36,30 @@ function getContent() {
                 let recentItems = myWoodbridge.getElementsByClassName(itemListID[d])
 
                 for (let p = 0; p < recentItems.length; p++) {
-                    let recentItem = document.createElement("p")
-                    let itemContent = recentItems[p].getElementsByTagName("a")[0]
-                    let itemContentTitle = itemContent.getAttribute("data-tooltip-title").replace(sentBy, "")
-                    let itemContentText = itemContent.getAttribute("data-tooltip-text")
                     let itemTitle = document.createElement("span")
-                    recentItem.id = itemContent.id.replace("link_", "")
-
-                    itemTitle.appendChild(document.createTextNode(itemContentTitle))
-                    recentItem.appendChild(itemTitle)
-                    recentItem.appendChild(document.createTextNode(itemContentText))
-                    recentList.appendChild(recentItem)
-
                     let itemLink = document.createElement("a")
-                    itemLink.className = "fa fa-share fa-lg formatLink"
-                    itemLink.href = itemContent.href
-                    recentItem.appendChild(itemLink)
-                    saveContent(recentItem.id, (itemContentTitle + "|" + itemContentText + "|" + itemContent.href), itemListID[d])
+                    if (recentList.id == "event") {
+                        itemLink.href = recentItems[p].getElementsByTagName("a")[0].href
+                        itemLink.innerHTML = recentItems[p].getElementsByTagName("a")[0].innerHTML
+                        itemTitle.appendChild(itemLink)
+                        recentList.appendChild(itemTitle)
+                    } else {
+                        let recentItem = document.createElement("p")
+                        let itemContent = recentItems[p].getElementsByTagName("a")[0]
+                        let itemContentTitle = itemContent.getAttribute("data-tooltip-title").replace(sentBy, "")
+                        let itemContentText = itemContent.getAttribute("data-tooltip-text")
+                        recentItem.id = itemContent.id.replace("link_", "")
+                        itemTitle.appendChild(document.createTextNode(itemContentTitle))
+                        recentItem.appendChild(itemTitle)
+                        recentItem.appendChild(document.createTextNode(itemContentText))
+                        itemLink.className = "fa fa-share fa-lg formatLink"
+                        itemLink.href = itemContent.href
+                        recentItem.appendChild(itemLink)
+                        recentList.appendChild(recentItem)
+                        saveContent(recentItem.id, (itemContentTitle + "|" + itemContentText + "|" + itemContent.href), itemListID[d])
+                    }
                 }
-                recentList.parentElement.parentElement.getElementsByTagName("span")[0].className = itemListIcon[d]
+                document.getElementById(itemListID[d] + "xIconx").className = itemListIcon[d]
             }
 
             for (let k = 0; k < photoList.length; k++) {
@@ -70,6 +71,8 @@ function getContent() {
                 picLink.appendChild(pic)
                 photoDisplay.appendChild(picLink)
             }
+            document.getElementById(photoDisplay.id + "xIconx").className = "fa fa-picture-o"
+
         })
 }
 function showProfile() {
@@ -90,33 +93,45 @@ function showProfile() {
 }
 function getGroups(NumOfDays) {
     try {
+        var k = 1
         let selectedGroups = []
         let fileLocation = (window.location.hostname == "localhost") ? "/Discussion/list/28118/discussion-groups.html" : "/Discussion/list/28118/discussion-groups"
         $.get(fileLocation, function () { })
             .done(function (responseText) {
                 let forums = new DOMParser().parseFromString(responseText, "text/html")
                 let forumName = forums.getElementsByClassName("clsBodyText")
-                let groupCheck = "(Group is included on My Woodbridge)"
+                let dateCheck = forums.getElementsByClassName("clsBodyItalic")
+                let currentDate = new Date()
                 for (let p = 2; p < forumName.length; p += 2) {
-                    let includeGroup = forumName[p].innerText.includes(groupCheck)
-                    if (includeGroup == true) {
-                        let groupID = forumName[p - 1].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
-                        let groupName = forumName[p - 1].innerText
-                        selectedGroups.push(groupID + "|" + groupName)
+
+                    let dateText = dateCheck[k].innerText
+                    let dateNum = dateText.indexOf("Last Post:")
+                    if (dateNum > -1) {
+                        let postDate = new Date(dateText.substr(dateNum + 10, 18))
+                        let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
+                        if (dayDiff <= NumOfDays) {
+
+                            let groupID = forumName[p - 1].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
+                            let groupName = forumName[p - 1].innerText
+                            selectedGroups.push(groupID + "|" + groupName)
+                          
+                           
+                        }
+                       
                     }
-                }
-                showPosts(selectedGroups, NumOfDays)
+                    
+                k++}
+                for (let h = 0; h < selectedGroups.length; h++) { showPosts(selectedGroups[h].split("|")[0], NumOfDays) }
             })
-    } catch { }
+            .fail(fileLocation, function () {return })
+    } catch {alert(error.message) }
 }
 
 function showPosts(groupID, NumOfDays) {
     try {
-        let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + groupID + ".html" : "/Discussion/28118~8364"
+        let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + groupID + ".html" : "/Discussion/28118~" + groupID
         let currentDate = new Date()
         let forumPosts = document.getElementById("post")
-        forumPosts.parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-spinner fa-pulse fa-fw"
-
         $.get(selectedPost, function () { })
             .done(function (responseText) {
 
@@ -131,7 +146,7 @@ function showPosts(groupID, NumOfDays) {
                     let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
                     let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
 
-                    if (dayDiff < NumOfDays) {
+                    if (dayDiff <= NumOfDays) {
                         let currentPost = document.createElement("p")
                         let postHeader = document.createElement("span")
                         let postMessage = document.createElement("span")
@@ -149,6 +164,7 @@ function showPosts(groupID, NumOfDays) {
                             replys.className = "fa fa-comments fa-lg formatLink"
                             replys.href = "javascript:showReplies(" + document.getElementById("post").getElementsByTagName("p").length + ")"
                             postHeader.appendChild(replys)
+                            postHeader.appendChild(document.createTextNode(" (" + (messageTexts.length - 1) + ") "))
                         }
 
                         postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
@@ -167,14 +183,14 @@ function showPosts(groupID, NumOfDays) {
                         forumPosts.appendChild(currentPost)
                     }
                 }
-                forumPosts.parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-comments-o"
+                document.getElementById(forumPosts.id + "xIconx").className = "fa fa-comments-o"
             })
-
+          
+     
     } catch (error) {
         alert(error.message)
     }
 }
-
 function showHistory() {
     let k = 2
     let emails = document.getElementById("message").getElementsByTagName("p")
@@ -190,7 +206,7 @@ function showHistory() {
 function showPostHistory() {
     document.getElementById("post").innerHTML = ""
     postHistoryLen += 90
-    showPosts(8364, postHistoryLen)
+    getGroups(postHistoryLen)
 }
 function showReplies(p_id) {
     var testSpans = document.getElementById("post").getElementsByTagName("p")[p_id].getElementsByTagName("span")
@@ -202,8 +218,6 @@ function showDocuments() {
     try {
         let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
         let documentList = document.getElementById("document")
-
-        documentList.parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-spinner fa-pulse fa-fw"
         $.get(fileLocation, function () { })
             .done(function (responseText) {
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
@@ -216,8 +230,8 @@ function showDocuments() {
                     selectedDoc.href = documentLink[p].href
                     resourceItem.appendChild(selectedDoc)
                     documentList.appendChild(resourceItem)
-                } documentList.parentElement.parentElement.getElementsByTagName("span")[0].className = "fa fa-file-text-o"
-
+                }
+                document.getElementById(documentList.id + "xIconx").className = "fa fa-file-text-o"
             })
     } catch (error) {
     }
