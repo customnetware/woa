@@ -81,15 +81,16 @@ function getContent() {
 
             }
             document.getElementById(photoDisplay.id + "xIconx").className = "fa fa-picture-o"
-            let residentNameFrm = myWoodbridge.getElementsByClassName("clsHeader")[0].innerText
-            let residentName = document.getElementsByClassName("clsHeader")[0]
-            if (residentNameFrm !== null && residentName !== null) {
-                if (residentName.getElementsByTagName("a").length > 0) {
-                    residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
-                } else {
-                    residentName.innerText = residentNameFrm
-                }
-            }
+            document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
+            //let residentNameFrm = myWoodbridge.getElementsByClassName("clsHeader")[0].innerText
+            //let residentName = document.getElementsByClassName("clsHeader")[0]
+            //if (residentNameFrm !== null && residentName !== null) {
+            //    if (residentName.getElementsByTagName("a").length > 0) {
+            //        residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
+            //    } else {
+            //        residentName.innerText = residentNameFrm
+            //    }
+            //}
         })
 
 }
