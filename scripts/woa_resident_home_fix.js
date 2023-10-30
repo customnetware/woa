@@ -30,11 +30,10 @@ function getContent() {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
             let photoList = myWoodbridge.querySelectorAll("[id^=gallery_link_]")
             let galleryLink = myWoodbridge.querySelectorAll("[class^=gallery_txt_sub]")
-
+            let galleryText = myWoodbridge.getElementsByClassName("left")
             for (let d = 0; d < itemListID.length; d++) {
                 let recentList = document.getElementById(itemListID[d])
                 let recentItems = myWoodbridge.getElementsByClassName(itemListID[d])
-
                 for (let p = 0; p < recentItems.length; p++) {
                     let itemTitle = document.createElement("span")
                     let itemLink = document.createElement("a")
@@ -61,18 +60,27 @@ function getContent() {
                 }
                 document.getElementById(itemListID[d] + "xIconx").className = itemListIcon[d]
             }
-
+            let test = photoDisplay.getElementsByTagName("div")
             for (let k = 0; k < photoList.length; k++) {
+                let picSpan = document.createElement("span")
+                picSpan.style.paddingLeft = "10px"
+                picSpan.style.fontSize=".8em"
                 let picLink = document.createElement("a")
-                picLink.href = galleryLink[k].getElementsByTagName("a")[0].href
                 let pic = document.createElement("img")
+
+                picSpan.innerText = galleryText[k].innerText.replace(".jpg", "")
+
+                picLink.href = galleryLink[k].getElementsByTagName("a")[0].href
+
                 pic.src = photoList[k].src
                 pic.className = "recentPic"
+
                 picLink.appendChild(pic)
-                photoDisplay.appendChild(picLink)
+                picLink.appendChild(picSpan)
+                test[k].appendChild(picLink)
+
             }
             document.getElementById(photoDisplay.id + "xIconx").className = "fa fa-picture-o"
-
         })
 }
 function showProfile() {
@@ -196,9 +204,6 @@ function showHistory() {
             if (updateNum == 2) { break } else { updateNum++ }
         }
     }
-
-
-
 }
 function showDocuments() {
     try {
@@ -230,7 +235,6 @@ function saveContent(saveKey, saveValue, saveType) {
             if (retrievedData !== null) {
                 if (retrievedData.includes(saveKey)) { return }
                 var emailData = JSON.parse(retrievedData)
-
             } else { var emailData = [] }
             emailData.push([saveKey, newEmail[0], newEmail[1], newEmail[2]])
             let currentEmails = JSON.stringify(emailData)
