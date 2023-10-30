@@ -1,15 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Discussion",
-    "\\Discussion\\list",
-    "\\Discussion\\list\\28118",
     "\\homepage",
-    "\\homepage\\28118",
-    "\\resourcecenter",
-    "\\resourcecenter\\28118",
     "\\scripts"
   ],
-  "SelectedNode": "\\woa_resident_home.html",
+  "SelectedNode": "\\scripts\\woa_resident_home_fix.js",
   "PreviewInSolutionExplorer": false
 }

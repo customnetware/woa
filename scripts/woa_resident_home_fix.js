@@ -31,6 +31,7 @@ function getContent() {
             let photoList = myWoodbridge.querySelectorAll("[id^=gallery_link_]")
             let galleryLink = myWoodbridge.querySelectorAll("[class^=gallery_txt_sub]")
             let galleryText = myWoodbridge.getElementsByClassName("left")
+
             for (let d = 0; d < itemListID.length; d++) {
                 let recentList = document.getElementById(itemListID[d])
                 let recentItems = myWoodbridge.getElementsByClassName(itemListID[d])
@@ -60,28 +61,37 @@ function getContent() {
                 }
                 document.getElementById(itemListID[d] + "xIconx").className = itemListIcon[d]
             }
-            let test = photoDisplay.getElementsByTagName("div")
+            let picList = photoDisplay.getElementsByTagName("div")
             for (let k = 0; k < photoList.length; k++) {
                 let picSpan = document.createElement("span")
-                picSpan.style.paddingLeft = "10px"
-                picSpan.style.fontSize=".8em"
                 let picLink = document.createElement("a")
                 let pic = document.createElement("img")
 
+                picSpan.style.paddingLeft = "10px"
+                picSpan.style.fontSize = ".8em"
                 picSpan.innerText = galleryText[k].innerText.replace(".jpg", "")
-
-                picLink.href = galleryLink[k].getElementsByTagName("a")[0].href
 
                 pic.src = photoList[k].src
                 pic.className = "recentPic"
 
+                picLink.href = galleryLink[k].getElementsByTagName("a")[0].href
                 picLink.appendChild(pic)
                 picLink.appendChild(picSpan)
-                test[k].appendChild(picLink)
+                picList[k].appendChild(picLink)
 
             }
             document.getElementById(photoDisplay.id + "xIconx").className = "fa fa-picture-o"
+            let residentNameFrm = myWoodbridge.getElementsByClassName("clsHeader")[0].innerText
+            let residentName = document.getElementsByClassName("clsHeader")[0]
+            if (residentNameFrm !== null && residentName !== null) {
+                if (residentName.getElementsByTagName("a").length > 0) {
+                    residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
+                } else {
+                    residentName.innerText = residentNameFrm
+                }
+            }
         })
+
 }
 function showProfile() {
     let profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
@@ -89,21 +99,13 @@ function showProfile() {
     $.get(profilePage, function () {
     }).done(function (responseText) {
         let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
-        let residentNameText = profileDoc.getElementsByTagName("h2")[0].innerText
-        let residentName = document.getElementsByClassName("clsHeader")[0]
         document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
-        if (residentName.getElementsByTagName("a").length > 0) {
-            residentName.getElementsByTagName("a")[0].innerText = residentNameText
-        } else {
-            residentName.innerText = residentNameText
-        }
     })
 }
 function getGroups(NumOfDays) {
     try {
         let selectedGroups = [8030, 8364]
         for (let h = 0; h < selectedGroups.length; h++) { showPosts(selectedGroups[h], NumOfDays) }
-
     } catch { alert(error.message) }
 }
 
