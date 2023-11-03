@@ -1,24 +1,3 @@
-var postHistoryLen = 60
-$(window).load(function () {
-    try {
-        getContent()
-        showProfile()
-        getGroups(61)
-        showDocuments()
-
-        if (document.getElementById("resDisplayName") !== null) {
-            document.getElementById("resDisplayName").innerText = "My Woodbridge"
-        }
-        if (document.getElementsByClassName("association-name") !== null) {
-            document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
-        }
-    }
-    catch (err) {
-        if (window.location.hostname == "localhost") {
-            document.getElementById("errText").innerHTML = err.message
-        } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
-    }
-})
 function getContent() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     let sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
@@ -78,21 +57,10 @@ function getContent() {
                 picLink.appendChild(pic)
                 picLink.appendChild(picSpan)
                 picList[k].appendChild(picLink)
-
             }
             document.getElementById(photoDisplay.id + "xIconx").className = "fa fa-picture-o"
             document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
-            //let residentNameFrm = myWoodbridge.getElementsByClassName("clsHeader")[0].innerText
-            //let residentName = document.getElementsByClassName("clsHeader")[0]
-            //if (residentNameFrm !== null && residentName !== null) {
-            //    if (residentName.getElementsByTagName("a").length > 0) {
-            //        residentName.getElementsByTagName("a")[0].innerText = residentNameFrm
-            //    } else {
-            //        residentName.innerText = residentNameFrm
-            //    }
-            //}
         })
-
 }
 function showProfile() {
     let profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
@@ -113,12 +81,10 @@ function getGroups(NumOfDays) {
 function showPosts(groupID, NumOfDays) {
     try {
         let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + groupID + ".html" : "/Discussion/28118~" + groupID
-
         let currentDate = new Date()
         let forumPosts = document.getElementById("post")
         $.get(selectedPost, function () { })
             .done(function (responseText) {
-
                 let forum = new DOMParser().parseFromString(responseText, "text/html")
                 let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
                 let postContents = forum.querySelectorAll("[id^=contents]")
@@ -135,10 +101,9 @@ function showPosts(groupID, NumOfDays) {
                         let postHeader = document.createElement("span")
                         let postMessage = document.createElement("span")
                         let postAuthor = document.createElement("span")
+                        let postReply = document.createElement("a")
 
                         postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
-
-                        let postReply = document.createElement("a")
                         postReply.className = "fa fa-reply fa-lg formatLink"
                         postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
                         postHeader.appendChild(postReply)
@@ -150,7 +115,6 @@ function showPosts(groupID, NumOfDays) {
                             postHeader.appendChild(replys)
                             postHeader.appendChild(document.createTextNode(" (" + (messageTexts.length - 1) + ") "))
                         }
-
                         postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
                         postAuthor.appendChild(document.createTextNode(messageAuthor[0].innerText))
                         currentPost.appendChild(postHeader)
@@ -169,8 +133,6 @@ function showPosts(groupID, NumOfDays) {
                 }
                 document.getElementById(forumPosts.id + "xIconx").className = "fa fa-comments-o"
             })
-
-
     } catch (error) {
         alert(error.message)
     }
@@ -180,32 +142,31 @@ function showPosts(groupID, NumOfDays) {
     getGroups(postHistoryLen)
 }
 function showReplies(p_id) {
-    var testSpans = document.getElementById("post").getElementsByTagName("p")[p_id].getElementsByTagName("span")
-    for (let p = 3; p < testSpans.length; p++) {
-        if (testSpans[p].style.display == "block") { testSpans[p].style.display = "none" } else { testSpans[p].style.display = "block" }
+    var replies = document.getElementById("post").getElementsByTagName("p")[p_id].getElementsByTagName("span")
+    for (let p = 3; p < replies.length; p++) {
+        if (replies[p].style.display == "block") { replies[p].style.display = "none" } else { replies[p].style.display = "block" }
     }
 }
+
 function showHistory() {
-    let updateNum = 0
     let retrievedData = localStorage.getItem("emails")
     let emailData = JSON.parse(retrievedData)
-    let emails = document.getElementById("message").getElementsByTagName("p")
-    for (let p = 0; p < emailData.length; p++) {
-        if (document.getElementById(emailData[p][0]) == null) {
-            emails[updateNum].innerHTML = ""
-            let t_span = document.createElement("span")
-            t_span.innerText = emailData[p][1]
-            emails[updateNum].appendChild(t_span)
-
-            let t_Link = document.createElement("a")
-            t_Link.className = "fa fa-share fa-lg formatLink"
-            t_Link.href = emailData[p][3]
-            emails[updateNum].appendChild(document.createTextNode(emailData[p][2]))
-            emails[updateNum].appendChild(t_Link)
-            emails[updateNum].id = emailData[p][0]
-
-            if (updateNum == 2) { break } else { updateNum++ }
-        }
+    let recentList = document.getElementById("message")
+    recentList.innerHTML = ""
+    for (let p = 0; p < 3; p++) {
+        if (emailHistoryPos == emailData.length) { emailHistoryPos = 0 }
+        let recentItem = document.createElement("p")
+        let itemTitle = document.createElement("span")
+        let itemLink = document.createElement("a")
+        itemTitle.appendChild(document.createTextNode(emailData[emailHistoryPos][1]))
+        itemLink.className = "fa fa-share fa-lg formatLink"
+        itemLink.href = emailData[emailHistoryPos][3]
+        recentItem.id = emailData[emailHistoryPos][0]
+        recentItem.appendChild(itemTitle)
+        recentItem.appendChild(document.createTextNode(emailData[emailHistoryPos][2]))
+        recentItem.appendChild(itemLink)
+        recentList.appendChild(recentItem)
+        emailHistoryPos++
     }
 }
 function showDocuments() {

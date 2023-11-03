@@ -17,29 +17,7 @@
         <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
     </div>
     <div class="container-fluid">
-        <script>
-            function doesFileExist(urlToCheck) {
-                var fileRequest = new XMLHttpRequest()
-                fileRequest.open('HEAD', urlToCheck, false)
-                fileRequest.send()
-                if (fileRequest.status == '200') {
-                    return true
-                } else {
-                    return false
-                }
-            }
-            try {
-                var result = doesFileExist("https://customnetware.github.io/woa/scripts/woa_resident_home.js")
-                if (result == false && window.location.hostname !== "localhost") {
-                    location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
-                }
-            } catch {
-                if (window.location.hostname == "localhost") {
-                    document.getElementById("errText").innerHTML = err.message
-                } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
-            }
 
-        </script>
         <style type="text/css">
             .formatHeader {
                 background-color: #999999;
@@ -132,13 +110,7 @@
         </style>
         <div class="row">
             <div class="col-md-8">
-                <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="newsxIconx"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/News/List/28118"></a>Recent News Articles </div>
-                    <div class="card-body">
-                        <div id="news" class="panel_news_content">
-                        </div>
-                    </div>
-                </div>
+
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="messagexIconx"></span>&nbsp;&nbsp;Latest Emails<a href="javascript:showHistory()" class="fa fa-history formatRight"></a></div>
                     <div class="card-body">
@@ -146,21 +118,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader">
-                        <span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="postxIconx"></span>&nbsp;&nbsp;Recent Disscussion Group Posts<a href="javascript:showPostHistory()" class="fa fa-history formatRight"></a>
-                    </div>
-                    <div class="card-body">
-                        <div id="post" class="panel_discuss_content">
-                        </div>
-                    </div>
-                </div>
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card z-depth-3 mb-3">
                             <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="documentxIconx"></span>&nbsp;&nbsp;Activities & Event Flyers <a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">(Resource Center)</a></div>
                             <div class="card-body">
                                 <div id="document" class="panel_resource_content">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card z-depth-3 mb-3">
+                            <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="eventxIconx"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"></a>Upcoming Events</div>
+                            <div class="card-body">
+                                <div id="event" class="panel_cal_content">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card z-depth-3 mb-3">
+                            <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="newsxIconx"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/News/List/28118"></a>Recent News Articles </div>
+                            <div class="card-body">
+                                <div id="news" class="panel_news_content">
                                 </div>
                             </div>
                         </div>
@@ -173,6 +151,14 @@
                                     <div style="width:33%; float:left !important"></div><div style="width: 33%; float:left !important"></div><div style="width:33%; float:left !important"></div>
                                 </div>
                             </div>
+                        </div><div class="card z-depth-3 mb-3">
+                            <div class="card-header border-success formatHeader">
+                                <span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="postxIconx"></span>&nbsp;&nbsp;Recent Disscussion Group Posts<a href="javascript:showPostHistory()" class="fa fa-history formatRight"></a>
+                            </div>
+                            <div class="card-body">
+                                <div id="post" class="panel_discuss_content">
+                                </div>
+                            </div>
                         </div>
                         <div class="card z-depth-3 mb-3">
                             <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="classifiedxIconx"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds"></a>Classified Items</div>
@@ -181,16 +167,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card z-depth-3 mb-3">
-                            <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true" id="eventxIconx"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"></a>Upcoming Events</div>
-                            <div class="card-body">
-                                <div id="event" class="panel_cal_content">
-                                </div>
-                            </div>
-                        </div>
+
 
                     </div>
                 </div>
+
             </div>
             <div class="col-md-4">
                 <div class="card z-depth-3 mb-3">
@@ -199,7 +180,6 @@
                         <img id="profileImage" width="110" src="" class="dropShadow" />To make changes to your sign in name or password, phone number, email address, profile image or other personal information stored on this site, click the <b>My Profile</b> button at the top right of this page. (if you are using a mobile device, click or tap the <b>Profile</b> link at the top of the page).
                     </div>
                 </div>
-
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader">Lakeview Clubhouse and Office Hours</div>
                     <div id="userProfile" class="card-body" style="padding:10px">
@@ -273,6 +253,30 @@
         </div>
         <div id="errText"></div>
         <script src="https://customnetware.github.io/woa/scripts/woa_resident_home_fix.js"></script>
+        <script>
+            var postHistoryLen = 60
+            var emailHistoryPos = 0
+            $(window).load(function () {
+                try {
+                    getContent()
+                    showProfile()
+                    getGroups(61)
+                    showDocuments()
+
+                    if (document.getElementById("resDisplayName") !== null) {
+                        document.getElementById("resDisplayName").innerText = "My Woodbridge"
+                    }
+                    if (document.getElementsByClassName("association-name") !== null) {
+                        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
+                    }
+                }
+                catch (err) {
+                    if (window.location.hostname == "localhost") {
+                        document.getElementById("errText").innerHTML = err.message
+                    } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
+                }
+            })</script>
+
         <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
 
     </div>
