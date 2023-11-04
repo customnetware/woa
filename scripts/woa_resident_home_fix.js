@@ -1,3 +1,29 @@
+
+postHistoryLen = 60
+emailHistoryPos = 0
+$(window).load(function () {
+
+    try {
+        getContent()
+        showProfile()
+        getGroups(61)
+        showDocuments()
+
+        if (document.getElementById("resDisplayName") !== null) {
+            document.getElementById("resDisplayName").innerText = "My Woodbridge"
+        }
+        if (document.getElementsByClassName("association-name") !== null) {
+            document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
+        }
+    }
+    catch (err) {
+        if (window.location.hostname == "localhost") {
+            document.getElementById("errText").innerHTML = err.message
+        } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
+    }
+})
+
+
 function getContent() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     let sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
