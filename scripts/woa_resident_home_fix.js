@@ -23,7 +23,6 @@ $(window).load(function () {
     }
 })
 
-
 function getContent() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     let sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
