@@ -4,6 +4,7 @@ emailHistoryPos = 0
 $(window).load(function () {
 
     try {
+        teststring = ""
         showProfile()
         showDocuments()
         getGroups(61)
