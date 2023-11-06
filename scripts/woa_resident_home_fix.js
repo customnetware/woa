@@ -88,7 +88,7 @@ function getContent() {
             document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
 
             showDocuments()
-            getGroups(61)
+         
             
             sortSavedData()
         })
@@ -225,6 +225,7 @@ function showDocuments() {
                     documentList.appendChild(resourceItem)
                 }
                 document.getElementById(documentList.id + "xIconx").className = "fa fa-file-text-o"
+                getGroups(61)
             })
     } catch (error) {
     }
