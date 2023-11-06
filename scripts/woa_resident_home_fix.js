@@ -9,8 +9,6 @@ $(window).load(function () {
         getGroups(61)
         showDocuments()
 
-
-
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
         }
@@ -27,9 +25,9 @@ $(window).load(function () {
 
 function getContent() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
-    let sentBy = "by Woodbridge HOA (Messenger@AssociationVoice.com)"
     let photoDisplay = document.getElementById("photo")
-    let itemListID = ["message", "classified", "news", "event"]
+    /*let itemListID = ["message", "classified", "news", "event"]*/
+    let itemListID = ["message"]
     let itemListIcon = ["fa fa-envelope-o", "fa fa-shopping-cart", "fa fa-newspaper-o", "fa fa-calendar"]
     $.get(residentPage, function () { })
         .done(function (responseText) {
@@ -51,7 +49,7 @@ function getContent() {
                     } else {
                         let recentItem = document.createElement("p")
                         let itemContent = recentItems[p].getElementsByTagName("a")[0]
-                        let itemContentTitle = itemContent.getAttribute("data-tooltip-title").replace(sentBy, "")
+                        let itemContentTitle = itemContent.getAttribute("data-tooltip-title").split("by")[0]
                         let itemContentText = itemContent.getAttribute("data-tooltip-text")
                         recentItem.id = itemContent.id.replace("link_", "")
                         itemTitle.appendChild(document.createTextNode(itemContentTitle))
@@ -182,23 +180,25 @@ function showReplies(p_id) {
 
 function showHistory() {
     let retrievedData = localStorage.getItem("emails")
-    let emailData = JSON.parse(retrievedData)
-    let recentList = document.getElementById("message")
-    recentList.innerHTML = ""
-    for (let p = 0; p < 3; p++) {
-        if (emailHistoryPos == emailData.length) { emailHistoryPos = 0 }
-        let recentItem = document.createElement("p")
-        let itemTitle = document.createElement("span")
-        let itemLink = document.createElement("a")
-        itemTitle.appendChild(document.createTextNode(emailData[emailHistoryPos][1]))
-        itemLink.className = "fa fa-share fa-lg formatLink"
-        itemLink.href = emailData[emailHistoryPos][3]
-        recentItem.id = emailData[emailHistoryPos][0]
-        recentItem.appendChild(itemTitle)
-        recentItem.appendChild(document.createTextNode(emailData[emailHistoryPos][2]))
-        recentItem.appendChild(itemLink)
-        recentList.appendChild(recentItem)
-        emailHistoryPos++
+    if (retrievedData !== null) {
+        let emailData = JSON.parse(retrievedData)
+        let recentList = document.getElementById("message")
+        recentList.innerHTML = ""
+        for (let p = 0; p < 3; p++) {
+            if (emailHistoryPos == emailData.length) { emailHistoryPos = 0 }
+            let recentItem = document.createElement("p")
+            let itemTitle = document.createElement("span")
+            let itemLink = document.createElement("a")
+            itemTitle.appendChild(document.createTextNode(emailData[emailHistoryPos][1]))
+            itemLink.className = "fa fa-share fa-lg formatLink"
+            itemLink.href = emailData[emailHistoryPos][3]
+            recentItem.id = emailData[emailHistoryPos][0]
+            recentItem.appendChild(itemTitle)
+            recentItem.appendChild(document.createTextNode(emailData[emailHistoryPos][2]))
+            recentItem.appendChild(itemLink)
+            recentList.appendChild(recentItem)
+            emailHistoryPos++
+        }
     }
 }
 function showDocuments() {
@@ -231,6 +231,7 @@ function sortSavedData() {
             emailData.sort()
             let currentEmails = JSON.stringify(emailData)
             localStorage.setItem("emails", currentEmails)
+            document.getElementsByClassName("fa fa-history formatRight")[0].style.display = "block"
         }
     }
 }
