@@ -8,6 +8,8 @@ $(window).load(function () {
         showProfile()
         getGroups(61)
         showDocuments()
+        sortSavedData()
+
 
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
@@ -166,9 +168,14 @@ function showPosts(groupID, NumOfDays) {
     getGroups(postHistoryLen)
 }
 function showReplies(p_id) {
-    var replies = document.getElementById("post").getElementsByTagName("p")[p_id].getElementsByTagName("span")
-    for (let p = 3; p < replies.length; p++) {
-        if (replies[p].style.display == "block") { replies[p].style.display = "none" } else { replies[p].style.display = "block" }
+    let posts = document.getElementById("post").getElementsByTagName("p")
+    for (let p = 0; p < posts.length; p++) {
+        let replies = posts[p].getElementsByTagName("span")
+        if (replies.length > 3) {
+            for (let r = 3; r < replies.length; r++) {
+                if (p == p_id) { if (replies[r].style.display == "block") { replies[r].style.display = "none" } else { replies[r].style.display = "block" } } else { replies[r].style.display = "none" }
+            }
+        }
     }
 }
 
@@ -178,7 +185,7 @@ function showHistory() {
     let recentList = document.getElementById("message")
     recentList.innerHTML = ""
     for (let p = 0; p < 3; p++) {
-        if (emailHistoryPos == emailData.length) { emailHistoryPos = 0 }
+        if (emailHistoryPos == emailData.length) { recentList.innerHTML = ""; emailHistoryPos = 0 }
         let recentItem = document.createElement("p")
         let itemTitle = document.createElement("span")
         let itemLink = document.createElement("a")
@@ -215,16 +222,26 @@ function showDocuments() {
     } catch (error) {
     }
 }
+function sortSavedData() {
+    var retrievedData = localStorage.getItem("emails")
+    var emailData = JSON.parse(retrievedData)
+    emailData.sort()
+    let currentEmails = JSON.stringify(emailData)
+    localStorage.setItem("emails", currentEmails)
+}
+ 
 function saveContent(saveKey, saveValue, saveType) {
     try {
         if (saveType == "message") {
             var newEmail = saveValue.split("|")
             var retrievedData = localStorage.getItem("emails")
+
             if (retrievedData !== null) {
                 if (retrievedData.includes(saveKey)) { return }
                 var emailData = JSON.parse(retrievedData)
             } else { var emailData = [] }
             emailData.push([saveKey, newEmail[0], newEmail[1], newEmail[2]])
+            emailData.sort()
             let currentEmails = JSON.stringify(emailData)
             localStorage.setItem("emails", currentEmails)
         }
