@@ -8,7 +8,7 @@ $(window).load(function () {
         showProfile()
         getGroups(61)
         showDocuments()
-        sortSavedData()
+
 
 
         if (document.getElementById("resDisplayName") !== null) {
@@ -86,6 +86,7 @@ function getContent() {
             }
             document.getElementById(photoDisplay.id + "xIconx").className = "fa fa-picture-o"
             document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
+            sortSavedData()
         })
 }
 function showProfile() {
@@ -223,11 +224,15 @@ function showDocuments() {
     }
 }
 function sortSavedData() {
-    var retrievedData = localStorage.getItem("emails")
-    var emailData = JSON.parse(retrievedData)
-    emailData.sort()
-    let currentEmails = JSON.stringify(emailData)
-    localStorage.setItem("emails", currentEmails)
+    let retrievedData = localStorage.getItem("emails")
+    if (retrievedData !== null) {
+        var emailData = JSON.parse(retrievedData)
+        if (emailData.length > 3) {
+            emailData.sort()
+            let currentEmails = JSON.stringify(emailData)
+            localStorage.setItem("emails", currentEmails)
+        }
+    }
 }
 
 function saveContent(saveKey, saveValue, saveType) {
@@ -241,7 +246,6 @@ function saveContent(saveKey, saveValue, saveType) {
                 var emailData = JSON.parse(retrievedData)
             } else { var emailData = [] }
             emailData.push([saveKey, newEmail[0], newEmail[1], newEmail[2]])
-            emailData.sort()
             let currentEmails = JSON.stringify(emailData)
             localStorage.setItem("emails", currentEmails)
         }
