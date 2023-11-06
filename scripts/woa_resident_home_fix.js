@@ -4,6 +4,9 @@ emailHistoryPos = 0
 $(window).load(function () {
 
     try {
+        showProfile()
+        showDocuments()
+        getGroups(61)
         getContent()
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
@@ -24,7 +27,7 @@ function getContent() {
     let photoDisplay = document.getElementById("photo")
     let itemListID = ["message", "classified", "news", "event"]
     let itemListIcon = ["fa fa-envelope-o", "fa fa-shopping-cart", "fa fa-newspaper-o", "fa fa-calendar"]
-    showProfile()
+   
     $.get(residentPage, function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
@@ -68,14 +71,8 @@ function getContent() {
                     let picSpan = document.createElement("span")
                     let picLink = document.createElement("a")
                     let pic = document.createElement("img")
-
-                    picSpan.style.paddingLeft = "10px"
-                    picSpan.style.fontSize = ".8em"
                     picSpan.innerText = galleryText[k].innerText.replace(".jpg", "")
-
                     pic.src = photoList[k].src
-                    pic.className = "recentPic"
-
                     picLink.href = galleryLink[k].getElementsByTagName("a")[0].href
                     picLink.appendChild(pic)
                     picLink.appendChild(picSpan)
@@ -88,7 +85,7 @@ function getContent() {
 
         })
         .always(function () {
-            showDocuments()
+          
             sortSavedData()
         })
 }
@@ -224,7 +221,7 @@ function showDocuments() {
                     documentList.appendChild(resourceItem)
                 }
                 document.getElementById(documentList.id + "xIconx").className = "fa fa-file-text-o"
-                getGroups(61)
+                
             })
     } catch (error) {
     }
