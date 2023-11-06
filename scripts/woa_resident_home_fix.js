@@ -5,8 +5,6 @@ $(window).load(function () {
 
     try {
         getContent()
-
-
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
         }
@@ -87,9 +85,10 @@ function getContent() {
             document.getElementById(photoDisplay.id + "xIconx").className = "fa fa-picture-o"
             document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
 
+
+        })
+        .always(function () {
             showDocuments()
-         
-            
             sortSavedData()
         })
 }
