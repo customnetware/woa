@@ -26,6 +26,7 @@ function getContent() {
     let photoDisplay = document.getElementById("photo")
     let itemListID = ["message", "classified", "news", "event"]
     let itemListIcon = ["fa fa-envelope-o", "fa fa-shopping-cart", "fa fa-newspaper-o", "fa fa-calendar"]
+    showProfile()
     $.get(residentPage, function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
@@ -86,9 +87,9 @@ function getContent() {
             document.getElementById(photoDisplay.id + "xIconx").className = "fa fa-picture-o"
             document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
 
-            showProfile()
-            getGroups(61)
             showDocuments()
+            getGroups(61)
+            
             sortSavedData()
         })
 }
