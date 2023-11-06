@@ -35,7 +35,6 @@ function getContent() {
             let photoList = myWoodbridge.querySelectorAll("[id^=gallery_link_]")
             let galleryLink = myWoodbridge.querySelectorAll("[class^=gallery_txt_sub]")
             let galleryText = myWoodbridge.getElementsByClassName("left")
-
             for (let d = 0; d < itemListID.length; d++) {
                 let recentList = document.getElementById(itemListID[d])
                 let recentItems = myWoodbridge.getElementsByClassName(itemListID[d])

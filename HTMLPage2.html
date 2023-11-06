@@ -10,89 +10,14 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-    <style>
-        #post p:nth-child(even) {
-            background-color: #eceeef
-        }
 
-        #post p {
-            margin: 0px;
-            padding: 0px !important
-        }
-
-            #post p span {
-                display: none;
-            }
-
-                #post p span:first-child {
-                    font-weight: 700;
-                    display: block
-                }
-
-                #post p span:nth-child(2) {
-                    display: block
-                }
-
-                #post p span:nth-child(3) {
-                    display: block
-                }
-
-                #post p span:nth-child(2n+4) {
-                    margin-top: 5px;
-                }
-    </style>
-    <div id="post" style="padding:10px;">
-
+    <div class="NormalSmall col-md-3" valign="top">
+        <a class="HoverLink" title="Add a new discussion topic" onmouseover="self.status = 'Add a new discussion topic'; return false;" onmouseout="self.status = '';" id="lnkAddTopic" href="javascript:AV.EditorLauncher.discussionTopic('','11323', '41993','new','New Topic','lnkAddTopic');">
+            <img src="/images/icons/icon-discussion-new.png" width="16" height="16" border="0" align="top" class="pngFix" style="margin-right: 5px;">
+            New Topic
+        </a>
     </div>
-    <script>
-        $(window).load(function () { showPosts(8364) })
-        function showPosts(groupID) {
-            try {
-                let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + groupID + ".html" : "/Discussion/28118~8364"
-                $.get(selectedPost, function () { })
-                    .done(function (responseText) {
-                        let forumPosts = document.getElementById("post")
-                        let forum = new DOMParser().parseFromString(responseText, "text/html")
-                        let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
-                        let postContents = forum.querySelectorAll("[id^=contents]")
-                        for (let h = 0; h < postHeaders.length; h++) {
-                            let messageTexts = postContents[h].getElementsByClassName("clsBodyText")
-                            let messageAuthor = postContents[h].getElementsByClassName("respAuthorWrapper")
-                            let messageContacts = postContents[h].getElementsByClassName("respReplyWrapper")
-                            let currentPost = document.createElement("p")
-                            let postHeader = document.createElement("span")
-                            let postMessage = document.createElement("span")
-                            let postAuthor = document.createElement("span")
-                            let postLink = document.createElement("a")
-                            postLink.innerHTML = postHeaders[h].innerText
-                            postLink.href = "javascript:showReplies(" + document.getElementById("post").getElementsByTagName("p").length + ")"
-                            postHeader.appendChild(postLink)
-                            postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
-                            postAuthor.appendChild(document.createTextNode(messageAuthor[0].innerText))
-                            currentPost.appendChild(postHeader)
-                            currentPost.appendChild(postMessage)
-                            currentPost.appendChild(postAuthor)
-                            for (let p = 1; p < messageTexts.length; p++) {
-                                let replyMessage = document.createElement("span")
-                                let replyAuthor = document.createElement("span")
-                                replyMessage.appendChild(document.createTextNode(messageTexts[p].innerText))
-                                replyAuthor.appendChild(document.createTextNode(messageAuthor[p].innerText))
-                                currentPost.appendChild(replyMessage)
-                                currentPost.appendChild(replyAuthor)
-                            }
-                            forumPosts.appendChild(currentPost)
-                        }
-                    })
-            } catch (error) {
-                alert(error.message)
-            }
-        }
-        function showReplies(p_id) {
-            var testSpans = document.getElementById("post").getElementsByTagName("p")[p_id].getElementsByTagName("span")
-            for (let p = 3; p < testSpans.length; p++) {
-                if (testSpans[p].style.display == "block") { testSpans[p].style.display = "none" } else { testSpans[p].style.display = "block" }
-            }
-        }
-    </script>
+    <form class="x-panel-body x-panel-body-noheader x-panel-body-noborder x-form" method="POST" id="ext-gen70"><input size="20" autocomplete="off" id="ext-comp-1044" name="action" class=" x-form-hidden x-form-field" value="post"><input size="20" autocomplete="off" id="ext-comp-1045" name="post_id" class=" x-form-hidden x-form-field" value=""><input size="20" autocomplete="off" id="ext-comp-1046" name="post_type" class=" x-form-hidden x-form-field" value="new"><input size="20" autocomplete="off" id="ext-comp-1047" name="forum_id" class=" x-form-hidden x-form-field" value="11323"><input size="20" autocomplete="off" id="ext-comp-1048" name="parent_post_id" class=" x-form-hidden x-form-field" value=""><input size="20" autocomplete="off" id="ext-comp-1049" name="post_body_text" class=" x-form-hidden x-form-field"><input size="20" autocomplete="off" id="ext-comp-1050" name="post_body_summary" class=" x-form-hidden x-form-field"><input size="20" autocomplete="off" id="ext-comp-1051" name="group_id" class=" x-form-hidden x-form-field" value="41993"><input size="20" autocomplete="off" id="ext-comp-1052" name="forum_name" class=" x-form-hidden x-form-field" value="Test Groups"><input size="20" autocomplete="off" id="ext-comp-1053" name="orig_notify" class=" x-form-hidden x-form-field" value=""><input size="20" autocomplete="off" id="ext-comp-1054" name="orig_email" class=" x-form-hidden x-form-field" value=""><input size="20" autocomplete="off" id="ext-comp-1055" name="orig_subject" class=" x-form-hidden x-form-field" value=""><div class="x-form-item " tabindex="-1" id="ext-gen73"><label for="ext-comp-1056" style="display:none;" class="x-form-item-label" id="ext-gen74"></label><div class="x-form-element" id="x-form-el-ext-comp-1056" style="padding-left:0;"><div id="ext-comp-1056" name="ext-comp-1056" class=" x-form-display-field form-items-container" style="font-weight: bold;">Subject</div></div><div class="x-form-clear-left"></div></div><div class="x-form-item " tabindex="-1" id="ext-gen75"><label for="ext-comp-1057" style="display:none;" class="x-form-item-label" id="ext-gen76"></label><div class="x-form-element" id="x-form-el-ext-comp-1057" style="padding-left:0;"><input type="text" size="20" autocomplete="off" id="ext-comp-1057" name="subject" class="x-form-text x-form-field form-items-container" style="padding-left: 8px; padding-right: 8px; width: 100%;"></div><div class="x-form-clear-left"></div></div><div id="ext-comp-1058" class=" av-editor-container" style="margin-bottom: 10px; width: 619px;"><div id="lbl_post_body" class=" x-form-item-label av-editor-ctrl-lbl" style="margin-bottom: 2px; width: 619px;">Text</div><div id="lbl_post_body" class=" x-form-item-label av-editor-ctrl-lbl" style="margin-bottom: 2px; width: 619px;">Text</div><input size="20" autocomplete="off" id="txtSpellpost_body" name="txtSpellpost_body" class=" x-form-hidden x-form-field"><input size="20" autocomplete="off" id="ext-comp-1059" name="post_body" class=" x-form-hidden x-form-field" value=""><textarea style="width: 611px; height: 294px;" autocomplete="off" id="txt_post_body" name="txt_post_body" class="x-form-textarea x-form-field"></textarea><div class="x-form-invalid-msg" id="div_post_bodyValMsg" style="display: none; width: 599px;"></div></div><div class="x-form-item " tabindex="-1" id="ext-gen78"><label for="ext-comp-1061" style="display:none;" class="x-form-item-label" id="ext-gen79">Options </label><div class="x-form-element" id="x-form-el-ext-comp-1061" style="padding-left:0;"><div class="x-form-check-wrap" id="ext-gen80"><input type="checkbox" autocomplete="off" id="ext-comp-1061" name="notify" class=" x-form-checkbox x-form-field form-items-container" value="0"><label for="ext-comp-1061" class="x-form-cb-label" id="ext-gen81">Send me an e-mail when someone responds to my post</label></div></div><div class="x-form-clear-left"></div></div></form>
+
 </body>
 </html>
