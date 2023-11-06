@@ -185,7 +185,7 @@ function showHistory() {
     let recentList = document.getElementById("message")
     recentList.innerHTML = ""
     for (let p = 0; p < 3; p++) {
-        if (emailHistoryPos == emailData.length) { recentList.innerHTML = ""; emailHistoryPos = 0 }
+        if (emailHistoryPos == emailData.length) { emailHistoryPos = 0 }
         let recentItem = document.createElement("p")
         let itemTitle = document.createElement("span")
         let itemLink = document.createElement("a")
@@ -229,7 +229,7 @@ function sortSavedData() {
     let currentEmails = JSON.stringify(emailData)
     localStorage.setItem("emails", currentEmails)
 }
- 
+
 function saveContent(saveKey, saveValue, saveType) {
     try {
         if (saveType == "message") {
