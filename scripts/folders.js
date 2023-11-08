@@ -30,7 +30,7 @@ function showDocuments(DoSort, selectedFolder) {
                     let documentName = documents.getElementById("contents" + selectedFolder).querySelectorAll(":scope > div")
                     let doclist = documentName[1].querySelectorAll(":scope > div")
            /*         let arrowHref = documents.getElementById("contents" + selectedFolder).parentElement.parentElement.parentElement.id.replace("contents", "").replace("contentInner", "000000")*/
-                    document.getElementById("bArrow").href = "javascript:showDocuments('Y','" + arrowHref + "')"
+                    /*document.getElementById("bArrow").href = "javascript:showDocuments('Y','" + arrowHref + "')"*/
                     for (let p = 0; p < doclist.length; p++) {
                         try {
                             let fileIcon = document.createElement("i")
