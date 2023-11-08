@@ -2,7 +2,6 @@
 postHistoryLen = 60
 emailHistoryPos = 0
 $(window).load(function () {
-
     try {
         showProfile()
         showDocuments()
@@ -15,46 +14,60 @@ $(window).load(function () {
             document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
         }
     }
-    catch (err) {
+    catch (error) {
         if (window.location.hostname == "localhost") {
-            document.getElementById("errText").innerHTML = err.message
+            document.getElementById("errText").innerHTML = error.message
         } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
     }
 })
 
 function getEmails() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
-     $.get(residentPage, function () { })
+    $.get(residentPage, function () { })
         .done(function (responseText) {
-            let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")    
-                try {          
-                    let recentItems = myWoodbridge.getElementsByClassName("message")
-                    for (let p = 0; p < recentItems.length; p++) {
-                        let itemTitle = document.createElement("span")
-                        let itemLink = document.createElement("a")
-                        let recentItem = document.createElement("p")
-                        let itemContent = recentItems[p].getElementsByTagName("a")[0]
-                        let itemContentTitle = itemContent.getAttribute("data-tooltip-title").split("by")[0]
-                        let itemContentText = itemContent.getAttribute("data-tooltip-text")
-                        recentItem.id = itemContent.id.replace("link_", "")
-                        itemTitle.appendChild(document.createTextNode(itemContentTitle))
-                        recentItem.appendChild(itemTitle)
-                        recentItem.appendChild(document.createTextNode(itemContentText))
-                        itemLink.className = "fa fa-share fa-lg formatLink"
-                        itemLink.href = itemContent.href
-                        recentItem.appendChild(itemLink)
-                        document.getElementById("message").appendChild(recentItem)
-                        saveContent(recentItem.id, (itemContentTitle + "|" + itemContentText + "|" + itemContent.href), "message")
-                    }
-                } catch { err }
-            document.getElementById("messagexIconx").className = "fa fa-envelope-o"      
-
+            let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
             document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
+            try {
+                let recentItems = myWoodbridge.getElementsByClassName("message")
+                for (let p = 0; p < recentItems.length; p++) {
+                    let itemTitle = document.createElement("span")
+                    let itemLink = document.createElement("a")
+                    let recentItem = document.createElement("p")
+                    let itemContent = recentItems[p].getElementsByTagName("a")[0]
+                    let itemContentTitle = itemContent.getAttribute("data-tooltip-title").split("by")[0]
+                    let itemContentText = itemContent.getAttribute("data-tooltip-text")
+                    recentItem.id = itemContent.id.replace("link_", "")
+                    itemTitle.appendChild(document.createTextNode(itemContentTitle))
+                    recentItem.appendChild(itemTitle)
+                    recentItem.appendChild(document.createTextNode(itemContentText))
+                    itemLink.className = "fa fa-share fa-lg formatLink"
+                    itemLink.href = itemContent.href
+                    recentItem.appendChild(itemLink)
+                    document.getElementById("message").appendChild(recentItem)
 
-
+                    let retrievedData = localStorage.getItem("emails")
+                    let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
+                    if ((retrievedData !== null && retrievedData.includes(recentItem.id) == false) || emailData.length == 0) {
+                        emailData.push([recentItem.id, itemContentTitle, itemContentText, itemContent.href])
+                        let currentEmails = JSON.stringify(emailData)
+                        localStorage.setItem("emails", currentEmails)
+                    }
+                }
+            } catch (error) { }
+            document.getElementById("messagexIconx").className = "fa fa-envelope-o"
+            
         })
         .always(function () {
-            sortSavedData()
+            let retrievedData = localStorage.getItem("emails")
+            if (retrievedData !== null) {
+                var emailData = JSON.parse(retrievedData)
+                if (emailData.length > 3) {
+                    emailData.sort()
+                    let currentEmails = JSON.stringify(emailData)
+                    localStorage.setItem("emails", currentEmails)
+                    document.getElementsByClassName("fa fa-history formatRight")[0].style.display = "block"
+                }
+            }
         })
 }
 function showProfile() {
@@ -72,7 +85,6 @@ function getGroups(NumOfDays) {
         for (let h = 0; h < selectedGroups.length; h++) { showPosts(selectedGroups[h], NumOfDays) }
     } catch { alert(error.message) }
 }
-
 function showPosts(groupID, NumOfDays) {
     try {
         let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + groupID + ".html" : "/Discussion/28118~" + groupID
@@ -87,10 +99,8 @@ function showPosts(groupID, NumOfDays) {
                     let messageTexts = postContents[h].getElementsByClassName("clsBodyText")
                     let messageAuthor = postContents[h].getElementsByClassName("respAuthorWrapper")
                     let messageContacts = postContents[h].getElementsByClassName("respReplyWrapper")
-
                     let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
                     let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-
                     if (dayDiff <= NumOfDays) {
                         let currentPost = document.createElement("p")
                         let postHeader = document.createElement("span")
@@ -131,7 +141,8 @@ function showPosts(groupID, NumOfDays) {
     } catch (error) {
         alert(error.message)
     }
-} function showPostHistory() {
+}
+function showPostHistory() {
     document.getElementById("post").innerHTML = ""
     postHistoryLen += 90
     getGroups(postHistoryLen)
@@ -147,7 +158,6 @@ function showReplies(p_id) {
         }
     }
 }
-
 function showHistory() {
     let retrievedData = localStorage.getItem("emails")
     if (retrievedData !== null) {
@@ -174,7 +184,6 @@ function showHistory() {
 function showDocuments() {
     try {
         let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
-        let documentList = document.getElementById("document")
         $.get(fileLocation, function () { })
             .done(function (responseText) {
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
@@ -186,10 +195,9 @@ function showDocuments() {
                     selectedDoc.innerHTML = documentName[p].innerHTML
                     selectedDoc.href = documentLink[p].href
                     resourceItem.appendChild(selectedDoc)
-                    documentList.appendChild(resourceItem)
+                    document.getElementById("document").appendChild(resourceItem)
                 }
-                document.getElementById(documentList.id + "xIconx").className = "fa fa-file-text-o"
-
+                document.getElementById("documentxIconx").className = "fa fa-file-text-o"
             })
     } catch (error) {
     }
@@ -202,7 +210,7 @@ function showPhotos() {
         let picList = photoDisplay.getElementsByTagName("div")
         let photoList = myWoodbridge.querySelectorAll("[id^=gallery_link_]")
         let galleryLink = myWoodbridge.querySelectorAll("[class^=gallery_txt_sub]")
-        let galleryText = myWoodbridge.getElementsByClassName("left")  
+        let galleryText = myWoodbridge.getElementsByClassName("left")
         for (let k = 0; k < photoList.length; k++) {
             let picSpan = document.createElement("span")
             let picLink = document.createElement("a")
@@ -214,34 +222,6 @@ function showPhotos() {
             picLink.appendChild(picSpan)
             picList[k].appendChild(picLink)
         }
-    } catch (err) { }
+    } catch (error) { }
     document.getElementById("photoxIconx").className = "fa fa-picture-o"
-}
-function sortSavedData() {
-    let retrievedData = localStorage.getItem("emails")
-    if (retrievedData !== null) {
-        var emailData = JSON.parse(retrievedData)
-        if (emailData.length > 3) {
-            emailData.sort()
-            let currentEmails = JSON.stringify(emailData)
-            localStorage.setItem("emails", currentEmails)
-            document.getElementsByClassName("fa fa-history formatRight")[0].style.display = "block"
-        }
-    }
-}
-
-function saveContent(saveKey, saveValue, saveType) {
-    try {
-        if (saveType == "message") {
-            var newEmail = saveValue.split("|")
-            var retrievedData = localStorage.getItem("emails")
-            if (retrievedData !== null) {
-                if (retrievedData.includes(saveKey)) { return }
-                var emailData = JSON.parse(retrievedData)
-            } else { var emailData = [] }
-            emailData.push([saveKey, newEmail[0], newEmail[1], newEmail[2]])
-            let currentEmails = JSON.stringify(emailData)
-            localStorage.setItem("emails", currentEmails)
-        }
-    } catch { err }
 }
