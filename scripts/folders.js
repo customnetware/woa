@@ -17,8 +17,8 @@
                                 let resourceItem = document.createElement("span")
                                 let link = document.createElement("a")
                                 let folderID = allChildren[p].getElementsByTagName("span")[0].id
-                                link.href = "javascript:test();"
-                               /* link.href = "javascript:showDocuments('Y','" + folderID.replace("f", "") + "');"*/
+                               
+                               link.href = "javascript:showDocuments('Y','" + folderID.replace("f", "") + "');"
                                 link.innerHTML = allChildren[p].getElementsByTagName("span")[0].innerText
                                 resourceItem.appendChild(link)
                                 document.getElementById("document").appendChild(resourceItem)
