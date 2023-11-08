@@ -25,7 +25,7 @@
                 display: block;
             }
 
-                #document span:nth-child(even) {
+                #document span:nth-child(odd) {
                     background-color: #eceeef
                 }
 
@@ -35,18 +35,22 @@
             padding: 0px;
             margin: 0px;
         }
+
+        .formatIcon {
+  
+            padding-right: 20px;
+    
+        }
     </style>
+ 
     <div style="width: 800px; margin-top:20px">
         <div style="float: right; width: 800px; text-align: right; vertical-align:middle">
             <a href="#" class="fa fa-arrow-left fa-lg formatRight" style="float:left; padding-left:10px" id="bArrow"></a>
             <a href="javascript:showDocuments('N')" class="fa fa-arrow-down fa-lg formatRight"></a>
             <a href="javascript:showDocuments('Y')" class="fa fa-arrow-up fa-lg formatRight"></a>
-
-        </div>
-        <div style="float: right; width: 400px; line-height: 50px; ">
         </div>
         <div id="document"></div>
     </div>
-    <script src="scripts/folders.js"></script>
+    <script src="https://customnetware.github.io/woa/scripts/folders.js"></script>
 </body>
 </html>
