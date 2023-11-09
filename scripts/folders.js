@@ -25,12 +25,35 @@ function showDocuments(DoSort, selectedFolder) {
                         resourceItem.appendChild(fileIcon)
                         resourceItem.appendChild(link)
                         document.getElementById("document").appendChild(resourceItem)
+
                     }
+
+                    let homeScreenID = ["000000"]
+                    let screenToSave = JSON.stringify(homeScreenID)
+                    localStorage.setItem("screenList", screenToSave)
+
+                    let homeSreen = []
+                    let currentScreen = document.getElementById("document").getElementsByTagName("span")
+                    for (let h = 0; h < currentScreen.length; h++) {
+                        homeSreen.push(currentScreen[h].innerHTML)
+                    }
+                    let saveFileList = JSON.stringify(homeSreen)
+                    localStorage.setItem(homeScreenID, saveFileList)
+
                 } else {
+
+
+                    let retrievedData = localStorage.getItem("screenList")
+                    if (retrievedData.includes(selectedFolder) == false) {
+                        let allScreens = JSON.parse(retrievedData)
+                        allScreens.push(selectedFolder)
+                        let screensToSave = JSON.stringify(allScreens)
+                        localStorage.setItem("screenList", screensToSave)
+                    }
+
                     let documentName = documents.getElementById("contents" + selectedFolder).querySelectorAll(":scope > div")
                     let doclist = documentName[1].querySelectorAll(":scope > div")
-           /*         let arrowHref = documents.getElementById("contents" + selectedFolder).parentElement.parentElement.parentElement.id.replace("contents", "").replace("contentInner", "000000")*/
-                    /*document.getElementById("bArrow").href = "javascript:showDocuments('Y','" + arrowHref + "')"*/
+
                     for (let p = 0; p < doclist.length; p++) {
                         try {
                             let fileIcon = document.createElement("i")
@@ -52,6 +75,16 @@ function showDocuments(DoSort, selectedFolder) {
                             document.getElementById("document").appendChild(resourceItem)
                         } catch { }
                     }
+                    document.getElementById("bArrow").href = "javascript:getLastPage('" + selectedFolder + "')"
+
+
+                    let subScreen = []
+                    let currentScreen = document.getElementById("document").getElementsByTagName("span")
+                    for (let h = 0; h < currentScreen.length; h++) {
+                        subScreen.push(currentScreen[h].innerHTML)
+                    }
+                    let saveFileList = JSON.stringify(subScreen)
+                    localStorage.setItem(selectedFolder, saveFileList)
                 }
 
                 /*let testArray = []*/
@@ -65,4 +98,38 @@ function showDocuments(DoSort, selectedFolder) {
     } catch (error) {
     }
 }
-function test() { alert("This is test") }
+function getLastPage(ScreenID) {
+    document.getElementById("document").innerHTML = ""
+    let retrievedData = localStorage.getItem("screenList")
+    let screens = JSON.parse(retrievedData)
+    let index = screens.indexOf(ScreenID)
+    let currentIndex = (index > 0) ? index - 1 : index
+
+
+
+    retrievedData = localStorage.getItem(screens[currentIndex])
+
+    if (retrievedData !== null) {
+        let fileListing = JSON.parse(retrievedData)
+        for (let p = 0; p < fileListing.length; p++) {
+            let currentFile = document.createElement("span")
+            currentFile.innerHTML = fileListing[p]
+            document.getElementById("document").appendChild(currentFile)
+        }
+    }
+
+    document.getElementById("bArrow").href = "javascript:getLastPage('" + screens[currentIndex] + "')"
+
+
+
+    //if (retrievedData !== null) {
+    //    
+    //    let recentList = document.getElementById("document")
+    //    recentList.innerHTML = ""
+    //    for (let p = 0; p < lastPage.length; p++) {
+    //        let rowContent = document.createElement("span")
+    //        rowContent.innerHTML = lastPage[p]
+    //        recentList.appendChild(rowContent)
+    //    }
+    //}
+}
