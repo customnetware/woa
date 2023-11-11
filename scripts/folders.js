@@ -1,12 +1,11 @@
 $(window).load(function () {
 
-    showDocuments('Y', '000000')
+    showDocuments('000000')
 })
-function showDocuments(DoSort, selectedFolder) {
+function showDocuments(selectedFolder) {
     document.getElementById("document").innerHTML = ""
     try {
         let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
-
         $.get(fileLocation, function () { })
             .done(function (responseText) {
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
@@ -27,11 +26,9 @@ function showDocuments(DoSort, selectedFolder) {
                         document.getElementById("document").appendChild(resourceItem)
 
                     }
-
                     let homeScreenID = ["000000"]
                     let screenToSave = JSON.stringify(homeScreenID)
                     localStorage.setItem("screenList", screenToSave)
-
                     let homeSreen = []
                     let currentScreen = document.getElementById("document").getElementsByTagName("span")
                     for (let h = 0; h < currentScreen.length; h++) {
@@ -41,8 +38,6 @@ function showDocuments(DoSort, selectedFolder) {
                     localStorage.setItem(homeScreenID, saveFileList)
 
                 } else {
-
-
                     let retrievedData = localStorage.getItem("screenList")
                     if (retrievedData.includes(selectedFolder) == false) {
                         let allScreens = JSON.parse(retrievedData)
@@ -50,28 +45,27 @@ function showDocuments(DoSort, selectedFolder) {
                         let screensToSave = JSON.stringify(allScreens)
                         localStorage.setItem("screenList", screensToSave)
                     }
-
-                    let documentName = documents.getElementById("contents" + selectedFolder).querySelectorAll(":scope > div")
-                    let doclist = documentName[1].querySelectorAll(":scope > div")
+                    let documentName = documents.getElementById("contents" + selectedFolder).querySelectorAll(":scope > div")[1]
+                    let doclist = documentName.querySelectorAll(":scope > div")
 
                     for (let p = 0; p < doclist.length; p++) {
                         try {
                             let fileIcon = document.createElement("i")
-
                             let resourceItem = document.createElement("span")
-                            let selectedDoc = document.createElement("a")
-                            selectedDoc.innerHTML = doclist[p].getElementsByTagName("span")[0].innerText
-                            if (doclist[p].getElementsByTagName("span")[0].id.startsWith("f")) {
+                            let docLink = document.createElement("a")
+                            let docSelected = doclist[p].getElementsByTagName("span")[0]
+                            docLink.innerHTML = docSelected.innerText
+                            if (docSelected.id.startsWith("f")) {
                                 fileIcon.className = "fa fa-folder-o formatIcon"
-                                selectedDoc.href = "javascript:showDocuments('Y','" + doclist[p].getElementsByTagName("span")[0].id.replace("f", "") + "');"
+                                docLink.href = "javascript:showDocuments('" + docSelected.id.replace("f", "") + "');"
                             } else {
                                 fileIcon.className = "fa fa-file-pdf-o formatIcon"
-                                let fileID = "contentsDoc" + doclist[p].getElementsByTagName("span")[0].id.replace("d", "")
+                                let fileID = "contentsDoc" + docSelected.replace("d", "")
                                 let selectedFile = documents.getElementById(fileID)
-                                selectedDoc.href = selectedFile.getElementsByTagName("a")[2].href
+                                docLink.href = selectedFile.getElementsByTagName("a")[2].href
                             }
                             resourceItem.appendChild(fileIcon)
-                            resourceItem.appendChild(selectedDoc)
+                            resourceItem.appendChild(docLink)
                             document.getElementById("document").appendChild(resourceItem)
                         } catch { }
                     }
@@ -86,17 +80,17 @@ function showDocuments(DoSort, selectedFolder) {
                     let saveFileList = JSON.stringify(subScreen)
                     localStorage.setItem(selectedFolder, saveFileList)
                 }
-
-                /*let testArray = []*/
-                //for (let p = 0; p < documentName.length; p++) {
-                //    testArray.push(documentName[p].innerHTML + "|" + documentLink[p])
-                //}
-                //testArray.sort()
-                //if (DoSort == "Y") { testArray.reverse() }
-
             })
     } catch (error) {
     }
+}
+function sortList() {
+    let testArray = []
+    for (let p = 0; p < documentName.length; p++) {
+        testArray.push(documentName[p].innerHTML + "|" + documentLink[p])
+    }
+    testArray.sort()
+    if (DoSort == "Y") { testArray.reverse() }
 }
 function getLastPage(ScreenID) {
     document.getElementById("document").innerHTML = ""
