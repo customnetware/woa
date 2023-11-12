@@ -1,5 +1,5 @@
 const fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
-function showDocuments(selectedFolder, previousFolder) {
+function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
     let currentScreen = localStorage.getItem(selectedFolder)
     if (currentScreen !== null) {
         let fileListing = JSON.parse(currentScreen)
@@ -41,7 +41,7 @@ function showDocuments(selectedFolder, previousFolder) {
                     let localDocID = remoteDoc.id.replace("f", "").replace("d", "")
                     if (isFolder == true) {
                         docIcon.className = "fa fa-folder-o formatIcon"
-                        docLink.href = "javascript:showDocuments('" + localDocID + "','" + selectedFolder + "');"
+                        docLink.href = "javascript:showDocuments('" + localDocID + "','" + selectedFolder + "'",+remoteDoc.innerText+"');"
                     } else {
                         docIcon.className = "fa fa-file-pdf-o formatIcon"
                         docLink.href = documents.getElementById("contentsDoc" + localDocID).getElementsByTagName("a")[2].href
