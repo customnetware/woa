@@ -41,7 +41,7 @@ function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
                     let localDocID = remoteDoc.id.replace("f", "").replace("d", "")
                     if (isFolder == true) {
                         docIcon.className = "fa fa-folder-o formatIcon"
-                        docLink.href = "javascript:showDocuments('" + localDocID + "','" + selectedFolder + "'",+remoteDoc.innerText+"');"
+                        docLink.href = "javascript:showDocuments('" + localDocID + "','" + selectedFolder + "',"+remoteDoc.innerText+"');"
                     } else {
                         docIcon.className = "fa fa-file-pdf-o formatIcon"
                         docLink.href = documents.getElementById("contentsDoc" + localDocID).getElementsByTagName("a")[2].href
