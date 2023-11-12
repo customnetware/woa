@@ -25,7 +25,7 @@ function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
                     docIcon1.className = "fa fa-folder-open-o formatIcon"
                     docLink.href = "javascript:showDocuments('" + previousFolder+"')"
 
-                    docLink.innerHTML = "Previous folder name goes here"
+                    docLink.innerHTML = PreviousFolderName
                     docRow.appendChild(docIcon1)
                     docRow.appendChild(docLink)
                     document.getElementById("document").appendChild(docRow)
