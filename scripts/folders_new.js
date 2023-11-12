@@ -1,22 +1,5 @@
 const fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
-function showDocuments(selectedFolder) {
-
-    let screenToSave = ""
-    let nextScreen = selectedFolder
-    if (selectedFolder == "000000") {
-        let startFolder = [selectedFolder]
-        screenToSave = JSON.stringify(startFolder)
-        nextScreen = selectedFolder
-    } else {
-        let savedScreens = localStorage.getItem("screenList")
-        let allScreens = JSON.parse(savedScreens)
-        if (allScreens.includes(selectedFolder) == false) { allScreens.push(selectedFolder) }
-        screenToSave = JSON.stringify(allScreens)
-        nextScreen = allScreens[allScreens.indexOf(selectedFolder) - 1]
-    }
-    localStorage.setItem("screenList", screenToSave)
-    document.getElementById("bArrow").href = "javascript:showDocuments('" + nextScreen + "')"
-
+function showDocuments(selectedFolder, previousFolder) {
     let currentScreen = localStorage.getItem(selectedFolder)
     if (currentScreen !== null) {
         let fileListing = JSON.parse(currentScreen)
@@ -29,11 +12,26 @@ function showDocuments(selectedFolder) {
     } else {
         $.get(fileLocation, function () { })
             .done(function (responseText) {
-
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
                 let parentElement = (selectedFolder == "000000") ? documents.querySelector(".clsTree") : documents.getElementById("contents" + selectedFolder).querySelectorAll(":scope > div")[1]
                 let documentList = parentElement.querySelectorAll(":scope > div")
                 document.getElementById("document").innerHTML = ""
+
+                if (selectedFolder !== "000000") {
+                    let docRow = document.createElement("span")
+                    let docLink = document.createElement("a")
+                    let docIcon1 = document.createElement("i")
+
+                    docIcon1.className = "fa fa-folder-open-o formatIcon"
+                    docLink.href = "javascript:showDocuments('" + previousFolder+"')"
+
+                    docLink.innerHTML = "Previous folder name goes here"
+                    docRow.appendChild(docIcon1)
+                    docRow.appendChild(docLink)
+                    document.getElementById("document").appendChild(docRow)
+                }
+
+
                 for (let d = 0; d < documentList.length; d++) {
                     let docRow = document.createElement("span")
                     let docLink = document.createElement("a")
@@ -43,7 +41,7 @@ function showDocuments(selectedFolder) {
                     let localDocID = remoteDoc.id.replace("f", "").replace("d", "")
                     if (isFolder == true) {
                         docIcon.className = "fa fa-folder-o formatIcon"
-                        docLink.href = "javascript:showDocuments('" + localDocID + "');"
+                        docLink.href = "javascript:showDocuments('" + localDocID + "','" + selectedFolder + "');"
                     } else {
                         docIcon.className = "fa fa-file-pdf-o formatIcon"
                         docLink.href = documents.getElementById("contentsDoc" + localDocID).getElementsByTagName("a")[2].href
@@ -63,5 +61,5 @@ function showDocuments(selectedFolder) {
 }
 
 $(window).load(function () {
-    showDocuments('000000')
+    showDocuments('000000', '000000')
 })
