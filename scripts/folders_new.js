@@ -2,10 +2,11 @@ const fileLocation = (window.location.hostname == "localhost") ? "/resourcecente
 function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
     document.getElementById("document").innerHTML = ""
     let waitRow = document.createElement("span")
-    let waitSpan = document.createElement("i")
+    let waitIcon = document.createElement("i")
 
-    waitSpan.className = "fa fa-circle-o-notch fa-pulse fa-fw fa-4x"
-    waitRow.appendChild(waitSpan)
+    waitIcon.className = "fa fa-circle-o-notch fa-pulse fa-fw formatIcon"
+    waitRow.appendChild(waitIcon)
+    waitRow.innerText="The requested folders and files are loading..."
 
     document.getElementById("document").appendChild(waitRow)
     let currentScreen = localStorage.getItem(selectedFolder)
