@@ -1,6 +1,8 @@
 const fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
 function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
-    document.getElementById("document").innerHTML = ""
+    let waitSpan = document.createElement("span")
+    waitSpan.className ="fa fa-circle-o-notch fa-pulse fa-fw fa-4x"
+    document.getElementById("document").appendChild(waitSpan)
     let currentScreen = localStorage.getItem(selectedFolder)
     if (currentScreen !== null) {
         let fileListing = JSON.parse(currentScreen)
@@ -16,7 +18,7 @@ function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
                 let parentElement = (selectedFolder == "000000") ? documents.querySelector(".clsTree") : documents.getElementById("contents" + selectedFolder).querySelectorAll(":scope > div")[1]
                 let documentList = parentElement.querySelectorAll(":scope > div")
-                
+                document.getElementById("document").innerHTML = ""
 
                 if (selectedFolder !== "000000") {
                     let docRow = document.createElement("span")
