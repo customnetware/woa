@@ -4,9 +4,9 @@ function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
     let waitRow = document.createElement("span")
     let waitIcon = document.createElement("i")
 
-    waitIcon.className = "fa fa-circle-o-notch fa-pulse fa-fw formatIcon"
+    waitIcon.className = "fa fa-spinner fa-pulse fa-fw"
     waitRow.appendChild(waitIcon)
-    waitRow.appendChild(document.createTextNode("The requested folders and files are loading..."))
+    waitRow.appendChild(document.createTextNode("  The requested folders and files are loading..."))
 
     document.getElementById("document").appendChild(waitRow)
     let currentScreen = localStorage.getItem(selectedFolder)
