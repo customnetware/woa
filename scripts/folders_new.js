@@ -1,10 +1,13 @@
 const fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
 function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
     document.getElementById("document").innerHTML = ""
+    let waitRow = document.createElement("span")
     let waitSpan = document.createElement("i")
 
-    waitSpan.className ="fa fa-circle-o-notch fa-pulse fa-fw fa-4x"
-    document.getElementById("document").appendChild(waitSpan)
+    waitSpan.className = "fa fa-circle-o-notch fa-pulse fa-fw fa-4x"
+    waitRow.appendChild(waitSpan)
+
+    document.getElementById("document").appendChild(waitRow)
     let currentScreen = localStorage.getItem(selectedFolder)
     if (currentScreen !== null) {
         let fileListing = JSON.parse(currentScreen)
