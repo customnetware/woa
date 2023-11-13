@@ -59,22 +59,15 @@ function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
 }
 function screenSort(sortDirection) {
     let screens = document.getElementById("document").getElementsByTagName("span")
-
-
     let sortScreens = []
     for (let s = 1; s < screens.length; s++) {
         sortScreens.push(screens[s].innerHTML)
     }
-
     sortScreens.sort()
-    if (sortDirection == "U") {  sortScreens.reverse() }
-  
-
+    if (sortDirection == "U") { sortScreens.reverse() }
     for (let s = 0; s < sortScreens.length; s++) {
-
         screens[s + 1].innerHTML = sortScreens[s]
     }
-
 }
 $(window).load(function () {
     showDocuments('000000', '000000')

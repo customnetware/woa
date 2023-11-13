@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+    <script src="https://www.ourwoodbridge.net/Assets/Libs/BootStrap/4.0.0-alpha/dist/js/bootstrap.min.js"></script>
+    <link href="https://www.ourwoodbridge.net/Assets/Libs/BootStrap/4.0.0-alpha/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
+<body>
+    <table width="100%" cellspacing="0" cellpadding="2">
+        <tbody>
+            <tr><td class="clsLabel">Form: </td><td class="clsBodyText" width="100%">Safety Concern Report</td></tr>
+            <tr><td class="clsLabel" nowrap="">Submitted By: </td><td class="clsBodyText">Richard Colbert</td></tr>
+            <tr><td class="clsLabel">Date: </td><td class="clsBodyText">10/17/2022</td></tr>
+            <tr><td class="clsLabel">Status: </td><td class="clsBodyText">CANCELLED</td></tr>
+            <tr>
+                <td colspan="2" style="padding-left:20px;">
+                    <table cellspacing="3" cellpadding="0" border="0" width="100%">
+                        <tbody>
+                            <tr height="1"><td><img src="/images/1ptrans.gif" width="110" height="1" alt=""></td><td width="100%"><img src="/images/1ptrans.gif" width="100" height="1" alt=""></td></tr>
+                            <tr><td class="clsLabel" unselectable="on" style="cursor:default;">Date</td><td valign="top" class="clsBodyText">10/17/2022</td></tr>
+                            <tr><td class="clsLabel" unselectable="on" style="cursor:default;">Time Of Day</td><td valign="top" class="clsBodyText">Afternoon</td></tr>
+                            <tr><td class="clsLabel" unselectable="on" style="cursor:default;">Location</td><td valign="top" class="clsBodyText">Softball Field Bleachers</td></tr>
+                            <tr><td class="clsLabel" unselectable="on" style="cursor:default;">Description of Concern</td><td valign="top" class="clsBodyText">From resident Bob Taglia - suggests the new bleach railing "support posts be padded for safety. They protrude outside and above the railing and could cause severe damage to a person if they were to lean or accidentally fall against them"</td></tr>
+                            <tr><td class="clsLabel" unselectable="on" style="cursor:default;">Name</td><td valign="top" class="clsBodyText">Richard Colbert</td></tr>
+                            <tr><td colspan="2"><hr></td></tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr><td colspan="2"><img alt="" border="0" src="../images/1ptrans.gif" width="10" height="10"></td></tr>
+        </tbody>
+    </table>
+
+    <div id="reports" style="padding:20px; width:1020px; margin-left:auto; margin-right:auto"></div>
+    <script>
+        const fileLocation = (window.location.hostname == "localhost") ? "/Reports/Display.html" : "/Reports/Display?report_id=1%7C317237&start_date=10%2F14%2F2022&end_date=11%2F12%2F2023&format_id=2"
+        $.get(fileLocation, function () { })
+            .done(function (responseText) {
+                let submittedForms = new DOMParser().parseFromString(responseText, "text/html")
+               let formContents = submittedForms.getElementsByTagName("table")
+
+                for (let s = 1; s < formContents.length; s += 2) {
+
+                    let reportLine = document.createElement("p")
+                    let formContent = formContents[s].getElementsByClassName("clsBodyText")
+                    if (formContent[3].innerText !== "COMPLETE" && formContent[3].innerText !== "CANCELLED") { 
+                    reportLine.innerHTML = "<b>Submitted: </b>" + formContent[2].innerText + " <b>Submitted By: </b>" + formContent[1].innerText + " <b>Status: </b>" + formContent[3].innerText+"<br><b>Concern: </b> <i>" + formContent[6].innerText + "</i><br />" + formContent[7].innerText
+
+                        document.getElementById("reports").appendChild(reportLine)
+                    }
+                }
+
+
+
+
+
+
+            })
+    </script>
+</body>
+
+</html>

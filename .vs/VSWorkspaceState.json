@@ -1,10 +1,11 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Reports",
     "\\resourcecenter",
     "\\resourcecenter\\28118",
     "\\scripts"
   ],
-  "SelectedNode": "\\scripts\\woa_resident_home.js",
+  "SelectedNode": "\\woa_safety_report.html",
   "PreviewInSolutionExplorer": false
 }
