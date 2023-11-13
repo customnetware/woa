@@ -1,5 +1,6 @@
 const fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
 function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
+    document.getElementById("document").innerHTML = ""
     let waitRow = document.createElement("span")
     let waitFolder = document.createElement("i")
     let waitIcon = document.createElement("i")
