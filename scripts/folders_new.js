@@ -2,6 +2,7 @@ const fileLocation = (window.location.hostname == "localhost") ? "/resourcecente
 function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
     document.getElementById("document").innerHTML = ""
     let waitSpan = document.createElement("span")
+    waitSpan.style.width="100%"
     waitSpan.className ="fa fa-circle-o-notch fa-pulse fa-fw fa-4x"
     document.getElementById("document").appendChild(waitSpan)
     let currentScreen = localStorage.getItem(selectedFolder)
