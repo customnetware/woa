@@ -6,7 +6,7 @@ function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
 
     waitIcon.className = "fa fa-circle-o-notch fa-pulse fa-fw formatIcon"
     waitRow.appendChild(waitIcon)
-    waitRow.innerText="The requested folders and files are loading..."
+    waitRow.appendChild(document.createTextNode("The requested folders and files are loading..."))
 
     document.getElementById("document").appendChild(waitRow)
     let currentScreen = localStorage.getItem(selectedFolder)
