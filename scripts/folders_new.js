@@ -1,7 +1,6 @@
 const fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
 function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
 
-    document.getElementById("document").appendChild(waitRow)
     let currentScreen = localStorage.getItem(selectedFolder)
     if (currentScreen !== null) {
         let fileListing = JSON.parse(currentScreen)
