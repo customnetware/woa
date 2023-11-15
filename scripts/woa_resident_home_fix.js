@@ -55,7 +55,7 @@ function getEmails() {
                 }
             } catch (error) { }
             document.getElementById("messagexIconx").className = "fa fa-envelope-o"
-            
+
         })
         .always(function () {
             let retrievedData = localStorage.getItem("emails")
@@ -187,6 +187,8 @@ function showDocuments() {
         $.get(fileLocation, function () { })
             .done(function (responseText) {
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
+
+
                 let documentName = documents.getElementById("contents540434").getElementsByClassName("clsTreeNde")
                 let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
                 for (let p = 0; p < documentName.length; p++) {
@@ -198,6 +200,30 @@ function showDocuments() {
                     document.getElementById("document").appendChild(resourceItem)
                 }
                 document.getElementById("documentxIconx").className = "fa fa-file-text-o"
+
+                let newsLetterName = documents.getElementById("contents951754").getElementsByClassName("clsTreeNde")
+                let newsLettertLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
+
+                for (var p = newsLetterName.length - 1; p >= 0; p--) {
+
+                    if (newsLetterName[p].id.startsWith("d")) {
+                        let newsLetterItem = document.createElement("span")
+                        let selectedDoc = document.createElement("a")
+                        selectedDoc.innerHTML = newsLetterName[p].innerHTML + newsLetterName[p].id
+                        try {
+                            selectedDoc.href = newsLettertLink[p].href
+                        } catch { }
+                        newsLetterItem.appendChild(selectedDoc)
+                        document.getElementById("wblife").appendChild(newsLetterItem)
+/*                        if (document.getElementById("wblife").getElementsByTagName("span").length == 3) { break }*/
+                    }
+
+
+                }
+
+
+
+
             })
     } catch (error) {
     }

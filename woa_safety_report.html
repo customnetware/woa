@@ -16,9 +16,31 @@
         <div class="clsHeader" style="float:left; padding-right:25px"></div>
         <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
     </div>
-    <div id="reports" style="padding:20px; width:100%; margin-left:auto; margin-right:auto"><span class="fa fa-circle-o-notch fa-pulse fa-fw fa-4x" id="loadIcon" style="width:100%; color:lightgray"></span>
+    <input type="button" value="Print Report" id="printButton" class="btn btn-secondary" style="margin-right:30px; cursor:pointer" />
+    <input type="button" value="Download Report" id="downloadButton" class="btn btn-secondary" style="margin-right:30px; cursor:pointer" />
+    <div id="reports" style="padding:20px; width:100%; margin-left:auto; margin-right:auto">
+        <span class="fa fa-circle-o-notch fa-pulse fa-fw fa-4x" id="loadIcon" style="width:100%; color:lightgray"></span>
     </div>
     <script>
+        document.getElementById("printButton").addEventListener("click", printDiv, false)
+        document.getElementById("downloadButton").addEventListener("click", downloadFile, false)
+        function printDiv() {
+            let printContents = document.getElementById('reports').innerHTML
+            let originalContents = document.body.innerHTML
+            document.body.innerHTML = printContents
+            window.print()
+            document.body.innerHTML = originalContents
+            location.reload()
+        }
+        function downloadFile() {
+            const link = document.createElement("a")
+            const content = document.getElementById("reports").innerText
+            const file = new Blob([content], { type: 'text/plain' })
+            link.href = URL.createObjectURL(file)
+            link.download = "Safety Concert Report.txt"
+            link.click()
+            URL.revokeObjectURL(link.href)
+        }
         document.getElementsByClassName("clsHeader")[0].innerHTML = "Safety Concern Report (In Process & New)"
         const currentDate = new Date()
         let reportEnd = currentDate.getMonth() + 1 + "%2F" + currentDate.getDate() + "%2F" + currentDate.getFullYear()
@@ -30,16 +52,20 @@
                 let formContents = submittedForms.getElementsByTagName("xmp")
                 let formContentTx = formContents[0].innerText.replace(/"/g, "").split(/\r?\n|\r|\n/g)
                 document.getElementById("loadIcon").style.display = "none"
-                for (let s = 3; s < formContentTx.length; s++) {
+                for (var s = formContentTx.length - 1; s >= 3; s--) {
+      
                     if (formContentTx[s].split("|").length == 13) {
                         let reportContent = formContentTx[s].split("|")
                         let reportStatus = reportContent[4]
                         if (reportStatus !== "COMPLETE" && reportStatus !== "CANCELLED") {
                             let reportLine = document.createElement("p")
                             let reportTitle = document.createElement("b")
-                            reportTitle.appendChild(document.createTextNode("Submitted by: " + reportContent[1] + " on " + reportContent[2] + " (" + reportStatus + ")"))
+                            let reportLocation = document.createElement("i")
+                            reportTitle.appendChild(document.createTextNode("Submitted by: " + reportContent[1] + " on " + reportContent[2] + " (Tracking ID: " + reportContent[3] + " - "+reportStatus + ")" ))
                             reportLine.appendChild(reportTitle)
-
+                            reportLine.appendChild(document.createElement("br"))
+                            reportLocation.appendChild(document.createTextNode("Location: " + reportContent[8]))
+                            reportLine.appendChild(reportLocation)
                             reportLine.appendChild(document.createElement("br"))
                             reportLine.appendChild(document.createTextNode(reportContent[9]))
                             reportLine.appendChild(document.createElement("br"))
@@ -50,6 +76,7 @@
                     }
                 }
             })
+
     </script>
 </body>
 
