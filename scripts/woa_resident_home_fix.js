@@ -26,6 +26,9 @@ function getEmails() {
     $.get(residentPage, function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
+            let photoList = myWoodbridge.querySelectorAll("[id^=gallery_link_]")
+            let galleryLink = myWoodbridge.querySelectorAll("[class^=gallery_txt_sub]")
+            let galleryText = myWoodbridge.getElementsByClassName("left")
             document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
             try {
                 let recentItems = myWoodbridge.getElementsByClassName("message")
@@ -55,6 +58,9 @@ function getEmails() {
                 }
             } catch (error) { }
             document.getElementById("messagexIconx").className = "fa fa-envelope-o"
+
+
+            showPhotos(photoList, galleryLink, galleryText)
 
         })
         .always(function () {
@@ -189,7 +195,7 @@ function showDocuments() {
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
 
 
-                let documentName = documents.getElementById("contents540434").getElementsByClassName("clsTreeNde")
+                let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
                 let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
                 for (let p = 0; p < documentName.length; p++) {
                     let resourceItem = document.createElement("span")
@@ -198,30 +204,24 @@ function showDocuments() {
                     selectedDoc.href = documentLink[p].href
                     resourceItem.appendChild(selectedDoc)
                     document.getElementById("document").appendChild(resourceItem)
+                    if (document.getElementById("document").getElementsByTagName("span").length == 3) { break }
                 }
                 document.getElementById("documentxIconx").className = "fa fa-file-text-o"
 
-                let newsLetterName = documents.getElementById("contents984961").getElementsByClassName("clsTreeNde")
-                let newsLettertLink = documents.getElementById("contents984961").querySelectorAll('a[title="View On-line"]')
+                let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
+                let newsLettertLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
 
                 for (var p = newsLetterName.length - 1; p >= 0; p--) {
-
-                    if (newsLetterName[p].id.startsWith("d")) {
-                        let newsLetterItem = document.createElement("span")                                                             
-                        let selectedDoc = document.createElement("a")
-                        selectedDoc.innerHTML = newsLetterName[p].innerHTML + newsLetterName[p].id
-                        try {
-                            selectedDoc.href = newsLettertLink[p].href
-                        } catch { }
-                        newsLetterItem.appendChild(selectedDoc)
-                        document.getElementById("wblife").appendChild(newsLetterItem)
-/*                        if (document.getElementById("wblife").getElementsByTagName("span").length == 3) { break }*/
-                    }
-
-
+                    let newsLetterItem = document.createElement("span")
+                    let selectedDoc = document.createElement("a")
+                    selectedDoc.innerHTML = newsLetterName[p].innerHTML
+                    selectedDoc.href = newsLettertLink[p].href
+                    newsLetterItem.appendChild(selectedDoc)
+                    document.getElementById("wblife").appendChild(newsLetterItem)
+                    if (document.getElementById("wblife").getElementsByTagName("span").length == 3) { break }
                 }
 
-
+                document.getElementById("newsletterxIconx").className = "fa fa-file-o"
 
 
             })
@@ -230,13 +230,10 @@ function showDocuments() {
 }
 function showNews() { }
 function showClassifieds() { }
-function showPhotos() {
+function showPhotos(photoList, galleryLink, galleryText) {
     try {
         let photoDisplay = document.getElementById("photo")
         let picList = photoDisplay.getElementsByTagName("div")
-        let photoList = myWoodbridge.querySelectorAll("[id^=gallery_link_]")
-        let galleryLink = myWoodbridge.querySelectorAll("[class^=gallery_txt_sub]")
-        let galleryText = myWoodbridge.getElementsByClassName("left")
         for (let k = 0; k < photoList.length; k++) {
             let picSpan = document.createElement("span")
             let picLink = document.createElement("a")
