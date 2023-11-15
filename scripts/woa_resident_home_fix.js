@@ -201,8 +201,8 @@ function showDocuments() {
                 }
                 document.getElementById("documentxIconx").className = "fa fa-file-text-o"
 
-                let newsLetterName = documents.getElementById("contents951754").getElementsByClassName("clsTreeNde")
-                let newsLettertLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
+                let newsLetterName = documents.getElementById("contents984961").getElementsByClassName("clsTreeNde")
+                let newsLettertLink = documents.getElementById("contents984961").querySelectorAll('a[title="View On-line"]')
 
                 for (var p = newsLetterName.length - 1; p >= 0; p--) {
 
