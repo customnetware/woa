@@ -207,7 +207,7 @@ function showDocuments() {
                 for (var p = newsLetterName.length - 1; p >= 0; p--) {
 
                     if (newsLetterName[p].id.startsWith("d")) {
-                        let newsLetterItem = document.createElement("span")
+                        let newsLetterItem = document.createElement("span")                                                             
                         let selectedDoc = document.createElement("a")
                         selectedDoc.innerHTML = newsLetterName[p].innerHTML + newsLetterName[p].id
                         try {
