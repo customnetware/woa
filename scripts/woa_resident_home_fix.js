@@ -238,16 +238,17 @@ function showNews() {
             let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
             let newsHeader = newsArticles.getElementsByClassName("clsHeader")
             let NewsBody = newsArticles.getElementsByClassName("clsBodyText")
+            if (newsHeader.length > 0) {
+                for (let p = 0; p < newsHeader.length; p++) {
+                    let selectedArticle = document.createElement("p")
+                    let articleHeader = document.createElement("span")
 
-            for (let p = 0; p < newsHeader.length; p++) {
-                let selectedArticle = document.createElement("p")
-                let articleHeader = document.createElement("span")
+                    articleHeader.appendChild(document.createTextNode(newsHeader[p].innerText))
 
-                articleHeader.appendChild(document.createTextNode(newsHeader[p].innerText))
-
-                selectedArticle.appendChild(articleHeader)
-                selectedArticle.appendChild(document.createTextNode(NewsBody[p].innerText))
-                documentList.appendChild(selectedArticle)
+                    selectedArticle.appendChild(articleHeader)
+                    selectedArticle.appendChild(document.createTextNode(NewsBody[p].innerText))
+                    documentList.appendChild(selectedArticle)
+                }
             }
             document.getElementById("newsxIconx").className = "fa fa-cart-arrow-down"
         })
