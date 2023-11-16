@@ -250,7 +250,7 @@ function showNews() {
                     documentList.appendChild(selectedArticle)
                 }
             }
-            document.getElementById("newsxIconx").className = "fa fa-cart-arrow-down"
+            document.getElementById("newsxIconx").className = "fa fa-newspaper-o"
         })
 }
 function showClassifieds() {
