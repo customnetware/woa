@@ -238,8 +238,8 @@ function showNews() {
             let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
             let newsHeader = newsArticles.getElementsByClassName("clsHeader")
             let NewsBody = newsArticles.getElementsByClassName("clsBodyText")
-            if (newsHeader.length > 0) {
-                for (let p = 0; p < newsHeader.length; p++) {
+            if (NewsBody.length > 0) {
+                for (let p = 0; p < NewsBody.length; p++) {
                     let selectedArticle = document.createElement("p")
                     let articleHeader = document.createElement("span")
 
