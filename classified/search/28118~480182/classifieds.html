@@ -25,6 +25,12 @@
                 </div>
                 <div id="bodyHeaderColSearch" class="col-xs-auto float-right col-header-search">
                     <div class="header-search float-right">
+                        <div class="header-search-input input-group clsSearch">
+                            <input class="form-control header-search-control" id="header_search_text" name="header_search_text" type="text" onkeypress="event.cancelBubble = true; headerSearch_keyCapture(event);" placeholder="Search...">
+                            <div class="input-group-btn clsSearchButtonContainer">
+                                <button class="btn header-search-btn clsSearchButton" onclick="javascript: doHeaderSearch();"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -70,7 +76,7 @@
                                     <li class="menu-item"><a class="menu-link" href="#" onclick="AV.MyProfileMenu.changePage('/Member/MyDocs/' + AV.assn_id + '~' + AV.member_id + '~' + AV.contact_id + '#MyDocs');">Access My Documents</a></li>
                                 </ul><ul class="menu-wrapper" id="mobile-menu-publish-links">
                                     <li class="menu-item has-sub">
-                                        <span class="submenu-button"></span><a href="/page/28118~480187/resident-services" class="menu-link">Resident Services</a><ul class="menu-sub-group" style="left: -999999em;">
+                                        <span class="submenu-button"></span><a href="/page/28118~480187/resident-services" class="menu-link">Resident Services</a><ul class="menu-sub-group">
                                             <li class="menu-item"><a href="https://ourwoodbridge.net/News/28118~776129/Emergency-Preparedness" class="menu-link">Emergency Preparedness</a></li>
                                             <li class="menu-item"><a href="/form/list/28118/management-forms" class="menu-link">Management Forms</a></li>
                                             <li class="menu-item"><a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds" class="menu-link">Submit A Classified Ad</a></li>
@@ -78,7 +84,7 @@
                                         </ul>
                                     </li>
                                     <li class="menu-item has-sub">
-                                        <span class="submenu-button"></span><a href="https://ourwoodbridge.net/page/28118~1077279/our-community" class="menu-link">Our Community</a><ul class="menu-sub-group" style="left: -999999em;">
+                                        <span class="submenu-button"></span><a href="https://ourwoodbridge.net/page/28118~1077279/our-community" class="menu-link">Our Community</a><ul class="menu-sub-group">
                                             <li class="menu-item"><a href="/officer/board/28118/board-members" class="menu-link">Board Members</a></li>
                                             <li class="menu-item"><a href="/officer/committeelist/28118/committee-members" class="menu-link">Committee Members</a></li>
                                             <li class="menu-item"><a target="_blank" href="https://ourwoodbridge.net/HOA/assn28118/images/WoodbridgeCommunityMap.pdf" class="menu-link">Community Map</a></li>
@@ -99,12 +105,17 @@
                                             <li class="menu-item"><a href="/classified/search/28118~480182/classifieds" class="menu-link">Classifieds</a></li>
                                             <li class="menu-item"><a href="/ResourceCenter/28118~540434/Flyers-Events-or-Activities" class="menu-link">Flyers and Activities</a></li>
                                             <li class="menu-item"><a href="/news/list/28118/news-announcements" class="menu-link">News &amp; Announcements</a></li>
-                                            <li class="menu-item"><a target="_blank" href="https://ourwoodbridge.net/ResourceCenter/Download/28118/2023_10woodbridgenewsletter?doc_id=3187314&amp;print=1&amp;view=1" class="menu-link">Woodbridge Life E-Magazine</a></li>
                                             <li class="menu-item"><a target="_blank" href="https://issuu.com/woodbridgelife" class="menu-link">Woodbridge Life Archive</a></li>
                                         </ul>
                                     </li>
                                     <li class="menu-item"><a href="/resourcecenter/28118/resource-center" class="menu-link">Resource Center</a></li>
-                                    <li class="menu-item"><a target="_blank" href="https://portal.sc-manage.com/Home_v2/Login" class="menu-link">Silvercreek</a></li>
+                                    <li class="menu-item has-sub">
+                                        <span class="submenu-button"></span><a href="https://portal.sc-manage.com/Home_v2/Login" class="menu-link">Silvercreek</a><ul class="menu-sub-group">
+                                            <li class="menu-item"><a href="/page/28118~1101019/maintenance-report-summary" class="menu-link">Maintenance Report Summary</a></li>
+                                            <li class="menu-item"><a href="/page/28118~1101018/safety-report-summary" class="menu-link">Safety Report Summary</a></li>
+                                            <li class="menu-item"><a href="/page/28118~1098177/management-forms-summary" class="menu-link">Management Forms Summary</a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </nav>
 
@@ -139,165 +150,161 @@
                 <div id="bodyMainCol" class="col">
                     <div id="content" role="main">
                         <div class="content-inner" id="contentInner">
-                            <!--List Announcements-->
-                            <table width="99%" cellspacing="0" cellpadding="2" border="0" style="width: 99% !important;">
-                                <tbody>
-                                    <tr>
-                                        <td nowrap="" align="right" width="100%" style="display: flex; justify-content: flex-end; width: 100% !important; text-align: right;"><a title="Click for Full View" onmouseover="self.status='Click for Full View'; return true;" onmouseout="self.status=''" href="/News/List/28118?mode=full">Full View</a><div class="hidden-md-down" style="padding-left: 8px; padding-right: 8px;">|</div><a title="Click here for a printable version of the News Page" onmouseover="self.status='Click for a printable version of the News Page'; return true;" onmouseout="self.status=''" class="hidden-md-down" href="javascript:AV.newsPrint();"><img src="/images/icons/icon-printer-small.png" class="pngFix" width="16" height="16" alt="Click here for a printable version of the News Page" border="0" align="absmiddle">&nbsp;Printable Version</a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div style="width: 100%; overflow: auto;">
-                                <div class="clsHeader"><a title="Edit this Article" align="right" id="titleEditNews776129" href="javascript: AV.EditorLauncher.news('776129','3 Steps to Emergency Preparedness','titleEditNews776129','28118')">3 Steps to Emergency Preparedness</a></div>
-                                <div class="clsBodyText" style="overflow: auto;">Emergencies and disasters can happen at any moment, and sometimes occur without warning. When an emergency strikes, your immediate safety and prompt recovery will depend on your existing levels of emergency ...</div>
-                                <div align="right">
-                                    <em></em>  <a target="_top" href="/News/28118~776129">More <img class="hidden-md-down" border="0" alt="" src="/images/r001sb.gif"></a>
-                                </div>
+
+
+                            <h1 class="clsHeader">Classifieds</h1>
+
+                            <div class="text-right fs-mobile-hide-edit">
+                                <button type="button" id="btnClassifiedCategories" class="btn btn-secondary mb-2" onclick="AV.EditorLauncher.classifiedCategories('', 'Edit Classified Categories', 'btnClassifiedCategories')">Classified Categories</button>
+                                <button type="button" id="addClassifiedButton" class="btn btn-secondary mb-2" onclick="AV.EditorLauncher.classified('', 'Add Classified', 'addClassifiedButton')">Add Classified</button>
                             </div>
-                            <style>
-                                .modal {
-                                    font-family: 'Lato', sans-serif;
-                                    display: none;
-                                    position: fixed;
-                                    z-index: 999;
-                                    left: 0;
-                                    top: 0;
-                                    width: 100%;
-                                    height: 100%;
-                                    overflow: auto;
-                                    background-color: rgb(0,0,0);
-                                    background-color: rgba(0,0,0,0.4);
-                                }
 
-                                .close {
-                                    color: #aaa;
-                                    float: right;
-                                    font-size: 20px;
-                                    font-weight: bold;
-                                    position: absolute;
-                                    right: 15px;
-                                    top: 15px;
-                                }
 
-                                    .close:hover,
-                                    .close:focus {
-                                        color: #000;
-                                        text-decoration: none;
-                                        cursor: pointer;
-                                    }
-
-                                .modal-header {
-                                    padding: 2px 16px;
-                                    background-color: #E8E8E8;
-                                    color: #000;
-                                    border-top-left-radius: 5px;
-                                    border-top-right-radius: 5px;
-                                    position: relative;
-                                }
-
-                                .m-0 {
-                                    margin: 0;
-                                }
-
-                                .modal-body {
-                                    max-height: 350px;
-                                    overflow-y: auto;
-                                    overflow-x: hidden;
-                                    border: 1px solid #d0d0d0;
-                                    margin: 4px;
-                                }
-
-                                .modal-content {
-                                    position: relative;
-                                    top: 50%;
-                                    background-color: #fefefe;
-                                    margin: auto;
-                                    padding: 0;
-                                    border: 1px solid #888;
-                                    width: 680px;
-                                    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-                                    animation-name: animatetop;
-                                    animation-duration: 0.4s;
-                                    border-radius: 5px;
-                                    transform: translate(0,-50%);
-                                    background-color: #E8E8E8;
-                                }
-
-                                .cta_button a, .modal-body-container a {
-                                    font: 14px 700 'Lato', sans-serif;
-                                    color: #791a15;
-                                    text-decoration: underline;
-                                }
-
-                                .bg_gray {
-                                    background: #666;
-                                    color: #ffffff;
-                                }
-
-                                .modal-footer {
-                                    padding: 10px 16px;
-                                    background-color: #E8E8E8;
-                                    color: #000;
-                                    border-bottom-left-radius: 5px;
-                                    border-bottom-right-radius: 5px;
-                                }
-
-                                .icon {
-                                    background-image: url(../images/gray/window/icon-info.gif)
-                                }
-
-                                .cta_button1 a1, .modal-body-container1 a1 {
-                                    font: 14px 700 'Lato', sans-serif;
-                                    color: #791a15;
-                                    text-decoration: underline;
-                                }
-
-                                .bg_gray1 {
-                                    background: #666;
-                                    color: #ffffff;
-                                }
-
-                                .img_class {
-                                    float: left;
-                                    margin-right: 10px;
-                                }
-                            </style>
-                            <div id="myModal" class="modal" style="display:none">
-
-                                <!-- Modal content -->
-                                <div class="modal-content">
-                                    <div class="modal-header custom_model_header">
-                                        <p>secure sign information</p>
-                                        <span id="cls_sign_in" class="close">×</span>
-
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="modal-body-container" id="mdl_sign_in">
-
+                            <div class="row mb-2">
+                                <div class="col-sm-12 col-lg-4 pt-2">
+                                    <form name="form1" id="form1" method="get">
+                                        <div class="input-group mb-2">
+                                            <label class="small font-weight-bold pr-2" for="cat_id">Category</label>
+                                            <select name="cat_id" id="cat_id" class="form-control form-control-sm">
+                                                <option></option>
+                                                <option value="12597">Items for Sale</option>
+                                                <option value="12596">Lost and Found</option>
+                                                <option value="12600">Other</option>
+                                                <option value="12598">Real Estate Listings</option>
+                                                <option value="12599">Services</option>
+                                            </select>
                                         </div>
-                                    </div>
+                                        <div class="input-group mb-2">
+                                            <label class="small font-weight-bold pr-2" for="search">Search Criteria</label>
+                                            <input type="text" name="search" id="search" class="form-control form-control-sm" value="">
+                                        </div>
+                                        <div class="text-right">
+                                            <button type="submit" class="btn btn-secondary">Search</button>
+                                            <button type="button" class="btn btn-secondary" onclick="location.href='/Classified/Search/28118'; return false;">Reset</button>
+                                        </div>
+                                    </form>
                                 </div>
+                                <div class="col-lg-8 hidden-sm-down">
+                                    <p class="clsInstructions ml-3 pl-4">
+                                        <i class="fa fa-info-circle text-primary" aria-hidden="true"></i>
+                                        To browse the classifieds, simply page through the listings below. If you wish to find
+                                        a specific listing choose a category and/or enter your search criteria and select Search.
+                                    </p>
 
-                            </div>
-                            <div id="errorModal" class="modal" style="display:none">
-                                <!-- Modal content -->
-                                <div class="modal-content">
-                                    <div class="modal-header custom_model_header1">
-                                        <p id="title"></p>
-                                        <span id="cls_error" class="close">×</span>
-                                        <span class="icon"></span>
-                                    </div>
-                                    <div class="modal-body white_bg">
-                                        <img src="/../Assets/Images/Common/Icons/icon-info.gif" class="img_class">
-                                        <span id="erro_msg" class="modal-body-container">
 
-                                        </span>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" id="okid" class="modal_btn">ok</button>
-                                    </div>
+
                                 </div>
                             </div>
+
+                            <nav aria-label="Search results pages (top):" class="row mb-3">
+                                <div class="col-sm-8">
+
+                                </div>
+                                <div class="col-sm-4 text-right">
+                                    <div class="clsBodyItalic">
+
+                                    </div>
+                                </div>
+                            </nav>
+
+
+                            <div class="clsBodyText">
+                                <a href="/Classified/28118~215652/Hancock-Model-Home-For-Rent" class="mr-2">
+                                    Hancock Model Home For Rent
+                                </a>
+                                <span class="font-italic text-nowrap">
+
+                                </span>
+                            </div>
+                            <div class="clsBodyText hidden-sm-down" aria-hidden="true">
+                                Hancock model home for rent effective January 1, 2024. 1330 sq ft, with washer, dryer and refrigerator included as well as all of the Del Web association ammenities and requirements. Yard maintenance is also provided. Located on Shadow Berry Dr. Here is a link to the floor plan: https://dwwoodbridge.com/the-hancock/ Call Gil: 209 327-9085
+                                <div class="text-right m-0 p-0">
+                                    <a href="/Classified/28118~215652/Hancock-Model-Home-For-Rent">
+                                        More
+                                        <i class="fa fa-arrow-circle-o-right classifiedMore" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="clsBodyText hidden-md-up">
+                                Hancock model home for rent effective January 1, 2024....
+                            </div>
+                            <hr>
+                            <div class="clsBodyText">
+                                <a href="/Classified/28118~215645/FOOD-DRIVE" class="mr-2">
+                                    FOOD DRIVE
+                                </a>
+                                <span class="font-italic text-nowrap">
+                                    Other
+                                </span>
+                            </div>
+                            <div class="clsBodyText hidden-sm-down" aria-hidden="true">
+                                Women of Woodbridge would like to THANK ALL who helped make this event such a HUGEsuccess.&nbsp; You have touched the hearts of many and helped provide a holiday dinner.&nbsp;
+                                <div class="text-right m-0 p-0">
+                                    <a href="/Classified/28118~215645/FOOD-DRIVE">
+                                        More
+                                        <i class="fa fa-arrow-circle-o-right classifiedMore" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="clsBodyText hidden-md-up">
+                                Women of Woodbridge would like to THANK ALL who helped...
+                            </div>
+                            <hr>
+                            <div class="clsBodyText">
+                                <a href="/Classified/28118~215562/Pool-Table" class="mr-2">
+                                    Pool Table
+                                </a>
+                                <span class="font-italic text-nowrap">
+                                    Items for Sale
+                                </span>
+                            </div>
+                            <div class="clsBodyText hidden-sm-down" aria-hidden="true">
+                                Legacy Billiards Destroyer 7 Foot Pool Table.1 inch slate with cues, super aramith pro balls, 2 boxes of chalk, ball racks, brushes and wall rack for pool cues. Table is disassembled and ready for pick up or will deliver locally to Lathrop or Manteca. $1200 or best offer. 209-915-1011.
+                                <div class="text-right m-0 p-0">
+                                    <a href="/Classified/28118~215562/Pool-Table">
+                                        More
+                                        <i class="fa fa-arrow-circle-o-right classifiedMore" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="clsBodyText hidden-md-up">
+                                Legacy Billiards Destroyer 7 Foot Pool Table.1 inch...
+                            </div>
+                            <hr>
+                            <div class="clsBodyText">
+                                <a href="/Classified/28118~215077/direct-tv-receiver" class="mr-2">
+                                    direct tv receiver
+                                </a>
+                                <span class="font-italic text-nowrap">
+
+                                </span>
+                            </div>
+                            <div class="clsBodyText hidden-sm-down" aria-hidden="true">
+                                wanted a Direct tv receiver that is HD + DVR mine failed and would like to replace with same kind &nbsp;Mel 408-234-7674
+                                <div class="text-right m-0 p-0">
+                                    <a href="/Classified/28118~215077/direct-tv-receiver">
+                                        More
+                                        <i class="fa fa-arrow-circle-o-right classifiedMore" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="clsBodyText hidden-md-up">
+                                wanted a Direct tv receiver that is HD + DVR mine failed...
+                            </div>
+                            <hr>
+
+
+                            <nav aria-label="Search results pages (bottom):" class="row mt-3">
+                                <div class="col-sm-8">
+
+                                </div>
+                                <div class="col-sm-4 text-right">
+                                    <div class="clsBodyItalic">
+
+                                    </div>
+                                </div>
+                            </nav>
+
                         </div>
                     </div>
                 </div>
@@ -445,14 +452,12 @@
 
 
     <script type="text/javascript">
-        AV.newsPrint = function () { var newsPrintWindow = window.open('/news/list/28118?mode=print', null, 'height=600,width=720,menubar=yes,resizable=yes,toolbar=yes,scrollbars=yes'); newsPrintWindow.focus() }
-
         /*Startup Scripts*/
 
         Ext.onReady(function () {
             AV.AlertTicker = new AV.Ticker('fscroller', { 'items': AV.alertTickerData })
 
-            AV.Util.WriteRssHeaderLink("/rss/index/", "News Feed")
+            AV.Util.WriteRssHeaderLink("/rss/index/", "Classified Feed")
 
         })
 

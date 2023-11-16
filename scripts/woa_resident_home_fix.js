@@ -7,6 +7,8 @@ $(window).load(function () {
         showDocuments()
         getGroups(61)
         getEmails()
+        showClassifieds()
+        showNews()
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
         }
@@ -228,8 +230,48 @@ function showDocuments() {
     } catch (error) {
     }
 }
-function showNews() { }
-function showClassifieds() { }
+function showNews() {
+    let documentList = document.getElementById("news")
+    let fileLocation = (window.location.hostname == "localhost") ? "/news/list/28118/news-announcements.html" : "/news/list/28118/news-announcements"
+    $.get(fileLocation, function () { })
+        .done(function (responseText) {
+            let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
+            let newsHeader = newsArticles.getElementsByClassName("clsHeader")
+            let NewsBody = newsArticles.getElementsByClassName("clsBodyText")
+
+            for (let p = 0; p < newsHeader.length; p++) {
+                let selectedArticle = document.createElement("p")
+                let articleHeader = document.createElement("span")
+
+                articleHeader.appendChild(document.createTextNode(newsHeader[p].innerText))
+
+                selectedArticle.appendChild(articleHeader)
+                selectedArticle.appendChild(document.createTextNode(NewsBody[p].innerText))
+                documentList.appendChild(selectedArticle)
+            }
+            document.getElementById("newsxIconx").className = "fa fa-cart-arrow-down"
+        })
+}
+function showClassifieds() {
+    let documentList = document.getElementById("classified")
+    let fileLocation = (window.location.hostname == "localhost") ? "/classified/search/28118~480182/classifieds.html" : "/classified/search/28118~480182/classifieds"
+    $.get(fileLocation, function () { })
+        .done(function (responseText) {
+            let classifieds = new DOMParser().parseFromString(responseText, "text/html")
+            let classifiedTitle = classifieds.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
+            let classifiedBody = classifieds.getElementsByClassName("clsBodyText hidden-sm-down")
+            for (let p = 0; p < classifiedTitle.length; p++) {
+                let selectedAd = document.createElement("p")
+                let adTitle = document.createElement("span")
+                let adBody = document.createElement("span")
+                adTitle.appendChild(document.createTextNode(classifiedTitle[p].innerText))
+                selectedAd.appendChild(adTitle)
+                selectedAd.appendChild(document.createTextNode(classifiedBody[p].innerText))
+                documentList.appendChild(selectedAd)
+            }
+            document.getElementById("classifiedxIconx").className = "fa fa-cart-arrow-down"
+        })
+}
 function showPhotos(photoList, galleryLink, galleryText) {
     try {
         let photoDisplay = document.getElementById("photo")

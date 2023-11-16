@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+    <script src="https://www.ourwoodbridge.net/Assets/Libs/BootStrap/4.0.0-alpha/dist/js/bootstrap.min.js"></script>
+    <link href="https://www.ourwoodbridge.net/Assets/Libs/BootStrap/4.0.0-alpha/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <style>
+        @import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css);
+        @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
+    </style>
+</head>
+<body>
+    <div id="event"></div>
+    <script>
+        let documentList = document.getElementById("event")
+        let fileLocation = (window.location.hostname == "localhost") ? "/classified/search/28118~480182/classifieds.html" : "/classified/search/28118~480182/classifieds"
+        $.get(fileLocation, function () { })
+            .done(function (responseText) {
+                let classifieds = new DOMParser().parseFromString(responseText, "text/html")
+                let classifiedTitle = classifieds.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
+                let classifiedBody = classifieds.getElementsByClassName("clsBodyText hidden-sm-down")
+                for (let p = 0; p < classifiedTitle.length; p++) {
+                    document.getElementById("event").appendChild(document.createTextNode(classifiedTitle[p].innerText))
+                    document.getElementById("event").appendChild(document.createElement("br"))
+                    document.getElementById("event").appendChild(document.createTextNode(classifiedBody[p].innerText))
+                    document.getElementById("event").appendChild(document.createElement("br"))
+                    document.getElementById("event").appendChild(document.createElement("br"))
+                }
+            })
+    </script>
+</body>
+</html>
