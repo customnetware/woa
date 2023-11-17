@@ -247,19 +247,19 @@ function showNews() {
                     selectedArticle.appendChild(document.createTextNode(NewsBody[p].innerText))
                     documentList.appendChild(selectedArticle)
                 }
-            } 
+            }
             let selectedArticle = document.createElement("p")
             let articleHeader = document.createElement("span")
             articleHeader.appendChild(document.createTextNode("Resident Group or Club News or Announcements"))
             selectedArticle.appendChild(articleHeader)
 
-            selectedArticle.appendChild(document.createTextNode("Share your Del Webb residents club or group announcements here where the content is avaiable to all Del Webb residents.  If you have Committee Member website permission and above, "))
+            selectedArticle.appendChild(document.createTextNode("Share your Del Webb residents club or group announcements here where the content is avaiable to all Del Webb residents.  "))
 
             let submitLink = document.createElement("a")
             submitLink.href = "/form/28118~169617/submit-a-news-announcements-posting"
-            submitLink.innerHTML = "click here to send your announcement."
+            submitLink.innerHTML = "Click here to send your announcement."
             selectedArticle.appendChild(submitLink)
-            selectedArticle.appendChild(document.createTextNode("   (All announcement are subject to HOA rules and regulations)"))
+            selectedArticle.appendChild(document.createTextNode("   (All announcements are subject to HOA rules and regulations)"))
 
             documentList.appendChild(selectedArticle)
             document.getElementById("newsxIconx").className = "fa fa-newspaper-o"
@@ -272,18 +272,45 @@ function showClassifieds() {
         .done(function (responseText) {
             let classifieds = new DOMParser().parseFromString(responseText, "text/html")
             let classifiedTitle = classifieds.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
-            let classifiedBody = classifieds.getElementsByClassName("clsBodyText hidden-md-up")
+            let classifiedSummary = classifieds.getElementsByClassName("clsBodyText hidden-md-up")
+            let classifiedBody = classifieds.getElementsByClassName("clsBodyText hidden-sm-down")
             for (let p = 0; p < classifiedTitle.length; p++) {
                 let selectedAd = document.createElement("p")
                 let adTitle = document.createElement("span")
-        
+                let adSummary = document.createElement("span")
+                let adBody = document.createElement("span")
+                adBody.style.display = "none"
+
                 adTitle.appendChild(document.createTextNode(classifiedTitle[p].getElementsByTagName("a")[0].innerHTML))
+                adSummary.appendChild(document.createTextNode(classifiedSummary[p].innerText))
+                adBody.appendChild(document.createTextNode(classifiedBody[p].childNodes[0].nodeValue))
+                let itemLink = document.createElement("a")
+                itemLink.className = "fa fa-plus fa-lg formatLink"
+
+                itemLink.href = "javascript:showFullAd(" + document.getElementById("classified").getElementsByTagName("p").length + ")"
+
                 selectedAd.appendChild(adTitle)
-                selectedAd.appendChild(document.createTextNode(classifiedBody[p].innerText))
+                selectedAd.appendChild(adSummary)
+                selectedAd.appendChild(adBody)
+                selectedAd.appendChild(itemLink)
+
                 documentList.appendChild(selectedAd)
             }
             document.getElementById("classifiedxIconx").className = "fa fa-cart-arrow-down"
         })
+}
+function showFullAd(adID) {
+    let currentAd = document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("span")
+    if (currentAd[1].style.display == "none" && currentAd[2].style.display == "inline") {
+        currentAd[1].style.display = "inline"
+        currentAd[2].style.display = "none"
+        document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("a")[0].className ="fa fa-plus fa-lg formatLink"
+    } else {
+        currentAd[1].style.display = "none"
+        currentAd[2].style.display = "inline"
+        document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("a")[0].className = "fa fa-minus fa-lg formatLink"
+    }
+
 }
 function showPhotos(photoList, galleryLink, galleryText) {
     try {
