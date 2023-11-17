@@ -242,14 +242,26 @@ function showNews() {
                 for (let p = 0; p < NewsBody.length; p++) {
                     let selectedArticle = document.createElement("p")
                     let articleHeader = document.createElement("span")
-
                     articleHeader.appendChild(document.createTextNode(newsHeader[p].innerText))
-
                     selectedArticle.appendChild(articleHeader)
                     selectedArticle.appendChild(document.createTextNode(NewsBody[p].innerText))
                     documentList.appendChild(selectedArticle)
                 }
             }
+            let selectedArticle = document.createElement("p")
+            let articleHeader = document.createElement("span")
+            articleHeader.appendChild(document.createTextNode("Resident Group or Club News or Announcements"))
+            selectedArticle.appendChild(articleHeader)
+
+            selectedArticle.appendChild(document.createTextNode("Share your Del Webb residents club or group announcements here where the content is avaiable to all Del Webb residents.  If you have Committee Member website permission and above, "))
+
+            let submitLink = document.createElement("a")
+            submitLink.href = "/form/28118~169617/submit-a-news-announcements-posting"
+            submitLink.innerHTML = "click here to send your announcement."
+            selectedArticle.appendChild(submitLink)
+            selectedArticle.appendChild(document.createTextNode("   (All announcement are subject to HOA rules and regulations)"))
+
+            documentList.appendChild(selectedArticle)
             document.getElementById("newsxIconx").className = "fa fa-newspaper-o"
         })
 }
@@ -260,12 +272,12 @@ function showClassifieds() {
         .done(function (responseText) {
             let classifieds = new DOMParser().parseFromString(responseText, "text/html")
             let classifiedTitle = classifieds.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
-            let classifiedBody = classifieds.getElementsByClassName("clsBodyText hidden-sm-down")
+            let classifiedBody = classifieds.getElementsByClassName("clsBodyText hidden-md-up")
             for (let p = 0; p < classifiedTitle.length; p++) {
                 let selectedAd = document.createElement("p")
                 let adTitle = document.createElement("span")
-                let adBody = document.createElement("span")
-                adTitle.appendChild(document.createTextNode(classifiedTitle[p].innerText))
+        
+                adTitle.appendChild(document.createTextNode(classifiedTitle[p].getElementsByTagName("a")[0].innerHTML))
                 selectedAd.appendChild(adTitle)
                 selectedAd.appendChild(document.createTextNode(classifiedBody[p].innerText))
                 documentList.appendChild(selectedAd)
