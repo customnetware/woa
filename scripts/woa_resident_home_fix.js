@@ -305,7 +305,7 @@ function showFullAd(adID) {
     let adIcon = document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("a")[0]
 
     for (let p = 0; p < document.getElementById("classified").getElementsByTagName("p").length; p++) {
-        if (p > adID) { 
+        if (p !== adID) { 
         document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("span")[1].style.display = "inline"
         document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("span")[2].style.display = "none"
         document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("a")[0].className = "fa fa-plus fa-lg formatLink"
