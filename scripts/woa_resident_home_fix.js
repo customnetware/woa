@@ -247,7 +247,7 @@ function showNews() {
                     selectedArticle.appendChild(document.createTextNode(NewsBody[p].innerText))
                     documentList.appendChild(selectedArticle)
                 }
-            }
+            } 
             let selectedArticle = document.createElement("p")
             let articleHeader = document.createElement("span")
             articleHeader.appendChild(document.createTextNode("Resident Group or Club News or Announcements"))
