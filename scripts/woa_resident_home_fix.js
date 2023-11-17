@@ -300,15 +300,25 @@ function showClassifieds() {
         })
 }
 function showFullAd(adID) {
-    let currentAd = document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("span")
-    if (currentAd[1].style.display == "none" && currentAd[2].style.display == "inline") {
-        currentAd[1].style.display = "inline"
-        currentAd[2].style.display = "none"
-        document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("a")[0].className ="fa fa-plus fa-lg formatLink"
+    let adSummaryText = document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("span")[1]
+    let adFullText = document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("span")[2]
+    let adIcon = document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("a")[0]
+
+    for (let p = 0; p < document.getElementById("classified").getElementsByTagName("p").length; p++) {
+        if (p > adID) { 
+        document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("span")[1].style.display = "inline"
+        document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("span")[2].style.display = "none"
+        document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("a")[0].className = "fa fa-plus fa-lg formatLink"
+    }}
+
+    if (adSummaryText.style.display == "none" && adFullText.style.display == "inline") {
+        adSummaryText.style.display = "inline"
+        adFullText.style.display = "none"
+        adIcon.className ="fa fa-plus fa-lg formatLink"
     } else {
-        currentAd[1].style.display = "none"
-        currentAd[2].style.display = "inline"
-        document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("a")[0].className = "fa fa-minus fa-lg formatLink"
+        adSummaryText.style.display = "none"
+        adFullText.style.display = "inline"
+        adIcon.className = "fa fa-minus fa-lg formatLink"
     }
 
 }
