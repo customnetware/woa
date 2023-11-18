@@ -279,20 +279,19 @@ function showClassifieds() {
                 let adTitle = document.createElement("span")
                 let adSummary = document.createElement("span")
                 let adBody = document.createElement("span")
-                adBody.style.display = "none"
+                let adLink = document.createElement("a")
 
+                adBody.style.display = "none"
+                adLink.className = "fa fa-plus fa-lg formatLink"
+                adLink.href = "javascript:showFullAd(" + document.getElementById("classified").getElementsByTagName("p").length + ")"
                 adTitle.appendChild(document.createTextNode(classifiedTitle[p].getElementsByTagName("a")[0].innerHTML))
+                adTitle.appendChild(adLink)
                 adSummary.appendChild(document.createTextNode(classifiedSummary[p].innerText))
                 adBody.appendChild(document.createTextNode(classifiedBody[p].childNodes[0].nodeValue))
-                let itemLink = document.createElement("a")
-                itemLink.className = "fa fa-plus fa-lg formatLink"
-
-                itemLink.href = "javascript:showFullAd(" + document.getElementById("classified").getElementsByTagName("p").length + ")"
 
                 selectedAd.appendChild(adTitle)
                 selectedAd.appendChild(adSummary)
                 selectedAd.appendChild(adBody)
-                selectedAd.appendChild(itemLink)
 
                 documentList.appendChild(selectedAd)
             }
@@ -305,16 +304,17 @@ function showFullAd(adID) {
     let adIcon = document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("a")[0]
 
     for (let p = 0; p < document.getElementById("classified").getElementsByTagName("p").length; p++) {
-        if (p !== adID) { 
-        document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("span")[1].style.display = "inline"
-        document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("span")[2].style.display = "none"
-        document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("a")[0].className = "fa fa-plus fa-lg formatLink"
-    }}
+        if (p !== adID) {
+            document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("span")[1].style.display = "inline"
+            document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("span")[2].style.display = "none"
+            document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("a")[0].className = "fa fa-plus fa-lg formatLink"
+        }
+    }
 
     if (adSummaryText.style.display == "none" && adFullText.style.display == "inline") {
         adSummaryText.style.display = "inline"
         adFullText.style.display = "none"
-        adIcon.className ="fa fa-plus fa-lg formatLink"
+        adIcon.className = "fa fa-plus fa-lg formatLink"
     } else {
         adSummaryText.style.display = "none"
         adFullText.style.display = "inline"
