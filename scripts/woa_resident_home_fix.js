@@ -3,13 +3,12 @@ postHistoryLen = 60
 emailHistoryPos = 0
 $(window).load(function () {
     try {
-        getEmails()
         showProfile()
+        getEmails()
         showDocuments()
-        getGroups(61)
-
         showClassifieds()
         showNews()
+        getGroups(61)
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
         }

@@ -20,17 +20,16 @@
         $(window).load(function () {
             let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
             let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
+            residentHome = $.get(residentPage),
+                resourceCenter = $.get(fileLocation)
+
+            $.when(residentHome, resourceCenter).done(function (residentHome, resourceCenter) {
+                let myWoodbridge = new DOMParser().parseFromString(residentHome, "text/html")
+                let documents = new DOMParser().parseFromString(resourceCenter, "text/html")
 
 
-            aj1 = $.get(residentPage),
-                aj2 = $.get(fileLocation)
 
-            $.when(aj1, aj2).done(function (a, b) {
-                let myWoodbridge = new DOMParser().parseFromString(a, "text/html")
-        
-                recentItems = myWoodbridge.getElementsByClassName("message")
-
-                alert(recentItems[0].innerHTML)
+                alert(myWoodbridge.getElementsByTagName("div").length)
 
             })
 
