@@ -3,10 +3,11 @@ postHistoryLen = 60
 emailHistoryPos = 0
 $(window).load(function () {
     try {
+        getEmails()
         showProfile()
         showDocuments()
         getGroups(61)
-        getEmails()
+
         showClassifieds()
         showNews()
         if (document.getElementById("resDisplayName") !== null) {
@@ -22,7 +23,6 @@ $(window).load(function () {
         } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
     }
 })
-
 function getEmails() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     $.get(residentPage, function () { })
@@ -95,9 +95,9 @@ function getGroups(NumOfDays) {
 }
 function showPosts(groupID, NumOfDays) {
     try {
-        let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + groupID + ".html" : "/Discussion/28118~" + groupID
         let currentDate = new Date()
         let forumPosts = document.getElementById("post")
+        let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + groupID + ".html" : "/Discussion/28118~" + groupID
         $.get(selectedPost, function () { })
             .done(function (responseText) {
                 let forum = new DOMParser().parseFromString(responseText, "text/html")
@@ -144,7 +144,7 @@ function showPosts(groupID, NumOfDays) {
                         forumPosts.appendChild(currentPost)
                     }
                 }
-                document.getElementById(forumPosts.id + "xIconx").className = "fa fa-comments-o"
+                document.getElementById("postxIconx").className = "fa fa-comments-o"
             })
     } catch (error) {
         alert(error.message)
@@ -195,8 +195,6 @@ function showDocuments() {
         $.get(fileLocation, function () { })
             .done(function (responseText) {
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
-
-
                 let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
                 let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
                 for (let p = 0; p < documentName.length; p++) {
@@ -222,10 +220,7 @@ function showDocuments() {
                     document.getElementById("wblife").appendChild(newsLetterItem)
                     if (document.getElementById("wblife").getElementsByTagName("span").length == 3) { break }
                 }
-
                 document.getElementById("newsletterxIconx").className = "fa fa-file-o"
-
-
             })
     } catch (error) {
     }
@@ -250,12 +245,11 @@ function showNews() {
             }
             let selectedArticle = document.createElement("p")
             let articleHeader = document.createElement("span")
+            let submitLink = document.createElement("a")
+
             articleHeader.appendChild(document.createTextNode("Resident Group or Club News or Announcements"))
             selectedArticle.appendChild(articleHeader)
-
             selectedArticle.appendChild(document.createTextNode("Share your Del Webb residents club or group announcements here where the content is avaiable to all Del Webb residents.  "))
-
-            let submitLink = document.createElement("a")
             submitLink.href = "/form/28118~169617/submit-a-news-announcements-posting"
             submitLink.innerHTML = "Click here to send your announcement."
             selectedArticle.appendChild(submitLink)
@@ -299,28 +293,28 @@ function showClassifieds() {
         })
 }
 function showFullAd(adID) {
-    let adSummaryText = document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("span")[1]
-    let adFullText = document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("span")[2]
-    let adIcon = document.getElementById("classified").getElementsByTagName("p")[adID].getElementsByTagName("a")[0]
+    let classifieds = document.getElementById("classified").getElementsByTagName("p")
+    for (let p = 0; p < classifieds.length; p++) {
+        let adSummaryText = classifieds[p].getElementsByTagName("span")[1]
+        let adFullText = classifieds[p].getElementsByTagName("span")[2]
+        let adIcon = classifieds[p].getElementsByTagName("a")[0]
 
-    for (let p = 0; p < document.getElementById("classified").getElementsByTagName("p").length; p++) {
         if (p !== adID) {
-            document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("span")[1].style.display = "inline"
-            document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("span")[2].style.display = "none"
-            document.getElementById("classified").getElementsByTagName("p")[p].getElementsByTagName("a")[0].className = "fa fa-plus fa-lg formatLink"
+            adSummaryText.style.display = "inline"
+            adFullText.style.display = "none"
+            adIcon.className = "fa fa-plus fa-lg formatLink"
+        } else {
+            if (adSummaryText.style.display == "none") {
+                adSummaryText.style.display = "inline"
+                adFullText.style.display = "none"
+                adIcon.className = "fa fa-plus fa-lg formatLink"
+            } else {
+                adSummaryText.style.display = "none"
+                adFullText.style.display = "inline"
+                adIcon.className = "fa fa-minus fa-lg formatLink"
+            }
         }
     }
-
-    if (adSummaryText.style.display == "none" && adFullText.style.display == "inline") {
-        adSummaryText.style.display = "inline"
-        adFullText.style.display = "none"
-        adIcon.className = "fa fa-plus fa-lg formatLink"
-    } else {
-        adSummaryText.style.display = "none"
-        adFullText.style.display = "inline"
-        adIcon.className = "fa fa-minus fa-lg formatLink"
-    }
-
 }
 function showPhotos(photoList, galleryLink, galleryText) {
     try {
