@@ -30,8 +30,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Safety Concern Report</td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td></tr>
-                <tr><td>Repair & Maintenance Report</td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td></tr>
+                <tr><td><a href="/page/28118~1101018/safety-report-summary">Safety Concern Report</a></td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td></tr>
+                <tr><td><a href="/page/28118~1101019/maintenance-report-summary">Repair & Maintenance Report</a></td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td></tr>
                 <tr><td>Complaint or CC&Rs Rules Violation</td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td></tr>
                 <tr><td>Ask A Manager</td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td></tr>
                 <tr><td>Board Agenda Topic Comment or Question</td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td><td class="text-right"></td></tr>
@@ -82,7 +82,7 @@
                     report[2].innerText = progressCount + " (" + (Math.round(progressCount / (formsTotal) * 100)) + "%)"
                     report[3].innerText = completeCount + " (" + (Math.round(completeCount / (formsTotal) * 100)) + "%)"
                     report[4].innerText = (formsTotal) + " (100%)"
-                    document.getElementById("reports").getElementsByTagName("span")[0].innerHTML = reportStart.replace("%2F", "/").replace("%2F", "/") + " thru " + reportEnd.replace("%2F", "/").replace("%2F", "/")
+                    document.getElementById("reports").getElementsByTagName("span")[0].innerHTML = (reportStart + " thru " + reportEnd).split("%2F").join("/")
                 })
         }
         $(window).load(function () {
