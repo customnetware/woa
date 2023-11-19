@@ -4,11 +4,12 @@ emailHistoryPos = 0
 $(window).load(function () {
     try {
         showProfile()
-        getEmails()
         showDocuments()
+        showPosts(61, false)
         showClassifieds()
         showNews()
-        showPosts(61, false)
+        getEmails()
+
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
         }
