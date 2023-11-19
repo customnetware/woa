@@ -8,7 +8,7 @@ $(window).load(function () {
         showDocuments()
         showClassifieds()
         showNews()
-        getGroups(61)
+        showPosts(61, false)
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
         }
@@ -86,73 +86,71 @@ function showProfile() {
         document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
     })
 }
-function getGroups(NumOfDays) {
+function showPosts(NumOfDays, showHistory) {
     try {
-        let selectedGroups = [8030, 8364]
-        for (let h = 0; h < selectedGroups.length; h++) { showPosts(selectedGroups[h], NumOfDays) }
-    } catch { alert(error.message) }
-}
-function showPosts(groupID, NumOfDays) {
-    try {
-        let currentDate = new Date()
         let forumPosts = document.getElementById("post")
-        let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + groupID + ".html" : "/Discussion/28118~" + groupID
-        $.get(selectedPost, function () { })
-            .done(function (responseText) {
-                let forum = new DOMParser().parseFromString(responseText, "text/html")
-                let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
-                let postContents = forum.querySelectorAll("[id^=contents]")
-                for (let h = 0; h < postHeaders.length; h++) {
-                    let messageTexts = postContents[h].getElementsByClassName("clsBodyText")
-                    let messageAuthor = postContents[h].getElementsByClassName("respAuthorWrapper")
-                    let messageContacts = postContents[h].getElementsByClassName("respReplyWrapper")
-                    let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
-                    let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-                    if (dayDiff <= NumOfDays) {
-                        let currentPost = document.createElement("p")
-                        let postHeader = document.createElement("span")
-                        let postMessage = document.createElement("span")
-                        let postAuthor = document.createElement("span")
-                        let postReply = document.createElement("a")
+        let currentDate = new Date()
 
-                        postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
-                        postReply.className = "fa fa-reply fa-lg formatLink"
-                        postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
-                        postHeader.appendChild(postReply)
+        if (showHistory == true) {
+            postHistoryLen += 90
+            NumOfDays = postHistoryLen
+            forumPosts.innerHTML = ""
+        }
+        let selectedGroups = [8030, 8364]
+        for (let h = 0; h < selectedGroups.length; h++) {
+            let selectedPost = (window.location.hostname == "localhost") ? "/Discussion/28118~" + selectedGroups[h] + ".html" : "/Discussion/28118~" + selectedGroups[h]
+            $.get(selectedPost, function () { })
+                .done(function (responseText) {
+                    let forum = new DOMParser().parseFromString(responseText, "text/html")
+                    let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
+                    let postContents = forum.querySelectorAll("[id^=contents]")
+                    for (let h = 0; h < postHeaders.length; h++) {
+                        let messageTexts = postContents[h].getElementsByClassName("clsBodyText")
+                        let messageAuthor = postContents[h].getElementsByClassName("respAuthorWrapper")
+                        let messageContacts = postContents[h].getElementsByClassName("respReplyWrapper")
+                        let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
+                        let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
+                        if (dayDiff <= NumOfDays) {
+                            let currentPost = document.createElement("p")
+                            let postHeader = document.createElement("span")
+                            let postMessage = document.createElement("span")
+                            let postAuthor = document.createElement("span")
+                            let postReply = document.createElement("a")
 
-                        if (messageTexts.length > 1) {
-                            let replys = document.createElement("a")
-                            replys.className = "fa fa-comments fa-lg formatLink"
-                            replys.href = "javascript:showReplies(" + document.getElementById("post").getElementsByTagName("p").length + ")"
-                            postHeader.appendChild(replys)
-                            postHeader.appendChild(document.createTextNode(" (" + (messageTexts.length - 1) + ") "))
+                            postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
+                            postReply.className = "fa fa-reply fa-lg formatLink"
+                            postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
+                            postHeader.appendChild(postReply)
+
+                            if (messageTexts.length > 1) {
+                                let replys = document.createElement("a")
+                                replys.className = "fa fa-comments fa-lg formatLink"
+                                replys.href = "javascript:showReplies(" + document.getElementById("post").getElementsByTagName("p").length + ")"
+                                postHeader.appendChild(replys)
+                                postHeader.appendChild(document.createTextNode(" (" + (messageTexts.length - 1) + ") "))
+                            }
+                            postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
+                            postAuthor.appendChild(document.createTextNode(messageAuthor[0].innerText))
+                            currentPost.appendChild(postHeader)
+                            currentPost.appendChild(postMessage)
+                            currentPost.appendChild(postAuthor)
+                            for (let p = 1; p < messageTexts.length; p++) {
+                                let replyMessage = document.createElement("span")
+                                let replyAuthor = document.createElement("span")
+                                replyMessage.appendChild(document.createTextNode(messageTexts[p].innerText))
+                                replyAuthor.appendChild(document.createTextNode(messageAuthor[p].innerText))
+                                currentPost.appendChild(replyMessage)
+                                currentPost.appendChild(replyAuthor)
+                            }
+                            forumPosts.appendChild(currentPost)
                         }
-                        postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
-                        postAuthor.appendChild(document.createTextNode(messageAuthor[0].innerText))
-                        currentPost.appendChild(postHeader)
-                        currentPost.appendChild(postMessage)
-                        currentPost.appendChild(postAuthor)
-                        for (let p = 1; p < messageTexts.length; p++) {
-                            let replyMessage = document.createElement("span")
-                            let replyAuthor = document.createElement("span")
-                            replyMessage.appendChild(document.createTextNode(messageTexts[p].innerText))
-                            replyAuthor.appendChild(document.createTextNode(messageAuthor[p].innerText))
-                            currentPost.appendChild(replyMessage)
-                            currentPost.appendChild(replyAuthor)
-                        }
-                        forumPosts.appendChild(currentPost)
                     }
-                }
-                document.getElementById("postxIconx").className = "fa fa-comments-o"
-            })
+
+                })
+        } document.getElementById("postxIconx").className = "fa fa-comments-o"
     } catch (error) {
         alert(error.message)
     }
-}
-function showPostHistory() {
-    document.getElementById("post").innerHTML = ""
-    postHistoryLen += 90
-    getGroups(postHistoryLen)
 }
 function showReplies(p_id) {
     let posts = document.getElementById("post").getElementsByTagName("p")
@@ -219,7 +217,7 @@ function showDocuments() {
                     document.getElementById("wblife").appendChild(newsLetterItem)
                     if (document.getElementById("wblife").getElementsByTagName("span").length == 3) { break }
                 }
-                document.getElementById("newsletterxIconx").className = "fa fa-file-o"
+                document.getElementById("wblifexIconx").className = "fa fa-file-o"
             })
     } catch (error) {
     }
