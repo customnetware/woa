@@ -3,7 +3,7 @@ postHistoryLen = 60
 emailHistoryPos = 0
 $(window).load(function () {
     try {
-/*        showProfile()*/
+        showProfile()
         showDocuments()
         showPosts(61, false)
         showClassifieds()
@@ -29,52 +29,50 @@ function getEmails() {
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
             document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
-            document.getElementById("profileImage").src = myWoodbridge.getElementById("panel_acct_profile_ajax").getElementsByTagName("img")[0].src
-    try {
-        let recentItems = myWoodbridge.getElementsByClassName("message")
-        for (let p = 0; p < recentItems.length; p++) {
-            let itemTitle = document.createElement("span")
-            let itemLink = document.createElement("a")
-            let recentItem = document.createElement("p")
-            let itemContent = recentItems[p].getElementsByTagName("a")[0]
-            let itemContentTitle = itemContent.getAttribute("data-tooltip-title").split("by")[0]
-            let itemContentText = itemContent.getAttribute("data-tooltip-text")
-            recentItem.id = itemContent.id.replace("link_", "")
-            itemTitle.appendChild(document.createTextNode(itemContentTitle))
-            recentItem.appendChild(itemTitle)
-            recentItem.appendChild(document.createTextNode(itemContentText))
-            itemLink.className = "fa fa-share fa-lg formatLink"
-            itemLink.href = itemContent.href
-            recentItem.appendChild(itemLink)
-            document.getElementById("message").appendChild(recentItem)
 
-            let retrievedData = localStorage.getItem("emails")
-            let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
-            if ((retrievedData !== null && retrievedData.includes(recentItem.id) == false) || emailData.length == 0) {
-                emailData.push([recentItem.id, itemContentTitle, itemContentText, itemContent.href])
-                let currentEmails = JSON.stringify(emailData)
-                localStorage.setItem("emails", currentEmails)
-            }
-        }
-    } catch (error) { }
-    document.getElementById("messagexIconx").className = "fa fa-envelope-o"
+            try {
+                let recentItems = myWoodbridge.getElementsByClassName("message")
+                for (let p = 0; p < recentItems.length; p++) {
+                    let itemTitle = document.createElement("span")
+                    let itemLink = document.createElement("a")
+                    let recentItem = document.createElement("p")
+                    let itemContent = recentItems[p].getElementsByTagName("a")[0]
+                    let itemContentTitle = itemContent.getAttribute("data-tooltip-title").split("by")[0]
+                    let itemContentText = itemContent.getAttribute("data-tooltip-text")
+                    recentItem.id = itemContent.id.replace("link_", "")
+                    itemTitle.appendChild(document.createTextNode(itemContentTitle))
+                    recentItem.appendChild(itemTitle)
+                    recentItem.appendChild(document.createTextNode(itemContentText))
+                    itemLink.className = "fa fa-share fa-lg formatLink"
+                    itemLink.href = itemContent.href
+                    recentItem.appendChild(itemLink)
+                    document.getElementById("message").appendChild(recentItem)
 
+                    let retrievedData = localStorage.getItem("emails")
+                    let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
+                    if ((retrievedData !== null && retrievedData.includes(recentItem.id) == false) || emailData.length == 0) {
+                        emailData.push([recentItem.id, itemContentTitle, itemContentText, itemContent.href])
+                        let currentEmails = JSON.stringify(emailData)
+                        localStorage.setItem("emails", currentEmails)
+                    }
+                }
+            } catch (error) { }
+            document.getElementById("messagexIconx").className = "fa fa-envelope-o"
+            showPhotos(myWoodbridge)
 
-    showPhotos(myWoodbridge)
-
-})
+        })
         .always(function () {
-    let retrievedData = localStorage.getItem("emails")
-    if (retrievedData !== null) {
-        var emailData = JSON.parse(retrievedData)
-        if (emailData.length > 3) {
-            emailData.sort()
-            let currentEmails = JSON.stringify(emailData)
-            localStorage.setItem("emails", currentEmails)
-            document.getElementsByClassName("fa fa-history formatRight")[0].style.display = "block"
-        }
-    }
-})
+            let retrievedData = localStorage.getItem("emails")
+            if (retrievedData !== null) {
+                var emailData = JSON.parse(retrievedData)
+                if (emailData.length > 3) {
+                    emailData.sort()
+                    let currentEmails = JSON.stringify(emailData)
+                    localStorage.setItem("emails", currentEmails)
+                    document.getElementsByClassName("fa fa-history formatRight")[0].style.display = "block"
+                }
+            }
+        })
 }
 function showHistory() {
     let retrievedData = localStorage.getItem("emails")
