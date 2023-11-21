@@ -9,6 +9,7 @@ $(window).load(function () {
         showClassifieds()
         showNews()
         getEmails()
+        showPage()
 
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
@@ -23,6 +24,7 @@ $(window).load(function () {
         } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
     }
 })
+function showPage() { document.getElementById("pageRow").style.visibility="visible" }
 function getEmails() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     $.get(residentPage, function () { })
@@ -251,7 +253,6 @@ function showNews() {
             submitLink.innerHTML = "Click here to send your announcement."
             selectedArticle.appendChild(submitLink)
             selectedArticle.appendChild(document.createTextNode("   (All announcements are subject to HOA rules and regulations)"))
-
             documentList.appendChild(selectedArticle)
             document.getElementById("newsxIconx").className = "fa fa-newspaper-o"
         })
