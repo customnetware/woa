@@ -9,7 +9,7 @@ $(window).load(function () {
         showClassifieds()
         showNews()
         getEmails()
-/*        showPage()*/
+        
 
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
@@ -57,7 +57,7 @@ function getEmails() {
                         let currentEmails = JSON.stringify(emailData)
                         localStorage.setItem("emails", currentEmails)
                     }
-                }
+                } showPage();
             } catch (error) { }
             document.getElementById("messagexIconx").className = "fa fa-envelope-o"
             showPhotos(myWoodbridge)
