@@ -24,7 +24,7 @@ $(window).load(function () {
         } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
     }
 })
-function showPage() { document.getElementById("pageRow").style.visibility="visible" }
+function showPage() { document.getElementById("pageRow").style.visibility = "visible" }
 function getEmails() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     $.get(residentPage, function () { })
