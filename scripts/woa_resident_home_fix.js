@@ -9,7 +9,7 @@ $(window).load(function () {
         showClassifieds()
         showNews()
         getEmails()
-        
+
 
         if (document.getElementById("resDisplayName") !== null) {
             document.getElementById("resDisplayName").innerText = "My Woodbridge"
@@ -24,7 +24,10 @@ $(window).load(function () {
         } else { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") }
     }
 })
-function showPage() { document.getElementById("pageRow").style.visibility = "visible" }
+function showPage() {
+    document.getElementById("loadIcon").style.display="none"
+    document.getElementById("pageRow").style.visibility = "visible"
+}
 function getEmails() {
     let residentPage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
     $.get(residentPage, function () { })
@@ -57,13 +60,14 @@ function getEmails() {
                         let currentEmails = JSON.stringify(emailData)
                         localStorage.setItem("emails", currentEmails)
                     }
-                } showPage();
+                }
             } catch (error) { }
             document.getElementById("messagexIconx").className = "fa fa-envelope-o"
             showPhotos(myWoodbridge)
 
         })
         .always(function () {
+            showPage()
             let retrievedData = localStorage.getItem("emails")
             if (retrievedData !== null) {
                 var emailData = JSON.parse(retrievedData)
@@ -314,13 +318,13 @@ function showFullAd(adID) {
         }
     }
 }
-function showPhotos(parsedString) {
+function showPhotos(galleryPage) {
     try {
         let photoDisplay = document.getElementById("photo")
         let picList = photoDisplay.getElementsByTagName("div")
-        let photoList = parsedString.querySelectorAll("[id^=gallery_link_]")
-        let galleryLink = parsedString.querySelectorAll("[class^=gallery_txt_sub]")
-        let galleryText = parsedString.getElementsByClassName("left")
+        let photoList = galleryPage.querySelectorAll("[id^=gallery_link_]")
+        let galleryLink = galleryPage.querySelectorAll("[class^=gallery_txt_sub]")
+        let galleryText = galleryPage.getElementsByClassName("left")
         for (let k = 0; k < photoList.length; k++) {
             let picSpan = document.createElement("span")
             let picLink = document.createElement("a")
