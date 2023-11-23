@@ -3,6 +3,7 @@ postHistoryLen = 60
 emailHistoryPos = 0
 $(window).load(function () {
     try {
+        document.getElementsByClassName("clsHeader")[0].innerHTML = 'Your content is loading...'
         showProfile()
         showDocuments()
         showPosts(61, false)

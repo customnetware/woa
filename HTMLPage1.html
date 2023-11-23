@@ -16,37 +16,41 @@
 </head>
 <body>
     <div id="event"></div>
+    <h1>PDF Example by Object Tag</h1>
+    <object data="New Years Eve Party Flyer.pdf" type="application/pdf"  height="500px">
+        <p>Unable to display PDF file. <a href="New Years Eve Party Flyer.pdf">Download</a> instead.</p>
+    </object>
     <script>
         $.ajax({
             url: "https://customnetware.github.io/woa/scripts/woa_resident_home.js",
             method: "HEAD",
             statusCode: {
                 404: function () {
-                    alert('file not found')
+                /*    alert('file not found')*/
                 },
                 200: function () {
-                    alert("file exists")
+       /*             alert("file exists")*/
                 }
             }
-        });
-       
-      
+        })
 
-                //let documentList = document.getElementById("event")
-                //let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
-                //$.get(fileLocation, function () { })
-                //    .done(function (responseText) {
-                //        let documents = new DOMParser().parseFromString(responseText, "text/html")
-                //        let documentLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
-                //        documentList.innerHTML = documentLink[documentLink.length - 1].href
-                //    })
 
-                //    $("#event").load("/Calendar/28118~19555/", function (responseTxt, statusTxt, xhr) {
-                //        if (statusTxt == "success")
-                //            alert("External content loaded successfully!")
-                //        if (statusTxt == "error")
-                //            alert("Error: " + xhr.status + ": " + xhr.statusText)
-                //    })
+
+                        //let documentList = document.getElementById("event")
+                        //let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
+                        //$.get(fileLocation, function () { })
+                        //    .done(function (responseText) {
+                        //        let documents = new DOMParser().parseFromString(responseText, "text/html")
+                        //        let documentLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
+                        //        documentList.innerHTML = documentLink[documentLink.length - 1].href
+                        //    })
+
+                        //    $("#event").load("/Calendar/28118~19555/", function (responseTxt, statusTxt, xhr) {
+                        //        if (statusTxt == "success")
+                        //            alert("External content loaded successfully!")
+                        //        if (statusTxt == "error")
+                        //            alert("Error: " + xhr.status + ": " + xhr.statusText)
+                        //    })
     </script>
 </body>
 </html>
