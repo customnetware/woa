@@ -10,6 +10,11 @@
       "taskLabel": "task-woa_resident_home_fix",
       "appliesTo": "scripts/woa_resident_home_fix.js",
       "type": "launch"
+    },
+    {
+      "taskLabel": "task-new_test",
+      "appliesTo": "scripts/new_test.js",
+      "type": "launch"
     }
   ]
 }
