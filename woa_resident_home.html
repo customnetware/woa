@@ -52,7 +52,7 @@
                 padding-right: 15px;
             }
 
-            #document span, #event span, #wblife span {
+            #document span, #recentNewsletters span {
                 padding-left: 10px;
                 padding-bottom: 5px;
                 padding-top: 5px;
@@ -60,15 +60,15 @@
                 display: block;
             }
 
-                #document span:nth-child(even), #event span:nth-child(even), #wblife span:nth-child(even) {
+                #document span:nth-child(even), #recentNewsletters p:nth-child(even) {
                     background-color: #eceeef
                 }
 
-            #post p:nth-child(even), #message p:nth-child(even), #news p:nth-child(even), #classified p:nth-child(even) {
+            #post p:nth-child(even), #message p:nth-child(even) {
                 background-color: #eceeef
             }
 
-            #post p, #message p, #classified p, #news p {
+            #post p, #message p {
                 margin: 0px;
                 padding: 10px !important
             }
@@ -77,7 +77,7 @@
                     display: none;
                 }
 
-                    #post p span:first-child, #message p span:first-child, #classified p span:first-child, #news p span:first-child {
+                    #post p span:first-child, #message p span:first-child {
                         font-weight: 700;
                         display: block
                     }
@@ -99,13 +99,13 @@
                         margin-top: 1px;
                     }
 
-            #photo span {
+            #recentPhotos span {
                 display: block;
                 padding-left: 10px;
                 font-size: .8em
             }
 
-            #photo img {
+            #recentPhotos img {
                 max-width: 100%;
                 max-height: 100%;
                 padding-right: 10px;
@@ -114,42 +114,13 @@
             }
         </style>
         <div><span class="fa fa-circle-o-notch fa-pulse fa-fw fa-5x" id="loadIcon" style="width:100%; color:lightgray"></span></div>
+
         <div class="row" id="pageRow" style="visibility:hidden">
-
-            <div class="col-md-8">
-                <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-bell" aria-hidden="true" id="messagexIconx"></span>&nbsp;&nbsp;Recent Notification<a href="javascript:showHistory()" class="fa fa-history formatRight" style="display:none"></a></div>
-                    <div class="card-body">
-                        <div id="message" class="panel_messages_content">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card z-depth-3 mb-3">
-                            <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-spin fa-fw" aria-hidden="true" id="documentxIconx"></span>&nbsp;&nbsp;Activities & Event Flyers <a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">(Resource Center)</a></div>
-                            <div class="card-body">
-                                <div id="document" class="panel_resource_content">
-                                </div>
-                            </div>
-                        </div>
-                    
-
-                    </div>
-                    <div class="col-md-6">
-
-
-
-
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader">My Personal Information</div>
                     <div id="userProfile" class="card-body" style="padding:10px">
-                        <img id="profileImage" width="110" src="" class="dropShadow" />To make changes to your sign in name or password, phone number, email address, profile image or other personal information stored on this site, click the <b>My Profile</b> button at the top right of this page. (if you are using a mobile device, click or tap the <b>Profile</b> link at the top of the page).
+                        <img id="profileImage" width="110" src="" class="dropShadow" />To update your personal information, click the <b>My Profile</b> button.  Click or tap the <b>Profile</b> link on mobile devices.
                     </div>
                 </div>
                 <div class="card z-depth-3 mb-3">
@@ -222,9 +193,42 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader"><span class="fa fa-bell" aria-hidden="true" id="messageIcon"></span>&nbsp;&nbsp;Recent Notification<a href="javascript:showHistory()" class="fa fa-history formatRight" style="display:none"></a></div>
+                    <div class="card-body">
+                        <div id="message">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-spin fa-fw" aria-hidden="true" id="documentIcon"></span>&nbsp;&nbsp;Activities & Event Flyers <a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">(Resource Center)</a></div>
+                    <div class="card-body">
+                        <div id="document">
+                        </div>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader"><span class="fa fa-newspaper-o" aria-hidden="true" id="newslettersIcon"></span>&nbsp;&nbsp;Woodbridge Life Newsletters</div>
+                    <div class="card-body">
+                        <div id="recentNewsletters">
+                        </div>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader"><span class="fa fa-picture-o" aria-hidden="true" id="recentPhotosIcon"></span>&nbsp;&nbsp;Recent Event Photos</div>
+                    <div class="card-body">
+                        <div id="recentPhotos">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div id="errText"></div>
-        <script src="scripts/new_test.js"></script>
+        <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
         <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
     </div>
 

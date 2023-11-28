@@ -1,5 +1,5 @@
 let currentDate = new Date()
-$.get("/homepage/28118/resident-home-page", function () { })
+$.get("/homepage/28118/resident-home-page.html", function () { })
     .done(function (responseText) {
         let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
         let recentItems = myWoodbridge.getElementsByClassName("message")
@@ -10,7 +10,7 @@ $.get("/homepage/28118/resident-home-page", function () { })
         showPhotos(myWoodbridge)
         document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
     })
-$.get("/news/list/28118/news-announcements", function () { })
+$.get("/news/list/28118/news-announcements.html", function () { })
     .done(function (responseText) {
         let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
         let articleTitle = newsArticles.getElementsByClassName("clsHeader")
@@ -19,7 +19,7 @@ $.get("/news/list/28118/news-announcements", function () { })
             addToNotifications(articleTitle[p].innerText, articleContent[p].innerText, "#", "fa fa-newspaper-o")
         }
     })
-$.get("/Discussion/28118~8364", function () { })
+$.get("/Discussion/28118~8364.html", function () { })
     .done(function (responseText) {
         let forum = new DOMParser().parseFromString(responseText, "text/html")
         let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
@@ -36,7 +36,7 @@ $.get("/Discussion/28118~8364", function () { })
         }
 
     })
-$.get("/resourcecenter/28118/resource-center", function () { })
+$.get("/resourcecenter/28118/resource-center.html", function () { })
     .done(function (responseText) {
         let documents = new DOMParser().parseFromString(responseText, "text/html")
         let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
@@ -49,7 +49,7 @@ $.get("/resourcecenter/28118/resource-center", function () { })
         selectedDoc.innerHTML = newsLetterName[newsLetterName.length - 1].innerHTML
         selectedDoc.href = newsLettertLink[newsLetterName.length - 1].href
         newsLetterItem.appendChild(selectedDoc)
-        document.getElementById("document").appendChild(newsLetterItem)
+        document.getElementById("recentNewsletters").appendChild(newsLetterItem)
 
         for (let p = 0; p < documentName.length; p++) {
             let resourceItem = document.createElement("span")
@@ -60,10 +60,10 @@ $.get("/resourcecenter/28118/resource-center", function () { })
             document.getElementById("document").appendChild(resourceItem)
             if (document.getElementById("document").getElementsByTagName("span").length == 15) { break }
         }
-        document.getElementById("documentxIconx").className = "fa fa-file-text-o"
+        document.getElementById("documentIcon").className = "fa fa-file-text-o"
     })
 
-$.get("/classified/search/28118~480182/classifieds", function () { })
+$.get("/classified/search/28118~480182/classifieds.html", function () { })
     .done(function (responseText) {
         let classifieds = new DOMParser().parseFromString(responseText, "text/html")
         let classifiedTitle = classifieds.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
@@ -73,6 +73,16 @@ $.get("/classified/search/28118~480182/classifieds", function () { })
             addToNotifications(classifiedTitle[p].getElementsByTagName("a")[0].innerHTML, classifiedBody[p].childNodes[0].nodeValue, "#", "fa fa-shopping-cart")
         }
     })
+
+
+let profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
+let profilePage = (window.location.hostname == "localhost") ? "/Member/28118~" + profileID + ".html" : "/Member/28118~" + profileID
+$.get(profilePage, function () {
+}).done(function (responseText) {
+    let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
+    document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
+})
+
 
 function showPhotos(galleryPage) {
     try {
@@ -99,7 +109,7 @@ function showPhotos(galleryPage) {
 
             picList.appendChild(picLink)
 
-        } document.getElementById("message").appendChild(picList)
+        } document.getElementById("recentPhotos").appendChild(picList)
     } catch (error) { }
 
 }
