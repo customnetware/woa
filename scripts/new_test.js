@@ -94,14 +94,9 @@ function showPhotos(galleryPage) {
         for (let k = 0; k < photoList.length; k++) {
             let picSpan = document.createElement("span")
             let pic = document.createElement("img")
-            pic.src = photoList[k].src
-            pic.style.height = "100px"
-
-
             let picLink = document.createElement("a")
-
+            pic.src = photoList[k].src
             picSpan.appendChild(document.createTextNode(galleryText[k].innerText.replace(".jpg", "")))
-
             picLink.href = galleryLink[k].getElementsByTagName("a")[0].href
             picLink.appendChild(pic)
 
