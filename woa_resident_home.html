@@ -118,7 +118,7 @@
 
             <div class="col-md-8">
                 <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-bell-o" aria-hidden="true" id="messagexIconx"></span>&nbsp;&nbsp;Recent Notifications<a href="javascript:showHistory()" class="fa fa-history formatRight" style="display:none"></a></div>
+                    <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-spin fa-fw" aria-hidden="true" id="messagexIconx"></span>&nbsp;&nbsp;Latest Emails<a href="javascript:showHistory()" class="fa fa-history formatRight" style="display:none"></a></div>
                     <div class="card-body">
                         <div id="message" class="panel_messages_content">
                         </div>
@@ -133,13 +133,29 @@
                                 </div>
                             </div>
                         </div>
-
+                    
 
                     </div>
                     <div class="col-md-6">
 
+              
 
-
+                        <div class="card z-depth-3 mb-3">
+                            <div class="card-header border-success formatHeader">
+                                <span class="fa fa-spinner fa-spin fa-fw" aria-hidden="true" id="postxIconx"></span>&nbsp;&nbsp;Recent Disscussion Group Posts<a href="javascript:showPosts(61,true)" class="fa fa-history formatRight"></a>
+                            </div>
+                            <div class="card-body">
+                                <div id="post" class="panel_discuss_content">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card z-depth-3 mb-3">
+                            <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-spin fa-fw" aria-hidden="true" id="classifiedxIconx"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds"></a>Classified Items</div>
+                            <div class="card-body">
+                                <div id="classified" class="panel_classifieds_content">
+                                </div>
+                            </div>
+                        </div>
 
 
                     </div>
@@ -225,7 +241,7 @@
             </div>
         </div>
         <div id="errText"></div>
-        <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
+        <script src="scripts/new_test.js"></script>
         <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
     </div>
 
