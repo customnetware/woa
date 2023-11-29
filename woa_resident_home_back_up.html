@@ -126,9 +126,62 @@
             .classHide {
                 display: none
             }
-        </style> <div id="overlay" onclick="this.style.display='none'"><div id="text" class="text-opacity-50"><span class="fa fa-spinner fa-pulse fa-fw"></span>Updating recent emails, documents... </div></div><div class="row">
-            <div id="fromWOA" class="col-md-8"><div class="card z-depth-3 mb-3"><div class="card-header border-success formatHeader"><span class="fa fa-newspaper-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/News/List/28118">Recent News Articles</a> </div><div class="card-body"><div id="news" class="panel_news_content"></div></div></div><div class="card z-depth-3 mb-3"><div class="card-header border-success formatHeader"><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;Latest Emails</div><div class="card-body"><div id="message" class="panel_messages_content"></div></div></div><div class="card z-depth-3 mb-3"><div class="card-header border-success formatHeader"><span class="fa fa-comments-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/discussion/list/28118/discussion-groups">Latest Discussions </a></div><div class="card-body"><div id="post" class="panel_discuss_content"></div></div></div><div class="card z-depth-3 mb-3"><div class="card-header border-success formatHeader"><span class="fa fa-shopping-cart" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds">Classified Items</a></div><div class="card-body"><div id="classified" class="panel_classifieds_content"></div></div></div><div class="row"><div class="col-md-6"><div class="card z-depth-3 mb-3"><div class="card-header border-success formatHeader"><span class="fa fa-file-text-o" aria-hidden="true"></span>&nbsp;&nbsp;Activities &amp; Event Flyers <a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">(Resource Center)</a></div><div class="card-body"><div id="document" class="panel_resource_content"></div></div></div></div><div class="col-md-6"><div class="card z-depth-3 mb-3"><div class="card-header border-success formatHeader"><span class="fa fa-calendar" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events">Upcoming Events</a></div><div class="card-body"><div id="event" class="panel_cal_content"></div></div></div></div></div></div><div class="col-md-4">
-                <div class="card z-depth-3 mb-3"><div class="card-header border-success formatHeader">My Personal Information</div><div id="userProfile" class="card-body" style="padding:10px;"><img id="profileImage" width="110" src="" class="dropShadow">To make changes to your sign in name or password, phone number, email address, profile image or other personal information stored on this site, click the <strong>My Profile</strong> button at the top right of this page. (if you are using a mobile device, click or tap the <strong>Profile</strong> link at the top of the page). </div></div><div class="card z-depth-3 mb-3">
+        </style>
+        <div id="overlay" onclick="this.style.display='none'">
+            <div id="text" class="text-opacity-50"><span class="fa fa-spinner fa-pulse fa-fw"></span>Updating recent emails, documents... </div>
+        </div>
+        <div class="row">
+            <div id="fromWOA" class="col-md-8">
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">
+                        <span class="fa fa-newspaper-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/News/List/28118">Recent News Articles</a>
+                    </div>
+                    <div class="card-body"><div id="news" class="panel_news_content"></div></div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">
+                        <span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;Latest Emails
+                    </div>
+                    <div class="card-body"><div id="message" class="panel_messages_content"></div></div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">
+                        <span class="fa fa-comments-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/discussion/list/28118/discussion-groups">Latest Discussions </a>
+                    </div>
+                    <div class="card-body">
+                        <div id="post" class="panel_discuss_content"></div>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">
+                        <span class="fa fa-shopping-cart" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds">Classified Items</a>
+                    </div>
+                    <div class="card-body"><div id="classified" class="panel_classifieds_content"></div></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card z-depth-3 mb-3">
+                            <div class="card-header border-success formatHeader"><span class="fa fa-file-text-o" aria-hidden="true"></span>&nbsp;&nbsp;Activities &amp; Event Flyers <a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">(Resource Center)</a></div>
+                            <div class="card-body"><div id="document" class="panel_resource_content"></div></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card z-depth-3 mb-3">
+                            <div class="card-header border-success formatHeader"><span class="fa fa-calendar" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events">Upcoming Events</a></div>
+                            <div class="card-body"><div id="event" class="panel_cal_content"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">My Personal Information</div>
+                    <div id="userProfile" class="card-body" style="padding:10px;">
+                        <img id="profileImage" width="110" src="" class="dropShadow">To make changes to your sign in name or password, phone number, email address, profile image or other personal information stored on this site, click the <strong>My Profile</strong> button at the top right of this page. (if you are using a mobile device, click or tap the <strong>Profile</strong> link at the top of the page).
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader">Lakeview Clubhouse and Office Hours</div><div id="userProfile" class="card-body" style="padding:10px;">
                         <ul>
                             <li>Monday - Saturday 7 a.m. to 9 p.m.</li>
@@ -137,7 +190,17 @@
                         </ul>
                         <em>Clubhouse and Office closed: New Year's Day, Easter Sunday, Thanksgiving Day, Christmas Eve and Christmas Day.</em>
                     </div>
-                </div><div class="card z-depth-3 mb-3"><div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-exclamation-circle" aria-hidden="true"></span>&nbsp;&nbsp;I want to...</div><div class="card-body text-muted" style="padding-left:10px;" id="userProfile"><div><span class="fa fa-external-link" style="padding-right:10px;"></span><a href="https://portal.sc-manage.com/Home_v2/Login">Pay WHOA assessment online and/or see balance</a></div><div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~188049/Repair-or-Maintenance">File a WHOA maintenance request (Common Area)</a></div><div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~188011/Complaint-or-CCRs-Rules-Violation">File a Complaint or CC&amp;Rs Rules Violation</a></div><div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~116540/Ask-A-Manager">Send a question or comment to management</a></div><div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~317256/Community-Crime-Incident-Report">File A Community Crime Incident Report (non PD)</a></div><div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~243363/Board-Agenda-Topic-Comment-or-Question">Send A Board Agenda Topic Comment or Question</a></div></div></div><div class="card z-depth-3 mb-3">
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-exclamation-circle" aria-hidden="true"></span>&nbsp;&nbsp;I want to...</div>
+                    <div class="card-body text-muted" style="padding-left:10px;" id="userProfile">
+                        <div><span class="fa fa-external-link" style="padding-right:10px;"></span><a href="https://portal.sc-manage.com/Home_v2/Login">Pay WHOA assessment online and/or see balance</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~188049/Repair-or-Maintenance">File a WHOA maintenance request (Common Area)</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~188011/Complaint-or-CCRs-Rules-Violation">File a Complaint or CC&amp;Rs Rules Violation</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~116540/Ask-A-Manager">Send a question or comment to management</a></div><div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~317256/Community-Crime-Incident-Report">File A Community Crime Incident Report (non PD)</a></div><div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~243363/Board-Agenda-Topic-Comment-or-Question">Send A Board Agenda Topic Comment or Question</a></div>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-address-card-o" aria-hidden="true"></span>&nbsp;&nbsp;Silvercreek Management Contacts </div><div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
                         <strong>General Manager - Jessica Ross</strong> <ul style="list-style-type:none;padding:0px;margin:0px;">
                             <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209) 824-7581 Ext 101</li>
@@ -164,7 +227,8 @@
                             <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto:frontdesk@ourwoodbridge.net">frontdesk@ourwoodbridge.net</a></li>
                         </ul>
                     </div>
-                </div><div class="card z-depth-3 mb-3">
+                </div>
+                <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-shield" aria-hidden="true"></span>&nbsp;&nbsp;Woodbridge On-Site Security </div><div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
                         <strong>Alpine Protective Solutions</strong> <ul style="list-style-type:none;padding:0px;margin:0px;">
                             <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209)495-5347</li>
@@ -173,7 +237,8 @@
                     </div>
                 </div>
             </div>
-        </div><div id="errText"></div>
+        </div>
+        <div id="errText"></div>
         <script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>
     </div>
 

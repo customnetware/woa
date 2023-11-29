@@ -1,5 +1,5 @@
 let currentDate = new Date()
-$.get("/homepage/28118/resident-home-page", function () { })
+$.get("/homepage/28118/resident-home-page.html", function () { })
     .done(function (responseText) {
         let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
         let recentItems = myWoodbridge.getElementsByClassName("message")
@@ -10,7 +10,7 @@ $.get("/homepage/28118/resident-home-page", function () { })
         showPhotos(myWoodbridge)
         document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
     })
-$.get("/news/list/28118/news-announcements", function () { })
+$.get("/news/list/28118/news-announcements.html", function () { })
     .done(function (responseText) {
         let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
         let articleTitle = newsArticles.getElementsByClassName("clsHeader")
@@ -19,7 +19,7 @@ $.get("/news/list/28118/news-announcements", function () { })
             addToNotifications(articleTitle[p].innerText, articleContent[p].innerText, "#", "fa fa-newspaper-o")
         }
     })
-$.get("/Discussion/28118~8364", function () { })
+$.get("/Discussion/28118~8364.html", function () { })
     .done(function (responseText) {
         let forum = new DOMParser().parseFromString(responseText, "text/html")
         let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
@@ -34,9 +34,8 @@ $.get("/Discussion/28118~8364", function () { })
                 addToNotifications(postHeaders[h].innerText, messageTexts[0].innerText + messageAuthor[0].innerText, "#", "fa fa-comments-o fa-lg")
             }
         }
-
     })
-$.get("/resourcecenter/28118/resource-center", function () { })
+$.get("/resourcecenter/28118/resource-center.html", function () { })
     .done(function (responseText) {
         let documents = new DOMParser().parseFromString(responseText, "text/html")
         let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
@@ -62,8 +61,7 @@ $.get("/resourcecenter/28118/resource-center", function () { })
         }
         document.getElementById("documentIcon").className = "fa fa-file-text-o"
     })
-
-$.get("/classified/search/28118~480182/classifieds", function () { })
+$.get("/classified/search/28118~480182/classifieds.html", function () { })
     .done(function (responseText) {
         let classifieds = new DOMParser().parseFromString(responseText, "text/html")
         let classifiedTitle = classifieds.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
@@ -73,8 +71,6 @@ $.get("/classified/search/28118~480182/classifieds", function () { })
             addToNotifications(classifiedTitle[p].getElementsByTagName("a")[0].innerHTML, classifiedBody[p].childNodes[0].nodeValue, "#", "fa fa-shopping-cart")
         }
     })
-
-
 let profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
 let profilePage = (window.location.hostname == "localhost") ? "/Member/28118~" + profileID + "" : "/Member/28118~" + profileID
 $.get(profilePage, function () {
@@ -82,7 +78,6 @@ $.get(profilePage, function () {
     let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
     document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
 })
-
 
 function showPhotos(galleryPage) {
     try {
@@ -97,10 +92,11 @@ function showPhotos(galleryPage) {
             let picLink = document.createElement("a")
             pic.src = photoList[k].src
             picSpan.appendChild(document.createTextNode(galleryText[k].innerText.replace(".jpg", "")))
+
             picLink.href = galleryLink[k].getElementsByTagName("a")[0].href
             picLink.appendChild(pic)
 
-            /*    picLink.appendChild(picSpan)*/
+                picLink.appendChild(picSpan)
 
             picList.appendChild(picLink)
 
@@ -117,14 +113,17 @@ function addToNotifications(title, content, link, iconType) {
     itemType.className = iconType
     itemType.style.paddingRight = "7px"
 
+    itemLink.className = "fa fa-arrow-right fa-lg formatLink"
+    itemLink.href = link
+
     itemTitle.appendChild(itemType)
     itemTitle.appendChild(document.createTextNode(title))
-    itemLink.className = "fa fa-share fa-lg formatLink"
-    itemLink.href = link
+
 
     recentItem.appendChild(itemTitle)
     recentItem.appendChild(document.createTextNode(content))
-    recentItem.appendChild(itemLink)
+
+    if (iconType.includes("envelope")) { recentItem.appendChild(itemLink) }
     if (iconType.includes("envelope")) {
         document.getElementById("message").insertBefore(recentItem, document.getElementById("message").children[0])
     } else {
