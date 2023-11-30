@@ -49,6 +49,23 @@ function getContent() {
                         btmSpan.appendChild(document.createTextNode(selectedDoc.getAttribute("data-tooltip-text")))
                         spanLink.href = selectedDoc.href
                         spanLink.className = "fa fa-external-link formatLink"
+                        try {
+                            if (currentDoc[i].className == "news") {
+                                let newsTitle = selectedDoc.getAttribute("data-tooltip-title")
+                                let detailItem = ["Parade", "Winter Concert", "Winter Dance", "Drama Club"]
+                                let detailItemImg = ["parade.png", "singers.png", "2nd_chance.png", "drama_plays2.jpg"]
+                                for (var d = 0; d < detailItem.length; d++) {
+                                    if (newsTitle.includes(detailItem[d])) {
+                                        let newsIcon = document.createElement("img")
+                                        newsIcon.style.height = "2.75rem"
+                                        newsIcon.style.float = "left"
+                                        newsIcon.style.paddingRight = "5px"
+                                        newsIcon.src = "https://customnetware.github.io/woa/" + detailItemImg[d]
+                                        btmSpan.appendChild(newsIcon)
+                                    }
+                                }
+                            }
+                        } catch { }
                         btmSpan.appendChild(spanLink)
                     }
                     clientDoc.appendChild(topSpan)
