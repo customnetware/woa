@@ -90,14 +90,12 @@ function showPhotos(galleryPage) {
             let picSpan = document.createElement("span")
             let pic = document.createElement("img")
             let picLink = document.createElement("a")
+
             pic.src = photoList[k].src
             picSpan.appendChild(document.createTextNode(galleryText[k].innerText.replace(".jpg", "")))
-
             picLink.href = galleryLink[k].getElementsByTagName("a")[0].href
             picLink.appendChild(pic)
-
-                picLink.appendChild(picSpan)
-
+            picLink.appendChild(picSpan)
             picList.appendChild(picLink)
 
         } document.getElementById("recentPhotos").appendChild(picList)
