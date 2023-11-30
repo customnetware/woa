@@ -46,9 +46,6 @@ function getContent() {
                         topSpan.className = (i % 2 == 0) ? "topEven" : "topOdd"
                         btmSpan.className = (i % 2 == 0) ? "btmEven" : "btmOdd"
                         topSpan.appendChild(document.createTextNode(selectedDoc.getAttribute("data-tooltip-title").replace(sentBy, "")))
-                        btmSpan.appendChild(document.createTextNode(selectedDoc.getAttribute("data-tooltip-text")))
-                        spanLink.href = selectedDoc.href
-                        spanLink.className = "fa fa-external-link formatLink"
                         try {
                             if (currentDoc[i].className == "news") {
                                 let newsTitle = selectedDoc.getAttribute("data-tooltip-title")
@@ -66,6 +63,12 @@ function getContent() {
                                 }
                             }
                         } catch { }
+
+
+                        btmSpan.appendChild(document.createTextNode(selectedDoc.getAttribute("data-tooltip-text")))
+                        spanLink.href = selectedDoc.href
+                        spanLink.className = "fa fa-external-link formatLink"
+
                         btmSpan.appendChild(spanLink)
                     }
                     clientDoc.appendChild(topSpan)
