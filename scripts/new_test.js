@@ -1,5 +1,5 @@
 let currentDate = new Date()
-$.get("/homepage/28118/resident-home-page.html", function () { })
+$.get("/homepage/28118/resident-home-page", function () { })
     .done(function (responseText) {
         let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
         let recentItems = myWoodbridge.getElementsByClassName("message")
@@ -10,7 +10,7 @@ $.get("/homepage/28118/resident-home-page.html", function () { })
         showPhotos(myWoodbridge)
         document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
     })
-$.get("/news/list/28118/news-announcements.html", function () { })
+$.get("/news/list/28118/news-announcements", function () { })
     .done(function (responseText) {
         let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
         let articleTitle = newsArticles.getElementsByClassName("clsHeader")
@@ -21,7 +21,7 @@ $.get("/news/list/28118/news-announcements.html", function () { })
             addToNotifications(articleTitle[p].innerText, articleContent[p].innerText, articleLink, "fa fa-newspaper-o")
         }
     })
-$.get("/Discussion/28118~8364.html", function () { })
+$.get("/Discussion/28118~8364", function () { })
     .done(function (responseText) {
         let forum = new DOMParser().parseFromString(responseText, "text/html")
         let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
@@ -37,7 +37,7 @@ $.get("/Discussion/28118~8364.html", function () { })
             }
         }
     })
-$.get("/resourcecenter/28118/resource-center.html", function () { })
+$.get("/resourcecenter/28118/resource-center", function () { })
     .done(function (responseText) {
         let documents = new DOMParser().parseFromString(responseText, "text/html")
         let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
@@ -63,7 +63,7 @@ $.get("/resourcecenter/28118/resource-center.html", function () { })
         }
         document.getElementById("documentIcon").className = "fa fa-file-text-o"
     })
-$.get("/classified/search/28118~480182/classifieds.html", function () { })
+$.get("/classified/search/28118~480182/classifieds", function () { })
     .done(function (responseText) {
         let classifieds = new DOMParser().parseFromString(responseText, "text/html")
         let classifiedTitle = classifieds.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
