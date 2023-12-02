@@ -99,21 +99,23 @@
                         margin-top: 1px;
                     }
 
-            #recentPhotos span {
-                display: block;
-                padding-left: 5px;
-                font-size: .8em;
-                width:33%
-              
+            #recentPhotos {
+                text-align: center;
+                vertical-align: middle;
             }
 
-            #recentPhotos img {
-                max-width: 100%;
-                max-height: 100%;
-                padding-right: 2px;
-                padding-top: 2px;
-                padding-left: 2px
-            }
+                #recentPhotos div {
+                    width: 33%;
+                    float: left;
+                }
+
+                #recentPhotos img {
+                    max-width: 100%;
+                    max-height: 100%;
+                    padding-right: 2px;
+                    padding-top: 10px;
+                    padding-left: 2px
+                }
         </style>
         <div><span class="fa fa-circle-o-notch fa-pulse fa-fw fa-5x" id="loadIcon" style="width:100%; color:lightgray"></span></div>
         <div class="row" id="pageRow" style="visibility:hidden">
@@ -196,7 +198,7 @@
             </div>
             <div class="col-md-6">
                 <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-bell" aria-hidden="true" id="messageIcon"></span>&nbsp;&nbsp;Recent Notification<a href="javascript:showHistory()" class="fa fa-history formatRight" style="display:none"></a></div>
+                    <div class="card-header border-success formatHeader"><span class="fa fa-bell" aria-hidden="true" id="messageIcon"></span>&nbsp;&nbsp;Recent Notifications<a href="javascript:showHistory()" class="fa fa-history formatRight" style="display:none"></a></div>
                     <div class="card-body">
                         <div id="message">
                         </div>
@@ -222,6 +224,9 @@
                     <div class="card-header border-success formatHeader"><span class="fa fa-picture-o" aria-hidden="true" id="recentPhotosIcon"></span>&nbsp;&nbsp;Recent Event Photos</div>
                     <div class="card-body">
                         <div id="recentPhotos">
+                            <div><a><img src="" /><br /><span></span></a></div>
+                            <div><a><img src="" /><br /><span></span></a></div>
+                            <div><a><img src="" /><br /><span></span></a></div>
                         </div>
                     </div>
                 </div>
