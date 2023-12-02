@@ -25,6 +25,12 @@
                 </div>
                 <div id="bodyHeaderColSearch" class="col-xs-auto float-right col-header-search">
                     <div class="header-search float-right">
+                        <div class="header-search-input input-group clsSearch">
+                            <input class="form-control header-search-control" id="header_search_text" name="header_search_text" type="text" onkeypress="event.cancelBubble = true; headerSearch_keyCapture(event);" placeholder="Search...">
+                            <div class="input-group-btn clsSearchButtonContainer">
+                                <button class="btn header-search-btn clsSearchButton" onclick="javascript: doHeaderSearch();"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -70,7 +76,7 @@
                                     <li class="menu-item"><a class="menu-link" href="#" onclick="AV.MyProfileMenu.changePage('/Member/MyDocs/' + AV.assn_id + '~' + AV.member_id + '~' + AV.contact_id + '#MyDocs');">Access My Documents</a></li>
                                 </ul><ul class="menu-wrapper" id="mobile-menu-publish-links">
                                     <li class="menu-item has-sub">
-                                        <span class="submenu-button"></span><a href="/page/28118~480187/resident-services" class="menu-link">Resident Services</a><ul class="menu-sub-group" style="left: -999999em;">
+                                        <span class="submenu-button"></span><a href="/page/28118~480187/resident-services" class="menu-link">Resident Services</a><ul class="menu-sub-group">
                                             <li class="menu-item"><a href="https://ourwoodbridge.net/News/28118~776129/Emergency-Preparedness" class="menu-link">Emergency Preparedness</a></li>
                                             <li class="menu-item"><a href="/form/list/28118/management-forms" class="menu-link">Management Forms</a></li>
                                             <li class="menu-item"><a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds" class="menu-link">Submit A Classified Ad</a></li>
@@ -78,7 +84,7 @@
                                         </ul>
                                     </li>
                                     <li class="menu-item has-sub">
-                                        <span class="submenu-button"></span><a href="https://ourwoodbridge.net/page/28118~1077279/our-community" class="menu-link">Our Community</a><ul class="menu-sub-group" style="left: -999999em;">
+                                        <span class="submenu-button"></span><a href="https://ourwoodbridge.net/page/28118~1077279/our-community" class="menu-link">Our Community</a><ul class="menu-sub-group">
                                             <li class="menu-item"><a href="/officer/board/28118/board-members" class="menu-link">Board Members</a></li>
                                             <li class="menu-item"><a href="/officer/committeelist/28118/committee-members" class="menu-link">Committee Members</a></li>
                                             <li class="menu-item"><a target="_blank" href="https://ourwoodbridge.net/HOA/assn28118/images/WoodbridgeCommunityMap.pdf" class="menu-link">Community Map</a></li>
@@ -99,12 +105,17 @@
                                             <li class="menu-item"><a href="/classified/search/28118~480182/classifieds" class="menu-link">Classifieds</a></li>
                                             <li class="menu-item"><a href="/ResourceCenter/28118~540434/Flyers-Events-or-Activities" class="menu-link">Flyers and Activities</a></li>
                                             <li class="menu-item"><a href="/news/list/28118/news-announcements" class="menu-link">News &amp; Announcements</a></li>
-                                            <li class="menu-item"><a target="_blank" href="https://ourwoodbridge.net/ResourceCenter/Download/28118/2023_10woodbridgenewsletter?doc_id=3187314&amp;print=1&amp;view=1" class="menu-link">Woodbridge Life E-Magazine</a></li>
                                             <li class="menu-item"><a target="_blank" href="https://issuu.com/woodbridgelife" class="menu-link">Woodbridge Life Archive</a></li>
                                         </ul>
                                     </li>
                                     <li class="menu-item"><a href="/resourcecenter/28118/resource-center" class="menu-link">Resource Center</a></li>
-                                    <li class="menu-item"><a target="_blank" href="https://portal.sc-manage.com/Home_v2/Login" class="menu-link">Silvercreek</a></li>
+                                    <li class="menu-item has-sub">
+                                        <span class="submenu-button"></span><a href="https://portal.sc-manage.com/Home_v2/Login" class="menu-link">Silvercreek</a><ul class="menu-sub-group">
+                                            <li class="menu-item"><a href="/page/28118~1101019/maintenance-report-summary" class="menu-link">Maintenance Report Summary</a></li>
+                                            <li class="menu-item"><a href="/page/28118~1101018/safety-report-summary" class="menu-link">Safety Report Summary</a></li>
+                                            <li class="menu-item"><a href="/page/28118~1098177/management-forms-summary" class="menu-link">Management Forms Summary</a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </nav>
 
@@ -139,21 +150,7 @@
                 <div id="bodyMainCol" class="col">
                     <div id="content" role="main">
                         <div class="content-inner" id="contentInner">
-                            <!--List Announcements-->
-                            <table width="99%" cellspacing="0" cellpadding="2" border="0" style="width: 99% !important;">
-                                <tbody>
-                                    <tr>
-                                        <td nowrap="" align="right" width="100%" style="display: flex; justify-content: flex-end; width: 100% !important; text-align: right;"><a title="Click for Full View" onmouseover="self.status='Click for Full View'; return true;" onmouseout="self.status=''" href="/News/List/28118?mode=full">Full View</a><div class="hidden-md-down" style="padding-left: 8px; padding-right: 8px;">|</div><a title="Click here for a printable version of the News Page" onmouseover="self.status='Click for a printable version of the News Page'; return true;" onmouseout="self.status=''" class="hidden-md-down" href="javascript:AV.newsPrint();"><img src="/images/icons/icon-printer-small.png" class="pngFix" width="16" height="16" alt="Click here for a printable version of the News Page" border="0" align="absmiddle">&nbsp;Printable Version</a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div style="width: 100%; overflow: auto;">
-                                <div class="clsHeader"><a title="Edit this Article" align="right" id="titleEditNews776129" href="javascript: AV.EditorLauncher.news('776129','3 Steps to Emergency Preparedness','titleEditNews776129','28118')">3 Steps to Emergency Preparedness</a></div>
-                                <div class="clsBodyText" style="overflow: auto;">Emergencies and disasters can happen at any moment, and sometimes occur without warning. When an emergency strikes, your immediate safety and prompt recovery will depend on your existing levels of emergency ...</div>
-                                <div align="right">
-                                    <em></em>  <a target="_top" href="/News/28118~776129">More <img class="hidden-md-down" border="0" alt="" src="/images/r001sb.gif"></a>
-                                </div>
-                            </div>
+                            <!--List Announcements--><table width="99%" cellspacing="0" cellpadding="2" border="0" style="width: 99% !important;"><tbody><tr><td nowrap="" align="right" width="100%" style="display: flex; justify-content: flex-end; width: 100% !important; text-align: right;"><a title="Click for Full View" onmouseover="self.status='Click for Full View'; return true;" onmouseout="self.status=''" href="/News/List/28118?mode=full">Full View</a><div class="hidden-md-down" style="padding-left: 8px; padding-right: 8px;">|</div><a title="Click here for a printable version of the News Page" onmouseover="self.status='Click for a printable version of the News Page'; return true;" onmouseout="self.status=''" class="hidden-md-down" href="javascript:AV.newsPrint();"><img src="/images/icons/icon-printer-small.png" class="pngFix" width="16" height="16" alt="Click here for a printable version of the News Page" border="0" align="absmiddle">&nbsp;Printable Version</a></td></tr></tbody></table><div style="width: 100%; overflow: auto;"><div class="clsHeader"><a title="Edit this Article" align="right" id="titleEditNews791763" href="javascript: AV.EditorLauncher.news('791763','Woodbridge Singers &amp; Dancers Winter Concert (12/04/2023)','titleEditNews791763','28118')">Woodbridge Singers &amp; Dancers Winter Concert (12/04/2023)</a></div><div class="clsBodyText" style="overflow: auto;">‘Tis the season . . .to jump-start your holiday spirit! Join us for a special time to enjoy songs, old and new, musicians, dancers, and light-hearted fun that captures the feeling of Christmas! There ...</div><div align="right"><em></em>  <a target="_top" href="/News/28118~791763">More <img class="hidden-md-down" border="0" alt="" src="/images/r001sb.gif"></a></div></div><div style="width: 100%; overflow: auto;"><div class="clsHeader"><a title="Edit this Article" align="right" id="titleEditNews791762" href="javascript: AV.EditorLauncher.news('791762','Annual Woodbridge Resident Christmas Parade (12/09/2023)','titleEditNews791762','28118')">Annual Woodbridge Resident Christmas Parade (12/09/2023)</a></div><div class="clsBodyText" style="overflow: auto;">The annual Woodbridge Resident Christmas parade is coming your way again this year. It will be held on December 9th 2023 starting at 6:00 PM. If the parade is rained out, it will be tentatively be rescheduled ...</div><div align="right"><em></em>  <a target="_top" href="/News/28118~791762">More <img class="hidden-md-down" border="0" alt="" src="/images/r001sb.gif"></a></div></div><div style="width: 100%; overflow: auto;"><div class="clsHeader"><a title="Edit this Article" align="right" id="titleEditNews791761" href="javascript: AV.EditorLauncher.news('791761','Woodbridge Drama Club Presents (12/10, 12/13 12/14 2023)','titleEditNews791761','28118')">Woodbridge Drama Club Presents (12/10, 12/13 12/14 2023)</a></div><div class="clsBodyText" style="overflow: auto;">Santa has personnel issues with his elves, office regifting issues, doctor's waiting room patient's thoughts and Mrs. Claus thoughts on her marriage to a Christmas icon. Come enjoy these delightful and ...</div><div align="right"><em></em>  <a target="_top" href="/News/28118~791761">More <img class="hidden-md-down" border="0" alt="" src="/images/r001sb.gif"></a></div></div>
                             <style>
                                 .modal {
                                     font-family: 'Lato', sans-serif;
@@ -279,6 +276,8 @@
                                 </div>
 
                             </div>
+
+
                             <div id="errorModal" class="modal" style="display:none">
                                 <!-- Modal content -->
                                 <div class="modal-content">

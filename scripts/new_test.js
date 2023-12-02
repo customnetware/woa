@@ -1,5 +1,5 @@
 let currentDate = new Date()
-$.get("/homepage/28118/resident-home-page", function () { })
+$.get("/homepage/28118/resident-home-page.html", function () { })
     .done(function (responseText) {
         let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
         let recentItems = myWoodbridge.getElementsByClassName("message")
@@ -10,16 +10,18 @@ $.get("/homepage/28118/resident-home-page", function () { })
         showPhotos(myWoodbridge)
         document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
     })
-$.get("/news/list/28118/news-announcements", function () { })
+$.get("/news/list/28118/news-announcements.html", function () { })
     .done(function (responseText) {
         let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
         let articleTitle = newsArticles.getElementsByClassName("clsHeader")
         let articleContent = newsArticles.getElementsByClassName("clsBodyText")
+
         for (let p = 0; p < articleContent.length; p++) {
-            addToNotifications(articleTitle[p].innerText, articleContent[p].innerText, "#", "fa fa-newspaper-o")
+            let articleLink = articleTitle[p].parentElement.getElementsByTagName("div")[2].getElementsByTagName("a")[0].href
+            addToNotifications(articleTitle[p].innerText, articleContent[p].innerText, articleLink, "fa fa-newspaper-o")
         }
     })
-$.get("/Discussion/28118~8364", function () { })
+$.get("/Discussion/28118~8364.html", function () { })
     .done(function (responseText) {
         let forum = new DOMParser().parseFromString(responseText, "text/html")
         let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
@@ -31,11 +33,11 @@ $.get("/Discussion/28118~8364", function () { })
             let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
             let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
             if (dayDiff <= 90) {
-                addToNotifications(postHeaders[h].innerText, messageTexts[0].innerText + messageAuthor[0].innerText, "#", "fa fa-comments-o fa-lg")
+                addToNotifications(postHeaders[h].innerText, messageTexts[0].innerText + messageAuthor[0].innerText, messageContacts[0].getElementsByTagName("a")[0].href, "fa fa-comments-o fa-lg")
             }
         }
     })
-$.get("/resourcecenter/28118/resource-center", function () { })
+$.get("/resourcecenter/28118/resource-center.html", function () { })
     .done(function (responseText) {
         let documents = new DOMParser().parseFromString(responseText, "text/html")
         let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
@@ -61,7 +63,7 @@ $.get("/resourcecenter/28118/resource-center", function () { })
         }
         document.getElementById("documentIcon").className = "fa fa-file-text-o"
     })
-$.get("/classified/search/28118~480182/classifieds", function () { })
+$.get("/classified/search/28118~480182/classifieds.html", function () { })
     .done(function (responseText) {
         let classifieds = new DOMParser().parseFromString(responseText, "text/html")
         let classifiedTitle = classifieds.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
@@ -81,7 +83,7 @@ $.get(profilePage, function () {
 
 function showPhotos(galleryPage) {
     try {
-        let newPicList = document.getElementById("recentPhotos").getElementsByTagName("div") 
+        let newPicList = document.getElementById("recentPhotos").getElementsByTagName("div")
         let photoList = galleryPage.querySelectorAll("[id^=gallery_link_]")
         let galleryLink = galleryPage.querySelectorAll("[class^=gallery_txt_sub]")
         let galleryText = galleryPage.getElementsByClassName("left")
@@ -89,7 +91,7 @@ function showPhotos(galleryPage) {
             newPicList[k].getElementsByTagName("img")[0].src = photoList[k].src
             newPicList[k].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
             newPicList[k].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
-        } 
+        }
     } catch (error) { }
 
 }
@@ -102,16 +104,24 @@ function addToNotifications(title, content, link, iconType) {
     itemType.className = iconType
     itemType.style.paddingRight = "7px"
 
-    itemLink.className = "fa fa-arrow-right fa-lg formatLink"
-    itemLink.href = link
-
     itemTitle.appendChild(itemType)
     itemTitle.appendChild(document.createTextNode(title))
+
+    if (iconType.includes("comments")) {
+        let replyLink = document.createElement("a")
+        replyLink.href = link
+        replyLink.innerHTML = "Reply"
+        itemTitle.appendChild(replyLink)
+    }
 
     recentItem.appendChild(itemTitle)
     recentItem.appendChild(document.createTextNode(content))
 
-    if (iconType.includes("envelope")) { recentItem.appendChild(itemLink) }
+    itemLink.href = link
+    itemLink.className = "fa fa-arrow-right fa-lg formatLink"
+    if (iconType.includes("envelope") || iconType.includes("newspaper")) { recentItem.appendChild(itemLink) }
+
+
     if (iconType.includes("envelope")) {
         document.getElementById("message").insertBefore(recentItem, document.getElementById("message").children[0])
     } else {
