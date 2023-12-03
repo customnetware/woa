@@ -28,9 +28,10 @@ function getContent() {
             let windowDoc = document.getElementById("fromWOA").getElementsByClassName("card-body")
             let residentNameFrm = profileDoc.getElementsByClassName("clsHeader")[0].innerText
             let residentName = document.getElementsByClassName("clsHeader")[0]
-
+            showPhotos(profileDoc)
             for (let p = 0; p < windowDoc.length; p++) {
                 let clientDoc = windowDoc[p].getElementsByTagName("div")[0]
+                if (clientDoc.id !== "recentPhotos") { 
                 let currentDoc = profileDoc.getElementById(clientDoc.className).getElementsByClassName(clientDoc.id)
                 for (let i = 0; i < currentDoc.length; i++) {
                     let selectedDoc = currentDoc[i].getElementsByTagName("a")[0]
@@ -73,7 +74,7 @@ function getContent() {
                     }
                     clientDoc.appendChild(topSpan)
                     clientDoc.appendChild(btmSpan)
-                }
+                }}
             }
             document.getElementById("overlay").style.display = "none"
             if (residentNameFrm !== null && residentName !== null) {
@@ -204,6 +205,19 @@ function showDocuments() {
             })
     } catch (error) {
     }
+}
+function showPhotos(galleryPage) {
+    try {
+        let newPicList = document.getElementById("recentPhotos").getElementsByTagName("div")
+        let photoList = galleryPage.querySelectorAll("[id^=gallery_link_]")
+        let galleryLink = galleryPage.querySelectorAll("[class^=gallery_txt_sub]")
+        let galleryText = galleryPage.getElementsByClassName("left")
+        for (let k = 0; k < photoList.length; k++) {
+            newPicList[k].getElementsByTagName("img")[0].src = photoList[k].src
+            newPicList[k].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
+            newPicList[k].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
+        }
+    } catch (error) { }
 }
 function saveUser(saveKey, saveValue) {
     try {
