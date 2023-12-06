@@ -11,7 +11,13 @@ function getResidentHomePage() {
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
             let recentItems = myWoodbridge.getElementsByClassName("message")
-            document.getElementById("notificationHeader").getElementsByClassName("card-header")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
+            let nameHeader = document.getElementById("notificationHeader").getElementsByClassName("card-header")[0]
+            nameHeader.innerHTML=""
+            let nameCheck = document.createElement("span")
+            nameCheck.style.marginRight="5px"
+            nameCheck.className = "fa fa-check-circle formatLink"
+            nameHeader.appendChild(nameCheck)
+            nameHeader.appendChild(document.createTextNode(myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML))
             showPhotos(myWoodbridge)
             for (let p = 0; p < recentItems.length; p++) {
                 let itemContent = recentItems[p].getElementsByTagName("a")[0]
