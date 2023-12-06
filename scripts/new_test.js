@@ -10,8 +10,7 @@ function getResidentHomePage() {
     $.get(residentHomePage, function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
-            let recentItems = myWoodbridge.getElementsByClassName("message")
-            
+            let recentItems = myWoodbridge.getElementsByClassName("message")            
             document.getElementById("notificationHeader").getElementsByClassName("card-header")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
             showPhotos(myWoodbridge)
             for (let p = 0; p < recentItems.length; p++) {
@@ -27,8 +26,6 @@ function getResidentHomePage() {
                 currentItem.appendChild(itemLink)
                 emailList.appendChild(currentItem)
             }
-            document.getElementById("loadIcon").style.display = "none"
-            document.getElementById("recentNotifications").style.visibility = "visible"
         })
 }
 function getNewsAndAnnouncements() {
@@ -76,7 +73,6 @@ function getResourceCenter() {
                 selectedDoc.href = documentLink[p].href
                 resourceItem.appendChild(selectedDoc)
                 docList.appendChild(resourceItem)
-             /*   if (document.getElementById("document").getElementsByTagName("span").length == 15) { break }*/
             }
         
         })

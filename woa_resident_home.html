@@ -164,12 +164,12 @@
                 }
         </style>
         <div class="container-fluid">
-            
+
             <div class="row" id="notificationHeader">
 
                 <div class="col-md-12">
                     <div class="card z-depth-3 mb-3">
-                        <div class="card-header border-success formatHeader">My Personal Information</div>
+                        <div class="card-header border-success formatHeader"><span class="fa fa-refresh fa-spin fa-fw"  style="margin-right:5px"></span>Checking for new emails and flyers... </div>
                         <div id="userProfile" class="card-body" style="padding:10px">
                             <img id="profileImage" width="110" src="" class="dropShadow" />To update your personal information, click the <b>My Profile</b> button.  Click or tap the <b>Profile</b> link on mobile devices.
                         </div>
@@ -188,31 +188,32 @@
                         </div>
                     </div>
                     <div class="card z-depth-3 mb-3">
-                        <div class="card-header" data-toggle="collapse" data-target="#recentEmails" aria-expanded="true">
-                            <span class="title"><span class="fa fa-envelope-o" style="margin-right:20px"></span>Recent Association Emails </span>
-                            <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                        <div class="card-header" data-toggle="collapse" data-target="#recentNews" aria-expanded="true">
+                            <span class="title"><span class="fa fa-newspaper-o" style="margin-right:5px"></span><b>News And Announcements</b></span>
+                            <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                         </div>
-                        <div id="recentEmails" class="collapse show" data-parent="#recentNotifications">
+                        <div id="recentNews" class="collapse show" data-parent="#recentNotifications">
                             <div class="card-body">
 
                             </div>
                         </div>
                     </div>
                     <div class="card z-depth-3 mb-3">
-                        <div class="card-header collapsed" data-toggle="collapse" data-target="#recentNews" aria-expanded="false">
-                            <span class="title"><span class="fa fa-newspaper-o" style="margin-right:20px"></span>Recent News And Announcement </span>
-                            <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                        <div class="card-header collapsed" data-toggle="collapse" data-target="#recentEmails" aria-expanded="false">
+                            <span class="title"><span class="fa fa-envelope-o" style="margin-right:5px"></span><b>Association Emails</b></span>
+                            <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                         </div>
-                        <div id="recentNews" class="collapse" data-parent="#recentNotifications">
+                        <div id="recentEmails" class="collapse" data-parent="#recentNotifications">
                             <div class="card-body">
 
                             </div>
                         </div>
                     </div>
+
                     <div class="card z-depth-3 mb-3">
                         <div class="card-header collapsed" data-toggle="collapse" data-target="#recentPosts" aria-expanded="false">
-                            <span class="title"><span class="fa fa-comments-o" style="margin-right:20px"></span>Recent Discussion Group Posts </span>
-                            <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                            <span class="title"><span class="fa fa-comments-o" style="margin-right:5px"></span><b>Discussion Group Posts</b></span>
+                            <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                         </div>
                         <div id="recentPosts" class="collapse" data-parent="#recentNotifications">
                             <div class="card-body">
@@ -222,8 +223,8 @@
                     </div>
                     <div class="card z-depth-3 mb-3">
                         <div class="card-header collapsed" data-toggle="collapse" data-target="#recentAds" aria-expanded="false">
-                            <span class="title"><span class="fa fa-shopping-cart" style="margin-right:20px"></span>Classified Ads</span>
-                            <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                            <span class="title"><span class="fa fa-shopping-cart" style="margin-right:5px"></span><b>Classified Ads</b></span>
+                            <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                         </div>
                         <div id="recentAds" class="collapse" data-parent="#recentNotifications">
                             <div class="card-body">
@@ -233,8 +234,8 @@
                     </div>
                     <div class="card z-depth-3 mb-3">
                         <div class="card-header collapsed" data-toggle="collapse" data-target="#recentFlyers" aria-expanded="false">
-                            <span class="title"><span class="fa fa-file-pdf-o" style="margin-right:20px"></span>Activity And Event Flyers</span>
-                            <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                            <span class="title"><span class="fa fa-file-pdf-o" style="margin-right:5px"></span><b>Activity And Event Flyers</b></span>
+                            <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                         </div>
                         <div id="recentFlyers" class="collapse" data-parent="#recentNotifications">
                             <div class="card-body">
@@ -244,8 +245,8 @@
                     </div>
                     <div class="card z-depth-3 mb-3">
                         <div class="card-header collapsed" data-toggle="collapse" data-target="#recentPhotos" aria-expanded="false">
-                            <span class="title"><i class="fa fa-picture-o" style="margin-right:20px"></i>Activity And Event Photos</span>
-                            <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                            <span class="title"><span class="fa fa-picture-o" style="margin-right:5px"></span><b>Activity And Event Photos</b></span>
+                            <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                         </div>
                         <div id="recentPhotos" class="collapse" data-parent="#recentNotifications">
                             <div class="card-body">
