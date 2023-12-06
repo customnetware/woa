@@ -16,7 +16,7 @@
         <div class="clsHeader" style="float:left; padding-right:25px"></div>
         <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
     </div>
-    <div class="container-fluid">
+    <div class="container">
         <style type="text/css">
             .formatHeader {
                 background-color: #999999;
@@ -52,7 +52,7 @@
                 padding-right: 15px;
             }
 
-            #document span, #recentNewsletters span {
+            #recentFlyers span {
                 padding-left: 10px;
                 padding-bottom: 5px;
                 padding-top: 5px;
@@ -60,42 +60,56 @@
                 display: block;
             }
 
-                #document span:nth-child(even), #recentNewsletters p:nth-child(even) {
+                #recentFlyers span:nth-child(even) {
                     background-color: #eceeef
                 }
 
-            #post p:nth-child(even), #message p:nth-child(even) {
-                background-color: #eceeef
-            }
-
-            #post p, #message p {
+            #recentEmails p, #recentNews p, #recentAds p {
                 margin: 0px;
                 padding: 10px !important
             }
 
-                #post p span {
+                #recentEmails p:nth-child(even), #recentNews p:nth-child(even), #recentAds p:nth-child(even) {
+                    background-color: #eceeef
+                }
+
+                #recentEmails p span:first-child, #recentNews p span:first-child, #recentAds p span:first-child {
+                    font-weight: 700;
+                    display: block
+                }
+
+            .groupPost {
+                margin: 0px;
+                padding: 10px !important
+            }
+
+                .groupPost:nth-child(even) {
+                    background-color: #eceeef
+                }
+
+                .groupPost span {
                     display: none;
                 }
 
-                    #post p span:first-child, #message p span:first-child {
+                    .groupPost span:first-child {
                         font-weight: 700;
                         display: block
                     }
 
-                    #post p span:nth-child(2) {
+                    .groupPost span:nth-child(2) {
                         display: block
                     }
 
-                    #post p span:nth-child(3) {
+                    .groupPost span:nth-child(3) {
                         display: block
                     }
 
-                    #post p span:nth-child(2n+4) {
+                    .groupPost span:nth-child(2n+4) {
                         margin-top: 5px;
                         border-top: 1px solid black;
                     }
 
-                    #post p span:nth-child(2n+5) {
+                    .groupPost span:nth-child(2n+5) {
                         margin-top: 1px;
                     }
 
@@ -108,6 +122,7 @@
                 #recentPhotos div {
                     width: 33%;
                     float: left;
+                    filter: drop-shadow(5px 5px 5px grey);
                 }
 
                 #recentPhotos img {
@@ -117,127 +132,152 @@
                     padding-top: 10px;
                     padding-left: 2px
                 }
-        </style>
-        <div><span class="fa fa-circle-o-notch fa-pulse fa-fw fa-5x" id="loadIcon" style="width:100%; color:lightgray"></span></div>
-        <div class="row" id="pageRow" style="visibility:hidden">
-            <div class="col-md-3">
-                <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader">My Personal Information</div>
-                    <div id="userProfile" class="card-body" style="padding:10px">
-                        <img id="profileImage" width="110" src="" class="dropShadow" />To update your personal information, click the <b>My Profile</b> button.  Click or tap the <b>Profile</b> link on mobile devices.
-                    </div>
-                </div>
-                <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader">Lakeview Clubhouse and Office Hours</div>
-                    <div id="userProfile" class="card-body" style="padding:10px">
-                        <ul>
-                            <li>Monday - Saturday 7 a.m. to 9 p.m.</li>
-                            <li>Sunday 8 a.m. to 6 p.m.</li>
-                            <li>Clubhouse hours may vary seasonally</li>
-                        </ul>
-                        <i>Clubhouse and Office closed: New Year's Day, Easter Sunday, Thanksgiving Day, Christmas Eve and Christmas Day.</i>
-                    </div>
-                </div>
-                <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-exclamation-circle" aria-hidden="true"></span>&nbsp;&nbsp;I want to...</div>
-                    <div class="card-body text-muted" style="padding-left:10px;" id="userProfile">
-                        <div><span class="fa fa-external-link" style="padding-right:10px"></span><a href="https://portal.sc-manage.com/Home_v2/Login">Pay WHOA assessment online and/or see balance</a></div>
-                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="/Form/28118~188049/Repair-or-Maintenance">File a WHOA maintenance request (Common Area)</a></div>
-                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="/Form/28118~188011/Complaint-or-CCRs-Rules-Violation">File a Complaint or CC&Rs Rules Violation</a></div>
-                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="/Form/28118~116540/Ask-A-Manager">Send a question or comment to management</a></div>
-                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="/Form/28118~317256/Community-Crime-Incident-Report">File A Community Crime Incident Report (non PD)</a></div>
-                        <div><span class="fa fa-list" style="padding-right:10px"></span><a href="/Form/28118~243363/Board-Agenda-Topic-Comment-or-Question">Send A Board Agenda Topic Comment or Question</a></div>
-                    </div>
-                </div>
-                <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-address-card-o" aria-hidden="true"></span>&nbsp;&nbsp;Silvercreek Management Contacts </div>
-                    <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
-                        <strong>General Manager - Jessica Ross</strong>
-                        <ul style="list-style-type:none;padding:0px;margin:0px;">
-                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209) 824-7581 Ext 101</li>
-                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto:jross@ourwoodbridge.net">jross@ourwoodbridge.net</a></li>
-                        </ul>
-                    </div>
-                    <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
-                        <strong>Office Manager - Jacquelynn Allen</strong>
-                        <ul style="list-style-type:none;padding:0px;margin:0px;">
-                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209) 824-7581 Ext 105</li>
-                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto:jallen@ourwoodbridge.net">jallen@ourwoodbridge.net</a></li>
-                        </ul>
-                    </div>
-                    <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
-                        <strong>Lifestyle Manager</strong>
-                        <ul style="list-style-type:none;padding:0px;margin:0px;">
-                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209) 824-7927</li>
-                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;</li>
-                        </ul>
-                    </div>
-                    <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
-                        <strong>Maintenance Lead - James Shirron</strong>
-                        <ul style="list-style-type:none;padding:0px;margin:0px;">
-                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (000) 000-0000</li>
-                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto:jshirron@ourwoodbridge.net">jshirron@ourwoodbridge.net</a></li>
-                        </ul>
-                    </div>
-                    <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
-                        <strong>Woodbridge Clubhouse - Front Desk</strong>
-                        <ul style="list-style-type:none;padding:0px;margin:0px;">
-                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; 209-824-7581</li>
-                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto:frontdesk@ourwoodbridge.net">frontdesk@ourwoodbridge.net</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-shield" aria-hidden="true"></span>&nbsp;&nbsp;Woodbridge On-Site Security </div>
-                    <div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
-                        <strong>Alpine Protective Solutions</strong> <ul style="list-style-type:none;padding:0px;margin:0px;">
-                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209)495-5347</li>
-                            <li><span class="fa fa-globe" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://alpineprotect.com/"> https://alpineprotect.com/ </a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-bell" aria-hidden="true" id="messageIcon"></span>&nbsp;&nbsp;Recent Notifications<a href="javascript:showHistory()" class="fa fa-history formatRight" style="display:none"></a></div>
-                    <div class="card-body">
-                        <div id="message">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-spinner fa-spin fa-fw" aria-hidden="true" id="documentIcon"></span>&nbsp;&nbsp;Activities & Event Flyers <a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">(Resource Center)</a></div>
-                    <div class="card-body">
-                        <div id="document">
-                        </div>
-                    </div>
-                </div>
-                <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-newspaper-o" aria-hidden="true" id="newslettersIcon"></span>&nbsp;&nbsp;Woodbridge Life Newsletters</div>
-                    <div class="card-body">
-                        <div id="recentNewsletters">
-                        </div>
-                    </div>
-                </div>
-                <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-picture-o" aria-hidden="true" id="recentPhotosIcon"></span>&nbsp;&nbsp;Recent Event Photos</div>
-                    <div class="card-body">
-                        <div id="recentPhotos">
-                            <div><a><img src="" /><br /><span></span></a></div>
-                            <div><a><img src="" /><br /><span></span></a></div>
-                            <div><a><img src="" /><br /><span></span></a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-        </div>
-        <div id="errText"></div>
-        <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
-        <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
-    </div>
+            #notificationsSettings button {
+                cursor: pointer;
+                width: 100%;
+                text-align: left;
+                margin-bottom: 5px;
+            }
+
+            #notificationsSettings span {
+                margin-right: 10px
+            }
+
+            .card-body {
+                padding-left: 15px;
+            }
+
+            .card-header {
+                cursor: pointer;
+                border-bottom: none;
+            }
+
+                .card-header:not(.collapsed) .rotate-icon {
+                    transform: rotate(180deg);
+                }
+
+                .card-header .accicon {
+                    float: right;
+                    font-size: 20px;
+                    width: 1.2em;
+                }
+        </style>
+        <div class="container-fluid">
+            <div><span class="fa fa-circle-o-notch fa-pulse fa-fw fa-5x" id="loadIcon" style="width:100%; color:lightgray"></span></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card z-depth-3 mb-3">
+                        <div class="card-header border-success formatHeader"><span class="fa fa-cog" aria-hidden="true"></span>&nbsp;&nbsp;Notifications Options</div>
+                        <div id="notificationsSettings" class="card-body" style="padding:10px">
+                            <button onclick="notifySettings(0)"><span class="fa fa-envelope"></span>All Saved Emails</button>
+                            <button onclick="notifySettings(1)"><span class="fa fa-comments"></span>All Active Posts</button>
+                            <button onclick="notifySettings(2)"><span class="fa fa-shopping-cart"></span>All Items For Sale</button>
+                            <button onclick="notifySettings(3)"><span class="fa fa-newspaper-o"></span>All News Articles</button>
+                            <button onclick="notifySettings(4)"><span class="fa fa-window-restore"></span>Reset View</button>
+                        </div>
+                    </div>
+                </div><div class="col-md-6">
+                    <div class="card z-depth-3 mb-3">
+                        <div class="card-header border-success formatHeader">My Personal Information</div>
+                        <div id="userProfile" class="card-body" style="padding:10px">
+                            <img id="profileImage" width="110" src="" class="dropShadow" />To update your personal information, click the <b>My Profile</b> button.  Click or tap the <b>Profile</b> link on mobile devices.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="pageRow" style="visibility:hidden">
+
+                <div class="col-md-12">
+
+                    <div class="card z-depth-3 mb-3">
+                        <div class="card-header border-success formatHeader"><span class="fa fa-bell" aria-hidden="true" id="noticeIcon"></span>&nbsp;&nbsp;Recent Notifications<a href="javascript:showHistory()" class="fa fa-history formatRight"></a></div>
+                        <div class="card-body">
+                            <div id="notice">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card z-depth-3 mb-3">
+                        <div class="card-header" data-toggle="collapse" data-target="#recentEmails" aria-expanded="true">
+                            <span class="title"><i class="fa fa-envelope-o" style="margin-right:20px"></i>Recent Association Emails </span>
+                            <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                        </div>
+                        <div id="recentEmails" class="collapse show" data-parent="#pageRow">
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card z-depth-3 mb-3">
+                        <div class="card-header collapsed" data-toggle="collapse" data-target="#recentNews" aria-expanded="false">
+                            <span class="title"><i class="fa fa-newspaper-o" style="margin-right:20px"></i>Recent News And Announcement </span>
+                            <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                        </div>
+                        <div id="recentNews" class="collapse" data-parent="#pageRow">
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card z-depth-3 mb-3">
+                        <div class="card-header collapsed" data-toggle="collapse" data-target="#recentPosts" aria-expanded="false">
+                            <span class="title"><i class="fa fa-comments-o" style="margin-right:20px"></i>Recent Discussion Group Posts </span>
+                            <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                        </div>
+                        <div id="recentPosts" class="collapse" data-parent="#pageRow">
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card z-depth-3 mb-3">
+                        <div class="card-header collapsed" data-toggle="collapse" data-target="#recentAds" aria-expanded="false">
+                            <span class="title"><i class="fa fa-shopping-cart" style="margin-right:20px"></i>Classified Ads</span>
+                            <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                        </div>
+                        <div id="recentAds" class="collapse" data-parent="#pageRow">
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card z-depth-3 mb-3">
+                        <div class="card-header collapsed" data-toggle="collapse" data-target="#recentFlyers" aria-expanded="false">
+                            <span class="title"><i class="fa fa-file-pdf-o" style="margin-right:20px"></i>Activity And Event Flyers</span>
+                            <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                        </div>
+                        <div id="recentFlyers" class="collapse" data-parent="#pageRow">
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card z-depth-3 mb-3">
+                        <div class="card-header collapsed" data-toggle="collapse" data-target="#recentPhotos" aria-expanded="false">
+                            <span class="title"><i class="fa fa-picture-o" style="margin-right:20px"></i>Activity And Event Photos</span>
+                            <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                        </div>
+                        <div id="recentPhotos" class="collapse" data-parent="#pageRow">
+                            <div class="card-body">
+                                <div><a><img src="" /><br /><span></span></a></div>
+                                <div><a><img src="" /><br /><span></span></a></div>
+                                <div><a><img src="" /><br /><span></span></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-3">
+
+                </div>
+
+            </div><br /><br />
+            <div id="errText"></div>
+            <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
+            <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
+        </div></div>
 
 </body>
 </html>

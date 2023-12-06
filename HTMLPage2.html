@@ -10,64 +10,76 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
+    <style>
+        .card-header .title {
+            font-size: 17px;
+            color: #000;
+        }
 
-    <div class="NormalSmall col-md-3" valign="top">
-        <a class="HoverLink" title="Add a new discussion topic" onmouseover="self.status = 'Add a new discussion topic'; return false;" onmouseout="self.status = '';" id="lnkAddTopic" href="javascript:AV.EditorLauncher.discussionTopic('','11323', '41993','new','New Topic','lnkAddTopic');">
-            <img src="/images/icons/icon-discussion-new.png" width="16" height="16" border="0" align="top" class="pngFix" style="margin-right: 5px;">
-            New Topic
-        </a>
-    </div>
-    <form class="x-panel-body x-panel-body-noheader x-panel-body-noborder x-form" method="POST" id="ext-gen70" action="https://ourwoodbridge.net/Discussion/28118~11323/Test-Groups">
-        <input size="20" autocomplete="off" id="ext-comp-1044" name="action" class=" x-form-hidden x-form-field" value="post">
+        .card-header .accicon {
+            float: right;
+            font-size: 20px;
+            width: 1.2em;
+        }
 
-        <input size="20" autocomplete="off" id="ext-comp-1045" name="post_id" class=" x-form-hidden x-form-field" value="">
-        <input size="20" autocomplete="off" id="ext-comp-1046" name="post_type" class=" x-form-hidden x-form-field" value="new">
-        <input size="20" autocomplete="off" id="ext-comp-1047" name="forum_id" class=" x-form-hidden x-form-field" value="11323">
-        <input size="20" autocomplete="off" id="ext-comp-1048" name="parent_post_id" class=" x-form-hidden x-form-field" value="">
-        <input size="20" autocomplete="off" id="ext-comp-1049" name="post_body_text" class=" x-form-hidden x-form-field">
-        <input size="20" autocomplete="off" id="ext-comp-1050" name="post_body_summary" class=" x-form-hidden x-form-field">
-        <input size="20" autocomplete="off" id="ext-comp-1051" name="group_id" class=" x-form-hidden x-form-field" value="41993">
-        <input size="20" autocomplete="off" id="ext-comp-1052" name="forum_name" class=" x-form-hidden x-form-field" value="Test Groups">
-        <input size="20" autocomplete="off" id="ext-comp-1053" name="orig_notify" class=" x-form-hidden x-form-field" value="">
-        <input size="20" autocomplete="off" id="ext-comp-1054" name="orig_email" class=" x-form-hidden x-form-field" value="">
-        <input size="20" autocomplete="off" id="ext-comp-1055" name="orig_subject" class=" x-form-hidden x-form-field" value="">
-        <div class="x-form-item " tabindex="-1" id="ext-gen73">
-            <label for="ext-comp-1056" style="display:none;" class="x-form-item-label" id="ext-gen74"></label>
-            <div class="x-form-element" id="x-form-el-ext-comp-1056" style="padding-left:0;">
-                <div id="ext-comp-1056" name="ext-comp-1056" class=" x-form-display-field form-items-container" style="font-weight: bold;">Subject</div>
-            </div><div class="x-form-clear-left"></div>
-        </div>
+        .card-header {
+            cursor: pointer;
+            border-bottom: none;
+        }
 
-        <div class="x-form-item " tabindex="-1" id="ext-gen75">
-            <label for="ext-comp-1057" style="display:none;" class="x-form-item-label" id="ext-gen76"></label><div class="x-form-element" id="x-form-el-ext-comp-1057" style="padding-left:0;">
-                <input type="text" size="20" autocomplete="off" id="ext-comp-1057" name="subject" class="x-form-text x-form-field form-items-container" style="padding-left: 8px; padding-right: 8px; width: 100%;">
+        .card {
+            border: 1px solid #ddd;
+        }
 
-            </div>
-            <div class="x-form-clear-left"></div>
-        </div>
+        .card-body {
+            border-top: 1px solid #ddd;
+        }
 
-        <div id="ext-comp-1058" class=" av-editor-container" style="margin-bottom: 10px; width: 619px;">
-            <div id="lbl_post_body" class=" x-form-item-label av-editor-ctrl-lbl" style="margin-bottom: 2px; width: 619px;">Text</div><div id="lbl_post_body" class=" x-form-item-label av-editor-ctrl-lbl" style="margin-bottom: 2px; width: 619px;">Text</div>
-
-            <input size="20" autocomplete="off" id="txtSpellpost_body" name="txtSpellpost_body" class=" x-form-hidden x-form-field">
-            <input size="20" autocomplete="off" id="ext-comp-1059" name="post_body" class=" x-form-hidden x-form-field" value="">
-            <textarea style="width: 611px; height: 294px;" autocomplete="off" id="txt_post_body" name="txt_post_body" class="x-form-textarea x-form-field"></textarea>
-
-
-            <div class="x-form-invalid-msg" id="div_post_bodyValMsg" style="display: none; width: 599px;"></div>
-        </div>
-        <div class="x-form-item " tabindex="-1" id="ext-gen78">
-            <label for="ext-comp-1061" style="display:none;" class="x-form-item-label" id="ext-gen79">Options </label><div class="x-form-element" id="x-form-el-ext-comp-1061" style="padding-left:0;">
-                <div class="x-form-check-wrap" id="ext-gen80">
-                    <input type="checkbox" autocomplete="off" id="ext-comp-1061" name="notify" class=" x-form-checkbox x-form-field form-items-container" value="0">
-
-
-
-                    <label for="ext-comp-1061" class="x-form-cb-label" id="ext-gen81">Send me an e-mail when someone responds to my post</label>
+        .card-header:not(.collapsed) .rotate-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false">
+                        <span class="title"><i class="fa fa-envelope-o" style="margin-right:20px"></i>Recent Association Emails </span>
+                        <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                    </div>
+                    <div id="collapseOne" class="collapse" data-parent="#accordionExample">
+                        <div class="card-body" style="padding:20px">
+                            Hello Woodbridge!This is your reminder of the Finance Committee Meeting being held Today Monday November 27th at 1pm in the Westport Room. Come join in on the conversation about the finances for the Clubhouse!20231127 - November Finance Committee Meeting ...
+                        </div>
+                    </div>
                 </div>
-            </div><div class="x-form-clear-left"></div>
-        </div><button type="submit" id="ext-gen36" class=" x-btn-text save-button">Post</button>
-    </form>
+                <div class="card">
+                    <div class="card-header collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <span class="title"><i class="fa fa-envelope-o" style="margin-right:20px"></i>Recent Discussion Group Posts</span>
+                        <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                    </div>
+                    <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
+                        <div class="card-body" style="padding:20px">
+                            Hello Woodbridge Residents!GP Landscaping has planted beautiful annual flowers in the entrance of our Clubhouse and we would like to keep them in great condition. We have noticed recently that there are people stepping on the flowers and/or taking them
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false">
+                        <span class="title"><i class="fa fa-envelope-o" style="margin-right:20px"></i>Recent News and Announcements</span>
+                        <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
+                    </div>
+                    <div id="collapseThree" class="collapse" data-parent="#accordionExample">
+                        <div class="card-body" style="padding:20px">
+                            Hello Woodbridge Residents! GP Landscaping has planted beautiful annual flowers in the entrance of our Clubhouse and we would like to keep them in great condition. We have noticed recently that there are people stepping on the flowers and/or taking
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
 
 </body>
 </html>
