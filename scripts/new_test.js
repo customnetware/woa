@@ -27,6 +27,8 @@ function getResidentHomePage() {
                 currentItem.appendChild(itemLink)
                 emailList.appendChild(currentItem)
             }
+            document.getElementById("loadIcon").style.display = "none"
+            document.getElementById("recentNotifications").style.visibility = "visible"
         })
 }
 function getNewsAndAnnouncements() {
@@ -226,7 +228,4 @@ $(window).load(function () {
     getDiscussionGroups(90)
     getClassifiedAds()
     getResidentHomePage()
-    document.getElementById("loadIcon").style.display = "none"
-    document.getElementById("recentNotifications").style.visibility = "visible"
-
 })
