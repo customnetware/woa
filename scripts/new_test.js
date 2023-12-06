@@ -88,9 +88,9 @@ function showPhotos(galleryPage) {
         let galleryLink = galleryPage.querySelectorAll("[class^=gallery_txt_sub]")
         let galleryText = galleryPage.getElementsByClassName("left")
         for (let k = 0; k < photoList.length; k++) {
-            newPicList[k].getElementsByTagName("img")[0].src = photoList[k].src
-            newPicList[k].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
-            newPicList[k].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
+            newPicList[k+1].getElementsByTagName("img")[0].src = photoList[k].src
+            newPicList[k+1].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
+            newPicList[k+1].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
         }
     } catch (error) { }
 
