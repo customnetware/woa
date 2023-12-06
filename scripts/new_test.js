@@ -11,7 +11,7 @@ function getResidentHomePage() {
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
             let recentItems = myWoodbridge.getElementsByClassName("message")
-            document.getElementsByClassName("clsHeader")[0].style.visibility="hidden"
+            
             document.getElementById("notificationHeader").getElementsByClassName("card-header")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
             showPhotos(myWoodbridge)
             for (let p = 0; p < recentItems.length; p++) {
@@ -222,6 +222,7 @@ function showHistory() {
     if (selectedID == "recentAds") { getNewsAndAnnouncements() }
 }
 $(window).load(function () {
+    document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
     getProfilePage()
     getResourceCenter()
     getNewsAndAnnouncements()
