@@ -2,7 +2,7 @@ let currentDate = new Date()
 function getResidentHomePage() {
     let emailList = document.getElementById("recentEmails").getElementsByClassName("card-body")[0]
     emailList.innerHTML = ""
-    $.get("/homepage/28118/resident-home-page.html", function () { })
+    $.get("/homepage/28118/resident-home-page", function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
             let recentItems = myWoodbridge.getElementsByClassName("message")
@@ -26,7 +26,7 @@ function getResidentHomePage() {
 function getNewsAndAnnouncements() {
     let newsList = document.getElementById("recentNews").getElementsByClassName("card-body")[0]
     newsList.innerHTML = ""
-    $.get("/news/list/28118/news-announcements.html", function () { })
+    $.get("/news/list/28118/news-announcements", function () { })
         .done(function (responseText) {
             let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
             let articleTitle = newsArticles.getElementsByClassName("clsHeader")
@@ -48,7 +48,7 @@ function getNewsAndAnnouncements() {
 }
 function getResourceCenter() {
     let docList = document.getElementById("recentFlyers").getElementsByClassName("card-body")[0]
-    $.get("/resourcecenter/28118/resource-center.html", function () { })
+    $.get("/resourcecenter/28118/resource-center", function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
             let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
@@ -99,7 +99,7 @@ function getProfilePage() {
 function getClassifiedAds() {
     let classifiedsList = document.getElementById("recentAds").getElementsByClassName("card-body")[0]
     classifiedsList.innerHTML = ""
-    $.get("/classified/search/28118~480182/classifieds.html", function () { })
+    $.get("/classified/search/28118~480182/classifieds", function () { })
         .done(function (responseText) {
             let classifieds = new DOMParser().parseFromString(responseText, "text/html")
             let classifiedTitle = classifieds.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
