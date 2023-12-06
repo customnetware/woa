@@ -10,7 +10,7 @@ function getResidentHomePage() {
     $.get(residentHomePage, function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
-            let recentItems = myWoodbridge.getElementsByClassName("message")            
+            let recentItems = myWoodbridge.getElementsByClassName("message")
             document.getElementById("notificationHeader").getElementsByClassName("card-header")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
             showPhotos(myWoodbridge)
             for (let p = 0; p < recentItems.length; p++) {
@@ -21,10 +21,29 @@ function getResidentHomePage() {
                 itemTitle.appendChild(document.createTextNode(itemContent.getAttribute("data-tooltip-title").split("by")[0]))
                 itemLink.href = itemContent.href
                 itemLink.className = "fa fa-arrow-right fa-lg formatLink"
+                currentItem.id = itemContent.id.replace("link_", "")
                 currentItem.appendChild(itemTitle)
                 currentItem.appendChild(document.createTextNode(itemContent.getAttribute("data-tooltip-text")))
                 currentItem.appendChild(itemLink)
                 emailList.appendChild(currentItem)
+            }
+        })
+        .always(function () {
+            let numOfItems = document.getElementById("recentEmails").getElementsByClassName("card-body")[0].getElementsByTagName("p").length
+            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
+
+            let retrievedData = localStorage.getItem("emails")
+            let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
+            let currentEmails = document.getElementById("recentEmails").getElementsByClassName("card-body")[0].getElementsByTagName("p")
+            for (let p = 0; p < currentEmails.length; p++) {
+                if ((retrievedData !== null && retrievedData.includes(currentEmails[p].id) == false) || emailData.length == 0) {
+                    let emailTitle = currentEmails[p].getElementsByTagName("span")[0].innerHTML
+                    let emailLink = currentEmails[p].getElementsByTagName("a")[0].href
+                    let emailBody = currentEmails[p].innerText.replace(emailTitle, "")
+                    emailData.push([currentEmails[p].id, emailTitle, emailBody, emailLink])
+                    let emailsToSave = JSON.stringify(emailData)
+                    localStorage.setItem("emails", emailsToSave)
+                }
             }
         })
 }
@@ -46,9 +65,12 @@ function getNewsAndAnnouncements() {
                 currentItem.appendChild(itemTitle)
                 currentItem.appendChild(document.createTextNode(articleContent[p].innerText))
                 currentItem.appendChild(itemLink)
-
                 newsList.appendChild(currentItem)
             }
+        })
+        .always(function () {
+            let numOfItems = document.getElementById("recentNews").getElementsByClassName("card-body")[0].getElementsByTagName("p").length
+            document.querySelector("[data-target='#recentNews']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
         })
 }
 function getResourceCenter() {
@@ -74,7 +96,11 @@ function getResourceCenter() {
                 resourceItem.appendChild(selectedDoc)
                 docList.appendChild(resourceItem)
             }
-        
+
+        })
+        .always(function () {
+            let numOfItems = document.getElementById("recentFlyers").getElementsByClassName("card-body")[0].getElementsByTagName("span").length
+            document.querySelector("[data-target='#recentFlyers']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
         })
 }
 function showPhotos(galleryPage) {
@@ -84,10 +110,14 @@ function showPhotos(galleryPage) {
         let galleryLink = galleryPage.querySelectorAll("[class^=gallery_txt_sub]")
         let galleryText = galleryPage.getElementsByClassName("left")
         for (let k = 0; k < photoList.length; k++) {
-            newPicList[k+1].getElementsByTagName("img")[0].src = photoList[k].src
-            newPicList[k+1].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
-            newPicList[k+1].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
+            newPicList[k + 1].getElementsByTagName("img")[0].src = photoList[k].src
+            newPicList[k + 1].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
+            newPicList[k + 1].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
         }
+     
+      /*      let numOfItems = document.getElementById("recentAds").getElementsByClassName("card-body")[0].getElementsByTagName("p").length*/
+        document.querySelector("[data-target='#recentPhotos']").getElementsByTagName("span")[2].innerHTML = " <b>(3)</b> "
+       
     } catch (error) { }
 
 }
@@ -118,6 +148,10 @@ function getClassifiedAds() {
                 currentItem.appendChild(document.createTextNode(classifiedBody[p].childNodes[0].nodeValue))
                 classifiedsList.appendChild(currentItem)
             }
+        })
+        .always(function () {
+            let numOfItems = document.getElementById("recentAds").getElementsByClassName("card-body")[0].getElementsByTagName("p").length
+            document.querySelector("[data-target='#recentAds']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
         })
 }
 function getDiscussionGroups(NumOfDays) {
@@ -175,6 +209,31 @@ function getDiscussionGroups(NumOfDays) {
                     }
                 }
             })
+            .always(function () {
+                let numOfItems = document.getElementById("recentPosts").getElementsByClassName("card-body")[0].getElementsByTagName("p").length
+                document.querySelector("[data-target='#recentPosts']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
+            })
+    }
+}
+function getSavedEmails() {
+    let retrievedData = localStorage.getItem("emails")
+    if (retrievedData !== null) {
+        let emailData = JSON.parse(retrievedData)
+        let emailList = document.getElementById("recentEmails").getElementsByClassName("card-body")
+        emailList[0].innerHTML = ""
+        for (let p = 0; p < emailData.length; p++) {
+            let currentItem = document.createElement("p")
+            let itemTitle = document.createElement("span")
+            let itemLink = document.createElement("a")
+            itemLink.className = "fa fa-arrow-right fa-lg formatLink"
+            itemLink.href = emailData[p][3]
+            itemTitle.appendChild(document.createTextNode(emailData[p][1]))
+            currentItem.appendChild(itemTitle)
+            currentItem.appendChild(document.createTextNode(emailData[p][2]))
+            currentItem.appendChild(itemLink)
+            currentItem.id = emailData[p][0]
+            emailList[0].appendChild(currentItem)
+        }
     }
 }
 function showReplies(p_id) {
@@ -212,7 +271,7 @@ function notifySettings(settingID) {
 }
 function showHistory() {
     let selectedID = document.getElementById("recentNotifications").getElementsByClassName("collapse show")[0].id
-    if (selectedID == "recentEmails") { getResidentHomePage() }
+    if (selectedID == "recentEmails") { getSavedEmails() }
     if (selectedID == "recentPosts") { getDiscussionGroups(365) }
     if (selectedID == "recentNews") { getClassifiedAds() }
     if (selectedID == "recentAds") { getNewsAndAnnouncements() }
