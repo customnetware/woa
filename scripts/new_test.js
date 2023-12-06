@@ -1,12 +1,18 @@
 let currentDate = new Date()
+let residentHomePage = (window.location.hostname == "localhost") ? "/homepage/28118/resident-home-page.html" : "/homepage/28118/resident-home-page"
+let resourceCenter = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
+let classifiedAds = (window.location.hostname == "localhost") ? "/classified/search/28118~480182/classifieds.html" : "/classified/search/28118~480182/classifieds"
+let newsAndAnnouncements = (window.location.hostname == "localhost") ? "/news/list/28118/news-announcements.html" : "/news/list/28118/news-announcements"
+
 function getResidentHomePage() {
     let emailList = document.getElementById("recentEmails").getElementsByClassName("card-body")[0]
     emailList.innerHTML = ""
-    $.get("/homepage/28118/resident-home-page", function () { })
+    $.get(residentHomePage, function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
             let recentItems = myWoodbridge.getElementsByClassName("message")
-            document.getElementsByClassName("clsHeader")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
+            document.getElementsByClassName("clsHeader")[0].style.visibility="hidden"
+            document.getElementById("notificationHeader").getElementsByClassName("card-header")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
             showPhotos(myWoodbridge)
             for (let p = 0; p < recentItems.length; p++) {
                 let itemContent = recentItems[p].getElementsByTagName("a")[0]
@@ -26,7 +32,7 @@ function getResidentHomePage() {
 function getNewsAndAnnouncements() {
     let newsList = document.getElementById("recentNews").getElementsByClassName("card-body")[0]
     newsList.innerHTML = ""
-    $.get("/news/list/28118/news-announcements", function () { })
+    $.get(newsAndAnnouncements, function () { })
         .done(function (responseText) {
             let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
             let articleTitle = newsArticles.getElementsByClassName("clsHeader")
@@ -48,7 +54,7 @@ function getNewsAndAnnouncements() {
 }
 function getResourceCenter() {
     let docList = document.getElementById("recentFlyers").getElementsByClassName("card-body")[0]
-    $.get("/resourcecenter/28118/resource-center", function () { })
+    $.get(resourceCenter, function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
             let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
@@ -99,7 +105,7 @@ function getProfilePage() {
 function getClassifiedAds() {
     let classifiedsList = document.getElementById("recentAds").getElementsByClassName("card-body")[0]
     classifiedsList.innerHTML = ""
-    $.get("/classified/search/28118~480182/classifieds", function () { })
+    $.get(classifiedAds, function () { })
         .done(function (responseText) {
             let classifieds = new DOMParser().parseFromString(responseText, "text/html")
             let classifiedTitle = classifieds.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
@@ -207,7 +213,7 @@ function notifySettings(settingID) {
     if (settingID == 4) { location.reload() }
 }
 function showHistory() {
-    let selectedID = document.getElementsByClassName("col-md-6")[0].getElementsByClassName("collapse show")[0].id
+    let selectedID = document.getElementById("recentNotifications").getElementsByClassName("collapse show")[0].id
     if (selectedID == "recentEmails") { getResidentHomePage() }
     if (selectedID == "recentPosts") { getDiscussionGroups(365) }
     if (selectedID == "recentNews") { getClassifiedAds() }
@@ -221,6 +227,6 @@ $(window).load(function () {
     getClassifiedAds()
     getResidentHomePage()
     document.getElementById("loadIcon").style.display = "none"
-    document.getElementById("pageRow").style.visibility = "visible"
+    document.getElementById("recentNotifications").style.visibility = "visible"
 
 })
