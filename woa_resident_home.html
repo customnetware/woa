@@ -169,7 +169,7 @@
 
                 <div class="col-md-12">
                     <div class="card z-depth-3 mb-3">
-                        <div class="card-header border-success formatHeader"><span class="fa fa-refresh fa-spin fa-fw"  style="margin-right:5px"></span>Checking for new emails and flyers... </div>
+                        <div class="card-header border-success formatHeader"><span class="fa fa-refresh fa-spin fa-fw" style="margin-right:5px"></span>Checking for new emails and flyers... </div>
                         <div id="userProfile" class="card-body" style="padding:10px">
                             <img id="profileImage" width="110" src="" class="dropShadow" />To update your personal information, click the <b>My Profile</b> button.  Click or tap the <b>Profile</b> link on mobile devices.
                         </div>
@@ -181,7 +181,7 @@
                 <div class="col-md-12">
 
                     <div class="card z-depth-3 mb-3">
-                        <div class="card-header border-success formatHeader"><span class="fa fa-bell formatLink" aria-hidden="true" id="noticeIcon"></span>&nbsp;&nbsp;Recent Notifications<a href="javascript:showHistory()" class="fa fa-history formatRight"></a></div>
+                        <div class="card-header border-success formatHeader"><span class="fa fa-bell formatLink" aria-hidden="true" id="noticeIcon"></span>&nbsp;&nbsp;Recent Notifications</div>
                         <div class="card-body">
                             <div id="notice">
                             </div>
@@ -196,6 +196,7 @@
                             <div class="card-body">
 
                             </div>
+
                         </div>
                     </div>
                     <div class="card z-depth-3 mb-3">
@@ -207,7 +208,11 @@
                             <div class="card-body">
 
                             </div>
+                            <div class="card-footer">
+                                <a href="javascript:getSavedEmails()">Click here to view more emails.</a>
+                            </div>
                         </div>
+
                     </div>
 
                     <div class="card z-depth-3 mb-3">
@@ -218,6 +223,9 @@
                         <div id="recentPosts" class="collapse" data-parent="#recentNotifications">
                             <div class="card-body">
 
+                            </div>
+                            <div class="card-footer">
+                                <a href="javascript:getDiscussionGroups(365)">Click here to view more posts.</a>
                             </div>
                         </div>
                     </div>
@@ -262,7 +270,7 @@
 
             </div><br /><br />
             <div id="errText"></div>
-            <script src="scripts/new_test.js"></script>
+            <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
             <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
         </div>
     </div>

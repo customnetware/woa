@@ -253,35 +253,6 @@ function showReplies(p_id) {
         }
     }
 }
-function notifySettings(settingID) {
-    let mButtons = document.getElementById("notificationsSettings").getElementsByTagName("button")
-    let recentItems = ["recentEmails", "recentPosts", "recentNews", "recentAds"]
-    for (let p = 0; p < mButtons.length; p++) { if (p == settingID) { mButtons[settingID].style.backgroundColor = "#0275d8" } else { mButtons[p].style.backgroundColor = "#F0F0F0" } }
-    for (let h = 0; h < recentItems.length; h++) {
-        if (h == settingID) {
-            document.getElementById(recentItems[h]).className = "collapse show"
-            document.getElementById(recentItems[h]).parentElement.getElementsByTagName("div")[0].className = "card-header"
-            document.getElementById(recentItems[h]).parentElement.getElementsByTagName("div")[0].setAttribute("aria-expanded", "true")
-        } else {
-            document.getElementById(recentItems[h]).className = "collapse"
-            document.getElementById(recentItems[h]).parentElement.getElementsByTagName("div")[0].className = "card-header collapsed"
-            document.getElementById(recentItems[h]).parentElement.getElementsByTagName("div")[0].setAttribute("aria-expanded", "false")
-        }
-
-    }
-    if (settingID == 0) { getResidentHomePage() }
-    if (settingID == 1) { getDiscussionGroups(365) }
-    if (settingID == 2) { getClassifiedAds() }
-    if (settingID == 3) { getNewsAndAnnouncements() }
-    if (settingID == 4) { location.reload() }
-}
-function showHistory() {
-    let selectedID = document.getElementById("recentNotifications").getElementsByClassName("collapse show")[0].id
-    if (selectedID == "recentEmails") { getSavedEmails() }
-    if (selectedID == "recentPosts") { getDiscussionGroups(365) }
-    if (selectedID == "recentNews") { getClassifiedAds() }
-    if (selectedID == "recentAds") { getNewsAndAnnouncements() }
-}
 $(window).load(function () {
     document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
     getProfilePage()
