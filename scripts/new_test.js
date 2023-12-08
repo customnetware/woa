@@ -257,7 +257,7 @@ function getSavedEmails() {
             let itemTitle = document.createElement("span")
             let itemLink = document.createElement("a")
             itemLink.className = "fa fa-arrow-right fa-lg formatLink"
-            itemLink.href = emailData[p][3]
+            itemLink.href = "javascript:getEmail('" + emailData[p][3] + "')"
             itemTitle.appendChild(document.createTextNode(emailData[p][1]))
             currentItem.appendChild(itemTitle)
             currentItem.appendChild(document.createTextNode(emailData[p][2]))
