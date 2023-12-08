@@ -209,7 +209,8 @@
 
                             </div>
                             <div class="card-footer">
-                                <a href="javascript:getSavedEmails()">Click here to view more emails.</a>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:getSavedEmails()">View Save Emails</button>
+
                             </div>
                         </div>
 
@@ -225,7 +226,10 @@
 
                             </div>
                             <div class="card-footer">
-                                <a href="javascript:getDiscussionGroups(365)">Click here to view more posts.</a>
+
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLive">
+                                    View more posts.
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -270,7 +274,75 @@
 
             </div><br /><br />
             <div id="errText"></div>
-            <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
+
+            <div class="modal fade" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLiveLabel">Discussion Group View Time Period</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+
+                                <div class="form-group">
+                                    <label for="formControlRange">Use the slider to change the time period</label>
+                                    <input type="range" class="form-control-range" id="formControlRange" min="1" max="12" value="3" onInput="$('#rangeval').html($(this).val())">
+                                    <span id="rangeval">3<!-- Default value --></span> (Number of Months)
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:getDiscussionGroups()">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="saveEmailAlert" tabindex="-1" aria-labelledby="saveEmailAlertLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="saveEmailAlertLabel">No saved emails found</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Only the emails you are currently viewing have been saved to your computer.  New emails will added to your saved emails the next time you visit this page.  Clearing your browser's cache will remove saved emails from this computer.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="showEmailAlert" tabindex="-1" aria-labelledby="showEmailAlertLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="showEmailAlertLabel">No saved emails found</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                     
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script src="scripts/new_test.js"></script>
             <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
         </div>
     </div>
