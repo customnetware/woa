@@ -252,7 +252,7 @@ function getEmail(messageID) {
             let emailBody = selectedEmail.getElementsByTagName("table")[1]
             let emailSubHeader = emailHeader.getElementsByClassName("clsGridDetail")
             emailDisplay.innerHTML = ""
-            emailDisplay.innerHTML = emailBody.innerHTML
+            emailDisplay.innerHTML = emailBody.innerHTML.replace("p>","div>")
 
             //let emailDisplay = document.getElementById("showEmailAlert").getElementsByClassName("modal-body")[0]
 
