@@ -246,7 +246,7 @@ function getEmail(messageID) {
     let currentEmail = (window.location.hostname == "localhost") ? messageID + ".html" : messageID
     $.get(currentEmail, function () { })
         .done(function (responseText) {
-            let emailDisplay = document.getElementById("recentEmails").getElementsByClassName("card-body")
+            let emailDisplay = document.getElementById("recentEmails").getElementsByClassName("card-body")[0]
             let selectedEmail = new DOMParser().parseFromString(responseText, "text/html")
             let emailHeader = selectedEmail.getElementById("tblMsgHeader")
             let emailBody = selectedEmail.getElementsByTagName("table")[1]
