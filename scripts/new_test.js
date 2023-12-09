@@ -3,7 +3,28 @@ let residentHomePage = (window.location.hostname == "localhost") ? "/homepage/28
 let resourceCenter = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
 let classifiedAds = (window.location.hostname == "localhost") ? "/classified/search/28118~480182/classifieds.html" : "/classified/search/28118~480182/classifieds"
 let newsAndAnnouncements = (window.location.hostname == "localhost") ? "/news/list/28118/news-announcements.html" : "/news/list/28118/news-announcements"
-
+function getSavedEmails() {
+    let retrievedData = localStorage.getItem("emails")
+    if (retrievedData !== null) {
+        let emailData = JSON.parse(retrievedData)
+        let emailList = document.getElementById("recentEmails").getElementsByClassName("card-body")
+        emailList[0].innerHTML = ""
+        for (let p = 0; p < emailData.length; p++) {
+            let currentItem = document.createElement("p")
+            let itemTitle = document.createElement("span")
+            let itemLink = document.createElement("a")
+            itemLink.className = "fa fa-arrow-right fa-lg formatLink"
+            itemLink.href = "javascript:getEmail('" + emailData[p][3] + "')"
+            itemTitle.appendChild(document.createTextNode(emailData[p][1]))
+            currentItem.appendChild(itemTitle)
+            currentItem.appendChild(document.createTextNode(emailData[p][2]))
+            currentItem.appendChild(itemLink)
+            currentItem.id = emailData[p][0]
+            emailList[0].appendChild(currentItem)
+        }
+        if (emailData.length <= 3) { $('#saveEmailAlert').modal('show') }
+    } else { $('#saveEmailAlert').modal('show') }
+}
 function getResidentHomePage() {
     let emailList = document.getElementById("recentEmails").getElementsByClassName("card-body")[0]
     emailList.innerHTML = ""
@@ -25,7 +46,7 @@ function getResidentHomePage() {
                 let itemTitle = document.createElement("span")
                 let itemLink = document.createElement("a")
                 itemTitle.appendChild(document.createTextNode(itemContent.getAttribute("data-tooltip-title").split("by")[0]))
-                itemLink.href = "javascript:getEmail('" + itemContent.href +"')"
+                itemLink.href = "javascript:getEmail('" + itemContent.href + "')"
                 itemLink.className = "fa fa-arrow-right fa-lg formatLink"
                 currentItem.id = itemContent.id.replace("link_", "")
                 currentItem.appendChild(itemTitle)
@@ -102,7 +123,6 @@ function getResourceCenter() {
                 resourceItem.appendChild(selectedDoc)
                 docList.appendChild(resourceItem)
             }
-
         })
         .always(function () {
             let numOfItems = document.getElementById("recentFlyers").getElementsByClassName("card-body")[0].getElementsByTagName("span").length
@@ -120,10 +140,7 @@ function showPhotos(galleryPage) {
             newPicList[k + 1].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
             newPicList[k + 1].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
         }
-
-        /*      let numOfItems = document.getElementById("recentAds").getElementsByClassName("card-body")[0].getElementsByTagName("p").length*/
         document.querySelector("[data-target='#recentPhotos']").getElementsByTagName("span")[2].innerHTML = " <b>(3)</b> "
-
     } catch (error) { }
 
 }
@@ -200,6 +217,7 @@ function getDiscussionGroups() {
                             postHeader.appendChild(replys)
                             postHeader.appendChild(document.createTextNode(" (" + (messageTexts.length - 1) + ") "))
                         }
+
                         postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
                         postAuthor.appendChild(document.createTextNode(messageAuthor[0].innerText))
                         currentPost.appendChild(postHeader)
@@ -228,53 +246,40 @@ function getEmail(messageID) {
     let currentEmail = (window.location.hostname == "localhost") ? messageID + ".html" : messageID
     $.get(currentEmail, function () { })
         .done(function (responseText) {
+            let emailDisplay = document.getElementById("recentEmails").getElementsByClassName("card-body")
             let selectedEmail = new DOMParser().parseFromString(responseText, "text/html")
             let emailHeader = selectedEmail.getElementById("tblMsgHeader")
-
-            let emailSubHeader = emailHeader.getElementsByClassName("clsGridDetail")
-            let emailDisplay = document.getElementById("showEmailAlert").getElementsByClassName("modal-body")[0]
-
-            let emailSubject = document.getElementById("showEmailAlertLabel")
-            emailSubject.innerHTML = emailSubHeader[3].innerHTML
-
             let emailBody = selectedEmail.getElementsByTagName("table")[1]
-
+            let emailSubHeader = emailHeader.getElementsByClassName("clsGridDetail")
+            emailDisplay.innerHTML = ""
             emailDisplay.innerHTML = emailBody.innerHTML
-            $('#showEmailAlert').modal('show')
+
+            //let emailDisplay = document.getElementById("showEmailAlert").getElementsByClassName("modal-body")[0]
+
+            //let emailSubject = document.getElementById("showEmailAlertLabel")
+            //emailSubject.innerHTML = emailSubHeader[3].innerHTML
+
+
+
+            ////emailDisplay.innerHTML = emailBody.innerHTML
+            ////$('#showEmailAlert').modal('show')
         })
         .fail(function () {
             alert("The requested email was not found on the server.  It may have been deleted or you do not have permission to view it.")
         })
 }
-function getSavedEmails() {
-    let retrievedData = localStorage.getItem("emails")
-    if (retrievedData !== null) {
-        let emailData = JSON.parse(retrievedData)
-        let emailList = document.getElementById("recentEmails").getElementsByClassName("card-body")
-        emailList[0].innerHTML = ""
-        for (let p = 0; p < emailData.length; p++) {
-            let currentItem = document.createElement("p")
-            let itemTitle = document.createElement("span")
-            let itemLink = document.createElement("a")
-            itemLink.className = "fa fa-arrow-right fa-lg formatLink"
-            itemLink.href = "javascript:getEmail('" + emailData[p][3] + "')"
-            itemTitle.appendChild(document.createTextNode(emailData[p][1]))
-            currentItem.appendChild(itemTitle)
-            currentItem.appendChild(document.createTextNode(emailData[p][2]))
-            currentItem.appendChild(itemLink)
-            currentItem.id = emailData[p][0]
-            emailList[0].appendChild(currentItem)
-        }
-        if (emailData.length <= 3) { $('#saveEmailAlert').modal('show') }
-    } else { $('#saveEmailAlert').modal('show') }
-}
+
 function showReplies(p_id) {
     let posts = document.getElementsByClassName("groupPost")
     for (let p = 0; p < posts.length; p++) {
         let replies = posts[p].getElementsByTagName("span")
         if (replies.length > 3) {
             for (let r = 3; r < replies.length; r++) {
-                if (p == p_id) { if (replies[r].style.display == "block") { replies[r].style.display = "none" } else { replies[r].style.display = "block" } } else { replies[r].style.display = "none" }
+                if (p == p_id) {
+                    if (replies[r].style.display == "block") {
+                        replies[r].style.display = "none"
+                    } else { replies[r].style.display = "block" }
+                } else { replies[r].style.display = "none" }
             }
         }
     }
