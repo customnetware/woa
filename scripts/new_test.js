@@ -260,7 +260,7 @@ function getEmail(messageID) {
                 p.parentNode.replaceChild(div, p)
             }
 
-       
+            emailDisplay.innerHTML = emailBody.innerHTML
 
             //let emailDisplay = document.getElementById("showEmailAlert").getElementsByClassName("modal-body")[0]
 
