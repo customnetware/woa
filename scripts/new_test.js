@@ -251,6 +251,7 @@ function getEmail(messageID) {
             let emailHeader = selectedEmail.getElementById("tblMsgHeader")
             let emailBody = selectedEmail.getElementsByTagName("table")[1]
             let emailSubHeader = emailHeader.getElementsByClassName("clsGridDetail")
+            emailDisplay,id="currentEmail"
             emailDisplay.innerHTML = ""
             emailDisplay.innerHTML = emailBody.innerHTML.replace("p>","div>")
 
