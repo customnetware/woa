@@ -256,7 +256,7 @@ function getEmail(messageID) {
             var pTags = emailBody.getElementsByTagName('p')
             for (i = 0; i < pTags.length;) {
                 var p = pTags[i], div = document.createElement('div')
-         
+                div.innerHTML = p.innerHTML
                 p.parentNode.replaceChild(div, p)
             }
 
