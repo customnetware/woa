@@ -251,9 +251,16 @@ function getEmail(messageID) {
             let emailHeader = selectedEmail.getElementById("tblMsgHeader")
             let emailBody = selectedEmail.getElementsByTagName("table")[1]
             let emailSubHeader = emailHeader.getElementsByClassName("clsGridDetail")
-            emailDisplay,id="currentEmail"
             emailDisplay.innerHTML = ""
-            emailDisplay.innerText = emailSubHeader[0].innerHTML.replace("p>","div>")
+
+            var pTags = emailBody.getElementsByTagName('p')
+            for (i = 0; i < pTags.length;) {
+                var p = pTags[i], div = document.createElement('div')
+                div.innerHTML = 'P tag replaced with a div tag'
+                p.parentNode.replaceChild(div, p)
+            }
+
+            emailDisplay.innerHTML = emailBody.innerHTML
 
             //let emailDisplay = document.getElementById("showEmailAlert").getElementsByClassName("modal-body")[0]
 
