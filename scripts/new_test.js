@@ -3,6 +3,37 @@ let residentHomePage = (window.location.hostname == "localhost") ? "/homepage/28
 let resourceCenter = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
 let classifiedAds = (window.location.hostname == "localhost") ? "/classified/search/28118~480182/classifieds.html" : "/classified/search/28118~480182/classifieds"
 let newsAndAnnouncements = (window.location.hostname == "localhost") ? "/news/list/28118/news-announcements.html" : "/news/list/28118/news-announcements"
+
+function getEmail(messageID) {
+    let currentEmail = (window.location.hostname == "localhost") ? messageID + ".html" : messageID
+    $.get(currentEmail, function () { })
+        .done(function (responseText) {
+            let emailDisplay = document.getElementById("recentEmails").getElementsByClassName("card-body")[0]
+            let selectedEmail = new DOMParser().parseFromString(responseText, "text/html")
+            let emailHeader = selectedEmail.getElementById("tblMsgHeader")
+            let emailBody = selectedEmail.getElementsByTagName("table")[1]
+            let emailSubHeader = emailHeader.getElementsByClassName("clsGridDetail")
+
+            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("b")[0].innerHTML = emailSubHeader[3].innerHTML + " - " + emailSubHeader[0].innerHTML
+            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-open-o"
+            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[1].innerHTML = ""
+
+
+            var pTags = emailBody.getElementsByTagName('p')
+            for (i = 0; i < pTags.length;) {
+                var p = pTags[i], divTag = document.createElement('div')
+                divTag.style.paddingLeft = "25px"
+                divTag.style.paddingRight = "25px"
+                divTag.style.marginBottom = "5px"
+                divTag.innerHTML = p.innerHTML
+                p.parentNode.replaceChild(divTag, p)
+            }
+            emailDisplay.innerHTML = emailBody.innerHTML
+        })
+        .fail(function () {
+            alert("The requested email was not found on the server.  It may have been deleted or you do not have permission to view it.")
+        })
+}
 function getSavedEmails() {
     let retrievedData = localStorage.getItem("emails")
     if (retrievedData !== null) {
@@ -22,11 +53,12 @@ function getSavedEmails() {
             currentItem.id = emailData[p][0]
             emailList[0].appendChild(currentItem)
         }
+    let numOfItems = emailList.getElementsByTagName("p").length
         document.querySelector("[data-target='#recentEmails']").getElementsByTagName("b")[0].innerHTML = "Association Emails"
+        document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-o"    
         document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[1].innerHTML = ""
-        document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-o"
-        let numOfItems = document.getElementById("recentEmails").getElementsByClassName("card-body")[0].getElementsByTagName("p").length
-        document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
+        document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[2].innerHTML = "(" + numOfItems + ")"
+
         if (emailData.length <= 3) { $('#saveEmailAlert').modal('show') }
     } else { $('#saveEmailAlert').modal('show') }
 }
@@ -61,18 +93,17 @@ function getResidentHomePage() {
             }
         })
         .always(function () {
-            let numOfItems = document.getElementById("recentEmails").getElementsByClassName("card-body")[0].getElementsByTagName("p").length
-            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-o"
-            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
+            let currentEmails = document.getElementById("recentEmails").getElementsByClassName("card-body")[0].getElementsByTagName("p")
             document.querySelector("[data-target='#recentEmails']").getElementsByTagName("b")[0].innerHTML = "Association Emails"
+            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-o"
+            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[2].innerHTML = "(" + currentEmails.length + ")"
 
             let retrievedData = localStorage.getItem("emails")
             let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
-            let currentEmails = document.getElementById("recentEmails").getElementsByClassName("card-body")[0].getElementsByTagName("p")
             for (let p = 0; p < currentEmails.length; p++) {
                 if ((retrievedData !== null && retrievedData.includes(currentEmails[p].id) == false) || emailData.length == 0) {
                     let emailTitle = currentEmails[p].getElementsByTagName("span")[0].innerHTML
-                    let emailLink = currentEmails[p].getElementsByTagName("a")[0].href.replace("javascript:getEmail(", "").replace(")","")
+                    let emailLink = currentEmails[p].getElementsByTagName("a")[0].href.replace("javascript:getEmail(", "").replace(")", "")
                     let emailBody = currentEmails[p].innerText.replace(emailTitle, "")
                     emailData.push([currentEmails[p].id, emailTitle, emailBody, emailLink])
                     let emailsToSave = JSON.stringify(emailData)
@@ -247,33 +278,6 @@ function getDiscussionGroups() {
                 document.querySelector("[data-target='#recentPosts']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
             })
     }
-}
-function getEmail(messageID) {
-    let currentEmail = (window.location.hostname == "localhost") ? messageID + ".html" : messageID
-    $.get(currentEmail, function () { })
-        .done(function (responseText) {
-            let emailDisplay = document.getElementById("recentEmails").getElementsByClassName("card-body")[0]
-            let selectedEmail = new DOMParser().parseFromString(responseText, "text/html")
-            let emailHeader = selectedEmail.getElementById("tblMsgHeader")
-            let emailBody = selectedEmail.getElementsByTagName("table")[1]
-            let emailSubHeader = emailHeader.getElementsByClassName("clsGridDetail")
-            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("b")[0].innerHTML = emailSubHeader[3].innerHTML + " - " + emailSubHeader[0].innerHTML
-            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[1].innerHTML = ""
-            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-open-o"
-            var pTags = emailBody.getElementsByTagName('p')
-            for (i = 0; i < pTags.length;) {
-                var p = pTags[i], div = document.createElement('div')
-                div.style.paddingLeft = "25px"
-                div.style.paddingRight = "25px"
-                div.style.marginBottom="5px"
-                div.innerHTML = p.innerHTML
-                p.parentNode.replaceChild(div, p)
-            }
-            emailDisplay.innerHTML = emailBody.innerHTML
-        })
-        .fail(function () {
-            alert("The requested email was not found on the server.  It may have been deleted or you do not have permission to view it.")
-        })
 }
 function showReplies(p_id) {
     let posts = document.getElementsByClassName("groupPost")
