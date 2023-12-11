@@ -142,7 +142,6 @@ function showPhotos(galleryPage) {
         }
         document.querySelector("[data-target='#recentPhotos']").getElementsByTagName("span")[2].innerHTML = " <b>(3)</b> "
     } catch (error) { }
-
 }
 function getProfilePage() {
     let profileID = document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]
@@ -243,6 +242,7 @@ function getDiscussionGroups() {
     }
 }
 function getEmail(messageID) {
+
     let currentEmail = (window.location.hostname == "localhost") ? messageID + ".html" : messageID
     $.get(currentEmail, function () { })
         .done(function (responseText) {
@@ -251,7 +251,7 @@ function getEmail(messageID) {
             let emailHeader = selectedEmail.getElementById("tblMsgHeader")
             let emailBody = selectedEmail.getElementsByTagName("table")[1]
             let emailSubHeader = emailHeader.getElementsByClassName("clsGridDetail")
-            document.getElementById("recentEmails").getElementsByTagName("span")[3].innerHTML = "Current Email"
+            document.getElementById("recentEmails").getElementsByTagName("span")[1].innerHTML = "Current Email"
 
             emailDisplay.innerHTML = ""
 
@@ -274,7 +274,6 @@ function getEmail(messageID) {
             alert("The requested email was not found on the server.  It may have been deleted or you do not have permission to view it.")
         })
 }
-
 function showReplies(p_id) {
     let posts = document.getElementsByClassName("groupPost")
     for (let p = 0; p < posts.length; p++) {
