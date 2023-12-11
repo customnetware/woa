@@ -22,6 +22,11 @@ function getSavedEmails() {
             currentItem.id = emailData[p][0]
             emailList[0].appendChild(currentItem)
         }
+        document.querySelector("[data-target='#recentEmails']").getElementsByTagName("b")[0].innerHTML = "Association Emails"
+        document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[1].innerHTML = ""
+        document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-o"
+        let numOfItems = document.getElementById("recentEmails").getElementsByClassName("card-body")[0].getElementsByTagName("p").length
+        document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
         if (emailData.length <= 3) { $('#saveEmailAlert').modal('show') }
     } else { $('#saveEmailAlert').modal('show') }
 }
@@ -57,7 +62,9 @@ function getResidentHomePage() {
         })
         .always(function () {
             let numOfItems = document.getElementById("recentEmails").getElementsByClassName("card-body")[0].getElementsByTagName("p").length
+            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-o"
             document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
+            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("b")[0].innerHTML = "Association Emails"
 
             let retrievedData = localStorage.getItem("emails")
             let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
@@ -65,7 +72,7 @@ function getResidentHomePage() {
             for (let p = 0; p < currentEmails.length; p++) {
                 if ((retrievedData !== null && retrievedData.includes(currentEmails[p].id) == false) || emailData.length == 0) {
                     let emailTitle = currentEmails[p].getElementsByTagName("span")[0].innerHTML
-                    let emailLink = currentEmails[p].getElementsByTagName("a")[0].href
+                    let emailLink = currentEmails[p].getElementsByTagName("a")[0].href.replace("javascript:getEmail(", "").replace(")","")
                     let emailBody = currentEmails[p].innerText.replace(emailTitle, "")
                     emailData.push([currentEmails[p].id, emailTitle, emailBody, emailLink])
                     let emailsToSave = JSON.stringify(emailData)
@@ -242,7 +249,6 @@ function getDiscussionGroups() {
     }
 }
 function getEmail(messageID) {
-
     let currentEmail = (window.location.hostname == "localhost") ? messageID + ".html" : messageID
     $.get(currentEmail, function () { })
         .done(function (responseText) {
@@ -251,24 +257,19 @@ function getEmail(messageID) {
             let emailHeader = selectedEmail.getElementById("tblMsgHeader")
             let emailBody = selectedEmail.getElementsByTagName("table")[1]
             let emailSubHeader = emailHeader.getElementsByClassName("clsGridDetail")
-            document.getElementById("recentEmails").getElementsByTagName("span")[1].innerHTML = "Current Email"
-
-            emailDisplay.innerHTML = ""
-
+            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("b")[0].innerHTML = emailSubHeader[3].innerHTML + " - " + emailSubHeader[0].innerHTML
+            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[1].innerHTML = ""
+            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-open-o"
             var pTags = emailBody.getElementsByTagName('p')
             for (i = 0; i < pTags.length;) {
                 var p = pTags[i], div = document.createElement('div')
+                div.style.paddingLeft = "25px"
+                div.style.paddingRight = "25px"
+                div.style.marginBottom="5px"
                 div.innerHTML = p.innerHTML
                 p.parentNode.replaceChild(div, p)
             }
-
             emailDisplay.innerHTML = emailBody.innerHTML
-
-            //let emailDisplay = document.getElementById("showEmailAlert").getElementsByClassName("modal-body")[0]
-            //let emailSubject = document.getElementById("showEmailAlertLabel")
-            //emailSubject.innerHTML = emailSubHeader[3].innerHTML
-            ////emailDisplay.innerHTML = emailBody.innerHTML
-            ////$('#showEmailAlert').modal('show')
         })
         .fail(function () {
             alert("The requested email was not found on the server.  It may have been deleted or you do not have permission to view it.")
