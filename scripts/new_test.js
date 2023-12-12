@@ -16,7 +16,7 @@ function getEmail(messageID) {
 
             let cardHeader = document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")
             cardHeader[0].className = "fa fa-envelope-open-o"
-            cardHeader[1].innerHTML = emailSubHeader[3].innerHTML 
+            cardHeader[1].innerHTML = emailSubHeader[3].innerHTML
             cardHeader[2].innerHTML = emailSubHeader[0].innerHTML
 
             var pTags = emailBody.getElementsByTagName('p')
@@ -96,6 +96,7 @@ function getResidentHomePage() {
             }
         })
         .always(function () {
+            let currentEmails = document.getElementById("recentEmails").getElementsByClassName("card-body")[0].getElementsByTagName("p")
             let cardHeader = document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")
             cardHeader[0].className = "fa fa-envelope-o"
             cardHeader[1].innerHTML = "Association Emails"
