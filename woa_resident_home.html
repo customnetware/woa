@@ -208,8 +208,8 @@
                         <div id="recentEmails" class="collapse" data-parent="#recentNotifications">
                             <div class="card-body"></div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:getSavedEmails()">View Save Emails</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:getResidentHomePage()">Return To Current Email List</button>
+                                <button type="button" id="viewSaveButton"class="btn btn-primary" onclick="javascript:getSavedEmails()">View Saved Emails</button>
+                                <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:getCurrentEmails()" style="display:none">&nbsp;<span class="fa fa-backward"></span> Previous</button>
                             </div>
                         </div>
                     </div>
@@ -224,7 +224,7 @@
                         <div id="recentPosts" class="collapse" data-parent="#recentNotifications">
                             <div class="card-body"></div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLive">View more posts.</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postSettingsAlert">View more posts.</button>
                             </div>
                         </div>
                     </div>
@@ -267,16 +267,13 @@
                     </div>
                 </div>
 
-
-
             </div><br /><br />
             <div id="errText"></div>
-
-            <div class="modal fade" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
+            <div class="modal fade" id="postSettingsAlert" tabindex="-1" aria-labelledby="postSettingsAlertLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLiveLabel">Discussion Group View Time Period</h5>
+                            <h5 class="modal-title" id="postSettingsAlertLabel">Discussion Group View Time Period</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -317,7 +314,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="modal fade" id="showEmailAlert" tabindex="-1" aria-labelledby="showEmailAlertLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">
@@ -338,8 +334,7 @@
                     </div>
                 </div>
             </div>
-
-            <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
+            <script src="scripts/new_test.js"></script>
             <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
         </div>
     </div>
