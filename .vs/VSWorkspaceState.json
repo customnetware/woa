@@ -1,7 +1,6 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Messenger",
     "\\Messenger\\MessageView",
     "\\Messenger\\MessageView\\28118~13515445",
     "\\Messenger\\MessageView\\28118~13641364",
@@ -9,6 +8,6 @@
     "\\Messenger\\MessageView\\28118~13645314",
     "\\scripts"
   ],
-  "SelectedNode": "\\woa_resident_home.html",
+  "SelectedNode": "\\scripts\\new_test.js",
   "PreviewInSolutionExplorer": false
 }

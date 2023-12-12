@@ -14,10 +14,10 @@ function getEmail(messageID) {
             let emailBody = selectedEmail.getElementsByTagName("table")[1]
             let emailSubHeader = emailHeader.getElementsByClassName("clsGridDetail")
 
-            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("b")[0].innerHTML = emailSubHeader[3].innerHTML + " - " + emailSubHeader[0].innerHTML
-            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-open-o"
-            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[1].innerHTML = ""
-
+            let cardHeader = document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")
+            cardHeader[0].className = "fa fa-envelope-open-o"
+            cardHeader[1].innerHTML = emailSubHeader[3].innerHTML 
+            cardHeader[2].innerHTML = emailSubHeader[0].innerHTML
 
             var pTags = emailBody.getElementsByTagName('p')
             for (i = 0; i < pTags.length;) {
@@ -53,11 +53,10 @@ function getSavedEmails() {
             currentItem.id = emailData[p][0]
             emailList[0].appendChild(currentItem)
         }
-    let numOfItems = emailList.getElementsByTagName("p").length
-        document.querySelector("[data-target='#recentEmails']").getElementsByTagName("b")[0].innerHTML = "Association Emails"
-        document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-o"    
-        document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[1].innerHTML = ""
-        document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[2].innerHTML = "(" + numOfItems + ")"
+        let cardHeader = document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")
+        cardHeader[0].className = "fa fa-envelope-o"
+        cardHeader[1].innerHTML = "Association Emails"
+        cardHeader[2].innerHTML = "(" + emailList[0].getElementsByTagName("p").length + ")"
 
         if (emailData.length <= 3) { $('#saveEmailAlert').modal('show') }
     } else { $('#saveEmailAlert').modal('show') }
@@ -70,12 +69,16 @@ function getResidentHomePage() {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
             let recentItems = myWoodbridge.getElementsByClassName("message")
             let nameHeader = document.getElementById("notificationHeader").getElementsByClassName("card-header")[0]
-            nameHeader.innerHTML = ""
             let nameCheck = document.createElement("span")
+
+
             nameCheck.style.marginRight = "5px"
             nameCheck.className = "fa fa-check-circle formatLink"
+
+            nameHeader.innerHTML = ""
             nameHeader.appendChild(nameCheck)
             nameHeader.appendChild(document.createTextNode(myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML))
+
             showPhotos(myWoodbridge)
             for (let p = 0; p < recentItems.length; p++) {
                 let itemContent = recentItems[p].getElementsByTagName("a")[0]
@@ -93,10 +96,10 @@ function getResidentHomePage() {
             }
         })
         .always(function () {
-            let currentEmails = document.getElementById("recentEmails").getElementsByClassName("card-body")[0].getElementsByTagName("p")
-            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("b")[0].innerHTML = "Association Emails"
-            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-o"
-            document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")[2].innerHTML = "(" + currentEmails.length + ")"
+            let cardHeader = document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")
+            cardHeader[0].className = "fa fa-envelope-o"
+            cardHeader[1].innerHTML = "Association Emails"
+            cardHeader[2].innerHTML = "(" + emailList.getElementsByTagName("p").length + ")"
 
             let retrievedData = localStorage.getItem("emails")
             let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
@@ -134,8 +137,7 @@ function getNewsAndAnnouncements() {
             }
         })
         .always(function () {
-            let numOfItems = document.getElementById("recentNews").getElementsByClassName("card-body")[0].getElementsByTagName("p").length
-            document.querySelector("[data-target='#recentNews']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
+            document.querySelector("[data-target='#recentNews']").getElementsByTagName("span")[2].innerHTML = "(" + newsList.getElementsByTagName("p").length + ")"
         })
 }
 function getResourceCenter() {
@@ -163,8 +165,7 @@ function getResourceCenter() {
             }
         })
         .always(function () {
-            let numOfItems = document.getElementById("recentFlyers").getElementsByClassName("card-body")[0].getElementsByTagName("span").length
-            document.querySelector("[data-target='#recentFlyers']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
+            document.querySelector("[data-target='#recentFlyers']").getElementsByTagName("span")[2].innerHTML = "(" + docList.getElementsByTagName("span").length + ")"
         })
 }
 function showPhotos(galleryPage) {
@@ -178,7 +179,7 @@ function showPhotos(galleryPage) {
             newPicList[k + 1].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
             newPicList[k + 1].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
         }
-        document.querySelector("[data-target='#recentPhotos']").getElementsByTagName("span")[2].innerHTML = " <b>(3)</b> "
+        document.querySelector("[data-target='#recentPhotos']").getElementsByTagName("span")[2].innerHTML = "(3)"
     } catch (error) { }
 }
 function getProfilePage() {
@@ -210,8 +211,7 @@ function getClassifiedAds() {
             }
         })
         .always(function () {
-            let numOfItems = document.getElementById("recentAds").getElementsByClassName("card-body")[0].getElementsByTagName("p").length
-            document.querySelector("[data-target='#recentAds']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
+            document.querySelector("[data-target='#recentAds']").getElementsByTagName("span")[2].innerHTML = "(" + classifiedsList.getElementsByTagName("p").length + ")"
         })
 }
 function getDiscussionGroups() {
@@ -274,8 +274,7 @@ function getDiscussionGroups() {
                 }
             })
             .always(function () {
-                let numOfItems = document.getElementById("recentPosts").getElementsByClassName("card-body")[0].getElementsByTagName("p").length
-                document.querySelector("[data-target='#recentPosts']").getElementsByTagName("span")[2].innerHTML = " <b>(" + numOfItems + ")</b> "
+                document.querySelector("[data-target='#recentPosts']").getElementsByTagName("span")[2].innerHTML = "(" + postList.getElementsByTagName("p").length + ")"
             })
     }
 }
