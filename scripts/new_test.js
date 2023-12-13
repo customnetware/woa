@@ -15,7 +15,7 @@ function getCurrentEmails() {
         if (savedIDs.includes(pToHide[p].id)) { pToHide[p].style.display = "inline-block" } else { pToHide[p].className ="saveHidden" }      
     }
 
-    pToRemove = pToHide.getElementsByClassName("saveHidden")
+    pToRemove = document.getElementById("recentEmails").getElementsByClassName("saveHidden")
     while (pToRemove.length > 0) { pToRemove[0].remove() }
 
     document.getElementById("viewSaveButton").style.display = "inline"
