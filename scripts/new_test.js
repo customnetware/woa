@@ -5,12 +5,19 @@ let classifiedAds = (window.location.hostname == "localhost") ? "/classified/sea
 let newsAndAnnouncements = (window.location.hostname == "localhost") ? "/news/list/28118/news-announcements.html" : "/news/list/28118/news-announcements"
 function getCurrentEmails() {
     let emailDisplay = document.getElementById("recentEmails").getElementsByClassName("card-body")[0]
-
+    let savedIDS = document.getElementById("currentEmailIDs").value
     divToRemove = emailDisplay.getElementsByTagName("div")
     while (divToRemove.length > 0) { divToRemove[0].remove() }
 
     pToHide = emailDisplay.getElementsByTagName("p")
-    for (p = 0; p < pToHide.length; p++) { pToHide[p].style.display = "inline-block" }
+
+
+
+
+    for (p = 0; p < pToHide.length; p++) {
+        if (savedIDS.includes(pToHide[p].id)) { pToHide[p].style.display = "inline-block" } else { pToHide[p].style.display = "none" }
+       
+    }
 
     document.getElementById("viewSaveButton").style.display = "inline"
     document.getElementById("viewCurrentButton").style.display = "none"
@@ -51,7 +58,7 @@ function getEmail(messageID) {
             }
             emailDisplay.appendChild(emailBody)
             document.getElementById("viewSaveButton").style.display = "none"
-            document.getElementById("viewCurrentButton").style.display="inline"
+            document.getElementById("viewCurrentButton").style.display = "inline"
         })
         .fail(function () {
             alert("The requested email was not found on the server.  It may have been deleted or you do not have permission to view it.")
@@ -85,7 +92,8 @@ function getSavedEmails() {
             $('#saveEmailAlert').modal('show')
         } else {
             document.getElementById("viewSaveButton").style.display = "none"
-            document.getElementById("viewCurrentButton").style.display = "inline" }
+            document.getElementById("viewCurrentButton").style.display = "inline"
+        }
     } else { $('#saveEmailAlert').modal('show') }
 }
 function getResidentHomePage() {
@@ -124,7 +132,6 @@ function getResidentHomePage() {
         })
         .always(function () {
 
-
             let currentEmails = document.getElementById("recentEmails").getElementsByClassName("card-body")[0].getElementsByTagName("p")
             let cardHeader = document.querySelector("[data-target='#recentEmails']").getElementsByTagName("span")
             let retrievedData = localStorage.getItem("emails")
@@ -133,6 +140,7 @@ function getResidentHomePage() {
             cardHeader[0].className = "fa fa-envelope-o"
             cardHeader[1].innerHTML = "Association Emails"
             cardHeader[2].innerHTML = "(" + emailList.getElementsByTagName("p").length + ")"
+            document.getElementById("currentEmailIDs").value = emailList.getElementsByTagName("p")[0].id.concat(emailList.getElementsByTagName("p")[1].id, emailList.getElementsByTagName("p")[2].id)
 
             for (let p = 0; p < currentEmails.length; p++) {
                 if ((retrievedData !== null && retrievedData.includes(currentEmails[p].id) == false) || emailData.length == 0) {

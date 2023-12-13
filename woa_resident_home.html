@@ -208,12 +208,12 @@
                         <div id="recentEmails" class="collapse" data-parent="#recentNotifications">
                             <div class="card-body"></div>
                             <div class="card-footer">
-                                <button type="button" id="viewSaveButton"class="btn btn-primary" onclick="javascript:getSavedEmails()">View Saved Emails</button>
-                                <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:getCurrentEmails()" style="display:none">&nbsp;<span class="fa fa-backward"></span> Previous</button>
+                                <button type="button" id="viewSaveButton" class="btn btn-primary" onclick="javascript:getSavedEmails()">View Saved Emails</button>
+                                <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:getCurrentEmails()" style="display:none">&nbsp;<span class="fa fa-backward"></span>&nbsp;Previous</button>
+                                <input type="hidden" id="currentEmailIDs" />
                             </div>
                         </div>
                     </div>
-
                     <div class="card z-depth-3 mb-3">
                         <div class="card-header collapsed" data-toggle="collapse" data-target="#recentPosts" aria-expanded="false">
                             <span class="fa fa-comments-o"></span>
