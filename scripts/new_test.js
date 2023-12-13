@@ -3,21 +3,20 @@ let residentHomePage = (window.location.hostname == "localhost") ? "/homepage/28
 let resourceCenter = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
 let classifiedAds = (window.location.hostname == "localhost") ? "/classified/search/28118~480182/classifieds.html" : "/classified/search/28118~480182/classifieds"
 let newsAndAnnouncements = (window.location.hostname == "localhost") ? "/news/list/28118/news-announcements.html" : "/news/list/28118/news-announcements"
+
 function getCurrentEmails() {
     let emailDisplay = document.getElementById("recentEmails").getElementsByClassName("card-body")[0]
-    let savedIDS = document.getElementById("currentEmailIDs").value
+    let savedIDs = document.getElementById("currentEmailIDs").value
     divToRemove = emailDisplay.getElementsByTagName("div")
     while (divToRemove.length > 0) { divToRemove[0].remove() }
 
     pToHide = emailDisplay.getElementsByTagName("p")
-
-
-
-
     for (p = 0; p < pToHide.length; p++) {
-        if (savedIDS.includes(pToHide[p].id)) { pToHide[p].style.display = "inline-block" } else { pToHide[p].style.display = "none" }
-       
+        if (savedIDs.includes(pToHide[p].id)) { pToHide[p].style.display = "inline-block" } else { pToHide[p].className ="saveHidden" }      
     }
+
+    pToRemove = pToHide.getElementsByClassName("saveHidden")
+    while (pToRemove.length > 0) { pToRemove[0].remove() }
 
     document.getElementById("viewSaveButton").style.display = "inline"
     document.getElementById("viewCurrentButton").style.display = "none"
