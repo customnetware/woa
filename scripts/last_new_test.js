@@ -9,7 +9,7 @@ function updateHeader(headerID, headerClass, headerTitle, headerLen) {
     cardHeader[2].innerHTML = "(" + headerLen + ")"
 }
 function getCurrentEmails() {
-    let emailDisplay = document.getElementById("recentEmailsBody")
+    let emailDisplay = document.getElementById("recentEmails").getElementsByClassName("card-body")[0]
     let savedIDs = document.getElementById("currentEmailIDs").value
     let emailToRemove = emailDisplay.getElementsByTagName("table")
     let hiddenEmails = emailDisplay.getElementsByTagName("p")
@@ -26,7 +26,7 @@ function getCurrentEmails() {
 function getEmail(messageID) {
     $.get(pageLocation(messageID), function () { })
         .done(function (responseText) {
-            let emailDisplay = document.getElementById("recentEmailsBody")
+            let emailDisplay = document.getElementById("recentEmails").getElementsByClassName("card-body")[0]
             let selectedEmail = new DOMParser().parseFromString(responseText, "text/html")
             let emailHeader = selectedEmail.getElementById("tblMsgHeader")
             let emailBody = selectedEmail.getElementsByTagName("table")[1]
@@ -54,8 +54,8 @@ function getSavedEmails() {
     let retrievedData = localStorage.getItem("emails")
     if (retrievedData !== null) {
         let emailData = JSON.parse(retrievedData)
-        let emailList = document.getElementById("recentEmailsBody")
-        emailList.innerHTML = ""
+        let emailList = document.getElementById("recentEmails").getElementsByClassName("card-body")
+        emailList[0].innerHTML = ""
         for (let p = 0; p < emailData.length; p++) {
             let currentItem = document.createElement("p")
             let itemTitle = document.createElement("span")
@@ -67,9 +67,9 @@ function getSavedEmails() {
             currentItem.appendChild(document.createTextNode(emailData[p][2]))
             currentItem.appendChild(itemLink)
             currentItem.id = emailData[p][0]
-            emailList.appendChild(currentItem)
+            emailList[0].appendChild(currentItem)
         }
-        updateHeader("recentEmails", "fa fa-envelope-o", "Association Emails", emailList.childElementCount)
+        updateHeader("recentEmails", "fa fa-envelope-o", "Association Emails", emailList[0].childElementCount)
         if (emailData.length <= 3) {
             $('#saveEmailAlert').modal('show')
         } else {
@@ -79,7 +79,7 @@ function getSavedEmails() {
     } else { $('#saveEmailAlert').modal('show') }
 }
 function getResidentHomePage() {
-    let emailList = document.getElementById("recentEmailsBody")
+    let emailList = document.getElementById("recentEmails").getElementsByClassName("card-body")[0]
     emailList.innerHTML = ""
     $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         .done(function (responseText) {
@@ -109,7 +109,7 @@ function getResidentHomePage() {
             showPhotos(myWoodbridge)
         })
         .always(function () {
-            let currentEmails = emailList.getElementsByTagName("p")
+            let currentEmails = document.getElementById("recentEmails").getElementsByClassName("card-body")[0].getElementsByTagName("p")
             let retrievedData = localStorage.getItem("emails")
             let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
             updateHeader("recentEmails", "fa fa-envelope-o", "Association Emails", currentEmails.length)
@@ -129,7 +129,7 @@ function getResidentHomePage() {
         })
 }
 function getNewsAndAnnouncements() {
-    let newsList = document.getElementById("recentNewsBody")
+    let newsList = document.getElementById("recentNews").getElementsByClassName("card-body")[0]
     newsList.innerHTML = ""
     $.get(pageLocation("/news/list/28118/news-announcements"), function () { })
         .done(function (responseText) {
@@ -150,11 +150,11 @@ function getNewsAndAnnouncements() {
             }
         })
         .always(function () {
-            document.querySelector("[data-target='#recentNews']").getElementsByTagName("span")[2].innerHTML = "(" + newsList.childElementCount + ")"
+            document.querySelector("[data-target='#recentNews']").getElementsByTagName("span")[2].innerHTML = "(" + newsList.getElementsByTagName("p").length + ")"
         })
 }
 function getResourceCenter() {
-    let docList = document.getElementById("recentFlyersBody")
+    let docList = document.getElementById("recentFlyers").getElementsByClassName("card-body")[0]
     $.get(pageLocation("/resourcecenter/28118/resource-center"), function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
@@ -185,14 +185,14 @@ function getResourceCenter() {
 }
 function showPhotos(galleryPage) {
     try {
-        let newPicList = document.getElementById("recentPhotosBody").getElementsByTagName("div")
+        let newPicList = document.getElementById("recentPhotos").getElementsByTagName("div")
         let photoList = galleryPage.querySelectorAll("[id^=gallery_link_]")
         let galleryLink = galleryPage.querySelectorAll("[class^=gallery_txt_sub]")
         let galleryText = galleryPage.getElementsByClassName("left")
         for (let k = 0; k < photoList.length; k++) {
-            newPicList[k].getElementsByTagName("img")[0].src = photoList[k].src
-            newPicList[k].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
-            newPicList[k].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
+            newPicList[k + 1].getElementsByTagName("img")[0].src = photoList[k].src
+            newPicList[k + 1].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
+            newPicList[k + 1].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
         }
         document.querySelector("[data-target='#recentPhotos']").getElementsByTagName("span")[2].innerHTML = "(3)"
     } catch (error) { }
@@ -205,7 +205,7 @@ function getProfilePage() {
     })
 }
 function getClassifiedAds() {
-    let classifiedsList = document.getElementById("recentAdsBody")
+    let classifiedsList = document.getElementById("recentAds").getElementsByClassName("card-body")[0]
     classifiedsList.innerHTML = ""
     $.get(pageLocation("/classified/search/28118~480182/classifieds"), function () { })
         .done(function (responseText) {
@@ -230,7 +230,7 @@ function getClassifiedAds() {
 function getDiscussionGroups() {
     const NumOfDays = +document.getElementById("rangeval").innerText * 30
     const selectedGroups = [8030, 8364]
-    const postList = document.getElementById("recentPostsBody")
+    const postList = document.getElementById("recentPosts").getElementsByClassName("card-body")[0]
     postList.innerHTML = ""
     for (let h = 0; h < selectedGroups.length; h++) {
         $.get(pageLocation("/Discussion/28118~" + selectedGroups[h]), function () { })

@@ -78,6 +78,12 @@
                     display: block
                 }
 
+            #recentEmails .card-body div {
+                padding-left: 25px;
+                padding-right: 25px;
+                margin-bottom: 5px
+            }
+
             .groupPost {
                 margin: 0px;
                 padding: 10px !important
@@ -181,9 +187,7 @@
                 </div>
             </div>
             <div class="row" id="recentNotifications">
-
                 <div class="col-md-12">
-
                     <div class="card z-depth-3 mb-3">
                         <div class="card-header border-success formatHeader"><span class="fa fa-bell formatLink" aria-hidden="true" id="noticeIcon"></span>&nbsp;&nbsp;Recent Notifications</div>
                         <div class="card-body">
@@ -199,7 +203,7 @@
                             <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                         </div>
                         <div id="recentNews" class="collapse show" data-parent="#recentNotifications">
-                            <div class="card-body"></div>
+                            <div class="card-body" id="recentNewsBody"></div>
                         </div>
                     </div>
                     <div class="card z-depth-3 mb-3">
@@ -210,7 +214,7 @@
                             <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                         </div>
                         <div id="recentEmails" class="collapse" data-parent="#recentNotifications">
-                            <div class="card-body"></div>
+                            <div class="card-body" id="recentEmailsBody"></div>
                             <div class="card-footer">
                                 <button type="button" id="viewSaveButton" class="btn btn-primary" onclick="javascript:getSavedEmails()">View Saved Emails</button>
                                 <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:getCurrentEmails()" style="display:none">&nbsp;<span class="fa fa-backward"></span>&nbsp;Previous</button>
@@ -226,7 +230,7 @@
                             <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                         </div>
                         <div id="recentPosts" class="collapse" data-parent="#recentNotifications">
-                            <div class="card-body"></div>
+                            <div class="card-body" id="recentPostsBody"></div>
                             <div class="card-footer">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postSettingsAlert">View more posts.</button>
                             </div>
@@ -240,7 +244,7 @@
                             <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                         </div>
                         <div id="recentAds" class="collapse" data-parent="#recentNotifications">
-                            <div class="card-body"></div>
+                            <div class="card-body" id="recentAdsBody"></div>
                         </div>
                     </div>
                     <div class="card z-depth-3 mb-3">
@@ -251,7 +255,7 @@
                             <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                         </div>
                         <div id="recentFlyers" class="collapse" data-parent="#recentNotifications">
-                            <div class="card-body"></div>
+                            <div class="card-body" id="recentFlyersBody"></div>
                         </div>
                     </div>
                     <div class="card z-depth-3 mb-3">
@@ -262,7 +266,7 @@
                             <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                         </div>
                         <div id="recentPhotos" class="collapse" data-parent="#recentNotifications">
-                            <div class="card-body">
+                            <div class="card-body" id="recentPhotosBody">
                                 <div><a><img src="" /><br /><span></span></a></div>
                                 <div><a><img src="" /><br /><span></span></a></div>
                                 <div><a><img src="" /><br /><span></span></a></div>
@@ -270,7 +274,6 @@
                         </div>
                     </div>
                 </div>
-
             </div><br /><br />
             <div id="errText"></div>
             <div class="modal fade" id="postSettingsAlert" tabindex="-1" aria-labelledby="postSettingsAlertLabel" aria-hidden="true">
@@ -328,8 +331,6 @@
                             </button>
                         </div>
                         <div class="modal-body">
-
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
