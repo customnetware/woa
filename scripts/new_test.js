@@ -15,8 +15,6 @@ function getCurrentEmails() {
     let hiddenEmails = emailDisplay.getElementsByTagName("p")
 
     while (emailToRemove.length > 0) { emailToRemove[0].remove() }
-
-
  
     for (p = 0; p < hiddenEmails.length; p++) { hiddenEmails[p].style.display = "inline-block" }
 
