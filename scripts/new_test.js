@@ -17,9 +17,11 @@ function getCurrentEmails() {
     while (emailToRemove.length > 0) { emailToRemove[0].remove() }
 
     for (p = 0; p < hiddenEmails.length; p++) {
-        if (savedIDs.includes(hiddenEmails[p])) { hiddenEmails[p].style.display = "inline-block" }
-
+        if (savedIDs.includes(hiddenEmails[p].id)) { hiddenEmails[p].style.display = "inline-block" } else hiddenEmails[p].className = "removeHidden"
     }
+    let removeSave = emailDisplay.getElementsByClassName("removeHidden")
+    while (removeSave.length > 0) { removeSave[0].remove() }
+
 
     updateHeader(document.getElementById("recentEmails").id, "fa fa-envelope-o", "Association Emails", emailDisplay.childElementCount)
 
