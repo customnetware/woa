@@ -32,21 +32,23 @@ function getEmail(messageID) {
     $.get(pageLocation(messageID), function () { })
         .done(function (responseText) {
             let emailDisplay = document.getElementById("recentEmailsBody")
-            let selectedEmail = new DOMParser().parseFromString(responseText, "text/html")
-            let emailHeader = selectedEmail.getElementById("tblMsgHeader")
-            let emailBody = selectedEmail.getElementsByTagName("table")[1]
-            let emailSubHeader = emailHeader.getElementsByClassName("clsGridDetail")
+            let emailHTML = new DOMParser().parseFromString(responseText, "text/html")
+            let emailBody = emailHTML.getElementsByTagName("table")[1]
+            let emailSubHeader = emailHTML.getElementById("tblMsgHeader").getElementsByClassName("clsGridDetail")
+
+
             updateHeader("recentEmails", "fa fa-envelope-open-o", emailSubHeader[3].innerHTML, emailSubHeader[0].innerHTML)
 
-            pToHide = emailDisplay.getElementsByTagName("p")
-            for (p = 0; p < pToHide.length; p++) { pToHide[p].style.display = "none" }
+            emailsToHide = emailDisplay.getElementsByTagName("p")
+            for (p = 0; p < emailsToHide.length; p++) { emailsToHide[p].style.display = "none" }
 
-            var pTags = emailBody.getElementsByTagName('p')
-            for (i = 0; i < pTags.length;) {
-                let selectedParagraph = pTags[i], divTag = document.createElement('div')
+            var requestedEmail = emailBody.getElementsByTagName('p')
+            for (i = 0; i < requestedEmail.length;) {
+                let selectedParagraph = requestedEmail[i], divTag = document.createElement('div')
                 divTag.innerHTML = selectedParagraph.innerHTML
                 selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
             }
+
             emailDisplay.appendChild(emailBody)
             document.getElementById("viewSaveButton").style.display = "none"
             document.getElementById("viewCurrentButton").style.display = "inline"
@@ -166,12 +168,12 @@ function getResourceCenter() {
             let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
             let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
             let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
-            let newsLettertLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
+            let newsLetterLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
             let newsLetterItem = document.createElement("span")
             let selectedDoc = document.createElement("a")
 
             selectedDoc.innerHTML = newsLetterName[newsLetterName.length - 1].innerHTML
-            selectedDoc.href = newsLettertLink[newsLetterName.length - 1].href
+            selectedDoc.href = newsLetterLink[newsLetterName.length - 1].href
             newsLetterItem.appendChild(selectedDoc)
             docList.appendChild(newsLetterItem)
 

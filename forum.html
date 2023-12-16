@@ -44,7 +44,7 @@
                                     let groupID = forumName[p - 1].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
                                     let groupName = forumName[p - 1].innerText
                                     selectedGroups.push(groupID + "|" + groupName)
-                                    document.getElementById("post").appendChild(document.createTextNode(groupName))
+                                    document.getElementById("post").appendChild(document.createTextNode(groupID))
                                     document.getElementById("post").appendChild(document.createElement("br"))
                                 }
                             }
