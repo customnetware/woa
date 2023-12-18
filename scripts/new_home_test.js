@@ -1,5 +1,5 @@
 const currentDate = new Date()
-function pageLocation(URLString) {return (window.location.hostname == "localhost") ? URLString + ".html" : URLString}
+function pageLocation(URLString) { return (window.location.hostname == "localhost") ? URLString + ".html" : URLString }
 function getResidentHomePage(pageToDownload) {
     $.get(pageLocation(pageToDownload), function () { })
         .done(function (responseText) {
@@ -35,7 +35,7 @@ function getResidentHomePage(pageToDownload) {
         })
 }
 function getResourceCenter(pageToDownload) {
-      let docList = document.getElementById("recentFlyersBody")
+    let docList = document.getElementById("recentFlyersBody")
     let folderToGet = ["951754", "540434"]
     $.get(pageLocation(pageToDownload), function () { })
         .done(function (responseText) {
@@ -116,16 +116,67 @@ function getDiscussionGroups() {
     }
 }
 function getProfilePage() {
-    $.get(pageLocation("/Member/28118~" + document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]), function () {
-    }).done(function (responseText) {
-        let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
-        document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
+    var regExp = /\(([^)]+)\)/
+    var profileID = regExp.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
+    $.get(pageLocation("/Member/28118~" + profileID), function () { })
+        .done(function (responseText) {
+            let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
+            document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
+        })
+}
+
+function getProfilePage() {
+    var regExp = /\(([^)]+)\)/
+    var profileID = regExp.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
+    $("#userProfile").load("/Member/28118~" + profileID + " img:first", function () {
+        let profileText = document.createElement("span")
+        profileText.innerHTML = "To update your personal information, click the <b>My Profile</b> button.  Click or tap the <b>Profile</b> link on mobile devices.  Beginning on January 1 st , 2024 the Woodbridge Homeowner Association assessment will increase to $180.00.      Only the emails you are currently viewing have been saved to your computer.  New emails will added to your saved emails the next time you visit this page.  Clearing your browser's cache will remove saved emails from this computer."
+        document.getElementById("userProfile").appendChild(profileText)
     })
 }
+
+function postTest() {
+
+    $("#recentPostsBody").load("/Discussion/28118~8364 .ThreadContainer", function () {
+        //document.getElementById("recentPostsBody").getElementsByClassName("row")[0].style.display = "inline"
+        //let test = document.getElementById("recentPostsBody").getElementsByTagName("p")
+
+
+        //for (i = test.length - 1; i >= 0; i--) {
+        //    if (test[i].innerHTML == "&nbsp;") { test[i].remove() } 
+          
+        //}
+
+
+
+
+        //for (i = 0; i < test.length;) {
+        //    let selectedParagraph = test[i], divTag = document.createElement('div')
+        //    divTag.appendChild(selectedParagraph.innerHTML)
+        //    selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
+        //}
+
+        //for (let h = 0; h < test.length; h++) {
+        //    if (test[h].innerHTML == "&nbsp;") {
+        //        test[h].style.display = "none"
+        //    }
+        //}
+
+
+
+        test.innerText = test.innerHTML
+
+
+    })
+}
+
 $(window).load(function () {
     getProfilePage()
-    getDiscussionGroups()
+    postTest()
+    /*    getDiscussionGroups()*/
     getResourceCenter("/resourcecenter/28118/resource-center")
     getResidentHomePage("/homepage/28118/resident-home-page")
+
+
 })
 

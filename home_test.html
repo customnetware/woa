@@ -176,6 +176,14 @@
             #news_link p, message_link p, classifieds_link p {
                 display: none
             }
+            #userProfile img {
+                height: 120px;
+                filter: drop-shadow(5px 5px 5px grey);
+                float: left;
+                padding-right: 15px;
+                padding-bottom: 10px;
+                padding-top: 5px;
+            }
         </style>
 
         <div class="row" id="notificationHeader">
@@ -184,9 +192,7 @@
                     <div class="card-header border-success formatHeader" id="currentProfile">
                         <span class="fa fa-refresh fa-spin fa-fw  fa-lg" style="margin-right:5px"></span><span>Checking for new emails and flyers... </span>
                     </div>
-                    <div id="userProfile" class="card-body" style="padding:10px">
-                        <img id="profileImage" width="110" src="" class="dropShadow" />To update your personal information, click the <b>My Profile</b> button.  Click or tap the <b>Profile</b> link on mobile devices.
-                    </div>
+                    <div id="userProfile" class="card-body"></div>
                 </div>
             </div>
         </div>
@@ -356,12 +362,7 @@
             </div>
         </div>
     </div>
-    <script>
-        const script = document.createElement("script")
-        script.src = (window.location.hostname == "localhost") ? "scripts/new_home_test.js" : "https://customnetware.github.io/woa/scripts/new_home_test.js"
-        document.body.appendChild(script)
-    </script>
-
-
+    <div id="testDiv"></div>
+    <script src="scripts/new_home_test.js"></script>
 </body>
 </html>
