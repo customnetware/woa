@@ -164,7 +164,7 @@ function postTest() {
 
 
 
-        test.innerText = test.innerHTML
+
 
 
     })
