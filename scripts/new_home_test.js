@@ -119,7 +119,7 @@ function getProfilePage() {
     var regExp = /\(([^)]+)\)/
     var profileID = regExp.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
     $("#userProfileImage").load(pageLocation("/Member/28118~" + profileID) + " img:first", function () {
-        $("#userProfileText").load(pageLocation("/news/28118~792554/webmaster-only")+" #contentInner", function () {
+        $("#userProfileText").load(pageLocation("/news/28118~792554/webmaster-only") + " #contentInner", function () {
             document.getElementById("userProfileText").getElementsByTagName("div")[0].getElementsByTagName("div")[0].remove()
             document.getElementById("userProfileText").getElementsByTagName("div")[0].getElementsByTagName("div")[1].remove()
         })
@@ -127,31 +127,40 @@ function getProfilePage() {
 
 }
 
-function postTest() {
-    $("#recentPostsBody").load(pageLocation("/Discussion/28118~8364")+" .ThreadContainer", function () {
-        //document.getElementById("recentPostsBody").getElementsByClassName("row")[0].style.display = "inline"
-        //let test = document.getElementById("recentPostsBody").getElementsByTagName("p")
-        //for (i = test.length - 1; i >= 0; i--) {
-        //    if (test[i].innerHTML == "&nbsp;") { test[i].remove() } 
-        //}
-        //for (i = 0; i < test.length;) {
-        //    let selectedParagraph = test[i], divTag = document.createElement('div')
-        //    divTag.appendChild(selectedParagraph.innerHTML)
-        //    selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
-        //}
+function getDiscussionGroupPosts() {
 
-        //for (let h = 0; h < test.length; h++) {
-        //    if (test[h].innerHTML == "&nbsp;") {
-        //        test[h].style.display = "none"
-        //    }
-        //}
+    $("#recentPostsBody").load(pageLocation("/Discussion/28118~8364") + " .ThreadContainer", function () {
+        let currentPosts = document.getElementsByClassName("ThreadContainer")[0].children
+        let currentDate = new Date()
+        for (i = currentPosts.length - 1; i >= 0; i--) {
+            let postDate = new Date(currentPosts[i].getElementsByTagName("div")[4].innerText.replace("Last Reply:", ""))
+            let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
+            if (dayDiff > 1000) { currentPosts[i].remove() }
+        }
+        for (c = 0; c < currentPosts.length; c++) {
+            let currentPostLink = currentPosts[c].getElementsByClassName("MsgHeader")[0].getElementsByTagName("a")[0]
+            currentPostLink.href = "javascript:getSelectedPost(" + c + ")"
+        }
     })
 }
-
+function getSelectedPost(postIndex) {
+    let currentPosts = document.getElementsByClassName("ThreadContainer")[0].children
+    let currentPost = currentPosts[postIndex].getElementsByClassName("row")[1]
+    if (currentPost.style.display == "none") {
+        let postContent = currentPost.getElementsByTagName("p")
+        for (i = postContent.length - 1; i >= 0; i--) { if (postContent[i].innerHTML == "&nbsp;") { postContent[i].remove() } }
+        for (i = 0; i < postContent.length;) {
+            let selectedParagraph = postContent[i]
+            let divTag = document.createElement('div')
+            divTag.textContent = selectedParagraph.textContent
+            selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
+        }
+        currentPost.style.display = "inline"
+    } else { currentPost.style.display = "none" }
+}
 $(window).load(function () {
     getProfilePage()
-    postTest()
-    /*    getDiscussionGroups()*/
+    getDiscussionGroupPosts()
     getResourceCenter("/resourcecenter/28118/resource-center")
     getResidentHomePage("/homepage/28118/resident-home-page")
 
