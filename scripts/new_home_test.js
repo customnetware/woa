@@ -124,9 +124,7 @@ function getProfilePage() {
             document.getElementById("userProfileText").getElementsByTagName("div")[0].getElementsByTagName("div")[1].remove()
         })
     })
-
 }
-
 function getDiscussionGroupPosts() {
 
     $("#recentPostsBody").load(pageLocation("/Discussion/28118~8364") + " .ThreadContainer", function () {
@@ -135,7 +133,7 @@ function getDiscussionGroupPosts() {
         for (i = currentPosts.length - 1; i >= 0; i--) {
             let postDate = new Date(currentPosts[i].getElementsByTagName("div")[4].innerText.replace("Last Reply:", ""))
             let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-            if (dayDiff > 1000) { currentPosts[i].remove() }
+            if (dayDiff > 2000) { currentPosts[i].remove() }
         }
         for (c = 0; c < currentPosts.length; c++) {
             let currentPostLink = currentPosts[c].getElementsByClassName("MsgHeader")[0].getElementsByTagName("a")[0]
@@ -145,18 +143,23 @@ function getDiscussionGroupPosts() {
 }
 function getSelectedPost(postIndex) {
     let currentPosts = document.getElementsByClassName("ThreadContainer")[0].children
+    for (c = 0; c < currentPosts.length; c++) {
+        if (c !== postIndex) { currentPosts[c].getElementsByClassName("row")[1].style.display = "none" }
+    }
     let currentPost = currentPosts[postIndex].getElementsByClassName("row")[1]
+    let postContent = currentPost.getElementsByTagName("p")
+    for (i = postContent.length - 1; i >= 0; i--) { if (postContent[i].innerHTML == "&nbsp;") { postContent[i].remove() } }
+
     if (currentPost.style.display == "none") {
-        let postContent = currentPost.getElementsByTagName("p")
-        for (i = postContent.length - 1; i >= 0; i--) { if (postContent[i].innerHTML == "&nbsp;") { postContent[i].remove() } }
         for (i = 0; i < postContent.length;) {
             let selectedParagraph = postContent[i]
-            let divTag = document.createElement('div')
-            divTag.textContent = selectedParagraph.textContent
+            let divTag = document.createElement('span')
+            divTag.textContent = selectedParagraph.textContent.trim()
             selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
         }
         currentPost.style.display = "inline"
     } else { currentPost.style.display = "none" }
+
 }
 $(window).load(function () {
     getProfilePage()
