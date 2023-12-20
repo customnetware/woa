@@ -91,6 +91,12 @@ function getDiscussionGroupPosts() {
 }
 function getSelectedPost(postIndex) {
     let currentPosts = document.getElementsByClassName("ThreadContainer")[0].children
+
+    let linksToHide = currentPosts[postIndex].getElementsByClassName("respReplyWrapper")
+    for (i = linksToHide.length - 1; i >= 1; i--) { linksToHide[i].remove()  }
+    linksToHide[0].getElementsByTagName("span")[2].remove()
+
+
     let currentPost = currentPosts[postIndex].getElementsByClassName("row")[1]
     let postContent = currentPost.getElementsByTagName("p")
     for (c = 0; c < currentPosts.length; c++) { if (c !== postIndex) { currentPosts[c].getElementsByClassName("row")[1].style.display = "none" } }
@@ -103,6 +109,7 @@ function getSelectedPost(postIndex) {
             selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
         }
         currentPost.style.display = "inherit"
+ 
     } else { currentPost.style.display = "none" }
 }
 $(window).load(function () {
