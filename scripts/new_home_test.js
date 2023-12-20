@@ -85,7 +85,9 @@ function getDiscussionGroupPosts() {
             let currentPostLink = currentPosts[c].getElementsByClassName("MsgHeader")[0].getElementsByTagName("a")[0]
             currentPostLink.href = "javascript:getSelectedPost(" + c + ")"
         }
+        document.getElementsByName("numOfPosts")[0].innerHTML = "(" + currentPosts.length + ")"
     })
+
 }
 function getSelectedPost(postIndex) {
     let currentPosts = document.getElementsByClassName("ThreadContainer")[0].children
