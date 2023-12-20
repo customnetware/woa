@@ -185,6 +185,10 @@
                 padding-bottom: 10px;
                 padding-top: 5px;
             }
+
+            .pngFix {
+                display: none
+            }
         </style>
 
         <div class="row" id="notificationHeader">
@@ -312,14 +316,34 @@
                         <form>
                             <div class="form-group">
                                 <label for="formControlRange">Use the slider to change the time period</label>
-                                <input type="range" class="form-control-range" id="formControlRange" min="1" max="12" value="3" onInput="$('#rangeval').html($(this).val())">
-                                <span id="rangeval">3<!-- Default value --></span> (Number of Months)
+                                <input type="range" class="form-control-range" id="formControlRange" min="1" max="36" value="3" onInput="$('#rangeval').html($(this).val())">
+                                <span id="rangeval">3</span> (Number of Months)
+                                <hr />
+                                <div><b>Select the discussion group to view</b></div>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="optradio" value="8364" checked> General Discussion
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="optradio" value="8030"> Recommendations
+                                    </label>
+                                </div>
+                                <div class="form-check-inline disabled">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="optradio" disabled>  All Groups
+                                    </label>
+                                </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
+ 
+
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:getDiscussionGroupPosts()">Save changes</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:getDiscussionGroups()">Save changes</button>
+
                     </div>
                 </div>
             </div>

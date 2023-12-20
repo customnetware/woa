@@ -58,63 +58,6 @@ function getResourceCenter(pageToDownload) {
             document.querySelector("[data-target='#recentFlyers']").getElementsByTagName("span")[2].innerHTML = "(" + docList.getElementsByTagName("span").length + ")"
         })
 }
-function getDiscussionGroups() {
-    const NumOfDays = +document.getElementById("rangeval").innerText * 30
-    const selectedGroups = [8030, 8364]
-    const postList = document.getElementById("recentPostsBody")
-    postList.innerHTML = ""
-    for (let h = 0; h < selectedGroups.length; h++) {
-        $.get(pageLocation("/Discussion/28118~" + selectedGroups[h]), function () { })
-            .done(function (responseText) {
-                let forum = new DOMParser().parseFromString(responseText, "text/html")
-                let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
-                let postContents = forum.querySelectorAll("[id^=contents]")
-                for (let h = 0; h < postHeaders.length; h++) {
-                    let messageTexts = postContents[h].getElementsByClassName("clsBodyText")
-                    let messageAuthor = postContents[h].getElementsByClassName("respAuthorWrapper")
-                    let messageContacts = postContents[h].getElementsByClassName("respReplyWrapper")
-                    let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
-                    let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-                    if (dayDiff <= NumOfDays) {
-                        let currentPost = document.createElement("p")
-                        let postHeader = document.createElement("span")
-                        let postMessage = document.createElement("span")
-                        let postAuthor = document.createElement("span")
-                        let postReply = document.createElement("a")
-                        postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
-                        postReply.className = "fa fa-reply fa-lg formatLink"
-                        postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
-                        postHeader.appendChild(postReply)
-                        if (messageTexts.length > 1) {
-                            let replys = document.createElement("a")
-                            replys.className = "fa fa-comments fa-lg formatLink"
-                            replys.href = "javascript:showReplies(" + document.getElementsByClassName("groupPost").length + ")"
-                            postHeader.appendChild(replys)
-                            postHeader.appendChild(document.createTextNode(" (" + (messageTexts.length - 1) + ") "))
-                        }
-                        postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
-                        postAuthor.appendChild(document.createTextNode(messageAuthor[0].innerText))
-                        currentPost.appendChild(postHeader)
-                        currentPost.appendChild(postMessage)
-                        currentPost.appendChild(postAuthor)
-                        for (let p = 1; p < messageTexts.length; p++) {
-                            let replyMessage = document.createElement("span")
-                            let replyAuthor = document.createElement("span")
-                            replyMessage.appendChild(document.createTextNode(messageTexts[p].innerText))
-                            replyAuthor.appendChild(document.createTextNode(messageAuthor[p].innerText))
-                            currentPost.appendChild(replyMessage)
-                            currentPost.appendChild(replyAuthor)
-                        }
-                        currentPost.className = "groupPost"
-                        postList.appendChild(currentPost)
-                    }
-                }
-            })
-            .always(function () {
-                document.querySelector("[data-target='#recentPosts']").getElementsByTagName("span")[2].innerHTML = "(" + postList.getElementsByTagName("p").length + ")"
-            })
-    }
-}
 function getProfilePage() {
     var regExp = /\(([^)]+)\)/
     var profileID = regExp.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
@@ -126,14 +69,17 @@ function getProfilePage() {
     })
 }
 function getDiscussionGroupPosts() {
-
-    $("#recentPostsBody").load(pageLocation("/Discussion/28118~8364") + " .ThreadContainer", function () {
+    const NumOfDays = +document.getElementById("rangeval").innerText * 30
+    let selectedGroup = "8364"
+    let selectedGroups = document.getElementsByName("optradio")
+    for (g = 0; g < selectedGroups.length; g++) { if (selectedGroups[g].checked == true) { selectedGroup = selectedGroups[g].value } }
+    $("#recentPostsBody").load(pageLocation("/Discussion/28118~" + selectedGroup) + " .ThreadContainer", function () {
         let currentPosts = document.getElementsByClassName("ThreadContainer")[0].children
         let currentDate = new Date()
         for (i = currentPosts.length - 1; i >= 0; i--) {
             let postDate = new Date(currentPosts[i].getElementsByTagName("div")[4].innerText.replace("Last Reply:", ""))
             let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-            if (dayDiff > 2000) { currentPosts[i].remove() }
+            if (dayDiff > NumOfDays) { currentPosts[i].remove() }
         }
         for (c = 0; c < currentPosts.length; c++) {
             let currentPostLink = currentPosts[c].getElementsByClassName("MsgHeader")[0].getElementsByTagName("a")[0]
@@ -143,13 +89,10 @@ function getDiscussionGroupPosts() {
 }
 function getSelectedPost(postIndex) {
     let currentPosts = document.getElementsByClassName("ThreadContainer")[0].children
-    for (c = 0; c < currentPosts.length; c++) {
-        if (c !== postIndex) { currentPosts[c].getElementsByClassName("row")[1].style.display = "none" }
-    }
     let currentPost = currentPosts[postIndex].getElementsByClassName("row")[1]
     let postContent = currentPost.getElementsByTagName("p")
+    for (c = 0; c < currentPosts.length; c++) { if (c !== postIndex) { currentPosts[c].getElementsByClassName("row")[1].style.display = "none" } }
     for (i = postContent.length - 1; i >= 0; i--) { if (postContent[i].innerHTML == "&nbsp;") { postContent[i].remove() } }
-
     if (currentPost.style.display == "none") {
         for (i = 0; i < postContent.length;) {
             let selectedParagraph = postContent[i]
@@ -157,9 +100,8 @@ function getSelectedPost(postIndex) {
             divTag.textContent = selectedParagraph.textContent.trim()
             selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
         }
-        currentPost.style.display = "inline"
+        currentPost.style.display = "inherit"
     } else { currentPost.style.display = "none" }
-
 }
 $(window).load(function () {
     getProfilePage()
