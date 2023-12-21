@@ -91,10 +91,12 @@ function getDiscussionGroupPosts() {
 }
 function getSelectedPost(postIndex) {
     let currentPosts = document.getElementsByClassName("ThreadContainer")[0].children
+    let currentPost = currentPosts[postIndex].getElementsByClassName("row")[1]
+
     let linksToHide = currentPosts[postIndex].getElementsByClassName("respReplyWrapper")
     let authorToShow = currentPosts[postIndex].getElementsByClassName("respAuthorWrapper")
     let testCSS = currentPosts[postIndex].getElementsByClassName("respDiscChildPost")
-    let currentPost = currentPosts[postIndex].getElementsByClassName("row")[1]
+
     let postContent = currentPost.getElementsByTagName("p")
 
     for (c = 0; c < testCSS.length; c++) {
@@ -102,21 +104,21 @@ function getSelectedPost(postIndex) {
     }
     for (i = linksToHide.length - 1; i >= 1; i--) {
         linksToHide[i].innerHTML = authorToShow[i].innerHTML
-        linksToHide[i].style.paddingLeft="30px"
-        authorToShow[i].style.display="none"
+        linksToHide[i].style.paddingLeft = "20px"
+        authorToShow[i].style.display = "none"
     }
     for (c = 0; c < currentPosts.length; c++) { if (c !== postIndex) { currentPosts[c].getElementsByClassName("row")[1].style.display = "none" } }
     for (i = postContent.length - 1; i >= 0; i--) { if (postContent[i].innerHTML == "&nbsp;") { postContent[i].remove() } }
     if (currentPost.style.display == "none") {
         currentPost.style.display = "inherit"
 
-        for (i = 0; i < postContent.length;) {
-            let selectedParagraph = postContent[i]
-            let divTag = document.createElement('div')
-            divTag.innerText = selectedParagraph.innerText
-   
-            selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
-        }
+        //for (i = 0; i < postContent.length;) {
+        //    let selectedParagraph = postContent[i]
+        //    let divTag = document.createElement('div')
+        //    divTag.innerText = selectedParagraph.innerText
+
+        //    selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
+        //}
     } else { currentPost.style.display = "none" }
 }
 $(window).load(function () {
