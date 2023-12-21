@@ -101,24 +101,36 @@ function getSelectedPost(postIndex) {
 
     for (c = 0; c < testCSS.length; c++) {
         testCSS[c].style.paddingTop = "10px"
+        testCSS[c].appendChild(document.createTextNode(" - " + authorToShow[c + 1].textContent))
     }
-    for (i = linksToHide.length - 1; i >= 1; i--) {
-        linksToHide[i].innerHTML = authorToShow[i].innerHTML
-        linksToHide[i].style.paddingLeft = "15px"
+
+    for (i = 1; i < linksToHide.length; i++) {
+        //linksToHide[i].textContent = authorToShow[i].textContent
+
+        //linksToHide[i].style.paddingLeft = "15px"
         authorToShow[i].style.display = "none"
+        linksToHide[i].style.display = "none"
     }
+
+
+
+    //for (i = linksToHide.length - 1; i >= 1; i--) {
+    //    linksToHide[i].innerHTML = authorToShow[i].innerHTML
+    //    linksToHide[i].style.paddingLeft = "15px"
+    //    authorToShow[i].style.display = "none"
+    //}respDiscTopic
     for (c = 0; c < currentPosts.length; c++) { if (c !== postIndex) { currentPosts[c].getElementsByClassName("row")[1].style.display = "none" } }
     for (i = postContent.length - 1; i >= 0; i--) { if (postContent[i].innerHTML == "&nbsp;") { postContent[i].remove() } }
     if (currentPost.style.display == "none") {
         currentPost.style.display = "inherit"
 
-        //for (i = 0; i < postContent.length;) {
-        //    let selectedParagraph = postContent[i]
-        //    let divTag = document.createElement('div')
-        //    divTag.innerText = selectedParagraph.innerText
+        for (i = 0; i < postContent.length;) {
+            let selectedParagraph = postContent[i]
+            let divTag = document.createElement('div')
+            divTag.innerText = selectedParagraph.innerText
 
-        //    selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
-        //}
+            selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
+        }
     } else { currentPost.style.display = "none" }
 }
 $(window).load(function () {
