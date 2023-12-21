@@ -95,8 +95,7 @@ function getSelectedPost(postIndex) {
 
 
     let test = currentPosts[postIndex].getElementsByClassName("respDiscChildPost")[0]
-    test.style.padding = "0px"
-    test.style.marginTop="10px"
+    test.classList=""
    
     let currentPost = currentPosts[postIndex].getElementsByClassName("row")[1]
     let postContent = currentPost.getElementsByTagName("p")
