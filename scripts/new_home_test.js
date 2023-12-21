@@ -101,7 +101,11 @@ function getSelectedPost(postIndex) {
 
     for (c = 0; c < testCSS.length; c++) {
         testCSS[c].style.paddingTop = "10px"
-        testCSS[c].appendChild(document.createTextNode(" - " + authorToShow[c + 1].textContent))
+        let testSpan = document.createElement("div")
+        testSpan.style.fontWeight = "700"
+        testSpan.innerHTML = authorToShow[c + 1].textContent
+        testSpan.appendChild(document.createElement("hr"))
+        testCSS[c].appendChild(testSpan)
     }
 
     for (i = 1; i < linksToHide.length; i++) {
