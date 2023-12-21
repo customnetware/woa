@@ -94,12 +94,11 @@ function getSelectedPost(postIndex) {
     let linksToHide = currentPosts[postIndex].getElementsByClassName("respReplyWrapper")
 
 
-    let test = currentPosts[postIndex].getElementsByClassName("respDiscChildPost")
-    for (c = 0; c < test.length; c++) {test[c].classList="" }
 
 
 
-   
+
+
     let currentPost = currentPosts[postIndex].getElementsByClassName("row")[1]
     let postContent = currentPost.getElementsByTagName("p")
 
@@ -111,11 +110,12 @@ function getSelectedPost(postIndex) {
         for (i = 0; i < postContent.length;) {
             let selectedParagraph = postContent[i]
             let divTag = document.createElement('span')
-            divTag.style.paddingLeft="0px"
+            divTag.style.paddingLeft = "0px"
             divTag.textContent = selectedParagraph.textContent.trim()
             selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
         }
-
+    let test = currentPosts[postIndex].getElementsByClassName("respDiscChildPost")
+    for (c = 0; c < test.length; c++) { test[c].classList = "" }
 
     } else { currentPost.style.display = "none" }
 }

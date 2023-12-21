@@ -187,7 +187,7 @@
             }
 
             .pngFix {
-                display: none
+                display: none !important;
             }
 
         </style>
@@ -317,7 +317,7 @@
                         <form>
                             <div class="form-group">
                                 <label for="formControlRange">Use the slider to change the time period</label>
-                                <input type="range" class="form-control-range" id="formControlRange" min="1" max="36" value="3" onInput="$('#rangeval').html($(this).val())">
+                                <input type="range" class="form-control-range" id="formControlRange" min="1" max="72" value="3" onInput="$('#rangeval').html($(this).val())">
                                 <span id="rangeval">3</span> (Number of Months)
                                 <hr />
                                 <div><b>Select the discussion group to view</b></div>
