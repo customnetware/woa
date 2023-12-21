@@ -75,12 +75,12 @@ function getDiscussionGroupPosts() {
     for (g = 0; g < selectedGroups.length; g++) { if (selectedGroups[g].checked == true) { selectedGroup = selectedGroups[g].value } }
     $("#recentPostsBody").load(pageLocation("/Discussion/28118~" + selectedGroup) + " .ThreadContainer", function () {
         let currentPosts = document.getElementsByClassName("ThreadContainer")[0].children
-        let currentDate = new Date()
-        for (i = currentPosts.length - 1; i >= 0; i--) {
-            let postDate = new Date(currentPosts[i].getElementsByTagName("div")[4].innerText.replace("Last Reply:", ""))
-            let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-            if (dayDiff > NumOfDays) { currentPosts[i].remove() }
-        }
+        //let currentDate = new Date()
+        //for (i = currentPosts.length - 1; i >= 0; i--) {
+        //    let postDate = new Date(currentPosts[i].getElementsByTagName("div")[4].innerText.replace("Last Reply:", ""))
+        //    let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
+        //    if (dayDiff > NumOfDays) { currentPosts[i].remove() }
+        //}
         for (c = 0; c < currentPosts.length; c++) {
             let currentPostLink = currentPosts[c].getElementsByClassName("MsgHeader")[0].getElementsByTagName("a")[0]
             currentPostLink.href = "javascript:getSelectedPost(" + c + ")"
@@ -93,48 +93,48 @@ function getSelectedPost(postIndex) {
     let currentPosts = document.getElementsByClassName("ThreadContainer")[0].children
     let currentPost = currentPosts[postIndex].getElementsByClassName("row")[1]
 
-    let linksToHide = currentPosts[postIndex].getElementsByClassName("respReplyWrapper")
-    let authorToShow = currentPosts[postIndex].getElementsByClassName("respAuthorWrapper")
-    let testCSS = currentPosts[postIndex].getElementsByClassName("respDiscChildPost")
+    //let linksToHide = currentPosts[postIndex].getElementsByClassName("respReplyWrapper")
+    //let authorToShow = currentPosts[postIndex].getElementsByClassName("respAuthorWrapper")
+    //let testCSS = currentPosts[postIndex].getElementsByClassName("respDiscChildPost")
 
-    let postContent = currentPost.getElementsByTagName("p")
+    //let postContent = currentPost.getElementsByTagName("p")
 
-    for (c = 0; c < testCSS.length; c++) {
-        testCSS[c].style.paddingTop = "10px"
-        let testSpan = document.createElement("div")
-        testSpan.style.fontWeight = "700"
-        testSpan.innerHTML = authorToShow[c + 1].textContent
-        testSpan.appendChild(document.createElement("hr"))
-        testCSS[c].appendChild(testSpan)
-    }
+    //for (c = 0; c < testCSS.length; c++) {
+    //    testCSS[c].style.paddingTop = "10px"
+    //    let testSpan = document.createElement("div")
+    //    testSpan.style.fontWeight = "700"
+    //    testSpan.innerHTML = authorToShow[c + 1].textContent
+    //    testSpan.appendChild(document.createElement("hr"))
+    //    testCSS[c].appendChild(testSpan)
+    //}
 
-    for (i = 1; i < linksToHide.length; i++) {
-        //linksToHide[i].textContent = authorToShow[i].textContent
+    //for (i = 1; i < linksToHide.length; i++) {
+    //    //linksToHide[i].textContent = authorToShow[i].textContent
 
-        //linksToHide[i].style.paddingLeft = "15px"
-        authorToShow[i].style.display = "none"
-        linksToHide[i].style.display = "none"
-    }
-
-
-
-    //for (i = linksToHide.length - 1; i >= 1; i--) {
-    //    linksToHide[i].innerHTML = authorToShow[i].innerHTML
-    //    linksToHide[i].style.paddingLeft = "15px"
+    //    //linksToHide[i].style.paddingLeft = "15px"
     //    authorToShow[i].style.display = "none"
-    //}respDiscTopic
-    for (c = 0; c < currentPosts.length; c++) { if (c !== postIndex) { currentPosts[c].getElementsByClassName("row")[1].style.display = "none" } }
-    for (i = postContent.length - 1; i >= 0; i--) { if (postContent[i].innerHTML == "&nbsp;") { postContent[i].remove() } }
+    //    linksToHide[i].style.display = "none"
+    //}
+
+
+
+    ////for (i = linksToHide.length - 1; i >= 1; i--) {
+    ////    linksToHide[i].innerHTML = authorToShow[i].innerHTML
+    ////    linksToHide[i].style.paddingLeft = "15px"
+    ////    authorToShow[i].style.display = "none"
+    ////}respDiscTopic
+    //for (c = 0; c < currentPosts.length; c++) { if (c !== postIndex) { currentPosts[c].getElementsByClassName("row")[1].style.display = "none" } }
+    //for (i = postContent.length - 1; i >= 0; i--) { if (postContent[i].innerHTML == "&nbsp;") { postContent[i].remove() } }
     if (currentPost.style.display == "none") {
-        currentPost.style.display = "inherit"
+        currentPost.style.display = "inline-flex"
 
-        for (i = 0; i < postContent.length;) {
-            let selectedParagraph = postContent[i]
-            let divTag = document.createElement('div')
-            divTag.innerText = selectedParagraph.innerText
+        //for (i = 0; i < postContent.length;) {
+        //    let selectedParagraph = postContent[i]
+        //    let divTag = document.createElement('div')
+        //    divTag.innerText = selectedParagraph.innerText
 
-            selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
-        }
+        //    selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
+        //}
     } else { currentPost.style.display = "none" }
 }
 $(window).load(function () {
