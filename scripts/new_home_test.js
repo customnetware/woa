@@ -94,8 +94,11 @@ function getSelectedPost(postIndex) {
     let linksToHide = currentPosts[postIndex].getElementsByClassName("respReplyWrapper")
 
 
-    let test = currentPosts[postIndex].getElementsByClassName("respDiscChildPost")[0]
-    test.classList=""
+    let test = currentPosts[postIndex].getElementsByClassName("respDiscChildPost")
+    for (c = 0; c < test.length; c++) {test[c].classList="" }
+
+
+
    
     let currentPost = currentPosts[postIndex].getElementsByClassName("row")[1]
     let postContent = currentPost.getElementsByTagName("p")
