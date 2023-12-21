@@ -104,7 +104,7 @@ function getSelectedPost(postIndex) {
     }
     for (i = linksToHide.length - 1; i >= 1; i--) {
         linksToHide[i].innerHTML = authorToShow[i].innerHTML
-        linksToHide[i].style.paddingLeft = "20px"
+        linksToHide[i].style.paddingLeft = "15px"
         authorToShow[i].style.display = "none"
     }
     for (c = 0; c < currentPosts.length; c++) { if (c !== postIndex) { currentPosts[c].getElementsByClassName("row")[1].style.display = "none" } }
