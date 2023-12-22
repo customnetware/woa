@@ -30,8 +30,9 @@ function getSelectedPost(postIndex) {
             if (replyName[i].innerHTML !== "") {
 
                 replyLinks[i].insertBefore(document.createTextNode(replyName[i].innerText.trim()), replyLinks[i].firstChild)
-                replyLinks[i].class = "col-sm-10 respReplyWrapper"
-                replyName[i].class = "col-sm-2 respAuthorWrapper"
+                replyLinks[i].className = "col-sm-10 respReplyWrapper"
+                replyName[i].className = "col-sm-2 respAuthorWrapper"
+                replyName[i].innerHTML=""
             }
         }
         for (c = 0; c < indentToRemove.length; c++) {
