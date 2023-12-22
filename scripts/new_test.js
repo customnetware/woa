@@ -209,7 +209,7 @@ function getProfilePage() {
     var regExp = /\(([^)]+)\)/
     var profileID = regExp.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
     $("#userProfile").load(pageLocation("/news/28118~792554/webmaster-only") + " #contentInner", function () {
-        document.getElementById("userProfile").innerText = document.getElementById("contentInner").getElementsByTagName("div")[8].innerText
+        document.getElementById("userProfile").innerHTML = document.getElementById("contentInner").getElementsByTagName("div")[8].innerHTML
         $.get(pageLocation("/Member/28118~" + profileID), function () {
         }).done(function (responseText) {
             let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
