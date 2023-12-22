@@ -27,9 +27,11 @@ function getSelectedPost(postIndex) {
     for (c = 0; c < currentPosts.length; c++) { if (c !== postIndex) { currentPosts[c].getElementsByClassName("row")[1].style.display = "none" } }
     if (currentPost.style.display == "none") {
         for (i = 0; i < replyLinks.length; i++) {
-            if (replyName[i].style.display !== "none") {
+            if (replyName[i].innerHTML !== "") {
+         
                 replyLinks[i].insertBefore(document.createTextNode(replyName[i].innerText.trim()), replyLinks[i].firstChild)
-                replyName[i].style.display = "none"
+                replyName[i].innerHTML = ""
+                replyName[i].style.width="5px"
             }
         }
         for (c = 0; c < indentToRemove.length; c++) {
