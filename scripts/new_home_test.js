@@ -28,11 +28,10 @@ function getSelectedPost(postIndex) {
     if (currentPost.style.display == "none") {
         for (i = 0; i < replyLinks.length; i++) {
             if (replyName[i].innerHTML !== "") {
-         
+
                 replyLinks[i].insertBefore(document.createTextNode(replyName[i].innerText.trim()), replyLinks[i].firstChild)
                 replyLinks[i].class = "col-sm-10 respReplyWrapper"
-                replyName[i].innerHTML = ""
-                replyName[i].class ="col-sm-2 respAuthorWrapper"
+                replyName[i].class = "col-sm-2 respAuthorWrapper"
             }
         }
         for (c = 0; c < indentToRemove.length; c++) {
