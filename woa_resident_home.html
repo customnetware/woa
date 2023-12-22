@@ -172,174 +172,180 @@
             .removeHidden {
                 display: none
             }
+            #userProfile img {
+                height: 120px;
+                filter: drop-shadow(5px 5px 5px grey);
+                float: left;
+                padding-right: 15px;
+                padding-bottom: 10px;
+                padding-top: 5px;
+            }
         </style>
-        <div class="container-fluid">
-            <div class="row" id="notificationHeader">
-                <div class="col-md-12">
-                    <div class="card z-depth-3 mb-3">
-                        <div class="card-header border-success formatHeader"><span class="fa fa-refresh fa-spin fa-fw" style="margin-right:5px"></span>Checking for new emails and flyers... </div>
-                        <div id="userProfile" class="card-body" style="padding:10px">
-                            <img id="profileImage" width="110" src="" class="dropShadow" />To update your personal information, click the <b>My Profile</b> button.  Click or tap the <b>Profile</b> link on mobile devices.
-                        </div>
+        <div class="row" id="notificationHeader">
+            <div class="col-md-12">
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader"><span class="fa fa-refresh fa-spin fa-fw fa-lg" style="margin-right:5px"></span>Checking for new emails and flyers... </div>
+                    <div id="userProfile" class="card-body" style="padding:10px">
+          
                     </div>
                 </div>
             </div>
-            <div class="row" id="recentNotifications">
-                <div class="col-md-12">
-                    <div class="card z-depth-3 mb-3">
-                        <div class="card-header border-success formatHeader"><span class="fa fa-bell formatLink" aria-hidden="true" id="noticeIcon"></span>&nbsp;&nbsp;Recent Notifications</div>
-                        <div class="card-body">
-                            <div id="notice">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card z-depth-3 mb-3">
-                        <div class="card-header" data-toggle="collapse" data-target="#recentNews" aria-expanded="true">
-                            <span class="fa fa-newspaper-o" style="margin-right:5px"></span>
-                            <span style="font-weight:700; margin-left:5px">News And Announcements</span>
-                            <span style="font-weight:700; margin-left:5px">(0)</span>
-                            <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
-                        </div>
-                        <div id="recentNews" class="collapse show" data-parent="#recentNotifications">
-                            <div class="card-body" id="recentNewsBody"></div>
-                        </div>
-                    </div>
-                    <div class="card z-depth-3 mb-3">
-                        <div class="card-header collapsed" data-toggle="collapse" data-target="#recentEmails" aria-expanded="false">
-                            <span class="fa fa-envelope-o"></span>
-                            <span style="font-weight:700; margin-left:5px">Association Emails</span>
-                            <span style="font-weight:700; margin-left:5px">(0)</span>
-                            <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
-                        </div>
-                        <div id="recentEmails" class="collapse" data-parent="#recentNotifications">
-                            <div class="card-body" id="recentEmailsBody"></div>
-                            <div class="card-footer">
-                                <button type="button" id="viewSaveButton" class="btn btn-primary" onclick="javascript:getSavedEmails()">View Saved Emails</button>
-                                <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:getCurrentEmails()" style="display:none">&nbsp;<span class="fa fa-backward"></span>&nbsp;Previous</button>
-                                <input type="hidden" id="currentEmailIDs" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card z-depth-3 mb-3">
-                        <div class="card-header collapsed" data-toggle="collapse" data-target="#recentPosts" aria-expanded="false">
-                            <span class="fa fa-comments-o"></span>
-                            <span style="font-weight:700; margin-left:5px">Discussion Group Posts</span>
-                            <span style="font-weight:700; margin-left:5px">(0)</span>
-                            <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
-                        </div>
-                        <div id="recentPosts" class="collapse" data-parent="#recentNotifications">
-                            <div class="card-body" id="recentPostsBody"></div>
-                            <div class="card-footer">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postSettingsAlert">View more posts.</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card z-depth-3 mb-3">
-                        <div class="card-header collapsed" data-toggle="collapse" data-target="#recentAds" aria-expanded="false">
-                            <span class="fa fa-shopping-cart"></span>
-                            <span style="font-weight:700; margin-left:5px">Classified Ads</span>
-                            <span style="font-weight:700; margin-left:5px">(0)</span>
-                            <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
-                        </div>
-                        <div id="recentAds" class="collapse" data-parent="#recentNotifications">
-                            <div class="card-body" id="recentAdsBody"></div>
-                        </div>
-                    </div>
-                    <div class="card z-depth-3 mb-3">
-                        <div class="card-header collapsed" data-toggle="collapse" data-target="#recentFlyers" aria-expanded="false">
-                            <span class="fa fa-file-pdf-o"></span>
-                            <span style="font-weight:700; margin-left:5px">Activity And Event Flyers</span>
-                            <span style="font-weight:700; margin-left:5px">(0)</span>
-                            <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
-                        </div>
-                        <div id="recentFlyers" class="collapse" data-parent="#recentNotifications">
-                            <div class="card-body" id="recentFlyersBody"></div>
-                        </div>
-                    </div>
-                    <div class="card z-depth-3 mb-3">
-                        <div class="card-header collapsed" data-toggle="collapse" data-target="#recentPhotos" aria-expanded="false">
-                            <span class="fa fa-picture-o"></span>
-                            <span style="font-weight:700; margin-left:5px">Activity And Event Photos</span>
-                            <span style="font-weight:700; margin-left:5px">(0)</span>
-                            <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
-                        </div>
-                        <div id="recentPhotos" class="collapse" data-parent="#recentNotifications">
-                            <div class="card-body" id="recentPhotosBody">
-                                <div><a><img src="" /><br /><span></span></a></div>
-                                <div><a><img src="" /><br /><span></span></a></div>
-                                <div><a><img src="" /><br /><span></span></a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><br /><br />
-            <div id="errText"></div>
-            <div class="modal fade" id="postSettingsAlert" tabindex="-1" aria-labelledby="postSettingsAlertLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="postSettingsAlertLabel">Discussion Group View Time Period</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-
-                                <div class="form-group">
-                                    <label for="formControlRange">Use the slider to change the time period</label>
-                                    <input type="range" class="form-control-range" id="formControlRange" min="1" max="12" value="3" onInput="$('#rangeval').html($(this).val())">
-                                    <span id="rangeval">3<!-- Default value --></span> (Number of Months)
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:getDiscussionGroups()">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="saveEmailAlert" tabindex="-1" aria-labelledby="saveEmailAlertLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="saveEmailAlertLabel">No saved emails found</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Only the emails you are currently viewing have been saved to your computer.  New emails will added to your saved emails the next time you visit this page.  Clearing your browser's cache will remove saved emails from this computer.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="showEmailAlert" tabindex="-1" aria-labelledby="showEmailAlertLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="showEmailAlertLabel">No saved emails found</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
-            <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
         </div>
+        <div class="row" id="recentNotifications">
+            <div class="col-md-12">
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader"><span class="fa fa-bell fa-lg formatLink" aria-hidden="true" id="noticeIcon"></span>&nbsp;&nbsp;Recent Notifications</div>
+                    <div class="card-body">
+                        <div id="notice">
+                        </div>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header" data-toggle="collapse" data-target="#recentNews" aria-expanded="true">
+                        <span class="fa fa-newspaper-o fa-lg" style="margin-right:5px"></span>
+                        <span style="font-weight:700; margin-left:5px">News And Announcements</span>
+                        <span style="font-weight:700; margin-left:5px">(0)</span>
+                        <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
+                    </div>
+                    <div id="recentNews" class="collapse show" data-parent="#recentNotifications">
+                        <div class="card-body" id="recentNewsBody"></div>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header collapsed" data-toggle="collapse" data-target="#recentEmails" aria-expanded="false">
+                        <span class="fa fa-envelope-o fa-lg"></span>
+                        <span style="font-weight:700; margin-left:5px">Association Emails</span>
+                        <span style="font-weight:700; margin-left:5px">(0)</span>
+                        <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
+                    </div>
+                    <div id="recentEmails" class="collapse" data-parent="#recentNotifications">
+                        <div class="card-body" id="recentEmailsBody"></div>
+                        <div class="card-footer">
+                            <button type="button" id="viewSaveButton" class="btn btn-primary" onclick="javascript:getSavedEmails()">View Saved Emails</button>
+                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:getCurrentEmails()" style="display:none">&nbsp;<span class="fa fa-backward"></span>&nbsp;Previous</button>
+                            <input type="hidden" id="currentEmailIDs" />
+                        </div>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header collapsed" data-toggle="collapse" data-target="#recentPosts" aria-expanded="false">
+                        <span class="fa fa-comments-o fa-lg"></span>
+                        <span style="font-weight:700; margin-left:5px">Discussion Group Posts</span>
+                        <span style="font-weight:700; margin-left:5px">(0)</span>
+                        <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
+                    </div>
+                    <div id="recentPosts" class="collapse" data-parent="#recentNotifications">
+                        <div class="card-body" id="recentPostsBody"></div>
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postSettingsAlert">View more posts.</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header collapsed" data-toggle="collapse" data-target="#recentAds" aria-expanded="false">
+                        <span class="fa fa-shopping-cart fa-lg"></span>
+                        <span style="font-weight:700; margin-left:5px">Classified Ads</span>
+                        <span style="font-weight:700; margin-left:5px">(0)</span>
+                        <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
+                    </div>
+                    <div id="recentAds" class="collapse" data-parent="#recentNotifications">
+                        <div class="card-body" id="recentAdsBody"></div>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header collapsed" data-toggle="collapse" data-target="#recentFlyers" aria-expanded="false">
+                        <span class="fa fa-file-pdf-o fa-lg"></span>
+                        <span style="font-weight:700; margin-left:5px">Activity And Event Flyers</span>
+                        <span style="font-weight:700; margin-left:5px">(0)</span>
+                        <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
+                    </div>
+                    <div id="recentFlyers" class="collapse" data-parent="#recentNotifications">
+                        <div class="card-body" id="recentFlyersBody"></div>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header collapsed" data-toggle="collapse" data-target="#recentPhotos" aria-expanded="false">
+                        <span class="fa fa-picture-o fa-lg"></span>
+                        <span style="font-weight:700; margin-left:5px">Activity And Event Photos</span>
+                        <span style="font-weight:700; margin-left:5px">(0)</span>
+                        <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
+                    </div>
+                    <div id="recentPhotos" class="collapse" data-parent="#recentNotifications">
+                        <div class="card-body" id="recentPhotosBody">
+                            <div><a><img src="" /><br /><span></span></a></div>
+                            <div><a><img src="" /><br /><span></span></a></div>
+                            <div><a><img src="" /><br /><span></span></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><br /><br />
+        <div id="errText"></div>
+        <div class="modal fade" id="postSettingsAlert" tabindex="-1" aria-labelledby="postSettingsAlertLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="postSettingsAlertLabel">Discussion Group View Time Period</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+
+                            <div class="form-group">
+                                <label for="formControlRange">Use the slider to change the time period</label>
+                                <input type="range" class="form-control-range" id="formControlRange" min="1" max="12" value="3" onInput="$('#rangeval').html($(this).val())">
+                                <span id="rangeval">3<!-- Default value --></span> (Number of Months)
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:getDiscussionGroups()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="saveEmailAlert" tabindex="-1" aria-labelledby="saveEmailAlertLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="saveEmailAlertLabel">No saved emails found</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Only the emails you are currently viewing have been saved to your computer.  New emails will added to your saved emails the next time you visit this page.  Clearing your browser's cache will remove saved emails from this computer.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="showEmailAlert" tabindex="-1" aria-labelledby="showEmailAlertLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="showEmailAlertLabel">No saved emails found</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="scripts/new_test.js"></script>
+        <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
     </div>
 
 </body>

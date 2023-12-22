@@ -205,10 +205,18 @@ function showPhotos(galleryPage) {
     } catch (error) { }
 }
 function getProfilePage() {
-    $.get(pageLocation("/Member/28118~" + document.getElementById("HeaderPublishAuthProfile").href.split("(")[1].split(",")[0]), function () {
-    }).done(function (responseText) {
-        let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
-        document.getElementById("profileImage").src = profileDoc.getElementsByTagName("img")[0].src
+    let profileImg = document.createElement("img")
+    var regExp = /\(([^)]+)\)/
+    var profileID = regExp.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
+    $("#userProfile").load(pageLocation("/news/28118~792554/webmaster-only") + " #contentInner", function () {
+        document.getElementById("userProfile").innerText = document.getElementById("contentInner").getElementsByTagName("div")[8].innerText
+        $.get(pageLocation("/Member/28118~" + profileID), function () {
+        }).done(function (responseText) {
+            let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
+            profileImg.src = profileDoc.getElementsByTagName("img")[0].src
+            document.getElementById("userProfile").insertBefore(profileImg, document.getElementById("userProfile").firstChild)
+        })
+
     })
 }
 function getClassifiedAds() {
