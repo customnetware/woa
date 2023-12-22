@@ -21,27 +21,21 @@ function getSelectedPost(postIndex) {
     let indentToRemove = currentPosts[postIndex].getElementsByClassName("respDiscChildPost")
     let replyLinks = currentPosts[postIndex].getElementsByClassName("respReplyWrapper")
     let replyName = currentPosts[postIndex].getElementsByClassName("respAuthorWrapper")
-
-
-
-
-
-    for (c = 0; c < currentPosts.length; c++) { if (c !== postIndex) { currentPosts[c].getElementsByClassName("row")[1].style.display = "none" } }
-    if (currentPost.style.display == "none") {
-
-    for (i = 0; i < replyLinks.length; i++) {
-        if (replyName[i].style.display !== "none") {
-            replyLinks[i].insertBefore(document.createTextNode(replyName[i].innerText.trim()), replyLinks[i].firstChild)
-            replyName[i].style.display = "none"
-        }
-    }
-    for (c = 0; c < indentToRemove.length; c++) {
-        indentToRemove[c].classList = "respDiscChildPost"
-        indentToRemove[c].removeAttribute("style")
-    }
     let replyFontSize = currentPost.getElementsByTagName("span")
     let replyBorder = currentPosts[postIndex].getElementsByClassName("respDiscWrapper")
 
+    for (c = 0; c < currentPosts.length; c++) { if (c !== postIndex) { currentPosts[c].getElementsByClassName("row")[1].style.display = "none" } }
+    if (currentPost.style.display == "none") {
+        for (i = 0; i < replyLinks.length; i++) {
+            if (replyName[i].style.display !== "none") {
+                replyLinks[i].insertBefore(document.createTextNode(replyName[i].innerText.trim()), replyLinks[i].firstChild)
+                replyName[i].style.display = "none"
+            }
+        }
+        for (c = 0; c < indentToRemove.length; c++) {
+            indentToRemove[c].classList = "respDiscChildPost"
+            indentToRemove[c].removeAttribute("style")
+        }
         currentPost.style.display = ""
         currentPost.style.border = ""
         currentPost.style.paddingLeft = "20px"
