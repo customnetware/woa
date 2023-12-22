@@ -99,13 +99,16 @@ function getSelectedPost(postIndex) {
     let authorFontSize = currentPosts[postIndex].getElementsByClassName("respDiscTopic")[1].getElementsByTagName("span")
 
     let indentToRemove = currentPosts[postIndex].getElementsByClassName("respDiscChildPost")
+
+    let replyLinks = currentPosts[postIndex].getElementsByClassName("respReplyWrapper")
+    let replyName = currentPosts[postIndex].getElementsByClassName("respAuthorWrapper")
+    alert(replyLinks.length)
+
     for (c = 0; c < indentToRemove.length; c++) {
        indentToRemove[c].classList = "respDiscChildPost"
         indentToRemove[c].removeAttribute("style")
 
     }
-
-
 
     //clsBodyText col-lg-12 respDiscChildPost
 
