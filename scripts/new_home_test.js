@@ -170,8 +170,8 @@ function getSelectedPost(postIndex) {
 //
 
 $(window).load(function () {
-    /*    getProfilePage()*/
     getDiscussionGroupPosts()
+    /*    getProfilePage()*/
     //getResourceCenter("/resourcecenter/28118/resource-center")
     //getResidentHomePage("/homepage/28118/resident-home-page")
 
