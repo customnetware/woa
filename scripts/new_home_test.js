@@ -30,6 +30,7 @@ function getSelectedPost(postIndex) {
             if (replyName[i].innerHTML !== "") {
          
                 replyLinks[i].insertBefore(document.createTextNode(replyName[i].innerText.trim()), replyLinks[i].firstChild)
+                replyLinks[i].style.width = "98%"
                 replyName[i].innerHTML = ""
                 replyName[i].style.width="5px"
             }
