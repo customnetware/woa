@@ -205,6 +205,8 @@ function getProfilePage() {
     var profileID = regExp.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
     $("#userProfile").load(pageLocation("/news/28118~792554/webmaster-only") + " #contentInner", function () {
         document.getElementById("userProfile").getElementsByClassName("clsPageMenu")[0].remove()
+        document.getElementById("userProfile").getElementsByClassName("clsHeader")[0].remove()
+
 
         $.get(pageLocation("/Member/28118~" + profileID), function () {
         }).done(function (responseText) {
