@@ -13,18 +13,9 @@ function getCurrentEmails() {
     let savedIDs = document.getElementById("currentEmailIDs").value
     let emailToRemove = emailDisplay.getElementsByTagName("table")
     let hiddenEmails = emailDisplay.getElementsByTagName("p")
-
     while (emailToRemove.length > 0) { emailToRemove[0].remove() }
-
-    for (p = 0; p < hiddenEmails.length; p++) {
-        if (savedIDs.includes(hiddenEmails[p].id)) { hiddenEmails[p].style.display = "inline-block" } else hiddenEmails[p].className = "removeHidden"
-    }
-    let removeSave = emailDisplay.getElementsByClassName("removeHidden")
-    while (removeSave.length > 0) { removeSave[0].remove() }
-
-
+    for (i = hiddenEmails.length - 1; i >= 0; i--) { if (savedIDs.includes(hiddenEmails[i].id) == false) { hiddenEmails[i].remove() } }
     updateHeader(document.getElementById("recentEmails").id, "fa fa-envelope-o", "Association Emails", emailDisplay.childElementCount)
-
     document.getElementById("viewSaveButton").style.display = "inline"
     document.getElementById("viewCurrentButton").style.display = "none"
 }
@@ -132,7 +123,6 @@ function getResidentHomePage() {
 }
 function getNewsAndAnnouncements() {
     let newsList = document.getElementById("recentNewsBody")
-    newsList.innerHTML = ""
     $.get(pageLocation("/news/list/28118/news-announcements"), function () { })
         .done(function (responseText) {
             let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
@@ -156,33 +146,43 @@ function getNewsAndAnnouncements() {
         })
 }
 function getResourceCenter() {
-    let docList = document.getElementById("recentFlyersBody")
+    let eventFlyer = document.getElementById("recentFlyersBody")
+    let newsLetter = document.getElementById("newsLettersBody")
     $.get(pageLocation("/resourcecenter/28118/resource-center"), function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
+
             let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
             let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
-            let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
-            let newsLetterLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
-            let newsLetterItem = document.createElement("span")
-            let selectedDoc = document.createElement("a")
+            for (p = documentName.length - 1; p >= 0; p--) {
 
-            selectedDoc.innerHTML = newsLetterName[newsLetterName.length - 1].innerHTML
-            selectedDoc.href = newsLetterLink[newsLetterName.length - 1].href
-            newsLetterItem.appendChild(selectedDoc)
-            docList.appendChild(newsLetterItem)
-
-            for (let p = 0; p < documentName.length; p++) {
                 let resourceItem = document.createElement("span")
                 let selectedDoc = document.createElement("a")
                 selectedDoc.innerHTML = documentName[p].innerHTML
                 selectedDoc.href = documentLink[p].href
                 resourceItem.appendChild(selectedDoc)
-                docList.appendChild(resourceItem)
+                eventFlyer.appendChild(resourceItem)
             }
+            let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
+            let newsLetterLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
+
+
+            for (i = newsLetterName.length - 1; i >= 0; i--) {
+                let resourceItem = document.createElement("span")
+                let selectedDoc = document.createElement("a")
+                selectedDoc.innerHTML = newsLetterName[i].innerHTML
+                selectedDoc.href = newsLetterLink[i].href
+                resourceItem.appendChild(selectedDoc)
+                newsLetter.appendChild(resourceItem)
+                if (newsLetter.getElementsByTagName("span").length > 5
+                ) { break }
+            }
+
+
         })
         .always(function () {
-            document.querySelector("[data-target='#recentFlyers']").getElementsByTagName("span")[2].innerHTML = "(" + docList.getElementsByTagName("span").length + ")"
+            document.querySelector("[data-target='#recentFlyers']").getElementsByTagName("span")[2].innerHTML = "(" + eventFlyer.getElementsByTagName("span").length + ")"
+            document.querySelector("[data-target='#newsLetters']").getElementsByTagName("span")[2].innerHTML = "(" + newsLetter.getElementsByTagName("span").length + ")"
         })
 }
 function showPhotos(galleryPage) {
@@ -318,6 +318,13 @@ function showReplies(p_id) {
     }
 }
 $(window).load(function () {
+    $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
+        this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
+    })
+    $("#recentFlyers, #newsLetters").on("show.bs.collapse", function () {
+        this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-open-o fa-lg"
+    })
+
     document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
     getProfilePage()
     getResourceCenter()
