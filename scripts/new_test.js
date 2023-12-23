@@ -204,8 +204,7 @@ function getProfilePage() {
     var regExp = /\(([^)]+)\)/
     var profileID = regExp.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
     $("#userProfile").load(pageLocation("/news/28118~792554/webmaster-only") + " #contentInner", function () {
-        document.getElementById("contentInner").getElementsByTagName("div")[0].remove()
-        document.getElementById("contentInner").getElementsByTagName("div")[1].remove()
+
 
         $.get(pageLocation("/Member/28118~" + profileID), function () {
         }).done(function (responseText) {
@@ -317,7 +316,7 @@ function showReplies(p_id) {
 }
 $(window).load(function () {
     document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
-  /*  getProfilePage()*/
+    getProfilePage()
     getResourceCenter()
     getNewsAndAnnouncements()
     getDiscussionGroups()
