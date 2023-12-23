@@ -172,6 +172,7 @@
             .removeHidden {
                 display: none
             }
+
             #userProfile img {
                 height: 120px;
                 filter: drop-shadow(5px 5px 5px grey);
@@ -180,13 +181,19 @@
                 padding-bottom: 10px;
                 padding-top: 5px;
             }
+
+            #userProfile #contentInner {
+                padding-right: 20px !important;
+                padding-top: 0px !important;
+                padding-bottom: 5px !important
+            }
         </style>
         <div class="row" id="notificationHeader">
             <div class="col-md-12">
                 <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader"><span class="fa fa-refresh fa-spin fa-fw fa-lg" style="margin-right:5px"></span>Checking for new emails and flyers... </div>
-                    <div id="userProfile" class="card-body" style="padding:10px">
-          
+                    <div id="userProfile" class="card-body">
+
                     </div>
                 </div>
             </div>
@@ -344,7 +351,7 @@
                 </div>
             </div>
         </div>
-        <script src="scripts/new_test.js"></script>
+        <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
         <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
     </div>
 
