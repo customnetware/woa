@@ -317,7 +317,7 @@ function showReplies(p_id) {
 }
 $(window).load(function () {
     document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
-    getProfilePage()
+  /*  getProfilePage()*/
     getResourceCenter()
     getNewsAndAnnouncements()
     getDiscussionGroups()
