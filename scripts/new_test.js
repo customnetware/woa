@@ -208,7 +208,7 @@ function getProfilePage() {
         document.getElementById("userProfile").getElementsByClassName("clsHeader")[0].remove()   
         let rowsToUpdate = document.getElementById("userProfile").getElementsByClassName("row")
         for (let h = 0; h < rowsToUpdate.length; h++) { rowsToUpdate[h].className="" }
-
+        document.getElementById("contentInner").id="localContent"
         $.get(pageLocation("/Member/28118~" + profileID), function () {
         }).done(function (responseText) {
             let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
