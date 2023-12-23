@@ -35,20 +35,15 @@ function getEmail(messageID) {
             let emailHTML = new DOMParser().parseFromString(responseText, "text/html")
             let emailBody = emailHTML.getElementsByTagName("table")[1]
             let emailSubHeader = emailHTML.getElementById("tblMsgHeader").getElementsByClassName("clsGridDetail")
-
-
             updateHeader("recentEmails", "fa fa-envelope-open-o", emailSubHeader[3].innerHTML, emailSubHeader[0].innerHTML)
-
             emailsToHide = emailDisplay.getElementsByTagName("p")
             for (p = 0; p < emailsToHide.length; p++) { emailsToHide[p].style.display = "none" }
-
             var requestedEmail = emailBody.getElementsByTagName('p')
             for (i = 0; i < requestedEmail.length;) {
                 let selectedParagraph = requestedEmail[i], divTag = document.createElement('div')
                 divTag.innerHTML = selectedParagraph.innerHTML
                 selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
             }
-
             emailDisplay.appendChild(emailBody)
             document.getElementById("viewSaveButton").style.display = "none"
             document.getElementById("viewCurrentButton").style.display = "inline"
@@ -209,7 +204,9 @@ function getProfilePage() {
     var regExp = /\(([^)]+)\)/
     var profileID = regExp.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
     $("#userProfile").load(pageLocation("/news/28118~792554/webmaster-only") + " #contentInner", function () {
-        document.getElementById("userProfile").innerHTML = document.getElementById("contentInner").getElementsByTagName("div")[8].innerHTML
+  
+        document.getElementById("userProfile").innerHTML = document.getElementById("contentInner").children[2].innerHTML
+
         $.get(pageLocation("/Member/28118~" + profileID), function () {
         }).done(function (responseText) {
             let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
