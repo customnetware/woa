@@ -311,6 +311,7 @@ function showReplies(p_id) {
     }
 }
 $(window).load(function () {
+    document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
     })
