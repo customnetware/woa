@@ -3,7 +3,8 @@ function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
 }
 function updateHeader(headerID, headerClass, headerTitle, headerLen) {
-    let cardHeader = document.querySelector("[data-target='#" + headerID + "']").getElementsByTagName("span")
+
+    let cardHeader = document.getElementById(headerID).children
     cardHeader[0].className = headerClass
     cardHeader[1].innerHTML = headerTitle
     cardHeader[2].innerHTML = "(" + headerLen + ")"
@@ -14,8 +15,10 @@ function getCurrentEmails() {
     let emailToRemove = emailDisplay.getElementsByTagName("table")
     let hiddenEmails = emailDisplay.getElementsByTagName("p")
     while (emailToRemove.length > 0) { emailToRemove[0].remove() }
-    for (i = hiddenEmails.length - 1; i >= 0; i--) { if (savedIDs.includes(hiddenEmails[i].id) == false) { hiddenEmails[i].remove() } }
-    updateHeader(document.getElementById("recentEmails").id, "fa fa-envelope-o", "Association Emails", emailDisplay.childElementCount)
+    for (i = hiddenEmails.length - 1; i >= 0; i--) {
+        if (savedIDs.includes(hiddenEmails[i].id) == false) { hiddenEmails[i].remove() } else { hiddenEmails[i].style.display = "" }
+    }
+    updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailDisplay.childElementCount)
     document.getElementById("viewSaveButton").style.display = "inline"
     document.getElementById("viewCurrentButton").style.display = "none"
 }
@@ -26,7 +29,7 @@ function getEmail(messageID) {
             let emailHTML = new DOMParser().parseFromString(responseText, "text/html")
             let emailBody = emailHTML.getElementsByTagName("table")[1]
             let emailSubHeader = emailHTML.getElementById("tblMsgHeader").getElementsByClassName("clsGridDetail")
-            updateHeader("recentEmails", "fa fa-envelope-open-o", emailSubHeader[3].innerHTML, emailSubHeader[0].innerHTML)
+            updateHeader("emailHeader", "fa fa-envelope-open-o", emailSubHeader[3].innerHTML, emailSubHeader[0].innerHTML)
             emailsToHide = emailDisplay.getElementsByTagName("p")
             for (p = 0; p < emailsToHide.length; p++) { emailsToHide[p].style.display = "none" }
             var requestedEmail = emailBody.getElementsByTagName('p')
@@ -62,7 +65,7 @@ function getSavedEmails() {
             currentItem.id = emailData[p][0]
             emailList.appendChild(currentItem)
         }
-        updateHeader("recentEmails", "fa fa-envelope-o", "Association Emails", emailList.childElementCount)
+        updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.childElementCount)
         if (emailData.length <= 3) {
             $('#saveEmailAlert').modal('show')
         } else {
@@ -105,8 +108,8 @@ function getResidentHomePage() {
             let currentEmails = emailList.getElementsByTagName("p")
             let retrievedData = localStorage.getItem("emails")
             let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
-            updateHeader("recentEmails", "fa fa-envelope-o", "Association Emails", currentEmails.length)
 
+            updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", currentEmails.length)
             document.getElementById("currentEmailIDs").value = currentEmails[0].id.concat(currentEmails[1].id, currentEmails[2].id)
 
             for (let p = 0; p < currentEmails.length; p++) {
@@ -142,12 +145,12 @@ function getNewsAndAnnouncements() {
             }
         })
         .always(function () {
-            document.querySelector("[data-target='#recentNews']").getElementsByTagName("span")[2].innerHTML = "(" + newsList.childElementCount + ")"
+            document.getElementById("newsHeader").children[2].innerHTML = "(" + newsList.childElementCount + ")"
+
         })
 }
 function getResourceCenter() {
-    let eventFlyer = document.getElementById("recentFlyersBody")
-    let newsLetter = document.getElementById("newsLettersBody")
+    let eventFlyer = document.getElementById("recentFlyersBody"),     newsLetter = document.getElementById("newsLettersBody")
     $.get(pageLocation("/resourcecenter/28118/resource-center"), function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
@@ -155,7 +158,6 @@ function getResourceCenter() {
             let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
             let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
             for (p = documentName.length - 1; p >= 0; p--) {
-
                 let resourceItem = document.createElement("span")
                 let selectedDoc = document.createElement("a")
                 selectedDoc.innerHTML = documentName[p].innerHTML
@@ -165,8 +167,6 @@ function getResourceCenter() {
             }
             let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
             let newsLetterLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
-
-
             for (i = newsLetterName.length - 1; i >= 0; i--) {
                 let resourceItem = document.createElement("span")
                 let selectedDoc = document.createElement("a")
@@ -177,12 +177,10 @@ function getResourceCenter() {
                 if (newsLetter.getElementsByTagName("span").length > 5
                 ) { break }
             }
-
-
         })
         .always(function () {
-            document.querySelector("[data-target='#recentFlyers']").getElementsByTagName("span")[2].innerHTML = "(" + eventFlyer.getElementsByTagName("span").length + ")"
-            document.querySelector("[data-target='#newsLetters']").getElementsByTagName("span")[2].innerHTML = "(" + newsLetter.getElementsByTagName("span").length + ")"
+            document.getElementById("flyersHeader").children[2].innerHTML = "(" + eventFlyer.getElementsByTagName("span").length + ")"
+            document.getElementById("newsletterHeader").children[2].innerHTML = "(" + newsLetter.getElementsByTagName("span").length + ")"
         })
 }
 function showPhotos(galleryPage) {
@@ -196,13 +194,12 @@ function showPhotos(galleryPage) {
             newPicList[k].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
             newPicList[k].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
         }
-        document.querySelector("[data-target='#recentPhotos']").getElementsByTagName("span")[2].innerHTML = "(3)"
+        document.getElementById("photoHeader").children[2].innerHTML = "(3)"
     } catch (error) { }
 }
 function getProfilePage() {
     let profileImg = document.createElement("img")
-    var regExp = /\(([^)]+)\)/
-    var profileID = regExp.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
+    let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
     $("#userProfile").load(pageLocation("/news/28118~792554/webmaster-only") + " #contentInner", function () {
         document.getElementById("userProfile").getElementsByClassName("clsPageMenu")[0].remove()
         document.getElementById("userProfile").getElementsByClassName("clsHeader")[0].remove()
@@ -213,9 +210,7 @@ function getProfilePage() {
             let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
             profileImg.src = profileDoc.getElementsByTagName("img")[0].src
             document.getElementById("userProfile").insertBefore(profileImg, document.getElementById("userProfile").firstChild)
-
         })
-
     })
 }
 function getClassifiedAds() {
@@ -238,7 +233,7 @@ function getClassifiedAds() {
             }
         })
         .always(function () {
-            document.querySelector("[data-target='#recentAds']").getElementsByTagName("span")[2].innerHTML = "(" + classifiedsList.getElementsByTagName("p").length + ")"
+            document.getElementById("classifiedHeader").children[2].innerHTML = "(" + classifiedsList.getElementsByTagName("p").length + ")"
         })
 }
 function getDiscussionGroups() {
@@ -246,6 +241,8 @@ function getDiscussionGroups() {
     const selectedGroups = [8030, 8364]
     const postList = document.getElementById("recentPostsBody")
     postList.innerHTML = ""
+    //let selectedGroups = document.getElementsByName("optradio")
+    //for (g = 0; g < selectedGroups.length; g++) { if (selectedGroups[g].checked == true) { selectedGroup = selectedGroups[g].value } }
     for (let h = 0; h < selectedGroups.length; h++) {
         $.get(pageLocation("/Discussion/28118~" + selectedGroups[h]), function () { })
             .done(function (responseText) {
@@ -264,21 +261,17 @@ function getDiscussionGroups() {
                         let postMessage = document.createElement("span")
                         let postAuthor = document.createElement("span")
                         let postReply = document.createElement("a")
-
                         postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
                         postReply.className = "fa fa-reply fa-lg formatLink"
                         postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
                         postHeader.appendChild(postReply)
-
                         if (messageTexts.length > 1) {
                             let replys = document.createElement("a")
                             replys.className = "fa fa-comments fa-lg formatLink"
-
                             replys.href = "javascript:showReplies(" + document.getElementsByClassName("groupPost").length + ")"
                             postHeader.appendChild(replys)
                             postHeader.appendChild(document.createTextNode(" (" + (messageTexts.length - 1) + ") "))
                         }
-
                         postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
                         postAuthor.appendChild(document.createTextNode(messageAuthor[0].innerText))
                         currentPost.appendChild(postHeader)
@@ -298,7 +291,7 @@ function getDiscussionGroups() {
                 }
             })
             .always(function () {
-                document.querySelector("[data-target='#recentPosts']").getElementsByTagName("span")[2].innerHTML = "(" + postList.getElementsByTagName("p").length + ")"
+                document.getElementById("postHeader").children[2].innerHTML = "(" + postList.getElementsByTagName("p").length + ")"
             })
     }
 }
@@ -324,8 +317,6 @@ $(window).load(function () {
     $("#recentFlyers, #newsLetters").on("show.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-open-o fa-lg"
     })
-
-    document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
     getProfilePage()
     getResourceCenter()
     getNewsAndAnnouncements()
