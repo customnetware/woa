@@ -151,7 +151,7 @@ function getNewsAndAnnouncements() {
         })
 }
 function getResourceCenter() {
-    let eventFlyer = document.getElementById("recentFlyersBody"),     newsLetter = document.getElementById("newsLettersBody")
+    let eventFlyer = document.getElementById("recentFlyersBody"), newsLetter = document.getElementById("newsLettersBody")
     $.get(pageLocation("/resourcecenter/28118/resource-center"), function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
@@ -198,21 +198,21 @@ function showPhotos(galleryPage) {
         document.getElementById("photoHeader").children[2].innerHTML = "(3)"
     } catch (error) { }
 }
+
 function getProfilePage() {
     let profileImg = document.createElement("img")
     let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
-    $("#userProfile").load(pageLocation("/news/28118~792554/webmaster-only") + " #contentInner", function () {
-        document.getElementById("userProfile").getElementsByClassName("clsPageMenu")[0].remove()
-        document.getElementById("userProfile").getElementsByClassName("clsHeader")[0].remove()
-        let rowsToUpdate = document.getElementById("userProfile").getElementsByClassName("row")
-        for (let h = 0; h < rowsToUpdate.length; h++) { rowsToUpdate[h].className = "" }
-        $.get(pageLocation("/Member/28118~" + profileID), function () {
-        }).done(function (responseText) {
+    $.get(pageLocation("/news/28118~792554/webmaster-only"), function () { })
+        .done(function (responseText) {
             let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
-            profileImg.src = profileDoc.getElementsByTagName("img")[0].src
-            document.getElementById("userProfile").insertBefore(profileImg, document.getElementById("userProfile").firstChild)
+            document.getElementById("userProfile").innerHTML = profileDoc.getElementById("contentInner").children[2].innerHTML
+            $.get(pageLocation("/Member/28118~" + profileID), function () { })
+                .done(function (responseText) {
+                    let profileDoc = new DOMParser().parseFromString(responseText, "text/html")
+                    profileImg.src = profileDoc.getElementsByTagName("img")[0].src
+                    document.getElementById("userProfile").insertBefore(profileImg, document.getElementById("userProfile").firstChild)
+                })
         })
-    })
 }
 function getClassifiedAds() {
     let classifiedsList = document.getElementById("recentAdsBody")
