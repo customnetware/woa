@@ -12,7 +12,15 @@ function updateHeader(headerID, headerClass, headerTitle, headerLen) {
     cardHeader[2].innerHTML = "(" + headerLen + ")"
 }
 function getCurrentEmails() {
-    getResidentHomePage()
+    let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
+    let emailSelected = document.getElementById("recentEmailsBody").getElementsByTagName("table")
+    if (emailSelected.length > 0) {
+        while (emailSelected.length > 0) { emailSelected[0].remove() }
+        for (p = 0; p < emailList.length; p++) { emailList[p].style.display = "" }
+    } else {
+        if (emailCount > 1) { emailCount = emailCount-1 }
+        getSavedEmails()
+    }
     updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", document.getElementById("recentEmailsBody").childElementCount)
 
 }
@@ -42,7 +50,7 @@ function getEmail(messageID) {
         })
 }
 function getSavedEmails() {
-    let retrievedData = localStorage.getItem("emails")  
+    let retrievedData = localStorage.getItem("emails")
     if (retrievedData !== null) {
         let emailData = JSON.parse(retrievedData)
         let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
@@ -56,7 +64,7 @@ function getSavedEmails() {
                 emailList[p].getElementsByTagName("a")[0].className = "fa fa-arrow-right fa-lg formatLink"
                 emailList[p].getElementsByTagName("a")[0].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
                 emailList[p].id = emailData[emailCount][0]
-                emailList[p].style.display=""
+                emailList[p].style.display = ""
                 emailCount++
             }
         }
