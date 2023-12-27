@@ -1,5 +1,6 @@
 document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
 let currentDate = new Date()
+let emailCount = 0
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
 }
@@ -11,67 +12,59 @@ function updateHeader(headerID, headerClass, headerTitle, headerLen) {
     cardHeader[2].innerHTML = "(" + headerLen + ")"
 }
 function getCurrentEmails() {
-    let emailDisplay = document.getElementById("recentEmailsBody")
-    let savedIDs = document.getElementById("currentEmailIDs").value
-    let emailToRemove = emailDisplay.getElementsByTagName("table")
-    let hiddenEmails = emailDisplay.getElementsByTagName("p")
-    while (emailToRemove.length > 0) { emailToRemove[0].remove() }
-    for (i = hiddenEmails.length - 1; i >= 0; i--) {
-        if (savedIDs.includes(hiddenEmails[i].id) == false) { hiddenEmails[i].remove() } else { hiddenEmails[i].style.display = "" }
-    }
-    updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailDisplay.childElementCount)
-    document.getElementById("viewSaveButton").style.display = "inline"
-    document.getElementById("viewCurrentButton").style.display = "none"
+    getResidentHomePage()
+    updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", document.getElementById("recentEmailsBody").childElementCount)
+
 }
 function getEmail(messageID) {
     $.get(pageLocation(messageID), function () { })
         .done(function (responseText) {
-            let emailDisplay = document.getElementById("recentEmailsBody")
             let emailHTML = new DOMParser().parseFromString(responseText, "text/html")
+            let emailDisplay = document.getElementById("recentEmailsBody")
             let emailBody = emailHTML.getElementsByTagName("table")[1]
             let emailSubHeader = emailHTML.getElementById("tblMsgHeader").getElementsByClassName("clsGridDetail")
+            let requestedEmail = emailBody.getElementsByTagName('p')
+            let emailsToHide = emailDisplay.getElementsByTagName("p")
+
             updateHeader("emailHeader", "fa fa-envelope-open-o", emailSubHeader[3].innerHTML, emailSubHeader[0].innerHTML)
-            emailsToHide = emailDisplay.getElementsByTagName("p")
+
             for (p = 0; p < emailsToHide.length; p++) { emailsToHide[p].style.display = "none" }
-            var requestedEmail = emailBody.getElementsByTagName('p')
             for (i = 0; i < requestedEmail.length;) {
                 let selectedParagraph = requestedEmail[i], divTag = document.createElement('div')
                 divTag.innerHTML = selectedParagraph.innerHTML
                 selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
             }
             emailDisplay.appendChild(emailBody)
-            document.getElementById("viewSaveButton").style.display = "none"
-            document.getElementById("viewCurrentButton").style.display = "inline"
+
         })
         .fail(function () {
             alert("The requested email was not found on the server.  It may have been deleted or you do not have permission to view it.")
         })
 }
 function getSavedEmails() {
-    let retrievedData = localStorage.getItem("emails")
+    let retrievedData = localStorage.getItem("emails")  
     if (retrievedData !== null) {
         let emailData = JSON.parse(retrievedData)
-        let emailList = document.getElementById("recentEmailsBody")
-        emailList.innerHTML = ""
-        for (let p = 0; p < emailData.length; p++) {
-            let currentItem = document.createElement("p")
-            let itemTitle = document.createElement("span")
-            let itemLink = document.createElement("a")
-            itemLink.className = "fa fa-arrow-right fa-lg formatLink"
-            itemLink.href = "javascript:getEmail('" + emailData[p][3] + "')"
-            itemTitle.appendChild(document.createTextNode(emailData[p][1]))
-            currentItem.appendChild(itemTitle)
-            currentItem.appendChild(document.createTextNode(emailData[p][2]))
-            currentItem.appendChild(itemLink)
-            currentItem.id = emailData[p][0]
-            emailList.appendChild(currentItem)
+        let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
+        let emailToRemove = document.getElementById("recentEmailsBody").getElementsByTagName("table")
+        while (emailToRemove.length > 0) { emailToRemove[0].remove() }
+        if (emailCount >= emailData.length) { emailCount = 0 }
+        for (let p = 0; p < emailList.length; p++) {
+            if (emailCount < emailData.length) {
+                emailList[p].getElementsByTagName("span")[0].innerHTML = emailData[emailCount][1]
+                emailList[p].getElementsByTagName("span")[1].innerHTML = emailData[emailCount][2]
+                emailList[p].getElementsByTagName("a")[0].className = "fa fa-arrow-right fa-lg formatLink"
+                emailList[p].getElementsByTagName("a")[0].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
+                emailList[p].id = emailData[emailCount][0]
+                emailList[p].style.display=""
+                emailCount++
+            }
         }
-        updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.childElementCount)
+        updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
         if (emailData.length <= 3) {
             $('#saveEmailAlert').modal('show')
         } else {
-            document.getElementById("viewSaveButton").style.display = "none"
-            document.getElementById("viewCurrentButton").style.display = "inline"
+
         }
     } else { $('#saveEmailAlert').modal('show') }
 }
@@ -80,37 +73,44 @@ function getResidentHomePage() {
     emailList.innerHTML = ""
     $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         .done(function (responseText) {
+
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
+            testItems = myWoodbridge
             let recentItems = myWoodbridge.getElementsByClassName("message")
-            let nameHeader = document.getElementById("notificationHeader").getElementsByClassName("card-header")[0]
-            let nameCheck = document.createElement("span")
-            nameCheck.style.marginRight = "5px"
-            nameCheck.className = "fa fa-check-circle formatLink"
-            nameHeader.innerHTML = ""
-            nameHeader.appendChild(nameCheck)
-            nameHeader.appendChild(document.createTextNode(myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML))
+
+            document.getElementById("notificationHeader").getElementsByTagName("span")[0].className = "fa fa-check-circle fa-lg formatLink"
+            document.getElementById("notificationHeader").getElementsByTagName("span")[1].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
+
             for (let p = 0; p < recentItems.length; p++) {
+
                 let itemContent = recentItems[p].getElementsByTagName("a")[0]
                 let currentItem = document.createElement("p")
                 let itemTitle = document.createElement("span")
+                let itemText = document.createElement("span")
                 let itemLink = document.createElement("a")
-                itemTitle.appendChild(document.createTextNode(itemContent.getAttribute("data-tooltip-title").split("by")[0]))
+
                 itemLink.href = "javascript:getEmail('" + itemContent.href + "')"
                 itemLink.className = "fa fa-arrow-right fa-lg formatLink"
+                itemTitle.appendChild(document.createTextNode(itemContent.getAttribute("data-tooltip-title").split("by")[0]))
                 currentItem.id = itemContent.id.replace("link_", "")
+                itemText.appendChild(document.createTextNode(itemContent.getAttribute("data-tooltip-text")))
+
+
                 currentItem.appendChild(itemTitle)
-                currentItem.appendChild(document.createTextNode(itemContent.getAttribute("data-tooltip-text")))
+                currentItem.appendChild(itemText)
                 currentItem.appendChild(itemLink)
                 emailList.appendChild(currentItem)
             }
             showPhotos(myWoodbridge)
         })
         .always(function () {
+            updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.childElementCount)
+
             let currentEmails = emailList.getElementsByTagName("p")
             let retrievedData = localStorage.getItem("emails")
             let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
 
-            updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", currentEmails.length)
+
             document.getElementById("currentEmailIDs").value = currentEmails[0].id.concat(currentEmails[1].id, currentEmails[2].id)
 
             for (let p = 0; p < currentEmails.length; p++) {
@@ -124,6 +124,8 @@ function getResidentHomePage() {
                 }
             }
         })
+
+
 }
 function getNewsAndAnnouncements() {
     let newsList = document.getElementById("recentNewsBody")
@@ -132,12 +134,15 @@ function getNewsAndAnnouncements() {
             let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
             let articleTitle = newsArticles.getElementsByClassName("clsHeader")
             let articleContent = newsArticles.getElementsByClassName("clsBodyText")
+
             for (let p = 0; p < articleContent.length; p++) {
                 let currentItem = document.createElement("p")
                 let itemTitle = document.createElement("span")
                 let itemLink = document.createElement("a")
+
                 itemLink.href = articleTitle[p].parentElement.getElementsByTagName("div")[2].getElementsByTagName("a")[0].href
                 itemLink.className = "fa fa-arrow-right fa-lg formatLink"
+
                 itemTitle.appendChild(document.createTextNode(articleTitle[p].innerText))
                 currentItem.appendChild(itemTitle)
                 currentItem.appendChild(document.createTextNode(articleContent[p].innerText))
@@ -166,6 +171,7 @@ function getResourceCenter() {
                 resourceItem.appendChild(selectedDoc)
                 eventFlyer.appendChild(resourceItem)
             }
+
             let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
             let newsLetterLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
             for (i = newsLetterName.length - 1; i >= 0; i--) {
@@ -175,8 +181,7 @@ function getResourceCenter() {
                 selectedDoc.href = newsLetterLink[i].href
                 resourceItem.appendChild(selectedDoc)
                 newsLetter.appendChild(resourceItem)
-                if (newsLetter.getElementsByTagName("span").length > 5
-                ) { break }
+                if (newsLetter.getElementsByTagName("span").length > 5) { break }
             }
         })
         .always(function () {
@@ -198,7 +203,6 @@ function showPhotos(galleryPage) {
         document.getElementById("photoHeader").children[2].innerHTML = "(3)"
     } catch (error) { }
 }
-
 function getProfilePage() {
     let profileImg = document.createElement("img")
     let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
@@ -234,7 +238,7 @@ function getClassifiedAds() {
             }
         })
         .always(function () {
-            document.getElementById("classifiedHeader").children[2].innerHTML = "(" + classifiedsList.getElementsByTagName("p").length + ")"
+            document.getElementById("classifiedHeader").children[2].innerHTML = "(" + classifiedsList.childElementCount + ")"
         })
 }
 function getDiscussionGroups() {
@@ -292,7 +296,7 @@ function getDiscussionGroups() {
                 }
             })
             .always(function () {
-                document.getElementById("postHeader").children[2].innerHTML = "(" + postList.getElementsByTagName("p").length + ")"
+                document.getElementById("postHeader").children[2].innerHTML = "(" + postList.childElementCount + ")"
             })
     }
 }
@@ -312,7 +316,6 @@ function showReplies(p_id) {
     }
 }
 $(window).load(function () {
-
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
     })
@@ -326,3 +329,4 @@ $(window).load(function () {
     getClassifiedAds()
     getResidentHomePage()
 })
+//           for (var a = [], i = recentItems.length; i;) a[--i] = recentItems[i]

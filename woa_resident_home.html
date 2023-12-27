@@ -16,34 +16,89 @@
         <div class="clsHeader" style="float:left; padding-right:25px"></div>
         <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
     </div>
-    <div class="container">
+    <div class="container" id="customContainer">
         <style type="text/css">
+            #contentInner {
+                padding-top: 1% !important;
+                padding-left: 2% !important;
+                padding-right: 2% !important;
+            }
+
+            #notificationsSettings button {
+                cursor: pointer;
+                width: 100%;
+                text-align: left;
+                margin-bottom: 5px;
+            }
+
+            #notificationsSettings span {
+                margin-right: 10px
+            }
+
             .formatHeader {
                 background-color: #999999;
                 color: white;
                 padding: 5px;
             }
 
-            .z-depth-3 {
-                -webkit-box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
-                box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
-            }
+
 
             .formatLink {
                 padding-left: 10px;
                 text-decoration: none !important;
             }
 
-            .formatRight {
-                float: right;
-                padding: 5px;
-                text-decoration: none !important;
+            #customContainer .card {
+                -webkit-box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+                box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
             }
 
-            .dropShadow {
+            #customContainer .card-body {
+                padding-left: 15px;
+            }
+
+            #customContainer .card-header {
+                cursor: pointer;
+                border-bottom: none;
+            }
+
+                #customContainer .card-header:not(.collapsed) .rotate-icon {
+                    transform: rotate(180deg);
+                }
+
+                #customContainer .card-header .accicon {
+                    float: right;
+                    font-size: 20px;
+                    width: 1.2em;
+                }
+
+            #userProfile img {
+                height: 120px;
                 filter: drop-shadow(5px 5px 5px grey);
                 float: left;
                 padding-right: 15px;
+                padding-bottom: 10px;
+                padding-top: 5px;
+            }
+
+            #recentNews p, #recentEmails p, #recentAds p {
+                margin: 0px;
+                padding: 10px !important
+            }
+
+                #recentNews p span:first-child, #recentEmails p span:first-child, #recentAds p span:first-child {
+                    font-weight: 700;
+                    display: block
+                }
+
+                #recentNews p:nth-child(even), #recentEmails p:nth-child(even), #recentFlyers span:nth-child(even), #newsLetters span:nth-child(even), #recentAds p:nth-child(even), .groupPost:nth-child(even) {
+                    background-color: #eceeef
+                }
+
+            #recentEmails .card-body div {
+                padding-left: 25px;
+                padding-right: 25px;
+                margin-bottom: 5px
             }
 
             #recentFlyers span, #newsLetters span {
@@ -54,38 +109,10 @@
                 display: block;
             }
 
-                #recentFlyers span:nth-child(even), #newsLetters span:nth-child(even) {
-                    background-color: #eceeef
-                }
-
-            #recentEmails p, #recentNews p, #recentAds p {
-                margin: 0px;
-                padding: 10px !important
-            }
-
-            #recentEmails .card-body div {
-                padding-left: 25px;
-                padding-right: 25px;
-                margin-bottom: 5px
-            }
-
-            #recentEmails p:nth-child(even), #recentNews p:nth-child(even), #recentAds p:nth-child(even) {
-                background-color: #eceeef
-            }
-
-            #recentEmails p span:first-child, #recentNews p span:first-child, #recentAds p span:first-child {
-                font-weight: 700;
-                display: block
-            }
-
             .groupPost {
                 margin: 0px;
                 padding: 10px !important
             }
-
-                .groupPost:nth-child(even) {
-                    background-color: #eceeef
-                }
 
                 .groupPost span {
                     display: none;
@@ -132,56 +159,11 @@
                     padding-top: 10px;
                     padding-left: 2px
                 }
-
-            #notificationsSettings button {
-                cursor: pointer;
-                width: 100%;
-                text-align: left;
-                margin-bottom: 5px;
-            }
-
-            #notificationsSettings span {
-                margin-right: 10px
-            }
-
-            .card-body {
-                padding-left: 15px;
-            }
-
-            .card-header {
-                cursor: pointer;
-                border-bottom: none;
-            }
-
-                .card-header:not(.collapsed) .rotate-icon {
-                    transform: rotate(180deg);
-                }
-
-                .card-header .accicon {
-                    float: right;
-                    font-size: 20px;
-                    width: 1.2em;
-                }
-
-            #userProfile img {
-                height: 120px;
-                filter: drop-shadow(5px 5px 5px grey);
-                float: left;
-                padding-right: 15px;
-                padding-bottom: 10px;
-                padding-top: 5px;
-            }
-
-            #userProfile #contentInner {
-                padding-right: 20px !important;
-                padding-top: 0px !important;
-                padding-bottom: 5px !important
-            }
         </style>
         <div class="row" id="notificationHeader">
             <div class="col-md-12">
-                <div class="card z-depth-3 mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-refresh fa-spin fa-fw fa-lg" style="margin-right:5px"></span>Checking for new emails and flyers... </div>
+                <div class="card mb-3">
+                    <div class="card-header border-success formatHeader"><span class="fa fa-refresh fa-spin fa-fw fa-lg" style="margin-right:5px"></span><span>Checking for new emails and flyers...</span> </div>
                     <div id="userProfile" class="card-body">
 
                     </div>
@@ -190,14 +172,14 @@
         </div>
         <div class="row" id="recentNotifications">
             <div class="col-md-12">
-                <div class="card z-depth-3 mb-3">
+                <div class="card mb-3">
                     <div class="card-header border-success formatHeader"><span class="fa fa-bell fa-lg formatLink" aria-hidden="true" id="noticeIcon"></span>&nbsp;&nbsp;Recent Notifications</div>
                     <div class="card-body">
                         <div id="notice">
                         </div>
                     </div>
                 </div>
-                <div class="card z-depth-3 mb-3">
+                <div class="card mb-3">
                     <div class="card-header" data-toggle="collapse" data-target="#recentNews" aria-expanded="true" id="newsHeader">
                         <span class="fa fa-newspaper-o fa-lg" style="margin-right:5px"></span>
                         <span style="font-weight:700; margin-left:5px">News And Announcements</span>
@@ -208,7 +190,7 @@
                         <div class="card-body" id="recentNewsBody"></div>
                     </div>
                 </div>
-                <div class="card z-depth-3 mb-3">
+                <div class="card mb-3">
                     <div class="card-header collapsed" data-toggle="collapse" data-target="#recentEmails" aria-expanded="false" id="emailHeader">
                         <span class="fa fa-envelope-o fa-lg"></span>
                         <span style="font-weight:700; margin-left:5px">Association Emails</span>
@@ -218,13 +200,13 @@
                     <div id="recentEmails" class="collapse" data-parent="#recentNotifications">
                         <div class="card-body" id="recentEmailsBody"></div>
                         <div class="card-footer">
-                            <button type="button" id="viewSaveButton" class="btn btn-primary" onclick="javascript:getSavedEmails()">View Saved Emails</button>
-                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:getCurrentEmails()" style="display:none">&nbsp;<span class="fa fa-backward"></span>&nbsp;Previous</button>
+                            <button type="button" id="viewSaveButton" class="btn btn-primary" onclick="javascript:getSavedEmails()" style="float:right">Next&nbsp;<span class="fa fa-forward"></span></button>
+                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:getCurrentEmails()">&nbsp;<span class="fa fa-backward"></span>&nbsp;Back</button>
                             <input type="hidden" id="currentEmailIDs" />
                         </div>
                     </div>
                 </div>
-                <div class="card z-depth-3 mb-3">
+                <div class="card mb-3">
                     <div class="card-header collapsed" data-toggle="collapse" data-target="#recentPosts" aria-expanded="false" id="postHeader">
                         <span class="fa fa-comments-o fa-lg"></span>
                         <span style="font-weight:700; margin-left:5px">Discussion Group Posts</span>
@@ -238,7 +220,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card z-depth-3 mb-3">
+                <div class="card mb-3">
                     <div class="card-header collapsed" data-toggle="collapse" data-target="#recentAds" aria-expanded="false" id="classifiedHeader">
                         <span class="fa fa-shopping-cart fa-lg"></span>
                         <span style="font-weight:700; margin-left:5px">Classified Ads</span>
@@ -249,7 +231,7 @@
                         <div class="card-body" id="recentAdsBody"></div>
                     </div>
                 </div>
-                <div class="card z-depth-3 mb-3">
+                <div class="card mb-3">
                     <div class="card-header collapsed" data-toggle="collapse" data-target="#recentFlyers" aria-expanded="false" id="flyersHeader">
                         <span class="fa fa-folder-o fa-lg"></span>
                         <span style="font-weight:700; margin-left:5px">Activity And Event Flyers</span>
@@ -260,7 +242,7 @@
                         <div class="card-body" id="recentFlyersBody"></div>
                     </div>
                 </div>
-                <div class="card z-depth-3 mb-3">
+                <div class="card mb-3">
                     <div class="card-header collapsed" data-toggle="collapse" data-target="#newsLetters" aria-expanded="false" id="newsletterHeader">
                         <span class="fa fa-folder-o fa-lg"></span>
                         <span style="font-weight:700; margin-left:5px">Monthly Newsletters</span>
@@ -271,7 +253,7 @@
                         <div class="card-body" id="newsLettersBody"></div>
                     </div>
                 </div>
-                <div class="card z-depth-3 mb-3">
+                <div class="card mb-3">
                     <div class="card-header collapsed" data-toggle="collapse" data-target="#recentPhotos" aria-expanded="false" id="photoHeader">
                         <span class="fa fa-picture-o fa-lg"></span>
                         <span style="font-weight:700; margin-left:5px">Activity And Event Photos</span>
@@ -286,7 +268,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <div class="modal fade" id="postSettingsAlert" tabindex="-1" aria-labelledby="postSettingsAlertLabel" aria-hidden="true">
@@ -325,11 +306,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-
-
                             <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:getDiscussionGroups()">Save changes</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
                         </div>
                     </div>
                 </div>
@@ -371,7 +349,7 @@
                     </div>
                 </div>
             </div>
-            <script src="scripts/new_test.js"></script>
+            <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
             <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
         </div>
     </div>
