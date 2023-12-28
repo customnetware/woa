@@ -18,8 +18,7 @@ function getCurrentEmails() {
         while (emailSelected.length > 0) { emailSelected[0].remove() }
         for (p = 0; p < emailList.length; p++) { emailList[p].style.display = "" }
     } else {
-        if (emailCount > 1) { emailCount = emailCount-1 }
-        getSavedEmails()
+        getSavedEmails(true)
     }
     updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", document.getElementById("recentEmailsBody").childElementCount)
 
@@ -49,24 +48,23 @@ function getEmail(messageID) {
             alert("The requested email was not found on the server.  It may have been deleted or you do not have permission to view it.")
         })
 }
-function getSavedEmails() {
+function getSavedEmails(goBack) {
+    let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
+    let emailToRemove = document.getElementById("recentEmailsBody").getElementsByTagName("table")
     let retrievedData = localStorage.getItem("emails")
+    while (emailToRemove.length > 0) { emailToRemove[0].remove() }
     if (retrievedData !== null) {
         let emailData = JSON.parse(retrievedData)
-        let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
-        let emailToRemove = document.getElementById("recentEmailsBody").getElementsByTagName("table")
-        while (emailToRemove.length > 0) { emailToRemove[0].remove() }
-        if (emailCount >= emailData.length) { emailCount = 0 }
         for (let p = 0; p < emailList.length; p++) {
-            if (emailCount < emailData.length) {
-                emailList[p].getElementsByTagName("span")[0].innerHTML = emailData[emailCount][1]
-                emailList[p].getElementsByTagName("span")[1].innerHTML = emailData[emailCount][2]
-                emailList[p].getElementsByTagName("a")[0].className = "fa fa-arrow-right fa-lg formatLink"
-                emailList[p].getElementsByTagName("a")[0].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
-                emailList[p].id = emailData[emailCount][0]
-                emailList[p].style.display = ""
-                emailCount++
-            }
+            if (emailCount >= emailData.length) { emailCount = 0 }
+            if (emailCount < 0) { emailCount = emailData.length-1 }
+            emailList[p].getElementsByTagName("span")[0].innerHTML = emailData[emailCount][1]
+            emailList[p].getElementsByTagName("span")[1].innerHTML = emailData[emailCount][2]
+            emailList[p].getElementsByTagName("a")[0].className = "fa fa-arrow-right fa-lg formatLink"
+            emailList[p].getElementsByTagName("a")[0].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
+            emailList[p].id = emailData[emailCount][0]
+            emailList[p].style.display = ""
+            if (goBack == true) { emailCount-- } else { emailCount++ }
         }
         updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
         if (emailData.length <= 3) {
