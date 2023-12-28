@@ -1,7 +1,7 @@
 document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
 let currentDate = new Date()
 let emailCount = 0
-let savedCount = 0
+
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
 }
@@ -20,11 +20,43 @@ function getCurrentEmails() {
         while (emailSelected.length > 0) { emailSelected[0].remove() }
         for (p = 0; p < emailList.length; p++) { emailList[p].style.display = "" }
     } else {
-        emailCount = savedCount - 4
-        getSavedEmails()
+        emailCount=0
+        let retrievedData = localStorage.getItem("emails")
+        if (retrievedData !== null) {
+            let emailData = JSON.parse(retrievedData), backCount = emailData.length - 3, pCount = 0
+            for (i = backCount; i < emailData.length; i++) {
+                emailList[pCount].id = emailData[i][0]
+                emailList[pCount].getElementsByTagName("span")[0].innerHTML = emailData[i][1]
+                emailList[pCount].getElementsByTagName("span")[1].innerHTML = emailData[i][2]
+                emailList[pCount].getElementsByTagName("a")[0].className = "fa fa-arrow-right fa-lg formatLink"
+                emailList[pCount].getElementsByTagName("a")[0].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
+                pCount++
+            }
+        }
     }
-    updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", document.getElementById("recentEmailsBody").childElementCount)
+    updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
+}
+function getSavedEmails() {
+    let emailToRemove = document.getElementById("recentEmailsBody").getElementsByTagName("table")
+    while (emailToRemove.length > 0) { emailToRemove[0].remove() }
 
+    let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
+    let retrievedData = localStorage.getItem("emails")
+
+    if (retrievedData !== null) {
+        let emailData = JSON.parse(retrievedData)
+        for (let p = 0 && emailCount <emailData.length; p < emailList.length; p++) {
+            emailList[p].id = emailData[emailCount][0]
+            emailList[p].getElementsByTagName("span")[0].innerHTML = emailData[emailCount][1]
+            emailList[p].getElementsByTagName("span")[1].innerHTML = emailData[emailCount][2]
+            emailList[p].getElementsByTagName("a")[0].className = "fa fa-arrow-right fa-lg formatLink"
+            emailList[p].getElementsByTagName("a")[0].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
+            emailList[p].style.display = ""
+            emailCount++
+        }
+        updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
+        if (emailData.length <= 3) { $('#saveEmailAlert').modal('show') }
+    } else { $('#saveEmailAlert').modal('show') }
 }
 function getEmail(messageID) {
     $.get(pageLocation(messageID), function () { })
@@ -39,7 +71,7 @@ function getEmail(messageID) {
             updateHeader("emailHeader", "fa fa-envelope-open-o", emailSubHeader[3].innerHTML, emailSubHeader[0].innerHTML)
 
             for (p = 0; p < emailsToHide.length; p++) { emailsToHide[p].style.display = "none" }
-            for (i = 0; i < requestedEmail.length;) {
+            for (i = 0; i < requestedEmail.length; i++) {
                 let selectedParagraph = requestedEmail[i], divTag = document.createElement('div')
                 divTag.innerHTML = selectedParagraph.innerHTML
                 selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
@@ -51,30 +83,7 @@ function getEmail(messageID) {
             alert("The requested email was not found on the server.  It may have been deleted or you do not have permission to view it.")
         })
 }
-function getSavedEmails() {
-    let emailToRemove = document.getElementById("recentEmailsBody").getElementsByTagName("table")
-    while (emailToRemove.length > 0) { emailToRemove[0].remove() }
 
-    let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
-    let retrievedData = localStorage.getItem("emails")
-
-    if (retrievedData !== null) {
-        let emailData = JSON.parse(retrievedData)
-        savedCount = emailData.length
-        for (let p = 0; p < emailList.length; p++) {
-            if (emailCount >= emailData.length) { emailCount = 0 }
-            emailList[p].getElementsByTagName("span")[0].innerHTML = emailData[emailCount][1]
-            emailList[p].getElementsByTagName("span")[1].innerHTML = emailData[emailCount][2]
-            emailList[p].getElementsByTagName("a")[0].className = "fa fa-arrow-right fa-lg formatLink"
-            emailList[p].getElementsByTagName("a")[0].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
-            emailList[p].id = emailData[emailCount][0]
-            emailList[p].style.display = ""
-            emailCount++
-        }
-        updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
-        if (emailData.length <= 3) { $('#saveEmailAlert').modal('show') }
-    } else { $('#saveEmailAlert').modal('show') }
-}
 function getResidentHomePage() {
     let emailList = document.getElementById("recentEmailsBody")
     emailList.innerHTML = ""
