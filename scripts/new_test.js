@@ -20,10 +20,11 @@ function getCurrentEmails() {
         while (emailSelected.length > 0) { emailSelected[0].remove() }
         for (p = 0; p < emailList.length; p++) { emailList[p].style.display = "" }
     } else {
-        emailCount=0
+        emailCount = 0
         let retrievedData = localStorage.getItem("emails")
         if (retrievedData !== null) {
             let emailData = JSON.parse(retrievedData), backCount = emailData.length - 3, pCount = 0
+            updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailData.length)
             for (i = backCount; i < emailData.length; i++) {
                 emailList[pCount].id = emailData[i][0]
                 emailList[pCount].getElementsByTagName("span")[0].innerHTML = emailData[i][1]
@@ -34,9 +35,9 @@ function getCurrentEmails() {
             }
         }
     }
-    updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
 }
 function getSavedEmails() {
+
     let emailToRemove = document.getElementById("recentEmailsBody").getElementsByTagName("table")
     while (emailToRemove.length > 0) { emailToRemove[0].remove() }
 
@@ -45,7 +46,9 @@ function getSavedEmails() {
 
     if (retrievedData !== null) {
         let emailData = JSON.parse(retrievedData)
-        for (let p = 0 && emailCount <emailData.length; p < emailList.length; p++) {
+        updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailData.length)
+        if (emailCount >= emailData.length) { emailCount = 0 }
+        for (let p = 0 && emailCount < emailData.length; p < emailList.length; p++) {
             emailList[p].id = emailData[emailCount][0]
             emailList[p].getElementsByTagName("span")[0].innerHTML = emailData[emailCount][1]
             emailList[p].getElementsByTagName("span")[1].innerHTML = emailData[emailCount][2]
@@ -54,7 +57,7 @@ function getSavedEmails() {
             emailList[p].style.display = ""
             emailCount++
         }
-        updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
+   
         if (emailData.length <= 3) { $('#saveEmailAlert').modal('show') }
     } else { $('#saveEmailAlert').modal('show') }
 }
@@ -119,12 +122,12 @@ function getResidentHomePage() {
 
         })
         .always(function () {
-            updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.childElementCount)
+
 
             let currentEmails = emailList.getElementsByTagName("p")
             let retrievedData = localStorage.getItem("emails")
             let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
-
+            updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailData.length)
 
             document.getElementById("currentEmailIDs").value = currentEmails[0].id.concat(currentEmails[1].id, currentEmails[2].id)
 
