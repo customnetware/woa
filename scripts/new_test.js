@@ -1,6 +1,7 @@
 document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
 let currentDate = new Date()
 let emailCount = 0
+let savedCount = 0
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
 }
@@ -14,12 +15,13 @@ function updateHeader(headerID, headerClass, headerTitle, headerLen) {
 function getCurrentEmails() {
     let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
     let emailSelected = document.getElementById("recentEmailsBody").getElementsByTagName("table")
+
     if (emailSelected.length > 0) {
         while (emailSelected.length > 0) { emailSelected[0].remove() }
         for (p = 0; p < emailList.length; p++) { emailList[p].style.display = "" }
     } else {
-
-        if (emailCount > 2) { getSavedEmails(true) }
+        emailCount = savedCount - 4
+        getSavedEmails()
     }
     updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", document.getElementById("recentEmailsBody").childElementCount)
 
@@ -49,31 +51,28 @@ function getEmail(messageID) {
             alert("The requested email was not found on the server.  It may have been deleted or you do not have permission to view it.")
         })
 }
-function getSavedEmails(goBack) {
-    let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
+function getSavedEmails() {
     let emailToRemove = document.getElementById("recentEmailsBody").getElementsByTagName("table")
-    let retrievedData = localStorage.getItem("emails")
     while (emailToRemove.length > 0) { emailToRemove[0].remove() }
+
+    let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
+    let retrievedData = localStorage.getItem("emails")
+
     if (retrievedData !== null) {
         let emailData = JSON.parse(retrievedData)
+        savedCount = emailData.length
         for (let p = 0; p < emailList.length; p++) {
             if (emailCount >= emailData.length) { emailCount = 0 }
-            if (emailCount < 0) { emailCount = emailData.length-1 }
             emailList[p].getElementsByTagName("span")[0].innerHTML = emailData[emailCount][1]
             emailList[p].getElementsByTagName("span")[1].innerHTML = emailData[emailCount][2]
             emailList[p].getElementsByTagName("a")[0].className = "fa fa-arrow-right fa-lg formatLink"
             emailList[p].getElementsByTagName("a")[0].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
             emailList[p].id = emailData[emailCount][0]
             emailList[p].style.display = ""
-            
-            if (goBack == true) { emailCount--} else { emailCount++ }
+            emailCount++
         }
         updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
-        if (emailData.length <= 3) {
-            $('#saveEmailAlert').modal('show')
-        } else {
-
-        }
+        if (emailData.length <= 3) { $('#saveEmailAlert').modal('show') }
     } else { $('#saveEmailAlert').modal('show') }
 }
 function getResidentHomePage() {
@@ -81,14 +80,13 @@ function getResidentHomePage() {
     emailList.innerHTML = ""
     $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         .done(function (responseText) {
-
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
-            testItems = myWoodbridge
-            let recentItems = myWoodbridge.getElementsByClassName("message")
 
+            showPhotos(myWoodbridge)
             document.getElementById("notificationHeader").getElementsByTagName("span")[0].className = "fa fa-check-circle fa-lg formatLink"
             document.getElementById("notificationHeader").getElementsByTagName("span")[1].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
 
+            let recentItems = myWoodbridge.getElementsByClassName("message")
             for (let p = 0; p < recentItems.length; p++) {
 
                 let itemContent = recentItems[p].getElementsByTagName("a")[0]
@@ -109,7 +107,7 @@ function getResidentHomePage() {
                 currentItem.appendChild(itemLink)
                 emailList.appendChild(currentItem)
             }
-            showPhotos(myWoodbridge)
+
         })
         .always(function () {
             updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.childElementCount)
