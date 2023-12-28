@@ -18,7 +18,8 @@ function getCurrentEmails() {
         while (emailSelected.length > 0) { emailSelected[0].remove() }
         for (p = 0; p < emailList.length; p++) { emailList[p].style.display = "" }
     } else {
-        getSavedEmails(true)
+
+        if (emailCount > 2) { getSavedEmails(true) }
     }
     updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", document.getElementById("recentEmailsBody").childElementCount)
 
@@ -64,8 +65,8 @@ function getSavedEmails(goBack) {
             emailList[p].getElementsByTagName("a")[0].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
             emailList[p].id = emailData[emailCount][0]
             emailList[p].style.display = ""
-            alert(goBack)
-            if (goBack == true) { emailCount-- } else { emailCount++ }
+            
+            if (goBack == true) { emailCount--} else { emailCount++ }
         }
         updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
         if (emailData.length <= 3) {
