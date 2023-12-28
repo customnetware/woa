@@ -64,6 +64,7 @@ function getSavedEmails(goBack) {
             emailList[p].getElementsByTagName("a")[0].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
             emailList[p].id = emailData[emailCount][0]
             emailList[p].style.display = ""
+            alert(goBack)
             if (goBack == true) { emailCount-- } else { emailCount++ }
         }
         updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
