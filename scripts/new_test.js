@@ -12,52 +12,46 @@ function updateHeader(headerID, headerClass, headerTitle, headerLen) {
     cardHeader[1].innerHTML = headerTitle
     cardHeader[2].innerHTML = "(" + headerLen + ")"
 }
-function getCurrentEmails() {
+function emailBack() {
+    emailCount = 0
     let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
     let emailSelected = document.getElementById("recentEmailsBody").getElementsByTagName("table")
+    while (emailSelected.length > 0) { emailSelected[0].remove() }
 
-    if (emailSelected.length > 0) {
-        while (emailSelected.length > 0) { emailSelected[0].remove() }
-        for (p = 0; p < emailList.length; p++) { emailList[p].style.display = "" }
-    } else {
-        emailCount = 0
-        let retrievedData = localStorage.getItem("emails")
-        if (retrievedData !== null) {
-            let emailData = JSON.parse(retrievedData), backCount = emailData.length - 3, pCount = 0
-            updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailData.length)
-            for (i = backCount; i < emailData.length; i++) {
-                emailList[pCount].id = emailData[i][0]
-                emailList[pCount].getElementsByTagName("span")[0].innerHTML = emailData[i][1]
-                emailList[pCount].getElementsByTagName("span")[1].innerHTML = emailData[i][2]
-                emailList[pCount].getElementsByTagName("a")[0].className = "fa fa-arrow-right fa-lg formatLink"
-                emailList[pCount].getElementsByTagName("a")[0].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
-                pCount++
+    let retrievedData = localStorage.getItem("emails")
+    if (retrievedData !== null) {
+        let emailData = JSON.parse(retrievedData)
+        for (i = emailData.length - 1, p = 2; i >= 0 && p < 3; i--, p--) {
+            if (emailList[p].style.display == "none") { emailList[p].style.display = "" } else {
+                emailList[p].id = emailData[i][0]
+                emailList[p].getElementsByTagName("span")[0].innerHTML = emailData[i][1]
+                emailList[p].getElementsByTagName("span")[1].innerHTML = emailData[i][2]
+                emailList[p].getElementsByTagName("a")[0].className = "fa fa-arrow-right fa-lg formatLink"
+                emailList[p].getElementsByTagName("a")[0].href = "javascript:getEmail('" + emailData[i][3] + "')"
             }
         }
+        updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailData.length)
     }
 }
-function getSavedEmails() {
-
+function emailNext() {
+    let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
     let emailToRemove = document.getElementById("recentEmailsBody").getElementsByTagName("table")
     while (emailToRemove.length > 0) { emailToRemove[0].remove() }
 
-    let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
-    let retrievedData = localStorage.getItem("emails")
 
+    let retrievedData = localStorage.getItem("emails")
     if (retrievedData !== null) {
         let emailData = JSON.parse(retrievedData)
-        updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailData.length)
         if (emailCount >= emailData.length) { emailCount = 0 }
-        for (let p = 0 && emailCount < emailData.length; p < emailList.length; p++) {
+        for (let p = 0; p < emailList.length && emailCount < emailData.length; p++, emailCount++) {
             emailList[p].id = emailData[emailCount][0]
             emailList[p].getElementsByTagName("span")[0].innerHTML = emailData[emailCount][1]
             emailList[p].getElementsByTagName("span")[1].innerHTML = emailData[emailCount][2]
             emailList[p].getElementsByTagName("a")[0].className = "fa fa-arrow-right fa-lg formatLink"
             emailList[p].getElementsByTagName("a")[0].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
             emailList[p].style.display = ""
-            emailCount++
         }
-   
+        updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailData.length)
         if (emailData.length <= 3) { $('#saveEmailAlert').modal('show') }
     } else { $('#saveEmailAlert').modal('show') }
 }
@@ -68,19 +62,18 @@ function getEmail(messageID) {
             let emailDisplay = document.getElementById("recentEmailsBody")
             let emailBody = emailHTML.getElementsByTagName("table")[1]
             let emailSubHeader = emailHTML.getElementById("tblMsgHeader").getElementsByClassName("clsGridDetail")
-            let requestedEmail = emailBody.getElementsByTagName('p')
+            var requestedEmail = emailBody.getElementsByTagName('p')
             let emailsToHide = emailDisplay.getElementsByTagName("p")
-
-            updateHeader("emailHeader", "fa fa-envelope-open-o", emailSubHeader[3].innerHTML, emailSubHeader[0].innerHTML)
-
             for (p = 0; p < emailsToHide.length; p++) { emailsToHide[p].style.display = "none" }
-            for (i = 0; i < requestedEmail.length; i++) {
-                let selectedParagraph = requestedEmail[i], divTag = document.createElement('div')
+            for (i = requestedEmail.length - 1; i >= 0; i--) {
+                let selectedParagraph = requestedEmail[i]
+                let divTag = document.createElement('div')
                 divTag.innerHTML = selectedParagraph.innerHTML
                 selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
             }
-            emailDisplay.appendChild(emailBody)
 
+            emailDisplay.appendChild(emailBody)
+            updateHeader("emailHeader", "fa fa-envelope-open-o", emailSubHeader[3].innerHTML, emailSubHeader[0].innerHTML)
         })
         .fail(function () {
             alert("The requested email was not found on the server.  It may have been deleted or you do not have permission to view it.")
