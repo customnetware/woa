@@ -17,9 +17,8 @@ function emailNavigation(previousPage) {
     let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
     let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
     let emailSelected = document.getElementById("recentEmailsBody").getElementsByTagName("table")
-
     emailData.reverse()
-    if (previousPage == false) {
+    if (previousPage == false || (previousPage == true && emailSelected.length == 0)) {
         for (let p = 0; p < emailList.length; p++) {
             if (emailList[p].id == emailData[emailData.length - 1][0]) { emailCount = 0 }
             if (p == 2 && emailData[0][0] == emailList[p].id) { emailCount = 3 }
@@ -29,22 +28,24 @@ function emailNavigation(previousPage) {
             emailList[p].children[2].href = ""
             emailList[p].style.display = "none"
         }
-    } else { emailCount = 0 }
-
-    for (p = emailList.length - 1; p >= 0 && emailCount < emailData.length; p--, emailCount++) {
-        if (emailSelected.length == 0 || previousPage==false) {
+        if (previousPage == true) { emailCount = 0 }
+        for (p = emailList.length - 1; p >= 0 && emailCount < emailData.length; p--, emailCount++) {
             emailList[p].id = emailData[emailCount][0]
             emailList[p].children[0].innerHTML = emailData[emailCount][1]
             emailList[p].children[1].innerHTML = emailData[emailCount][2]
             emailList[p].children[2].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
+            emailList[p].style.display = ""
         }
-        emailList[p].style.display = ""
+    }
+    if (previousPage == true && emailSelected.length > 0) {
+        for (let p = 0; p < emailList.length; p++) { if (emailList[p].id !== "") { emailList[p].style.display = "" } }
     }
     while (emailSelected.length > 0) { emailSelected[0].remove() }
-
-
     updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailData.length)
+
 }
+
+
 function getResidentHomePage() {
     let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
     let retrievedData = localStorage.getItem("emails")
