@@ -36,7 +36,7 @@ function emailNavigation(previousPage) {
             emailList[p].id = emailData[emailCount][0]
             emailList[p].children[0].innerHTML = emailData[emailCount][1]
             emailList[p].children[1].innerHTML = emailData[emailCount][2]
-            emailList[p].children[2].href = emailData[emailCount][3]
+            emailList[p].children[2].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
         }
         emailList[p].style.display = ""
     }
@@ -65,7 +65,7 @@ function getResidentHomePage() {
                 emailList[p].children[2].href = "javascript:getEmail('" + itemContent.href + "')"
 
                 if ((retrievedData !== null && retrievedData.includes(emailList[p].id) == false) || emailData.length == 0) {
-                    emailData.push([emailList[p].id, emailList[p].children[0].innerHTML, emailList[p].children[1].innerHTML, emailList[p].children[2].href])
+                    emailData.push([emailList[p].id, emailList[p].children[0].innerHTML, emailList[p].children[1].innerHTML, itemContent.href.href])
                     let emailsToSave = JSON.stringify(emailData)
                     localStorage.setItem("emails", emailsToSave)
                 }
@@ -76,7 +76,6 @@ function getResidentHomePage() {
         })
 }
 function getEmail(messageID) {
-    alert(pageLocation(messageID))
     $.get(pageLocation(messageID), function () { })
 
         .done(function (responseText) {
