@@ -15,34 +15,35 @@ function updateHeader(headerID, headerClass, headerTitle, headerLen) {
 function emailNavigation(previousPage) {
     let retrievedData = localStorage.getItem("emails")
     let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
-    let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
-    let emailSelected = document.getElementById("recentEmailsBody").getElementsByTagName("table")
-    emailData.reverse()
-    if (previousPage == false || (previousPage == true && emailSelected.length == 0)) {
-        for (let p = 0; p < emailList.length; p++) {
-            if (emailList[p].id == emailData[emailData.length - 1][0]) { emailCount = 0 }
-            if (p == 2 && emailData[0][0] == emailList[p].id) { emailCount = 3 }
-            emailList[p].id = ""
-            emailList[p].children[0].innerHTML = ""
-            emailList[p].children[1].innerHTML = ""
-            emailList[p].children[2].href = ""
-            emailList[p].style.display = "none"
+    if (emailData.length > 3) {
+        let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
+        let emailSelected = document.getElementById("recentEmailsBody").getElementsByTagName("table")
+        emailData.reverse()
+        if (previousPage == false || (previousPage == true && emailSelected.length == 0)) {
+            for (let p = 0; p < emailList.length; p++) {
+                if (emailList[p].id == emailData[emailData.length - 1][0]) { emailCount = 0 }
+                if (p == 2 && emailData[0][0] == emailList[p].id) { emailCount = 3 }
+                emailList[p].id = ""
+                emailList[p].children[0].innerHTML = ""
+                emailList[p].children[1].innerHTML = ""
+                emailList[p].children[2].href = ""
+                emailList[p].style.display = "none"
+            }
+            if (previousPage == true) { emailCount = 0 }
+            for (p = emailList.length - 1; p >= 0 && emailCount < emailData.length; p--, emailCount++) {
+                emailList[p].id = emailData[emailCount][0]
+                emailList[p].children[0].innerHTML = emailData[emailCount][1]
+                emailList[p].children[1].innerHTML = emailData[emailCount][2]
+                emailList[p].children[2].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
+                emailList[p].style.display = ""
+            }
         }
-        if (previousPage == true) { emailCount = 0 }
-        for (p = emailList.length - 1; p >= 0 && emailCount < emailData.length; p--, emailCount++) {
-            emailList[p].id = emailData[emailCount][0]
-            emailList[p].children[0].innerHTML = emailData[emailCount][1]
-            emailList[p].children[1].innerHTML = emailData[emailCount][2]
-            emailList[p].children[2].href = "javascript:getEmail('" + emailData[emailCount][3] + "')"
-            emailList[p].style.display = ""
+        if (previousPage == true && emailSelected.length > 0) {
+            for (let p = 0; p < emailList.length; p++) { if (emailList[p].id !== "") { emailList[p].style.display = "" } }
         }
+        while (emailSelected.length > 0) { emailSelected[0].remove() }
+        updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailData.length)
     }
-    if (previousPage == true && emailSelected.length > 0) {
-        for (let p = 0; p < emailList.length; p++) { if (emailList[p].id !== "") { emailList[p].style.display = "" } }
-    }
-    while (emailSelected.length > 0) { emailSelected[0].remove() }
-    updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailData.length)
-
 }
 
 
