@@ -25,7 +25,7 @@
             }
 
             #notificationsSettings button {
-                cursor: pointer;
+                cursor: pointer !important;
                 width: 100%;
                 text-align: left;
                 margin-bottom: 5px;
@@ -199,10 +199,14 @@
                         <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                     </div>
                     <div id="recentEmails" class="collapse" data-parent="#recentNotifications">
-                        <div class="card-body" id="recentEmailsBody"></div>
+                        <div class="card-body" id="recentEmailsBody">
+                            <p><span></span><span></span><a></a></p>
+                            <p><span></span><span></span><a></a></p>
+                            <p><span></span><span></span><a></a></p>
+                        </div>
                         <div class="card-footer">
-                            <button type="button" id="viewSaveButton" class="btn btn-primary" onclick="javascript:emailNext()" style="float:right">Next&nbsp;<span class="fa fa-forward"></span></button>
-                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:emailBack()">&nbsp;<span class="fa fa-backward"></span>&nbsp;Back</button>
+                            <button type="button" id="viewSaveButton" class="btn btn-primary" onclick="javascript:emailNavigation(false)" style="float:right">Browse&nbsp;<span class="fa fa-forward"></span></button>
+                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:emailNavigation(true)">&nbsp;<span class="fa fa-backward"></span>&nbsp;Back</button>
                             <input type="hidden" id="currentEmailIDs" />
                         </div>
                     </div>
@@ -275,7 +279,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="postSettingsAlertLabel">Discussion Group View Time Period</h5>
+                            <h5 class="modal-title" id="po  stSettingsAlertLabel">Discussion Group View Time Period</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -353,7 +357,7 @@
 
         </div>
         <div id="testDiv"></div>
-        <script src="scripts/new_test.js"></script>
+        <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
 
     </div>
     <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
