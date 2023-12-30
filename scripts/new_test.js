@@ -18,7 +18,6 @@ function emailNavigation(previousPage) {
     let emailSelected = document.getElementById("recentEmailsBody").getElementsByTagName("table")
     updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
     emailData.reverse()
-
     if (emailSelected.length > 0) {
         while (emailSelected.length > 0) { emailSelected[0].remove() }
         for (let p = 0; p < emailList.length; p++) {
@@ -28,8 +27,11 @@ function emailNavigation(previousPage) {
             }
         }
         if (previousPage == true) { return }
-
     }
+
+
+    if (emailData.length <= 3 && emailSelected.length==0) { $('#saveEmailAlert').modal('show'); return }
+
     if (emailCount + 1 == emailData.length || previousPage == true) {
         emailCount = 0
         for (let p = 0; p < emailList.length; p++) { if (p < 3) { emailList[p].style.display = "" } else { emailList[p].style.display = "none" } }
@@ -321,4 +323,3 @@ $(window).load(function () {
     getClassifiedAds()
     getResidentHomePage()
 })
-//           for (var a = [], i = recentItems.length; i;) a[--i] = recentItems[i]
