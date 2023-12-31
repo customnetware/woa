@@ -14,53 +14,67 @@ function updateHeader(headerID, headerClass, headerTitle, headerLen) {
 function emailNavigation(previousPage) {
     let retrievedData = localStorage.getItem("emails")
     let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
-    let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
-    let emailSelected = document.getElementById("recentEmailsBody").getElementsByTagName("table")
-    updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
-    emailData.reverse()
-    if (emailSelected.length > 0) {
-        while (emailSelected.length > 0) { emailSelected[0].remove() }
-        for (let p = 0; p < emailList.length; p++) {
-            if (emailList[p].id.includes("H_")) {
-                emailList[p].id = emailList[p].id.replace("H_")
+    let emailPopUp = document.getElementById("emailsSaved")
+
+/*    while (emailPopUp.firstChild) { emailPopUp.removeChild(emailPopUp.firstChild) }*/
+    for (let p = 0; p < emailData.length; p++) {
+        let newParagraph = document.createElement("span")
+        newParagraph.innerHTML = emailData[p][1]
+        emailPopUp.appendChild(newParagraph)
+    }
+    $("#recentPosts").load(pageLocation("https://ourwoodbridge.net/Messenger/MessageView/28118~13676912/Outdoor-Holiday-Light-Contest-Winners first:div"), function () {
+
+    })
+
+
+
+
+    $('#showEmailAlert').modal('show')
+    if (1 == 2) {
+        emailData.reverse()
+        if (emailSelected.length > 0) {
+            while (emailSelected.length > 0) { emailSelected[0].remove() }
+            for (let p = 0; p < emailList.length; p++) {
+                if (emailList[p].id.includes("H_")) {
+                    emailList[p].id = emailList[p].id.replace("H_")
+                    emailList[p].style.display = ""
+                }
+            } if (previousPage == true) { return }
+        }
+
+
+        if (emailData.length <= 3 && emailSelected.length == 0) { $('#saveEmailAlert').modal('show'); return }
+
+        if (emailCount + 1 == emailData.length || previousPage == true) {
+            emailCount = 0
+            for (let p = 0; p < emailList.length; p++) { if (p < 3) { emailList[p].style.display = "" } else { emailList[p].style.display = "none" } }
+            return
+        }
+        if (emailList.length == 3) {
+            for (let p = 3, n = 0; p < emailData.length; p++, n++) {
+                let newParagraph = emailList[0].cloneNode(true)
+                newParagraph.id = emailData[p][0]
+                newParagraph.children[0].innerHTML = emailData[p][1]
+                newParagraph.children[1].innerHTML = emailData[p][2]
+                newParagraph.children[2].href = "javascript:getEmail('" + emailData[p][3] + "')"
+                if (n > 2) { newParagraph.style.display = "none" }
+                emailList[0].parentElement.appendChild(newParagraph)
+            }
+            for (let p = 0; p < 3; p++) { emailList[p].style.display = "none" }
+            return
+        }
+        if (emailList.length > 3) {
+            for (let p = 0; p < emailList.length; p++) {
+                if (emailList[p].style.display !== "none") {
+                    emailList[p].style.display = "none"
+                    emailCount = p
+                }
+            }
+            for (let p = emailCount + 1, x = 1; p < emailList.length; p++, x++) {
                 emailList[p].style.display = ""
-            }
-        }
-        if (previousPage == true) { return }
-    }
-
-
-    if (emailData.length <= 3 && emailSelected.length==0) { $('#saveEmailAlert').modal('show'); return }
-
-    if (emailCount + 1 == emailData.length || previousPage == true) {
-        emailCount = 0
-        for (let p = 0; p < emailList.length; p++) { if (p < 3) { emailList[p].style.display = "" } else { emailList[p].style.display = "none" } }
-        return
-    }
-    if (emailList.length == 3) {
-        for (let p = 3, n = 0; p < emailData.length; p++, n++) {
-            let newParagraph = emailList[0].cloneNode(true)
-            newParagraph.id = emailData[p][0]
-            newParagraph.children[0].innerHTML = emailData[p][1]
-            newParagraph.children[1].innerHTML = emailData[p][2]
-            newParagraph.children[2].href = "javascript:getEmail('" + emailData[p][3] + "')"
-            if (n > 2) { newParagraph.style.display = "none" }
-            emailList[0].parentElement.appendChild(newParagraph)
-        }
-        for (let p = 0; p < 3; p++) { emailList[p].style.display = "none" }
-        return
-    }
-    if (emailList.length > 3) {
-        for (let p = 0; p < emailList.length; p++) {
-            if (emailList[p].style.display !== "none") {
-                emailList[p].style.display = "none"
                 emailCount = p
+                if (x == 3) { break }
             }
-        }
-        for (let p = emailCount + 1, x = 1; p < emailList.length; p++, x++) {
-            emailList[p].style.display = ""
-            emailCount = p
-            if (x == 3) { break }
         }
     }
 }

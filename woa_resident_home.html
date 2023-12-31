@@ -10,6 +10,7 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
+
     <div style="width: 100%; float: left; padding:20px; margin-top:20px">
         <div id="resDisplayName" style="float: left; display: none;"></div>
         <div class="association-name"><a href="/28118">My Woodbridge</a></div>
@@ -18,6 +19,14 @@
     </div>
     <div class="container" id="customContainer">
         <style type="text/css">
+            .modal-dialog {
+                overflow-y: initial !important
+            }
+
+            .modal-body {
+   
+                overflow-y: auto;
+            }
             #contentInner {
                 padding-top: 1% !important;
                 padding-left: 2% !important;
@@ -29,7 +38,6 @@
                 width: 100%;
                 text-align: left;
                 margin-bottom: 5px;
-
             }
 
             #notificationsSettings span {
@@ -92,7 +100,7 @@
                     display: block
                 }
 
-                #recentNews p:nth-child(even), #recentEmails p:nth-child(even), #recentFlyers span:nth-child(even), #newsLetters span:nth-child(even), #recentAds p:nth-child(even), .groupPost:nth-child(even) {
+                #recentNews p:nth-child(even), #recentEmails p:nth-child(even), #recentFlyers span:nth-child(even), #newsLetters span:nth-child(even), #recentAds p:nth-child(even), .groupPost:nth-child(even), #emailsSaved span:nth-child(even) {
                     background-color: #eceeef
                 }
 
@@ -102,7 +110,7 @@
                 margin-bottom: 5px
             }
 
-            #recentFlyers span, #newsLetters span {
+            #recentFlyers span, #newsLetters span, #emailsSaved span {
                 padding-left: 10px;
                 padding-bottom: 5px;
                 padding-top: 5px;
@@ -205,8 +213,8 @@
                             <p><span></span><span></span><a></a></p>
                         </div>
                         <div class="card-footer">
-                            <button type="button" id="viewSaveButton" class="btn btn-primary" onclick="javascript:emailNavigation(false)" style="float:right">Browse&nbsp;<span class="fa fa-forward"></span></button>
-                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:emailNavigation(true)">&nbsp;<span class="fa fa-backward"></span>&nbsp;Back</button>
+                            <!--<button type="button" id="viewSaveButton" class="btn btn-primary" onclick="javascript:emailNavigation(false)" style="float:right">Browse&nbsp;<span class="fa fa-forward"></span></button>-->
+                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:emailNavigation(true)">&nbsp;<span class="fa fa-bookmark-o"></span>&nbsp;View Saved Emails</button>
                             <input type="hidden" id="currentEmailIDs" />
                         </div>
                     </div>
@@ -328,24 +336,26 @@
                         </div>
                         <div class="modal-body">
                             Only the emails you are currently viewing have been saved to your computer.  New emails will added to your saved emails the next time you visit this page.  Clearing your browser's cache will remove saved emails from this computer.
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                        </div>                                                                                                                                                                                                                                                                                          
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal fade" id="showEmailAlert" tabindex="-1" aria-labelledby="showEmailAlertLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-dialog modal-dialog-scrollable modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="showEmailAlertLabel">No saved emails found</h5>
+                            <h5 class="modal-title" id="showEmailAlertLabel">Viewing Saved Email Messages</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" id="emailsSaved">
+                
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -356,7 +366,7 @@
             </div>
 
         </div>
-        <script src="scripts/new_test.js"></script>
+        <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
 
     </div>
     <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
