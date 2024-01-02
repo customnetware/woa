@@ -270,7 +270,7 @@ function showComments(SelectedPostID, postComment) {
 
 
     if (postComment == true) {
-        document.getElementById("woaFrame").src = "/Discussion/28118~" + param01 + "~" + parm03.replace("lnkTopicReply", "")
+        document.getElementById("woaFrame").src = "/Discussion/28118~" + param01 + "~" + param03.replace("lnkTopicReply", "")
         $('#woaFrame').on('load', function () {
             try {
 
