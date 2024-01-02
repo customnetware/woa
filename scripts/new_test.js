@@ -264,7 +264,7 @@ function showComments(SelectedPostID, postComment) {
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
 
-    let param01 = frameLink.split(",")[1], param02 = frameLink.split(",")[2], parm03 = frameLink.split(",")[5]
+    let param01 = frameLink.split(",")[1], param02 = frameLink.split(",")[2], param03 = frameLink.split(",")[5]
 
 
 
@@ -275,7 +275,7 @@ function showComments(SelectedPostID, postComment) {
             try {
 
                 let frameWindow = document.getElementById('woaFrame').contentWindow
-                frameWindow.AV.EditorLauncher.discussionTopic(parm01, parm02, '', 'reply', 'Reply to Post', parm03)
+                frameWindow.AV.EditorLauncher.discussionTopic(param01, param02, '', 'reply', 'Reply to Post', param03)
                 let waitforForm = setInterval(function () {
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                         frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
