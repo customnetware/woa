@@ -287,7 +287,7 @@ function showComments(SelectedPostID, postComment) {
 
 
 
-            alert("Comment posted")
+           
         } catch(error) {alert(error.message) }
 
     }
@@ -307,6 +307,7 @@ function pressButton() {
             for (let p = 0; p < test.length; p++) {
                 if (test[p].innerHTML == "Confirm")
                     test[p].click()
+                alert("Comment posted")
             }
         }
 
