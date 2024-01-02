@@ -278,7 +278,7 @@ function showComments(SelectedPostID, postComment) {
                         frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
                         frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                         clearInterval(waitforForm)
-                        pressButton()
+                        pressButton(frameWindow)
                     }
                 }, 1000)
             } catch (error) { alert(error.message) }
@@ -290,8 +290,8 @@ function showComments(SelectedPostID, postComment) {
     if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
 
 }
-function pressButton() {
-    let frameWindow = document.getElementById('woaFrame').contentWindow
+function pressButton(frameWindow) {
+    
     let waitforConfirm = setInterval(function () {
         if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
             let allButtons = frameWindow.document.getElementsByClassName(" x-btn-text")
