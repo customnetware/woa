@@ -266,6 +266,8 @@ function showComments(SelectedPostID, postComment) {
 
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
+    document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
+
 
     if (postComment == true) {
         try {
@@ -282,19 +284,14 @@ function showComments(SelectedPostID, postComment) {
                     clearInterval(waitforForm)
                     pressButton()
                 }
-            }, 1000)
-
-
-
-
-           
+            }, 1000)          
         } catch(error) {alert(error.message) }
 
     }
 
     if (selectedPost.childElementCount > 3) {
         document.getElementById("postComments").innerHTML = selectedPost.innerHTML
-        document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
+
         if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
     }
 }
