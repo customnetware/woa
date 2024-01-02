@@ -276,19 +276,15 @@ function showComments(SelectedPostID, postComment) {
                 let id01 = "'" + frameLink.split(",")[0] + "'"
                 let id02 = "'" + frameLink.split(",")[1] + "'"
                 let id03 = "'" + frameLink.split(",")[5] + "'"
-                alert(id01 + id02 + id03)
+           
                   frameWindow.AV.EditorLauncher.discussionTopic(id01, id02, '', 'reply', 'Reply to Post', id03)
                 /*frameWindow.AV.EditorLauncher.discussionTopic('334766', '11315', '', 'reply', 'Reply to Post', 'lnkTopicReply334766')*/
 
-
-
-                alert("launcher should be on the screen")
                 let waitforForm = setInterval(function () {
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                         frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
                         frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                         clearInterval(waitforForm)
-
                         pressButton()
                     }
                 }, 1000)
@@ -312,8 +308,11 @@ function pressButton() {
             let test = frameWindow.document.getElementsByClassName(" x-btn-text")
             clearInterval(waitforConfirm)
             for (let p = 0; p < test.length; p++) {
-                if (test[p].innerHTML == "Confirm") { test[p].click() }
-                alert("Comment posted")
+                if (test[p].innerHTML == "Confirm") {
+                    test[p].click()
+                    clearInterval(waitforConfirm)
+                }
+              
             }
         }
 
