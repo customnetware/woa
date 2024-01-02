@@ -278,10 +278,13 @@ function showComments(SelectedPostID, postComment) {
                 let id03 = "'" + frameLink.split(",")[5] + "'"
 
                 let testText = id01 + ", " + id02 + ", '', 'reply', 'Reply to Post', " + id03
+
+                const discussionTopic = new Function(id01, id02, '', 'reply', 'Reply to Post', id03)
+
                 alert(testText)
                /* let funcTest = frameWindow.AV.EditorLauncher.discussionTopic(testText)*/
 
-                let funcTest = frameWindow.AV.EditorLauncher.discussionTopic('334766', '11315', '', 'reply', 'Reply to Post', 'lnkTopicReply334766')
+                let funcTest = frameWindow.AV.EditorLauncher.discussionTopic()
 
                 alert(funcTest)
                 //let waitforForm = setInterval(function () {
