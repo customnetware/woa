@@ -293,6 +293,7 @@ function showComments(SelectedPostID, postComment) {
 function pressButton(frameWindow) {
     
     let waitforConfirm = setInterval(function () {
+        let frameWindow = document.getElementById('woaFrame').contentWindow
         if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
             let allButtons = frameWindow.document.getElementsByClassName(" x-btn-text")
             clearInterval(waitforConfirm)
