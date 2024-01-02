@@ -261,7 +261,7 @@ function getGroupPosts(selectedGroups, numOfDays) {
     }
 }
 function showComments(SelectedPostID, postComment) {
-
+    let searchComplete = false
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
 
@@ -275,10 +275,12 @@ function showComments(SelectedPostID, postComment) {
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                         frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
                         frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
+                        searchComplete=true
                         clearInterval(waitforForm)
                     }
                 }, 1000)
                 let waitforConfirm = setInterval(function () {
+                    if (searchComplete == true) { 
                     if (frameWindow.document.getElementsByClassName(" x-window x-window-plain x-window-dlg").length > 0) {
                         if (frameWindow.document.getElementsByClassName(" x-btn-text").length = 7) {
                             let allButtons = frameWindow.document.getElementsByClassName(" x-btn-text")
@@ -289,7 +291,7 @@ function showComments(SelectedPostID, postComment) {
                                 }
                             }
                         }
-                    }
+                    }}
                 }, 1000)
             } catch (error) { alert(error.message) }
         })
