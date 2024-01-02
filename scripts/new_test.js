@@ -196,63 +196,65 @@ function getGroups() {
     } catch { }
 }
 function getGroupPosts(selectedGroups, numOfDays) {
-    const postList = document.getElementById("recentPostsBody")
-    postList.innerHTML = ""
+    let postList = document.getElementById("recentPostsBody")
+    while (postList.firstChild) { postList.removeChild(postList.firstChild) }
 
     for (let h = 0; h < selectedGroups.length; h++) {
-        $.get(pageLocation("/Discussion/28118~" + selectedGroups[h].split("|")[0]), function () { })
-            .done(function (responseText) {
-                let forum = new DOMParser().parseFromString(responseText, "text/html")
-                let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
-                let postContents = forum.querySelectorAll("[id^=contents]")
-                for (let h = 0; h < postHeaders.length; h++) {
-                    let messageTexts = postContents[h].getElementsByClassName("clsBodyText")
-                    let messageAuthor = postContents[h].getElementsByClassName("respAuthorWrapper")
-                    let messageContacts = postContents[h].getElementsByClassName("respReplyWrapper")
-                    let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
-                    let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-                    if (dayDiff <= numOfDays || (selectedGroups.length == 1 && dayDiff > numOfDays)) {
-                        let currentPost = document.createElement("p")
-                        let postHeader = document.createElement("span")
-                        let postMessage = document.createElement("span")
-                        let postAuthor = document.createElement("span")
+        if (selectedGroups[h].split("|")[0] !== "6493") {
+            $.get(pageLocation("/Discussion/28118~" + selectedGroups[h].split("|")[0]), function () { })
+                .done(function (responseText) {
+                    let forum = new DOMParser().parseFromString(responseText, "text/html")
+                    let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
+                    let postContents = forum.querySelectorAll("[id^=contents]")
+                    for (let h = 0; h < postHeaders.length; h++) {
+                        let messageTexts = postContents[h].getElementsByClassName("clsBodyText")
+                        let messageAuthor = postContents[h].getElementsByClassName("respAuthorWrapper")
+                        let messageContacts = postContents[h].getElementsByClassName("respReplyWrapper")
+                        let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
+                        let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
+                        if (dayDiff <= numOfDays || (selectedGroups.length == 1 && dayDiff > numOfDays)) {
+                            let currentPost = document.createElement("p")
+                            let postHeader = document.createElement("span")
+                            let postMessage = document.createElement("span")
+                            let postAuthor = document.createElement("span")
 
-                        postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
-                        postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
-                        postAuthor.appendChild(document.createTextNode(messageAuthor[0].innerText))
-                        currentPost.appendChild(postHeader)
-                        currentPost.appendChild(postMessage)
+                            postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
+                            postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
+                            postAuthor.appendChild(document.createTextNode(messageAuthor[0].innerText))
+                            currentPost.appendChild(postHeader)
+                            currentPost.appendChild(postMessage)
 
-                        let postLink = document.createElement("a")
-                        postLink.style.fontWeight="800"
-                        postLink.innerHTML = " | Comments: (" + (messageTexts.length - 1) + ") | "
-                        postLink.href = "javascript:showComments(" + document.getElementsByClassName("groupPost").length + ")"
-                        postAuthor.appendChild(postLink)
+                            let postLink = document.createElement("a")
+                            postLink.style.fontWeight = "800"
+                            postLink.innerHTML = " | Comments: (" + (messageTexts.length - 1) + ") | "
+                            postLink.href = "javascript:showComments(" + document.getElementsByClassName("groupPost").length + ")"
+                            postAuthor.appendChild(postLink)
 
-                        let postReply = document.createElement("a")
-                        postReply.style.fontWeight = "800"
-                        postReply.innerHTML = messageContacts[0].getElementsByTagName("a")[0].innerHTML
-                        postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
-                        postAuthor.appendChild(postReply)
+                            let postReply = document.createElement("a")
+                            postReply.style.fontWeight = "800"
+                            postReply.innerHTML = messageContacts[0].getElementsByTagName("a")[0].innerHTML
+                            postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
+                            postAuthor.appendChild(postReply)
 
-                        currentPost.appendChild(postAuthor)
-                        for (let p = 1; p < messageTexts.length; p++) {
-                            let replyMessage = document.createElement("span")
-                            let replyAuthor = document.createElement("span")
-                            replyMessage.appendChild(document.createTextNode(messageTexts[p].innerText))
-                            replyAuthor.appendChild(document.createTextNode(messageAuthor[p].innerText))
-                            currentPost.appendChild(replyMessage)
-                            currentPost.appendChild(replyAuthor)
+                            currentPost.appendChild(postAuthor)
+                            for (let p = 1; p < messageTexts.length; p++) {
+                                let replyMessage = document.createElement("span")
+                                let replyAuthor = document.createElement("span")
+                                replyMessage.appendChild(document.createTextNode(messageTexts[p].innerText))
+                                replyAuthor.appendChild(document.createTextNode(messageAuthor[p].innerText))
+                                currentPost.appendChild(replyMessage)
+                                currentPost.appendChild(replyAuthor)
+                            }
+                            currentPost.className = "groupPost"
+                            postList.appendChild(currentPost)
                         }
-                        currentPost.className = "groupPost"
-                        postList.appendChild(currentPost)
+                        if (selectedGroups.length == 1 && dayDiff > numOfDays) { break }
                     }
-                    if (selectedGroups.length == 1 && dayDiff > numOfDays) {break }
-}
-            })
-            .always(function () {
-                document.getElementById("postHeader").children[2].innerHTML = "(" + postList.childElementCount + ")"
-            })
+                })
+                .always(function () {
+                    document.getElementById("postHeader").children[2].innerHTML = "(" + postList.childElementCount + ")"
+                })
+        }
     }
 }
 function showComments(SelectedPostID) {
@@ -264,10 +266,7 @@ function showComments(SelectedPostID) {
     }
 }
 $(window).load(function () {
-    $("#postSettingsAlert").on("hidden.bs.modal", function () {
-        document.getElementById("postComments").innerHTML = ""
-
-    })
+    $("#postSettingsAlert").on("hidden.bs.modal", function () { document.getElementById("postComments").innerHTML = "" })
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
     })
