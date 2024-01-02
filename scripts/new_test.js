@@ -272,7 +272,7 @@ function showComments(SelectedPostID, postComment) {
                 frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
                 let waitforForm = setInterval(function () {
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-                        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
+                        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerText = document.getElementById("replyContent").innerText
                         frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                         clearInterval(waitforForm)
                         pressButton()
@@ -281,33 +281,34 @@ function showComments(SelectedPostID, postComment) {
             } catch (error) { alert(error.message) }
         })
     }
+    document.getElementById("postComments").innerHTML = selectedPost.innerHTML
+    document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
 
-
-        document.getElementById("postComments").innerHTML = selectedPost.innerHTML
-        document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
-
-        if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
+    if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
 
 }
 function pressButton() {
     let frameWindow = document.getElementById('woaFrame').contentWindow
     let waitforConfirm = setInterval(function () {
         if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
-            let test = frameWindow.document.getElementsByClassName(" x-btn-text")
+            let allButtons = frameWindow.document.getElementsByClassName(" x-btn-text")
             clearInterval(waitforConfirm)
             for (let p = 0; p < test.length; p++) {
-                if (test[p].innerHTML == "Confirm") {
-                    test[p].click()
+                if (allButtons[p].innerHTML == "Confirm") {
+                    allButtons[p].click()
                     clearInterval(waitforConfirm)
                 }
-
             }
         }
 
     }, 1000)
 }
 $(window).load(function () {
-    $("#postSettingsAlert").on("hidden.bs.modal", function () { document.getElementById("postComments").innerHTML = "" })
+    $("#postSettingsAlert").on("hide.bs.modal", function () {
+        alert("here")
+        document.getElementById("postComments").innerHTML = ""
+        document.getElementById("replyContent").innerHTML = ""
+    })
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
     })
