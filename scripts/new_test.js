@@ -277,8 +277,8 @@ function showComments(SelectedPostID, postComment) {
                 let id02 = "'" + frameLink.split(",")[1] + "'"
                 let id03 = "'" + frameLink.split(",")[5] + "'"
                 alert(id01 + id02 + id03)
-                /*  frameWindow.AV.EditorLauncher.discussionTopic(id01, id02, '', 'reply', 'Reply to Post', id03)*/
-                frameWindow.AV.EditorLauncher.discussionTopic('334766', '11315', '', 'reply', 'Reply to Post', 'lnkTopicReply334766')
+                  frameWindow.AV.EditorLauncher.discussionTopic(id01, id02, '', 'reply', 'Reply to Post', id03)
+                /*frameWindow.AV.EditorLauncher.discussionTopic('334766', '11315', '', 'reply', 'Reply to Post', 'lnkTopicReply334766')*/
 
 
 
