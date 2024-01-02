@@ -261,7 +261,7 @@ function getGroupPosts(selectedGroups, numOfDays) {
     }
 }
 function showComments(SelectedPostID, postComment) {
-  
+
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
 
@@ -274,7 +274,7 @@ function showComments(SelectedPostID, postComment) {
                 frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
                 let waitforForm = setInterval(function () {
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-                        
+
                         frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
                         frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                         clearInterval(waitforForm)
@@ -291,16 +291,17 @@ function showComments(SelectedPostID, postComment) {
 
 }
 function pressButton(frameWindow) {
-    
     let waitforConfirm = setInterval(function () {
-        let frameWindow = document.getElementById('woaFrame').contentWindow
-        if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
-            let allButtons = frameWindow.document.getElementsByClassName(" x-btn-text")
-            clearInterval(waitforConfirm)
-            for (let p = 0; p < test.length; p++) {
-                if (allButtons[p].innerHTML == "Confirm") {
-                    allButtons[p].click()
-                    clearInterval(waitforConfirm)
+
+        if (frameWindow.document.getElementsByClassName(" x-window x-window-plain x-window-dlg").length > 0) {
+            if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
+                let allButtons = frameWindow.document.getElementsByClassName(" x-btn-text")
+                clearInterval(waitforConfirm)
+                for (let p = 0; p < test.length; p++) {
+                    if (allButtons[p].innerHTML == "Confirm") {
+                        allButtons[p].click()
+                        clearInterval(waitforConfirm)
+                    }
                 }
             }
         }
