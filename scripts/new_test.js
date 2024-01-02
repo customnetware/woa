@@ -230,7 +230,7 @@ function getGroupPosts(selectedGroups, numOfDays) {
                             let postLink = document.createElement("a")
                             postLink.style.fontWeight = "800"
                             postLink.innerHTML = " | Comments: (" + (messageTexts.length - 1) + ") | "
-                            postLink.href = "javascript:showComments(" + document.getElementsByClassName("groupPost").length + ")"
+                            postLink.href = "javascript:showComments(" + document.getElementsByClassName("groupPost").length + ",false)"
                             postAuthor.appendChild(postLink)
 
                             let postReply = document.createElement("a")
@@ -260,13 +260,57 @@ function getGroupPosts(selectedGroups, numOfDays) {
         }
     }
 }
-function showComments(SelectedPostID) {
+function showComments(SelectedPostID, postComment) {
+    //replyContent
+    document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
+
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
+    let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
+
+    if (postComment == true) {
+        try {
+            let id01 = "'" + frameLink.split(",")[0] + "'"
+            let id02 = "'" + frameLink.split(",")[1] + "'"
+            let id03 = "'" + frameLink.split(",")[5] + "'"
+            let frameWindow = document.getElementById('woaFrame').contentWindow
+            frameWindow.AV.EditorLauncher.discussionTopic(id01, id02, '', 'reply', 'Reply to Post', id03)
+
+            let waitforForm = setInterval(function () {
+                if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
+                    frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
+                    frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
+                    clearInterval(waitforForm)
+                    pressButton()
+                }
+            }, 1000)
+
+
+
+
+            alert("Comment posted")
+        } catch(error) {alert(error.message) }
+
+    }
+
     if (selectedPost.childElementCount > 3) {
         document.getElementById("postComments").innerHTML = selectedPost.innerHTML
-
+        document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
         if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
     }
+}
+function pressButton() {
+    let frameWindow = document.getElementById('woaFrame').contentWindow
+    let waitforConfirm = setInterval(function () {
+        if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
+            let test = frameWindow.document.getElementsByClassName(" x-btn-text")
+            clearInterval(waitforConfirm)
+            for (let p = 0; p < test.length; p++) {
+                if (test[p].innerHTML == "Confirm")
+                    test[p].click()
+            }
+        }
+
+    }, 1000)
 }
 $(window).load(function () {
     $("#postSettingsAlert").on("hidden.bs.modal", function () { document.getElementById("postComments").innerHTML = "" })

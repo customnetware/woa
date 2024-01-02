@@ -165,6 +165,7 @@
                     padding-left: 2px
                 }
         </style>
+        <iframe id="woaFrame" src="/discussion/list/28118/discussion-groups" title="Final WOA Code" style="display:none"></iframe>
         <div class="row" id="notificationHeader">
             <div class="col-md-12">
                 <div class="card mb-3">
@@ -289,11 +290,19 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+
                         <div class="modal-body" id="postComments"></div>
 
                         <div class="modal-footer">
 
+                            <textarea id="replyContent" class="form-control" rows="2" placeholder="Enter your comments here." style="width:100%; float:left"></textarea>
+
+
+                        </div>
+                        <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                         
+                            <a href="" id="saveComment">Save Comments</a>
                         </div>
                     </div>
                 </div>
