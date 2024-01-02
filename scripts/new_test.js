@@ -280,14 +280,14 @@ function showComments(SelectedPostID, postComment) {
                 frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
 
 
-                //let waitforForm = setInterval(function () {
-                //    if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-                //        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
-                //        frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
-                //        clearInterval(waitforForm)
-                //        pressButton()
-                //    }
-                //}, 1000)
+                let waitforForm = setInterval(function () {
+                    if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
+                        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
+                        frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
+                        clearInterval(waitforForm)
+                        pressButton()
+                    }
+                }, 1000)
             } catch (error) { alert(error.message) }
 
         }
