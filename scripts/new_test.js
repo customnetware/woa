@@ -276,17 +276,10 @@ function showComments(SelectedPostID, postComment) {
                 let id01 = "'" + frameLink.split(",")[0] + "'"
                 let id02 = "'" + frameLink.split(",")[1] + "'"
                 let id03 = "'" + frameLink.split(",")[5] + "'"
+            
+                frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
 
-                let testText = id01 + ", " + id02 + ", '', 'reply', 'Reply to Post', " + id03
 
-                const discussionTopic = new Function(id01, id02, '', 'reply', 'Reply to Post', id03)
-
-                alert(testText)
-               /* let funcTest = frameWindow.AV.EditorLauncher.discussionTopic(testText)*/
-
-                let funcTest = frameWindow.AV.EditorLauncher.discussionTopic()
-
-                alert(funcTest)
                 //let waitforForm = setInterval(function () {
                 //    if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                 //        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
