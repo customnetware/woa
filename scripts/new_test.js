@@ -267,35 +267,37 @@ function showComments(SelectedPostID, postComment) {
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
     document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
-    alert("/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", ""))
+    $('#woaFrame').on('load', function () {
+        if (postComment == true) {
+            try {
 
-    if (postComment == true) {
-        try {
-            alert(document.getElementById("woaFrame").src)
-            let frameWindow = document.getElementById('woaFrame').contentWindow
-  
-            let id01 = "'" + frameLink.split(",")[0] + "'"
-            let id02 = "'" + frameLink.split(",")[1] + "'"
-            let id03 = "'" + frameLink.split(",")[5] + "'"
-            alert(id01 + id02 + id03)
-          /*  frameWindow.AV.EditorLauncher.discussionTopic(id01, id02, '', 'reply', 'Reply to Post', id03)*/
-            frameWindow.document.AV.EditorLauncher.discussionTopic('334766', '11315', '', 'reply', 'Reply to Post', 'lnkTopicReply334766')
+                let frameWindow = document.getElementById('woaFrame').contentWindow
 
+                let id01 = "'" + frameLink.split(",")[0] + "'"
+                let id02 = "'" + frameLink.split(",")[1] + "'"
+                let id03 = "'" + frameLink.split(",")[5] + "'"
+                alert(id01 + id02 + id03)
+                /*  frameWindow.AV.EditorLauncher.discussionTopic(id01, id02, '', 'reply', 'Reply to Post', id03)*/
+                frameWindow.AV.EditorLauncher.discussionTopic('334766', '11315', '', 'reply', 'Reply to Post', 'lnkTopicReply334766')
 
 
-      alert("launcher should be on the screen") 
-            //let waitforForm = setInterval(function () {
-            //    if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-            //        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
-            //        frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
-            //        clearInterval(waitforForm)
-                
-            //        pressButton()
-            //    }
-            //}, 1000)
-        } catch (error) { alert(error.message) }
 
-    }
+                alert("launcher should be on the screen")
+                //let waitforForm = setInterval(function () {
+                //    if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
+                //        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
+                //        frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
+                //        clearInterval(waitforForm)
+
+                //        pressButton()
+                //    }
+                //}, 1000)
+            } catch (error) { alert(error.message) }
+
+        }
+    });
+
+ 
 
     if (selectedPost.childElementCount > 3) {
         document.getElementById("postComments").innerHTML = selectedPost.innerHTML
