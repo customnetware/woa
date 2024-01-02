@@ -282,7 +282,7 @@ function showComments(SelectedPostID, postComment) {
    
             let waitforForm = setInterval(function () {
                 if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-                    frameWindow.documentgetElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
+                    frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
                     frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                     clearInterval(waitforForm)
                     pressButton()
