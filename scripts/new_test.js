@@ -295,8 +295,8 @@ function pressButton(frameWindow) {
 
         if (frameWindow.document.getElementsByClassName(" x-window x-window-plain x-window-dlg").length > 0) {
             alert("found")
-            if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
-                alert("button found")
+            if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 6) {
+                alert(frameWindow.document.getElementsByClassName(" x-btn-text").length)
                 let allButtons = frameWindow.document.getElementsByClassName(" x-btn-text")
                 clearInterval(waitforConfirm)
                 for (let p = 0; p < test.length; p++) {
