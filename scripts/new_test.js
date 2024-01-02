@@ -279,7 +279,8 @@ function showComments(SelectedPostID, postComment) {
 
                 let testText = id01 + ", " + id02 + ", '', 'reply', 'Reply to Post', " + id03
                 alert(testText)
-                frameWindow.AV.EditorLauncher.discussionTopic(testText)
+                let funcTest = frameWindow.AV.EditorLauncher.discussionTopic(testText)
+                alert(funcTest)
                 /*frameWindow.AV.EditorLauncher.discussionTopic('334766', '11315', '', 'reply', 'Reply to Post', 'lnkTopicReply334766')*/
 
                 //let waitforForm = setInterval(function () {
