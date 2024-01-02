@@ -261,7 +261,7 @@ function getGroupPosts(selectedGroups, numOfDays) {
     }
 }
 function showComments(SelectedPostID, postComment) {
-    //replyContent
+
     document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
 
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
@@ -271,7 +271,7 @@ function showComments(SelectedPostID, postComment) {
 
     if (postComment == true) {
         try {
-
+            alert(document.getElementById("woaFrame").src)
             let frameWindow = document.getElementById('woaFrame').contentWindow
   
             let id01 = "'" + frameLink.split(",")[0] + "'"
