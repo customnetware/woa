@@ -264,18 +264,12 @@ function showComments(SelectedPostID, postComment) {
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
 
-    let param01 = frameLink.split(",")[1], param02 = frameLink.split(",")[2], param03 = frameLink.split(",")[5]
-
-
-
-
     if (postComment == true) {
-        document.getElementById("woaFrame").src = "/Discussion/28118~" + param01 + "~" + param03.replace("lnkTopicReply", "")
+        document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
         $('#woaFrame').on('load', function () {
             try {
-
                 let frameWindow = document.getElementById('woaFrame').contentWindow
-                frameWindow.AV.EditorLauncher.discussionTopic(param01, param02, '', 'reply', 'Reply to Post', param03)
+                frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
                 let waitforForm = setInterval(function () {
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                         frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
@@ -289,10 +283,10 @@ function showComments(SelectedPostID, postComment) {
     }
 
 
-    document.getElementById("postComments").innerHTML = selectedPost.innerHTML
-    document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
+        document.getElementById("postComments").innerHTML = selectedPost.innerHTML
+        document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
 
-    if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
+        if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
 
 }
 function pressButton() {
