@@ -294,6 +294,7 @@ function pressButton(frameWindow) {
     let waitforConfirm = setInterval(function () {
 
         if (frameWindow.document.getElementsByClassName(" x-window x-window-plain x-window-dlg").length > 0) {
+            alert("found")
             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                 let allButtons = frameWindow.document.getElementsByClassName(" x-btn-text")
                 clearInterval(waitforConfirm)
