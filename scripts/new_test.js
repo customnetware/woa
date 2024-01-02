@@ -283,15 +283,15 @@ function showComments(SelectedPostID, postComment) {
 
 
                 alert("launcher should be on the screen")
-                //let waitforForm = setInterval(function () {
-                //    if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-                //        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
-                //        frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
-                //        clearInterval(waitforForm)
+                let waitforForm = setInterval(function () {
+                    if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
+                        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
+                        frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
+                        clearInterval(waitforForm)
 
-                //        pressButton()
-                //    }
-                //}, 1000)
+                        pressButton()
+                    }
+                }, 1000)
             } catch (error) { alert(error.message) }
 
         }
