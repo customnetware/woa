@@ -272,7 +272,8 @@ function showComments(SelectedPostID, postComment) {
                 frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
                 let waitforForm = setInterval(function () {
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-                        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerText = document.getElementById("replyContent").innerText
+                        alert(document.getElementById("replyContent").textContent)
+                        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").textContent
                         frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                         clearInterval(waitforForm)
                         pressButton()
@@ -305,9 +306,8 @@ function pressButton() {
 }
 $(window).load(function () {
     $("#postSettingsAlert").on("hide.bs.modal", function () {
-        alert("here")
         document.getElementById("postComments").innerHTML = ""
-        document.getElementById("replyContent").innerHTML = ""
+        document.getElementById("replyContent").textContent = ""
     })
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
