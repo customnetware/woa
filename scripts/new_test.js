@@ -285,6 +285,7 @@ function showComments(SelectedPostID, postComment) {
                     frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
                     frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                     clearInterval(waitforForm)
+                    alert("Starting Save")
                     pressButton()
                 }
             }, 1000)
