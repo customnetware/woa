@@ -263,23 +263,13 @@ function getGroupPosts(selectedGroups, numOfDays) {
 function showComments(SelectedPostID, postComment) {
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
-
+    document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
 
     if (postComment == true) {
-        document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
         $('#woaFrame').on('load', function () {
-
             try {
-
                 let frameWindow = document.getElementById('woaFrame').contentWindow
-
-                let id01 = "'" + frameLink.split(",")[0] + "'"
-                let id02 = "'" + frameLink.split(",")[1] + "'"
-                let id03 = "'" + frameLink.split(",")[5] + "'"
-
                 frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
-
-
                 let waitforForm = setInterval(function () {
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                         frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
@@ -289,18 +279,15 @@ function showComments(SelectedPostID, postComment) {
                     }
                 }, 1000)
             } catch (error) { alert(error.message) }
-
-
         })
     }
 
 
-    if (selectedPost.childElementCount > 3) {
-        document.getElementById("postComments").innerHTML = selectedPost.innerHTML
-        document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
+    document.getElementById("postComments").innerHTML = selectedPost.innerHTML
+    document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
 
-        if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
-    }
+    if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
+
 }
 function pressButton() {
     let frameWindow = document.getElementById('woaFrame').contentWindow
