@@ -16,19 +16,22 @@ function viewSavedMessages(savedMessageURL) {
     let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
     let emailPopUp = document.getElementById("emailsSaved")
     while (emailPopUp.firstChild) { emailPopUp.removeChild(emailPopUp.firstChild) }
-    for (let p = 0; p < emailData.length; p++) {
-        let newParagraph = document.createElement("span")
-        let emailURL = document.createElement("a")
-        emailURL.innerHTML = emailData[p][1]
-        emailURL.href = "javascript:viewSavedMessages('" + emailData[p][3] + "')"
-        newParagraph.appendChild(emailURL)
-        emailPopUp.appendChild(newParagraph)
-    }
+
     if (savedMessageURL.includes("/Messenger/MessageView/")) {
         $("#emailsSaved").load(pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
             if (statusTxt == "error") { emailPopUp.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
         })
+    } else {
+        for (let p = 0; p < emailData.length; p++) {
+            let newParagraph = document.createElement("span")
+            let emailURL = document.createElement("a")
+            emailURL.innerHTML = emailData[p][1]
+            emailURL.href = "javascript:viewSavedMessages('" + emailData[p][3] + "')"
+            newParagraph.appendChild(emailURL)
+            emailPopUp.appendChild(newParagraph)
+        }
     }
+
     if (!$("#showEmailAlert").is(":visible")) { $("#showEmailAlert").modal("show") }
 }
 function getResidentHomePage() {
