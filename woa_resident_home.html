@@ -19,14 +19,6 @@
     </div>
     <div class="container" id="customContainer">
         <style type="text/css">
-            .modal-dialog {
-                overflow-y: initial !important
-            }
-
-            .modal-body {
-   
-                overflow-y: auto;
-            }
             #contentInner {
                 padding-top: 1% !important;
                 padding-left: 2% !important;
@@ -95,7 +87,7 @@
                 padding: 10px !important
             }
 
-                #recentNews p span:first-child, #recentEmails p span:first-child, #recentAds p span:first-child {
+                #recentNews p span:first-child, #recentEmails a:first-child, #recentAds p span:first-child {
                     font-weight: 700;
                     display: block
                 }
@@ -118,35 +110,39 @@
                 display: block;
             }
 
-            .groupPost {
+            #postComments span {
+                display: block;
+            }
+
+                #postComments span:nth-child(2n+4) {
+                    margin-top: 5px;
+                    border-top: 1px solid black;
+                }
+
+                #postComments span:nth-child(2n+5) {
+                    margin-top: 1px;
+                }
+
+            #recentPostsBody p {
                 margin: 0px;
                 padding: 10px !important
             }
 
-                .groupPost span {
+                #recentPostsBody p span {
                     display: none;
                 }
 
-                    .groupPost span:first-child {
+                    #recentPostsBody p span:first-child, #postComments span:first-child {
                         font-weight: 700;
                         display: block
                     }
 
-                    .groupPost span:nth-child(2) {
+                    #recentPostsBody p span:nth-child(2) {
                         display: block
                     }
 
-                    .groupPost span:nth-child(3) {
+                    #recentPostsBody p span:nth-child(3) {
                         display: block
-                    }
-
-                    .groupPost span:nth-child(2n+4) {
-                        margin-top: 5px;
-                        border-top: 1px solid black;
-                    }
-
-                    .groupPost span:nth-child(2n+5) {
-                        margin-top: 1px;
                     }
 
             #recentPhotos {
@@ -208,13 +204,13 @@
                     </div>
                     <div id="recentEmails" class="collapse" data-parent="#recentNotifications">
                         <div class="card-body" id="recentEmailsBody" style="overflow-y: auto">
-                            <p><span></span><span></span><a></a></p>
-                            <p><span></span><span></span><a></a></p>
-                            <p><span></span><span></span><a></a></p>
+                            <p><a></a><span></span><</p>
+                            <p><a></a><span></span></p>
+                            <p><a></a><span></span></p>
                         </div>
                         <div class="card-footer">
-                            <!--<button type="button" id="viewSaveButton" class="btn btn-primary" onclick="javascript:emailNavigation(false)" style="float:right">Browse&nbsp;<span class="fa fa-forward"></span></button>-->
-                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:emailNavigation(true)">&nbsp;<span class="fa fa-bookmark-o"></span>&nbsp;View Saved Emails</button>
+                            <!--<button type="button" id="viewSaveButton" class="btn btn-primary" onclick="javascript:viewSavedMessages(false)" style="float:right">Browse&nbsp;<span class="fa fa-forward"></span></button>-->
+                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:viewSavedMessages('showSaved')">&nbsp;<span class="fa fa-bookmark-o"></span>&nbsp;View Saved Emails</button>
                             <input type="hidden" id="currentEmailIDs" />
                         </div>
                     </div>
@@ -228,8 +224,9 @@
                     </div>
                     <div id="recentPosts" class="collapse" data-parent="#recentNotifications">
                         <div class="card-body" id="recentPostsBody"></div>
-                        <div class="card-footer">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postSettingsAlert">View more posts.</button>
+                        <div class="card-footer" style="vertical-align:middle">
+                            <input type="range" class="form-control-range" id="formControlRange" min="1" max="72" value="3" onInput="$('#rangeval').html($(this).val())">
+                            <i>Move the slider to view more posts. Currently viewing <span id="rangeval">3</span> months of history.</i> <a href="javascript:getGroups()" style="font-weight:800">Save Changes</a>
                         </div>
                     </div>
                 </div>
@@ -284,42 +281,18 @@
             </div>
 
             <div class="modal fade" id="postSettingsAlert" tabindex="-1" aria-labelledby="postSettingsAlertLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="po  stSettingsAlertLabel">Discussion Group View Time Period</h5>
+                            <h5 class="modal-title" id="postSettingsAlertLabel">Viewing Selected Post</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="formControlRange">Use the slider to change the time period</label>
-                                    <input type="range" class="form-control-range" id="formControlRange" min="1" max="72" value="3" onInput="$('#rangeval').html($(this).val())">
-                                    <span id="rangeval">3</span> (Number of Months)
-                                    <hr />
-                                    <div><b>Select the discussion group to view</b></div>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="optradio" value="8364" checked> General Discussion
-                                        </label>
-                                    </div>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="optradio" value="8030"> Recommendations
-                                        </label>
-                                    </div>
-                                    <div class="form-check-inline disabled">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="optradio" disabled>  All Groups
-                                        </label>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                        <div class="modal-body" id="postComments"></div>
+
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:getDiscussionGroups()">Save changes</button>
+
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -355,9 +328,10 @@
                             </button>
                         </div>
                         <div class="modal-body" id="emailsSaved">
-                
+
                         </div>
                         <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="javascript:viewSavedMessages('returnToSave')">Return To Saved Emails</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                         </div>

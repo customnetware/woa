@@ -11,72 +11,25 @@ function updateHeader(headerID, headerClass, headerTitle, headerLen) {
     cardHeader[1].innerHTML = headerTitle
     cardHeader[2].innerHTML = "(" + headerLen + ")"
 }
-function emailNavigation(previousPage) {
+function viewSavedMessages(savedMessageURL) {
     let retrievedData = localStorage.getItem("emails")
     let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
     let emailPopUp = document.getElementById("emailsSaved")
-
-/*    while (emailPopUp.firstChild) { emailPopUp.removeChild(emailPopUp.firstChild) }*/
+    while (emailPopUp.firstChild) { emailPopUp.removeChild(emailPopUp.firstChild) }
     for (let p = 0; p < emailData.length; p++) {
         let newParagraph = document.createElement("span")
-        newParagraph.innerHTML = emailData[p][1]
+        let emailURL = document.createElement("a")
+        emailURL.innerHTML = emailData[p][1]
+        emailURL.href = "javascript:viewSavedMessages('" + emailData[p][3] + "')"
+        newParagraph.appendChild(emailURL)
         emailPopUp.appendChild(newParagraph)
     }
-    $("#recentPosts").load(pageLocation("https://ourwoodbridge.net/Messenger/MessageView/28118~13676912/Outdoor-Holiday-Light-Contest-Winners first:div"), function () {
-
-    })
-
-
-
-
-    $('#showEmailAlert').modal('show')
-    if (1 == 2) {
-        emailData.reverse()
-        if (emailSelected.length > 0) {
-            while (emailSelected.length > 0) { emailSelected[0].remove() }
-            for (let p = 0; p < emailList.length; p++) {
-                if (emailList[p].id.includes("H_")) {
-                    emailList[p].id = emailList[p].id.replace("H_")
-                    emailList[p].style.display = ""
-                }
-            } if (previousPage == true) { return }
-        }
-
-
-        if (emailData.length <= 3 && emailSelected.length == 0) { $('#saveEmailAlert').modal('show'); return }
-
-        if (emailCount + 1 == emailData.length || previousPage == true) {
-            emailCount = 0
-            for (let p = 0; p < emailList.length; p++) { if (p < 3) { emailList[p].style.display = "" } else { emailList[p].style.display = "none" } }
-            return
-        }
-        if (emailList.length == 3) {
-            for (let p = 3, n = 0; p < emailData.length; p++, n++) {
-                let newParagraph = emailList[0].cloneNode(true)
-                newParagraph.id = emailData[p][0]
-                newParagraph.children[0].innerHTML = emailData[p][1]
-                newParagraph.children[1].innerHTML = emailData[p][2]
-                newParagraph.children[2].href = "javascript:getEmail('" + emailData[p][3] + "')"
-                if (n > 2) { newParagraph.style.display = "none" }
-                emailList[0].parentElement.appendChild(newParagraph)
-            }
-            for (let p = 0; p < 3; p++) { emailList[p].style.display = "none" }
-            return
-        }
-        if (emailList.length > 3) {
-            for (let p = 0; p < emailList.length; p++) {
-                if (emailList[p].style.display !== "none") {
-                    emailList[p].style.display = "none"
-                    emailCount = p
-                }
-            }
-            for (let p = emailCount + 1, x = 1; p < emailList.length; p++, x++) {
-                emailList[p].style.display = ""
-                emailCount = p
-                if (x == 3) { break }
-            }
-        }
+    if (savedMessageURL.includes("/Messenger/MessageView/")) {
+        $("#emailsSaved").load(pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
+            if (statusTxt == "error") { emailPopUp.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
+        })
     }
+    if (!$("#showEmailAlert").is(":visible")) { $("#showEmailAlert").modal("show") }
 }
 function getResidentHomePage() {
     $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
@@ -92,10 +45,10 @@ function getResidentHomePage() {
             for (let p = 0; p < recentItems.length; p++) {
                 let itemContent = recentItems[p].getElementsByTagName("a")[0]
                 emailList[p].id = itemContent.id.replace("link_", "")
+                emailList[p].children[0].href = "javascript:viewSavedMessages('" + itemContent.href + "')"
                 emailList[p].children[0].innerHTML = itemContent.getAttribute("data-tooltip-title").split("by")[0]
                 emailList[p].children[1].innerHTML = itemContent.getAttribute("data-tooltip-text")
-                emailList[p].children[2].className = "fa fa-arrow-right fa-lg formatLink"
-                emailList[p].children[2].href = "javascript:getEmail('" + itemContent.href + "')"
+
                 if ((retrievedData !== null && retrievedData.includes(emailList[p].id) == false) || emailData.length == 0) {
                     emailData.push([emailList[p].id, emailList[p].children[0].innerHTML, emailList[p].children[1].innerHTML, itemContent.href])
                     let emailsToSave = JSON.stringify(emailData)
@@ -103,35 +56,6 @@ function getResidentHomePage() {
                 }
             }
             updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
-        })
-}
-function getEmail(messageID) {
-    $.get(pageLocation(messageID), function () { })
-        .done(function (responseText) {
-            let emailHTML = new DOMParser().parseFromString(responseText, "text/html")
-            let emailDisplay = document.getElementById("recentEmailsBody")
-            let emailBody = emailHTML.getElementsByTagName("table")[1]
-            let emailSubHeader = emailHTML.getElementById("tblMsgHeader").getElementsByClassName("clsGridDetail")
-            let requestedEmail = emailBody.getElementsByTagName('p')
-            let emailsToHide = emailDisplay.getElementsByTagName("p")
-            for (p = 0; p < emailsToHide.length; p++) {
-                if (emailsToHide[p].style.display !== "none") {
-                    emailsToHide[p].id = "H_" + emailsToHide[p].id
-                    emailsToHide[p].style.display = "none"
-                }
-
-            }
-            for (i = requestedEmail.length - 1; i >= 0; i--) {
-                let selectedParagraph = requestedEmail[i]
-                let divTag = document.createElement('div')
-                divTag.innerHTML = selectedParagraph.innerHTML
-                selectedParagraph.parentNode.replaceChild(divTag, selectedParagraph)
-            }
-            emailDisplay.appendChild(emailBody)
-            updateHeader("emailHeader", "fa fa-envelope-open-o", emailSubHeader[3].innerHTML, emailSubHeader[0].innerHTML)
-        })
-        .fail(function () {
-            alert("The requested email was not found on the server.  It may have been deleted or you do not have permission to view it.")
         })
 }
 function getNewsAndAnnouncements() {
@@ -248,15 +172,35 @@ function getClassifiedAds() {
             document.getElementById("classifiedHeader").children[2].innerHTML = "(" + classifiedsList.childElementCount + ")"
         })
 }
-function getDiscussionGroups() {
-    const NumOfDays = +document.getElementById("rangeval").innerText * 30
-    const selectedGroups = [8030, 8364]
+function getGroups() {
+    const numOfDays = +document.getElementById("rangeval").innerText * 30
+    try {
+        let fileLocation = (window.location.hostname == "localhost") ? "/Discussion/list/28118/discussion-groups.html" : "/Discussion/list/28118/discussion-groups"
+        let selectedGroups = ["8364"]
+        let currentDate = new Date()
+        $.get(fileLocation, function () { })
+            .done(function (responseText) {
+                let forum = new DOMParser().parseFromString(responseText, "text/html")
+                let groups = forum.getElementById("contentInner").children
+                for (let p = 2; p < groups.length; p++) {
+                    let lastPost = groups[p].getElementsByClassName("clsBodyItalic")[0].innerText
+                    let groupName = groups[p].getElementsByClassName("clsBodyText")[0].innerText
+                    let groupID = groups[p].getElementsByClassName("clsBodyText")[0].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
+                    let dateStart = lastPost.indexOf("Last Post:")
+                    let postDate = (dateStart > -1) ? new Date(lastPost.substr(dateStart + 10, 18)) : new Date("01/01/2001")
+                    let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
+                    groupName = (groupName.includes(".")) ? groupName.split(".")[1] : groupName
+                    if (dayDiff < numOfDays && groupID !== "8364") { selectedGroups.push(groupID + "|" + groupName + "|" + postDate.toLocaleDateString) }
+                } getGroupPosts(selectedGroups, numOfDays)
+            })
+    } catch { }
+}
+function getGroupPosts(selectedGroups, numOfDays) {
     const postList = document.getElementById("recentPostsBody")
     postList.innerHTML = ""
-    //let selectedGroups = document.getElementsByName("optradio")
-    //for (g = 0; g < selectedGroups.length; g++) { if (selectedGroups[g].checked == true) { selectedGroup = selectedGroups[g].value } }
+
     for (let h = 0; h < selectedGroups.length; h++) {
-        $.get(pageLocation("/Discussion/28118~" + selectedGroups[h]), function () { })
+        $.get(pageLocation("/Discussion/28118~" + selectedGroups[h].split("|")[0]), function () { })
             .done(function (responseText) {
                 let forum = new DOMParser().parseFromString(responseText, "text/html")
                 let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
@@ -267,27 +211,30 @@ function getDiscussionGroups() {
                     let messageContacts = postContents[h].getElementsByClassName("respReplyWrapper")
                     let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
                     let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-                    if (dayDiff <= NumOfDays) {
+                    if (dayDiff <= numOfDays || (selectedGroups.length == 1 && dayDiff > numOfDays)) {
                         let currentPost = document.createElement("p")
                         let postHeader = document.createElement("span")
                         let postMessage = document.createElement("span")
                         let postAuthor = document.createElement("span")
-                        let postReply = document.createElement("a")
+
                         postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
-                        postReply.className = "fa fa-reply fa-lg formatLink"
-                        postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
-                        postHeader.appendChild(postReply)
-                        if (messageTexts.length > 1) {
-                            let replys = document.createElement("a")
-                            replys.className = "fa fa-comments fa-lg formatLink"
-                            replys.href = "javascript:showReplies(" + document.getElementsByClassName("groupPost").length + ")"
-                            postHeader.appendChild(replys)
-                            postHeader.appendChild(document.createTextNode(" (" + (messageTexts.length - 1) + ") "))
-                        }
                         postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
                         postAuthor.appendChild(document.createTextNode(messageAuthor[0].innerText))
                         currentPost.appendChild(postHeader)
                         currentPost.appendChild(postMessage)
+
+                        let postLink = document.createElement("a")
+                        postLink.style.fontWeight="800"
+                        postLink.innerHTML = " | Comments: (" + (messageTexts.length - 1) + ") | "
+                        postLink.href = "javascript:showComments(" + document.getElementsByClassName("groupPost").length + ")"
+                        postAuthor.appendChild(postLink)
+
+                        let postReply = document.createElement("a")
+                        postReply.style.fontWeight = "800"
+                        postReply.innerHTML = messageContacts[0].getElementsByTagName("a")[0].innerHTML
+                        postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
+                        postAuthor.appendChild(postReply)
+
                         currentPost.appendChild(postAuthor)
                         for (let p = 1; p < messageTexts.length; p++) {
                             let replyMessage = document.createElement("span")
@@ -300,30 +247,27 @@ function getDiscussionGroups() {
                         currentPost.className = "groupPost"
                         postList.appendChild(currentPost)
                     }
-                }
+                    if (selectedGroups.length == 1 && dayDiff > numOfDays) {break }
+}
             })
             .always(function () {
                 document.getElementById("postHeader").children[2].innerHTML = "(" + postList.childElementCount + ")"
             })
     }
 }
-function showReplies(p_id) {
-    let posts = document.getElementsByClassName("groupPost")
-    for (let p = 0; p < posts.length; p++) {
-        let replies = posts[p].getElementsByTagName("span")
-        if (replies.length > 3) {
-            for (let r = 3; r < replies.length; r++) {
-                if (p == p_id) {
-                    if (replies[r].style.display == "block") {
-                        replies[r].style.display = "none"
-                    } else { replies[r].style.display = "block" }
-                } else { replies[r].style.display = "none" }
-            }
-        }
+function showComments(SelectedPostID) {
+    let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
+    if (selectedPost.childElementCount > 3) {
+        document.getElementById("postComments").innerHTML = selectedPost.innerHTML
+
+        if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
     }
 }
 $(window).load(function () {
+    $("#postSettingsAlert").on("hidden.bs.modal", function () {
+        document.getElementById("postComments").innerHTML = ""
 
+    })
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
     })
@@ -333,7 +277,7 @@ $(window).load(function () {
     getProfilePage()
     getResourceCenter()
     getNewsAndAnnouncements()
-    getDiscussionGroups()
+    getGroups()
     getClassifiedAds()
     getResidentHomePage()
 })

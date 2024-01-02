@@ -1,14 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\homepage",
-    "\\homepage\\28118",
-    "\\Messenger",
-    "\\Messenger\\MessageView",
-    "\\Messenger\\MessageView\\28118~13655566",
-    "\\Messenger\\MessageView\\28118~13676607",
+    "\\Discussion",
+    "\\Discussion\\list",
+    "\\Discussion\\list\\28118",
+    "\\Member",
     "\\scripts"
   ],
-  "SelectedNode": "\\scripts\\new_test.js",
+  "SelectedNode": "\\scripts\\woa_resident_home_new.js",
   "PreviewInSolutionExplorer": false
 }
