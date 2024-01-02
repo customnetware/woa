@@ -271,17 +271,19 @@ function showComments(SelectedPostID, postComment) {
 
     if (postComment == true) {
         try {
-            let frameWindow = document.getElementById('woaFrame').contentWindow
+
+            let frameWindow = document.getElementById('woaFrame').contentDocument || document.getElementById('woaFrame').contentWindow.document;
+  
             let id01 = "'" + frameLink.split(",")[0] + "'"
             let id02 = "'" + frameLink.split(",")[1] + "'"
             let id03 = "'" + frameLink.split(",")[5] + "'"
-            let frameWindow = document.getElementById('woaFrame').contentWindow
+
             frameWindow.AV.EditorLauncher.discussionTopic(id01, id02, '', 'reply', 'Reply to Post', id03)
             alert(id01+id02+ id03)
             let waitforForm = setInterval(function () {
-                if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-                    frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
-                    frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
+                if (frameWindow.getElementsByTagName("iframe").length > 0) {
+                    frameWindow.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
+                    frameWindow.getElementsByClassName("x-btn-text save-button")[0].click()
                     clearInterval(waitforForm)
                     pressButton()
                 }
