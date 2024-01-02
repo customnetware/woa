@@ -267,7 +267,7 @@ function showComments(SelectedPostID, postComment) {
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
     document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
-
+    alert("/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", ""))
 
     if (postComment == true) {
         try {
@@ -279,13 +279,13 @@ function showComments(SelectedPostID, postComment) {
             let id03 = "'" + frameLink.split(",")[5] + "'"
 
             frameWindow.AV.EditorLauncher.discussionTopic(id01, id02, '', 'reply', 'Reply to Post', id03)
-   
+     alert("Starting Save")
             let waitforForm = setInterval(function () {
                 if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                     frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
                     frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                     clearInterval(waitforForm)
-                    alert("Starting Save")
+                  
                     pressButton()
                 }
             }, 1000)
