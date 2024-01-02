@@ -263,13 +263,19 @@ function getGroupPosts(selectedGroups, numOfDays) {
 function showComments(SelectedPostID, postComment) {
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
-    document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
+
+    let param01 = frameLink.split(",")[1], param02 = frameLink.split(",")[2], parm03 = frameLink.split(",")[5]
+
+
+
 
     if (postComment == true) {
+        document.getElementById("woaFrame").src = "/Discussion/28118~" + param01 + "~" + parm03.replace("lnkTopicReply", "")
         $('#woaFrame').on('load', function () {
             try {
+
                 let frameWindow = document.getElementById('woaFrame').contentWindow
-                frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
+                frameWindow.AV.EditorLauncher.discussionTopic(parm01, parm02, '', 'reply', 'Reply to Post', parm03)
                 let waitforForm = setInterval(function () {
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                         frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
