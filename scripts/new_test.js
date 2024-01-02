@@ -261,10 +261,12 @@ function getGroupPosts(selectedGroups, numOfDays) {
     }
 }
 function showComments(SelectedPostID, postComment) {
+  
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
 
     if (postComment == true) {
+
         document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
         $('#woaFrame').on('load', function () {
             try {
@@ -272,8 +274,8 @@ function showComments(SelectedPostID, postComment) {
                 frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
                 let waitforForm = setInterval(function () {
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-                        alert(document.getElementById("replyContent").innerHTML)
-                        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").innerHTML
+                        
+                        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
                         frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                         clearInterval(waitforForm)
                         pressButton()
