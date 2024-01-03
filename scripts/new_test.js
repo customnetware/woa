@@ -287,7 +287,6 @@ function addComments(SelectedPostID) {
             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                 frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
                 clearInterval(waitforConfirm)
-                showComments(SelectedPostID)
                 alert("Your comments has been posted")
 
             }
