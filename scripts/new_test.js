@@ -287,9 +287,9 @@ function addComments(SelectedPostID) {
             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                 frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
                 clearInterval(waitforConfirm)
-                getGroups()
-                document.getElementById("postComments").innerHTML = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID].innerHTML
+                getGroups()               
                 alert("Your comments has been posted")
+                document.getElementById("postComments").innerHTML = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID].innerHTML
             }
 
         }, 1000)
