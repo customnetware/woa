@@ -230,7 +230,8 @@ function getGroupPosts(selectedGroups, numOfDays) {
                             let postLink = document.createElement("a")
                             postLink.style.fontWeight = "800"
                             postLink.innerHTML = " | Comments: (" + (messageTexts.length - 1) + ") | "
-                            postLink.href = "javascript:showComments(" + document.getElementsByClassName("groupPost").length + ")"
+                            postLink.href = "javascript:showComments(" + document.getElementsByClassName("groupPost").length + ",true)"
+
                             postAuthor.appendChild(postLink)
 
                             let postReply = document.createElement("a")
@@ -260,13 +261,14 @@ function getGroupPosts(selectedGroups, numOfDays) {
         }
     }
 }
-function showComments(SelectedPostID) {
+function showComments(SelectedPostID, showForm) {
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
     document.getElementById("saveComment").href = "javascript:addComments(" + SelectedPostID + ")"
     document.getElementById("postComments").innerHTML = selectedPost.innerHTML
     document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[0] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
-    if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
+
+    if (!$("#postSettingsAlert").is(":visible") && showForm == true) { $("#postSettingsAlert").modal("show") }
 }
 function addComments(SelectedPostID) {
     try {
@@ -284,6 +286,8 @@ function addComments(SelectedPostID) {
         let waitforConfirm = setInterval(function () {
             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                 frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
+                if ($("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("hide") }
+                showComments(SelectedPostID, false)
                 clearInterval(waitforConfirm)
             }
 
