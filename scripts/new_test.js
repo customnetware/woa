@@ -230,7 +230,7 @@ function getGroupPosts(selectedGroups, numOfDays) {
                             let postLink = document.createElement("a")
                             postLink.style.fontWeight = "800"
                             postLink.innerHTML = " | Comments: (" + (messageTexts.length - 1) + ") | "
-                            postLink.href = "javascript:showComments(" + document.getElementsByClassName("groupPost").length + ",false)"
+                            postLink.href = "javascript:showComments(" + document.getElementsByClassName("groupPost").length + ")"
                             postAuthor.appendChild(postLink)
 
                             let postReply = document.createElement("a")
@@ -260,22 +260,21 @@ function getGroupPosts(selectedGroups, numOfDays) {
         }
     }
 }
-function showComments(SelectedPostID, postComment) {
+function showComments(SelectedPostID) {
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
-    let param00 = frameLink.split(",")[0], param01 = frameLink.split(",")[1], param05 = frameLink.split(",")[5]
-    document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
+    document.getElementById("saveComment").href = "javascript:addComments(" + SelectedPostID + ")"
     document.getElementById("postComments").innerHTML = selectedPost.innerHTML
-    document.getElementById("woaFrame").src = "/Discussion/28118~" + param01 + "~" + param05.replace("lnkTopicReply", "")
+    document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[0] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
     document.getElementById("woaFrame").addEventListener("load", function () { alert("iframe has loaded") })
-
-
     /*    if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }*/
 }
-function addComments(param01, param02, param03) {
+function addComments(SelectedPostID) {
     try {
+        let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
+        let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
         let frameWindow = document.getElementById('woaFrame').contentWindow
-        frameWindow.AV.EditorLauncher.discussionTopic(param01, param02, '', 'reply', 'Reply to Post', param03)
+        frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
         let waitforForm = setInterval(function () {
             if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                 frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
