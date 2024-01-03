@@ -278,19 +278,19 @@ function showComments(SelectedPostID, postComment) {
                         clearInterval(waitforForm)
                     }
                 }, 1000)
-                alert("interval cleard")
-            //    let waitforConfirm = setInterval(function () {
-            //        if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
-            //            frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
-            //            clearInterval(waitforConfirm)
-            //        }
+                alert("interval cleared")
+                //let waitforConfirm = setInterval(function () {
+                //    if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
+                //        frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
+                //        clearInterval(waitforConfirm)
+                //    }
 
-            //    }, 1000)
+                //}, 1000)
             } catch (error) { alert(error.message) }
         })
     }
     document.getElementById("postComments").innerHTML = selectedPost.innerHTML
-  /*  document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"*/
+      document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
     if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
 }
 
