@@ -261,22 +261,20 @@ function getGroupPosts(selectedGroups, numOfDays) {
     }
 }
 function showComments(SelectedPostID, postComment) {
-
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
-
     if (postComment == true) {
         document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
-        document.getElementById("woaFrame").addEventListener("load", addComments);
+        document.getElementById("woaFrame").addEventListener("load", addComments(frameLink.split(",")[0].frameLink.split(",")[1], frameLink.split(",")[5]))
     }
     document.getElementById("postComments").innerHTML = selectedPost.innerHTML
     document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
     if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
 }
-function addComments() {
+function addComments(param01,param02,param03) {
     try {
         let frameWindow = document.getElementById('woaFrame').contentWindow
-        frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
+        frameWindow.AV.EditorLauncher.discussionTopic(param01, param02, '', 'reply', 'Reply to Post', param03)
         let waitforForm = setInterval(function () {
             if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                 frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
@@ -292,7 +290,8 @@ function addComments() {
 
         }, 1000)
 
-    } catch (error) { alert(error.message) } }
+    } catch (error) { alert(error.message) }
+}
 $(window).load(function () {
     $("#postSettingsAlert").on("hide.bs.modal", function () {
         document.getElementById("postComments").innerHTML = ""
