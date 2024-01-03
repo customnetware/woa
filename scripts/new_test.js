@@ -292,7 +292,7 @@ function addComments() {
                 clearInterval(waitforConfirm)
                 alert("Your comments has been posted")
                 $("#postSettingsAlert").modal("hide")
-                window.location.reload(forcedReload)
+                location.reload()
             }
         }, 1000)
 
