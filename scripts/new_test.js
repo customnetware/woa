@@ -285,10 +285,10 @@ function showComments(SelectedPostID, postComment) {
                     if (searchComplete == true) {
                         if (frameWindow.document.getElementsByClassName(" x-window x-window-plain x-window-dlg").length > 0) {
                             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
-
                                 let allButtons = frameWindow.document.getElementsByClassName(" x-btn-text")
                                 for (let p = 0; p < allButtons.length; p++) {
                                     if (allButtons[p].innerHTML == "Confirm") {
+                                        alert(p)
                                         allButtons[p].click()
                                         break
                                         clearInterval(waitforConfirm)
