@@ -291,7 +291,7 @@ function addComments(param01,param02,param03) {
             }
 
         }, 1000)
-
+        document.getElementById("woaFrame").removeEventListener("load", function () { addComments(param00, param01, param05) })
     } catch (error) { alert(error.message) }
 }
 $(window).load(function () {
