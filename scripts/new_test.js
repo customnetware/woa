@@ -276,7 +276,7 @@ function showComments(SelectedPostID, postComment) {
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                         clearInterval(waitforForm)
                         frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
-                        frameWindow.document.getElementsByClassName(" x-btn-text save-button")[0].click()
+                        frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                         searchComplete = true
                     }
                 }, 1000)
