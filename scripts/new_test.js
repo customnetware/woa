@@ -261,14 +261,14 @@ function getGroupPosts(selectedGroups, numOfDays) {
         }
     }
 }
-function showComments(SelectedPostID, showForm) {
+function showComments(SelectedPostID) {
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
     document.getElementById("saveComment").href = "javascript:addComments(" + SelectedPostID + ")"
     document.getElementById("postComments").innerHTML = selectedPost.innerHTML
     document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[0] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
 
-    if (!$("#postSettingsAlert").is(":visible") && showForm == true) { $("#postSettingsAlert").modal("show") }
+    if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
 }
 function addComments(SelectedPostID) {
     try {
@@ -286,7 +286,7 @@ function addComments(SelectedPostID) {
         let waitforConfirm = setInterval(function () {
             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                 frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
-                showComments(SelectedPostID, false)
+                showComments(SelectedPostID)
                 clearInterval(waitforConfirm)
             }
 
