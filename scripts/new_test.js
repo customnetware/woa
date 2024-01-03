@@ -290,11 +290,9 @@ function addComments() {
             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                 frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
                 clearInterval(waitforConfirm)
-                getGroups()
                 alert("Your comments has been posted")
-                document.getElementById("postComments").innerHTML = document.getElementById("recentPostsBody").getElementsByTagName("p")[sessionStorage.getItem("selectedPostID")].innerHTML
+                window.location.reload(forcedReload)
             }
-
         }, 1000)
 
     } catch (error) { alert(error.message) }
