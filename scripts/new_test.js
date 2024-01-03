@@ -275,9 +275,8 @@ function showComments(SelectedPostID, postComment) {
                     clearInterval(waitforForm)
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                         frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
-                        frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
+                        frameWindow.document.getElementsByClassName(" x-btn-text save-button")[0].click()
                         searchComplete = true
-
                     }
                 }, 1000)
                 let waitforConfirm = setInterval(function () {
