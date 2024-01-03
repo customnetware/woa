@@ -287,8 +287,9 @@ function addComments(SelectedPostID) {
             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                 frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
                 clearInterval(waitforConfirm)
+                getGroups()
+                document.getElementById("postComments").innerHTML = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID].innerHTML
                 alert("Your comments has been posted")
-
             }
 
         }, 1000)
@@ -299,7 +300,6 @@ $(window).load(function () {
     $("#postSettingsAlert").on("hide.bs.modal", function () {
         document.getElementById("postComments").innerHTML = ""
         document.getElementById("replyContent").value = ""
-        getGroups()
     })
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
