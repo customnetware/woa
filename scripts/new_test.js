@@ -272,25 +272,25 @@ function showComments(SelectedPostID, postComment) {
                 let frameWindow = document.getElementById('woaFrame').contentWindow
                 frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
                 let waitforForm = setInterval(function () {
-                    
+
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-                        clearInterval(waitforForm)
+
                         frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
                         frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                         searchComplete = true
+                        clearInterval(waitforForm)
                     }
                 }, 1000)
                 let waitforConfirm = setInterval(function () {
                     if (searchComplete == true) {
                         if (frameWindow.document.getElementsByClassName(" x-window x-window-plain x-window-dlg").length > 0) {
                             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
-                               
+
                                 let allButtons = frameWindow.document.getElementsByClassName(" x-btn-text")
                                 for (let p = 0; p < allButtons.length; p++) {
-                                    alert(allButtons[p].innerHTML)
                                     if (allButtons[p].innerHTML == "Confirm") {
                                         allButtons[p].click()
-                                        alert("button clicked")
+                                        break
                                         clearInterval(waitforConfirm)
                                     }
                                 }
