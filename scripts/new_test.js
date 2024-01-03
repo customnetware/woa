@@ -264,18 +264,21 @@ function getGroupPosts(selectedGroups, numOfDays) {
 function showComments(SelectedPostID) {
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
-    document.getElementById("saveComment").href = "javascript:addComments(" + SelectedPostID + ")"
+
+    sessionStorage.setItem("selectedPostID", SelectedPostID)
+    sessionStorage.setItem("portalPostID", frameLink.split(",")[0])
+    sessionStorage.setItem("portalGroupID", frameLink.split(",")[1])
+    sessionStorage.setItem("portalReplyID", frameLink.split(",")[5])
+
     document.getElementById("postComments").innerHTML = selectedPost.innerHTML
-    document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[0] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
+    document.getElementById("woaFrame").src = "/Discussion/28118~" + sessionStorage.getItem("portalPostID") + "~" + sessionStorage.getItem("portalReplyID").replace("lnkTopicReply", "")
 
     if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
 }
-function addComments(SelectedPostID) {
+function addComments() {
     try {
-        let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
-        let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
         let frameWindow = document.getElementById('woaFrame').contentWindow
-        frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
+        frameWindow.AV.EditorLauncher.discussionTopic(sessionStorage.getItem("portalPostID"), sessionStorage.getItem("portalGroupID"), '', 'reply', 'Reply to Post', sessionStorage.getItem("portalReplyID"))
         let waitforForm = setInterval(function () {
             if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                 frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
@@ -287,9 +290,9 @@ function addComments(SelectedPostID) {
             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                 frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
                 clearInterval(waitforConfirm)
-                getGroups()               
+                getGroups()
                 alert("Your comments has been posted")
-                document.getElementById("postComments").innerHTML = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID].innerHTML
+                document.getElementById("postComments").innerHTML = document.getElementById("recentPostsBody").getElementsByTagName("p")[sessionStorage.getItem("selectedPostID")].innerHTML
             }
 
         }, 1000)
