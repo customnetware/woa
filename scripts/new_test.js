@@ -263,9 +263,10 @@ function getGroupPosts(selectedGroups, numOfDays) {
 function showComments(SelectedPostID, postComment) {
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
+    let param00 = frameLink.split(",")[0], param01 = frameLink.split(",")[1], param05 = frameLink.split(",")[5]
     if (postComment == true) {
-        document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
-        document.getElementById("woaFrame").addEventListener("load", function () { addComments(frameLink.split(",")[0].frameLink.split(",")[1], frameLink.split(",")[5]) })
+        document.getElementById("woaFrame").src = "/Discussion/28118~" + param01 + "~" + param05.replace("lnkTopicReply", "")
+        document.getElementById("woaFrame").addEventListener("load", function () { addComments(param00, param01, param05) })
 
     }
     document.getElementById("postComments").innerHTML = selectedPost.innerHTML
