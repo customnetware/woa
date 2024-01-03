@@ -299,7 +299,7 @@ $(window).load(function () {
     $("#postSettingsAlert").on("hide.bs.modal", function () {
         document.getElementById("postComments").innerHTML = ""
         document.getElementById("replyContent").value = ""
-        location.reload()
+        getGroups()
     })
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
