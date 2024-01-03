@@ -291,7 +291,7 @@ function addComments() {
                 frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
                 clearInterval(waitforConfirm)
                 alert("Your comments has been posted")
-                window.location.reload(forcedReload)
+                $("#postSettingsAlert").modal("hide")
             }
         }, 1000)
 
