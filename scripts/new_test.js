@@ -286,7 +286,6 @@ function addComments(SelectedPostID) {
         let waitforConfirm = setInterval(function () {
             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                 frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
-                if ($("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("hide") }
                 showComments(SelectedPostID, false)
                 clearInterval(waitforConfirm)
             }
