@@ -266,8 +266,7 @@ function showComments(SelectedPostID) {
     document.getElementById("saveComment").href = "javascript:addComments(" + SelectedPostID + ")"
     document.getElementById("postComments").innerHTML = selectedPost.innerHTML
     document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[0] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
-    document.getElementById("woaFrame").addEventListener("load", function () { alert("iframe has loaded") })
-        if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
+    if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
 }
 function addComments(SelectedPostID) {
     try {
