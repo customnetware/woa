@@ -286,8 +286,10 @@ function addComments(SelectedPostID) {
         let waitforConfirm = setInterval(function () {
             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                 frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
-                showComments(SelectedPostID)
                 clearInterval(waitforConfirm)
+                showComments(SelectedPostID)
+                alert("Your comments has been posted")
+
             }
 
         }, 1000)
