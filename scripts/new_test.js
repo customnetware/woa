@@ -272,8 +272,9 @@ function showComments(SelectedPostID, postComment) {
                 let frameWindow = document.getElementById('woaFrame').contentWindow
                 frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
                 let waitforForm = setInterval(function () {
-                    clearInterval(waitforForm)
+                    
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
+                        clearInterval(waitforForm)
                         frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
                         frameWindow.document.getElementsByClassName(" x-btn-text save-button")[0].click()
                         searchComplete = true
