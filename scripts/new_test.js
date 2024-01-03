@@ -261,7 +261,7 @@ function getGroupPosts(selectedGroups, numOfDays) {
     }
 }
 function showComments(SelectedPostID, postComment) {
-    let searchComplete = false
+
     let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
 
@@ -286,12 +286,11 @@ function showComments(SelectedPostID, postComment) {
 
                 }, 1000)
                 alert("should stop here")
-                return
             } catch (error) { alert(error.message) }
         })
     }
     document.getElementById("postComments").innerHTML = selectedPost.innerHTML
-    /*  document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"*/
+    document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
     if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
 }
 
