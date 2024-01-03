@@ -265,7 +265,8 @@ function showComments(SelectedPostID, postComment) {
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
     if (postComment == true) {
         document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
-        document.getElementById("woaFrame").addEventListener("load", addComments(frameLink.split(",")[0].frameLink.split(",")[1], frameLink.split(",")[5]))
+        document.getElementById("woaFrame").addEventListener("load", function () { addComments(frameLink.split(",")[0].frameLink.split(",")[1], frameLink.split(",")[5]) })
+
     }
     document.getElementById("postComments").innerHTML = selectedPost.innerHTML
     document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
