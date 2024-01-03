@@ -281,14 +281,12 @@ function showComments(SelectedPostID, postComment) {
                     }
                 }, 1000)
                 let waitforConfirm = setInterval(function () {
-
                     if (searchComplete == true) {
                         if (frameWindow.document.getElementsByClassName(" x-window x-window-plain x-window-dlg").length > 0) {
                             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                                 clearInterval(waitforConfirm)
                                 let allButtons = frameWindow.document.getElementsByClassName(" x-btn-text")
-                                alert(allButtons.length)
-                                for (let p = 0; p < test.length; p++) {
+                                for (let p = 0; p < allButtons.length; p++) {
                                     alert(allButtons[p].innerHTML)
                                     if (allButtons[p].innerHTML == "Confirm") {
                                         allButtons[p].click()
