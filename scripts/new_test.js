@@ -273,7 +273,8 @@ function showComments(SelectedPostID, postComment) {
     document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
     if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
 }
-function addComments(param01,param02,param03) {
+function addComments(param01, param02, param03) {
+    document.getElementById("woaFrame").removeEventListener("load", function () { addComments(param00, param01, param05) })
     try {
         let frameWindow = document.getElementById('woaFrame').contentWindow
         frameWindow.AV.EditorLauncher.discussionTopic(param01, param02, '', 'reply', 'Reply to Post', param03)
@@ -291,7 +292,7 @@ function addComments(param01,param02,param03) {
             }
 
         }, 1000)
-        document.getElementById("woaFrame").removeEventListener("load", function () { addComments(param00, param01, param05) })
+
     } catch (error) { alert(error.message) }
 }
 $(window).load(function () {
