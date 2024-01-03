@@ -286,6 +286,7 @@ function showComments(SelectedPostID, postComment) {
 
                 }, 1000)
                 alert("should stop here")
+                return
             } catch (error) { alert(error.message) }
         })
     }
