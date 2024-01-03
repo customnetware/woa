@@ -278,14 +278,15 @@ function showComments(SelectedPostID, postComment) {
                         clearInterval(waitforForm)
                     }
                 }, 1000)
-                alert("interval cleared")
-                //let waitforConfirm = setInterval(function () {
-                //    if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
-                //        frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
-                //        clearInterval(waitforConfirm)
-                //    }
 
-                //}, 1000)
+                let waitforConfirm = setInterval(function () {
+                    if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
+                        frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
+                        clearInterval(waitforConfirm)
+                        return;
+                    }
+
+                }, 1000)
             } catch (error) { alert(error.message) }
         })
     }
