@@ -296,10 +296,10 @@ function addComments(SelectedPostID) {
     } catch (error) { alert(error.message) }
 }
 $(window).load(function () {
-    $("#postSettingsAlert").on("hidden.bs.modal", function () {
+    $("#postSettingsAlert").on("hide.bs.modal", function () {
         document.getElementById("postComments").innerHTML = ""
         document.getElementById("replyContent").value = ""
-        getResidentHomePage()
+        location.reload()
     })
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
