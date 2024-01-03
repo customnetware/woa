@@ -267,47 +267,47 @@ function showComments(SelectedPostID, postComment) {
 
     if (postComment == true) {
         document.getElementById("woaFrame").src = "/Discussion/28118~" + frameLink.split(",")[1] + "~" + frameLink.split(",")[5].replace("lnkTopicReply", "")
-        {
-            try {
-                let frameWindow = document.getElementById('woaFrame').contentWindow
-                frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
-                let waitforForm = setInterval(function () {
-                    if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-                        frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
-                        frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
-                        clearInterval(waitforForm)
-                    }
-                }, 1000)
-                let waitforConfirm = setInterval(function () {
-                    if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
-                        frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
-                        clearInterval(waitforConfirm)
-                    }
+        try {
+            let frameWindow = document.getElementById('woaFrame').contentWindow
+            frameWindow.AV.EditorLauncher.discussionTopic(frameLink.split(",")[0], frameLink.split(",")[1], '', 'reply', 'Reply to Post', frameLink.split(",")[5])
+            let waitforForm = setInterval(function () {
+                if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
+                    frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
+                    frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
+                    clearInterval(waitforForm)
+                }
+            }, 1000)
 
-                }, 1000)
-            } catch (error) { alert(error.message) }
+            let waitforConfirm = setInterval(function () {
+                if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
+                    frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
+                    clearInterval(waitforConfirm)
+                    return
+                }
 
-        }
-        document.getElementById("postComments").innerHTML = selectedPost.innerHTML
-        document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
-        if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
+            }, 1000)
+        } catch (error) { alert(error.message) }
     }
+    document.getElementById("postComments").innerHTML = selectedPost.innerHTML
+      document.getElementById("saveComment").href = "javascript:showComments(" + SelectedPostID + ",true)"
+    if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
+}
 
-    $(window).load(function () {
-        $("#postSettingsAlert").on("hide.bs.modal", function () {
-            document.getElementById("postComments").innerHTML = ""
-            document.getElementById("replyContent").textContent = ""
-        })
-        $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
-            this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
-        })
-        $("#recentFlyers, #newsLetters").on("show.bs.collapse", function () {
-            this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-open-o fa-lg"
-        })
-        getProfilePage()
-        getResourceCenter()
-        getNewsAndAnnouncements()
-        getGroups()
-        getClassifiedAds()
-        getResidentHomePage()
+$(window).load(function () {
+    $("#postSettingsAlert").on("hide.bs.modal", function () {
+        document.getElementById("postComments").innerHTML = ""
+        document.getElementById("replyContent").textContent = ""
     })
+    $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
+        this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
+    })
+    $("#recentFlyers, #newsLetters").on("show.bs.collapse", function () {
+        this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-open-o fa-lg"
+    })
+    getProfilePage()
+    getResourceCenter()
+    getNewsAndAnnouncements()
+    getGroups()
+    getClassifiedAds()
+    getResidentHomePage()
+})
