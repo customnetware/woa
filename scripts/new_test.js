@@ -274,7 +274,6 @@ function showComments(SelectedPostID, postComment) {
                 let waitforForm = setInterval(function () {
 
                     if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-
                         frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
                         frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                         searchComplete = true
@@ -286,14 +285,8 @@ function showComments(SelectedPostID, postComment) {
                         if (frameWindow.document.getElementsByClassName(" x-window x-window-plain x-window-dlg").length > 0) {
                             if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                                 let allButtons = frameWindow.document.getElementsByClassName(" x-btn-text")
-                                for (let p = 0; p < allButtons.length; p++) {
-                                    if (allButtons[p].innerHTML == "Confirm") {
-                                        alert(p)
-                                        allButtons[p].click()
-                                        break
-                                        clearInterval(waitforConfirm)
-                                    }
-                                }
+                                allButtons[4].click()
+                                clearInterval(waitforConfirm)
                             }
                         }
                     }
