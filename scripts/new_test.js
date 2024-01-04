@@ -336,7 +336,6 @@ $(window).load(function () {
     getGroups()
     getClassifiedAds()
     getResidentHomePage()
-    alert(sessionStorage.getItem("showTheForm"))
     let waitforPosts = setInterval(function () {
         if (document.getElementById("emailHeader").children[2].innerHTML == "(3)") {
             clearInterval(waitforPosts)
