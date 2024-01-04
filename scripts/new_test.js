@@ -221,7 +221,7 @@ function getGroupPosts(selectedGroups, numOfDays) {
                             let postMessage = document.createElement("span")
                             let postAuthor = document.createElement("span")
                             let headerLink = document.createElement("a")
-                            headerLink.href = "javascript:showComments(" + document.getElementsByClassName("groupPost").length + ",true)"
+                            headerLink.href = "javascript:showComments('" + messageContacts[0].getElementsByTagName("a")[0].id.replace("lnkTopicReply", "post") + "',true)"
                             headerLink.innerHTML = postHeaders[h].innerText
                             postHeader.appendChild(headerLink)
 
@@ -233,10 +233,15 @@ function getGroupPosts(selectedGroups, numOfDays) {
                             postAuthor.appendChild(document.createTextNode(" - Comments: (" + (messageTexts.length - 1) + ")"))
 
                             let postReply = document.createElement("a")
-                            postReply.style.display="none"
+                            postReply.style.display = "none"
                             postReply.innerHTML = messageContacts[0].getElementsByTagName("a")[0].innerHTML
                             postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
                             postAuthor.appendChild(postReply)
+                            currentPost.id = messageContacts[0].getElementsByTagName("a")[0].id.replace("lnkTopicReply", "post")
+
+
+
+
 
                             currentPost.appendChild(postAuthor)
                             for (let p = 1; p < messageTexts.length; p++) {
@@ -260,7 +265,7 @@ function getGroupPosts(selectedGroups, numOfDays) {
     }
 }
 function showComments(SelectedPostID) {
-    let selectedPost = document.getElementById("recentPostsBody").getElementsByTagName("p")[SelectedPostID]
+    let selectedPost = document.getElementById(SelectedPostID)
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
 
     sessionStorage.setItem("selectedPostID", SelectedPostID)
@@ -274,7 +279,7 @@ function showComments(SelectedPostID) {
     if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
 }
 function addComments() {
-    if (document.getElementById("replyContent").value.length < 2) { alert("Please enter your commments in the box below!");return }
+    if (document.getElementById("replyContent").value.length < 2) { alert("Please enter your commments in the box below!"); return }
     if (window.location.hostname == "localhost") {
         alert("The comment cannot be saved because the application is being used on a local host.  This form will close and reopen to display your comment in the post feed.  The form does not currently have editing capabilities.")
         $("#postSettingsAlert").modal("hide")
