@@ -302,6 +302,7 @@ function addComments() {
                     clearInterval(waitforConfirm)
                     alert("Your comments have been posted.  This form will close and reopen to display your comment in the post feed.  The form does not currently have editing capabilities.")
                     $("#postSettingsAlert").modal("hide")
+                    sessionStorage.setItem("showTheForm", "postSettingsAlert")
                     location.reload()
                 }
             }, 1000)
