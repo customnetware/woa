@@ -220,22 +220,20 @@ function getGroupPosts(selectedGroups, numOfDays) {
                             let postHeader = document.createElement("span")
                             let postMessage = document.createElement("span")
                             let postAuthor = document.createElement("span")
+                            let headerLink = document.createElement("a")
+                            headerLink.href = "javascript:showComments(" + document.getElementsByClassName("groupPost").length + ",true)"
+                            headerLink.innerHTML = postHeaders[h].innerText
+                            postHeader.appendChild(headerLink)
 
-                            postHeader.appendChild(document.createTextNode(postHeaders[h].innerText))
                             postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
                             postAuthor.appendChild(document.createTextNode(messageAuthor[0].innerText))
                             currentPost.appendChild(postHeader)
                             currentPost.appendChild(postMessage)
 
-                            let postLink = document.createElement("a")
-                            postLink.style.fontWeight = "800"
-                            postLink.innerHTML = " | Comments: (" + (messageTexts.length - 1) + ") | "
-                            postLink.href = "javascript:showComments(" + document.getElementsByClassName("groupPost").length + ",true)"
-
-                            postAuthor.appendChild(postLink)
+                            postAuthor.appendChild(document.createTextNode(" - Comments: (" + (messageTexts.length - 1) + ")"))
 
                             let postReply = document.createElement("a")
-                            postReply.style.fontWeight = "800"
+                            postReply.style.display="none"
                             postReply.innerHTML = messageContacts[0].getElementsByTagName("a")[0].innerHTML
                             postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
                             postAuthor.appendChild(postReply)
@@ -276,29 +274,46 @@ function showComments(SelectedPostID) {
     if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
 }
 function addComments() {
-    try {
-        let frameWindow = document.getElementById('woaFrame').contentWindow
-        frameWindow.AV.EditorLauncher.discussionTopic(sessionStorage.getItem("portalPostID"), sessionStorage.getItem("portalGroupID"), '', 'reply', 'Reply to Post', sessionStorage.getItem("portalReplyID"))
-        let waitforForm = setInterval(function () {
-            if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-                frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
-                frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
-                clearInterval(waitforForm)
-            }
-        }, 1000)
-        let waitforConfirm = setInterval(function () {
-            if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
-                frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
-                clearInterval(waitforConfirm)
-                alert("Your comments has been posted")
-                $("#postSettingsAlert").modal("hide")
-                location.reload()
-            }
-        }, 1000)
+    if (document.getElementById("replyContent").value.length < 2) { alert("Please enter your commments in the box below!");return }
+    if (window.location.hostname == "localhost") {
+        alert("The comment cannot be saved because the application is being used on a local host.  This form will close and reopen to display your comment in the post feed.  The form does not currently have editing capabilities.")
+        $("#postSettingsAlert").modal("hide")
+        sessionStorage.setItem("showTheForm", "postSettingsAlert")
+        location.reload()
+    } else {
+        try {
+            let frameWindow = document.getElementById('woaFrame').contentWindow
+            frameWindow.AV.EditorLauncher.discussionTopic(sessionStorage.getItem("portalPostID"), sessionStorage.getItem("portalGroupID"), '', 'reply', 'Reply to Post', sessionStorage.getItem("portalReplyID"))
+            let waitforForm = setInterval(function () {
+                if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
+                    frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
+                    frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
+                    clearInterval(waitforForm)
+                }
+            }, 1000)
+            let waitforConfirm = setInterval(function () {
+                if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
+                    frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
+                    clearInterval(waitforConfirm)
+                    alert("Your comments have been posted.  This form will close and reopen to display your comment in the post feed.  The form does not currently have editing capabilities.")
+                    $("#postSettingsAlert").modal("hide")
+                    location.reload()
+                }
+            }, 1000)
 
-    } catch (error) { alert(error.message) }
+        } catch (error) { alert(error.message) }
+    }
+}
+function saveData() {
+    localStorage.setItem("postRange", document.getElementById("formControlRange").value)
+    getGroups()
 }
 $(window).load(function () {
+    let postRange = localStorage.getItem("postRange")
+    if (postRange !== null) {
+        document.getElementById("formControlRange").value = postRange
+        document.getElementById("rangeval").innerText = postRange
+    }
     $("#postSettingsAlert").on("hide.bs.modal", function () {
         document.getElementById("postComments").innerHTML = ""
         document.getElementById("replyContent").value = ""
@@ -315,4 +330,18 @@ $(window).load(function () {
     getGroups()
     getClassifiedAds()
     getResidentHomePage()
+
+    let waitforPosts = setInterval(function () {
+        if (document.getElementById("emailHeader").children[2].innerHTML == "(3)") {
+            clearInterval(waitforPosts)
+            if (sessionStorage.getItem("showTheForm") === "postSettingsAlert") {
+                showComments(sessionStorage.getItem("selectedPostID"))
+                sessionStorage.removeItem("showTheForm")
+                sessionStorage.removeItem("selectedPostID")
+                $("#recentPosts").collapse("show")
+            }
+
+        }
+    }, 1000)
+
 })
