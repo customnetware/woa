@@ -205,12 +205,13 @@
                     </div>
                     <div id="recentEmails" class="collapse" data-parent="#recentNotifications">
                         <div class="card-body" id="recentEmailsBody" style="overflow-y: auto">
-                            <p><a></a><span></span><</p>
+                            <p><a></a><span></span></p>
                             <p><a></a><span></span></p>
                             <p><a></a><span></span></p>
                         </div>
                         <div class="card-footer">
-                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:viewSavedMessages('showSaved')">&nbsp;<span class="fa fa-bookmark-o"></span>&nbsp;View Saved Emails</button>
+                            <button type="button" id="homeButton" class="btn btn-primary" onclick="javascript:emailNavigation('back')" style="cursor:pointer">&nbsp;<span class="fa fa-fast-backward"></span>&nbsp;View Current Emails</button>
+                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:emailNavigation('next')" style="float:right; cursor:pointer">Browse Saved Emails&nbsp;<span class="fa fa-forward"></span>&nbsp;</button>
                             <input type="hidden" id="currentEmailIDs" />
                         </div>
                     </div>
@@ -339,7 +340,6 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" onclick="javascript:viewSavedMessages('returnToSave')">Return To Saved Emails</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                         </div>

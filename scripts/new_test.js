@@ -1,6 +1,9 @@
 document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
 let currentDate = new Date()
 let emailCount = 0
+let viewedEmails = []
+
+
 
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
@@ -11,9 +14,23 @@ function updateHeader(headerID, headerClass, headerTitle, headerLen) {
     cardHeader[1].innerHTML = headerTitle
     cardHeader[2].innerHTML = "(" + headerLen + ")"
 }
+function emailNavigation(dir) {
+    if (dir == "next") {
+        let retrievedData = localStorage.getItem("emails")
+        let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
+        let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
+        if (emailCount >= emailData.length) { emailCount = 0 }
+        for (let p = 0, e = emailCount; e < emailData.length, p < 3; e++, p++) {
+            emailList[p].id = emailData[e][0]
+            emailList[p].children[0].innerHTML = emailData[e][1]
+            emailList[p].children[0].href = "javascript:viewSavedMessages('" + emailData[e][3] + "')"
+            emailList[p].children[1].innerHTML = emailData[e][2]
+            emailCount++
+            if (emailCount >= emailData.length) { emailCount = 0 }
+        }
+    } else { document.getElementById("recentEmailsBody").innerHTML=sessionStorage.getItem("currentEmails") }
+}
 function viewSavedMessages(savedMessageURL) {
-    let retrievedData = localStorage.getItem("emails")
-    let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
     let emailPopUp = document.getElementById("emailsSaved")
     while (emailPopUp.firstChild) { emailPopUp.removeChild(emailPopUp.firstChild) }
 
@@ -21,26 +38,18 @@ function viewSavedMessages(savedMessageURL) {
         $("#emailsSaved").load(pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
             if (statusTxt == "error") { emailPopUp.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
         })
-    } else {
-        for (let p = 0; p < emailData.length; p++) {
-            let newParagraph = document.createElement("span")
-            let emailURL = document.createElement("a")
-            emailURL.innerHTML = emailData[p][1]
-            emailURL.href = "javascript:viewSavedMessages('" + emailData[p][3] + "')"
-            newParagraph.appendChild(emailURL)
-            emailPopUp.appendChild(newParagraph)
-        }
     }
-
     if (!$("#showEmailAlert").is(":visible")) { $("#showEmailAlert").modal("show") }
 }
+
 function getResidentHomePage() {
     $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         .done(function (responseText) {
+            let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
             let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
             let retrievedData = localStorage.getItem("emails")
             let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
-            let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
+
             document.getElementById("notificationHeader").getElementsByTagName("span")[0].className = "fa fa-check-circle fa-lg formatLink"
             document.getElementById("notificationHeader").getElementsByTagName("span")[1].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
             showPhotos(myWoodbridge)
@@ -51,14 +60,16 @@ function getResidentHomePage() {
                 emailList[p].children[0].href = "javascript:viewSavedMessages('" + itemContent.href + "')"
                 emailList[p].children[0].innerHTML = itemContent.getAttribute("data-tooltip-title").split("by")[0]
                 emailList[p].children[1].innerHTML = itemContent.getAttribute("data-tooltip-text")
-
                 if ((retrievedData !== null && retrievedData.includes(emailList[p].id) == false) || emailData.length == 0) {
                     emailData.push([emailList[p].id, emailList[p].children[0].innerHTML, emailList[p].children[1].innerHTML, itemContent.href])
                     let emailsToSave = JSON.stringify(emailData)
                     localStorage.setItem("emails", emailsToSave)
                 }
+                viewedEmails.push(emailList[p].id)
             }
             updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
+            sessionStorage.setItem("currentEmails", document.getElementById("recentEmailsBody").innerHTML)
+
         })
 }
 function getNewsAndAnnouncements() {
@@ -68,25 +79,19 @@ function getNewsAndAnnouncements() {
             let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
             let articleTitle = newsArticles.getElementsByClassName("clsHeader")
             let articleContent = newsArticles.getElementsByClassName("clsBodyText")
-
             for (let p = 0; p < articleContent.length; p++) {
                 let currentItem = document.createElement("p")
                 let itemTitle = document.createElement("span")
                 let itemLink = document.createElement("a")
-
                 itemLink.href = articleTitle[p].parentElement.getElementsByTagName("div")[2].getElementsByTagName("a")[0].href
                 itemLink.className = "fa fa-arrow-right fa-lg formatLink"
-
                 itemTitle.appendChild(document.createTextNode(articleTitle[p].innerText))
                 currentItem.appendChild(itemTitle)
                 currentItem.appendChild(document.createTextNode(articleContent[p].innerText))
                 currentItem.appendChild(itemLink)
                 newsList.appendChild(currentItem)
             }
-        })
-        .always(function () {
             document.getElementById("newsHeader").children[2].innerHTML = "(" + newsList.childElementCount + ")"
-
         })
 }
 function getResourceCenter() {
@@ -94,48 +99,46 @@ function getResourceCenter() {
     $.get(pageLocation("/resourcecenter/28118/resource-center"), function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
-
-            let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
-            let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
-            for (p = documentName.length - 1; p >= 0; p--) {
-                let resourceItem = document.createElement("span")
-                let selectedDoc = document.createElement("a")
-                selectedDoc.innerHTML = documentName[p].innerHTML
-                selectedDoc.href = documentLink[p].href
-                resourceItem.appendChild(selectedDoc)
-                eventFlyer.appendChild(resourceItem)
+            if (documents.getElementById("contents540434") !== null) {
+                let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
+                let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
+                for (p = documentName.length - 1; p >= 0; p--) {
+                    let resourceItem = document.createElement("span")
+                    let selectedDoc = document.createElement("a")
+                    selectedDoc.innerHTML = documentName[p].innerHTML
+                    selectedDoc.href = documentLink[p].href
+                    resourceItem.appendChild(selectedDoc)
+                    eventFlyer.appendChild(resourceItem)
+                }
+                document.getElementById("flyersHeader").children[2].innerHTML = "(" + eventFlyer.getElementsByTagName("span").length + ")"
             }
-
-            let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
-            let newsLetterLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
-            for (i = newsLetterName.length - 1; i >= 0; i--) {
-                let resourceItem = document.createElement("span")
-                let selectedDoc = document.createElement("a")
-                selectedDoc.innerHTML = newsLetterName[i].innerHTML
-                selectedDoc.href = newsLetterLink[i].href
-                resourceItem.appendChild(selectedDoc)
-                newsLetter.appendChild(resourceItem)
-                if (newsLetter.getElementsByTagName("span").length > 5) { break }
+            if (documents.getElementById("contents951754") !== null) {
+                let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
+                let newsLetterLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
+                for (i = newsLetterName.length - 1; i >= 0; i--) {
+                    let resourceItem = document.createElement("span")
+                    let selectedDoc = document.createElement("a")
+                    selectedDoc.innerHTML = newsLetterName[i].innerHTML
+                    selectedDoc.href = newsLetterLink[i].href
+                    resourceItem.appendChild(selectedDoc)
+                    newsLetter.appendChild(resourceItem)
+                    if (newsLetter.getElementsByTagName("span").length > 5) { break }
+                }
+                document.getElementById("newsletterHeader").children[2].innerHTML = "(" + newsLetter.getElementsByTagName("span").length + ")"
             }
-        })
-        .always(function () {
-            document.getElementById("flyersHeader").children[2].innerHTML = "(" + eventFlyer.getElementsByTagName("span").length + ")"
-            document.getElementById("newsletterHeader").children[2].innerHTML = "(" + newsLetter.getElementsByTagName("span").length + ")"
         })
 }
 function showPhotos(galleryPage) {
-    try {
-        let newPicList = document.getElementById("recentPhotosBody").getElementsByTagName("div")
-        let photoList = galleryPage.querySelectorAll("[id^=gallery_link_]")
-        let galleryLink = galleryPage.querySelectorAll("[class^=gallery_txt_sub]")
-        let galleryText = galleryPage.getElementsByClassName("left")
-        for (let k = 0; k < photoList.length; k++) {
-            newPicList[k].getElementsByTagName("img")[0].src = photoList[k].src
-            newPicList[k].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
-            newPicList[k].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
-        }
-        document.getElementById("photoHeader").children[2].innerHTML = "(3)"
-    } catch (error) { }
+    let newPicList = document.getElementById("recentPhotosBody").getElementsByTagName("div")
+    let photoList = galleryPage.querySelectorAll("[id^=gallery_link_]")
+    let galleryLink = galleryPage.querySelectorAll("[class^=gallery_txt_sub]")
+    let galleryText = galleryPage.getElementsByClassName("left")
+    for (let k = 0; k < photoList.length; k++) {
+        newPicList[k].getElementsByTagName("img")[0].src = photoList[k].src
+        newPicList[k].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
+        newPicList[k].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
+    }
+    document.getElementById("photoHeader").children[2].innerHTML = "(3)"
 }
 function getProfilePage() {
     let profileImg = document.createElement("img")
@@ -170,8 +173,6 @@ function getClassifiedAds() {
                 currentItem.appendChild(document.createTextNode(classifiedBody[p].childNodes[0].nodeValue))
                 classifiedsList.appendChild(currentItem)
             }
-        })
-        .always(function () {
             document.getElementById("classifiedHeader").children[2].innerHTML = "(" + classifiedsList.childElementCount + ")"
         })
 }
@@ -266,6 +267,7 @@ function getGroupPosts(selectedGroups, numOfDays) {
 }
 function showComments(SelectedPostID) {
     let selectedPost = document.getElementById(SelectedPostID)
+
     let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
 
     sessionStorage.setItem("selectedPostID", SelectedPostID)
