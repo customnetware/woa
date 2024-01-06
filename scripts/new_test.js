@@ -28,7 +28,7 @@ function emailNavigation(dir) {
             emailCount++
             if (emailCount >= emailData.length) { emailCount = 0 }
         }
-    } else { document.getElementById("recentEmailsBody").innerHTML=sessionStorage.getItem("currentEmails") }
+    } else { document.getElementById("recentEmailsBody").innerHTML = sessionStorage.getItem("currentEmails") }
 }
 function viewSavedMessages(savedMessageURL) {
     let emailPopUp = document.getElementById("emailsSaved")
@@ -222,7 +222,7 @@ function getGroupPosts(selectedGroups, numOfDays) {
                             let postMessage = document.createElement("span")
                             let postAuthor = document.createElement("span")
                             let headerLink = document.createElement("a")
-                            headerLink.href = "javascript:showComments('" + messageContacts[0].getElementsByTagName("a")[0].id.replace("lnkTopicReply", "post") + "',true)"
+                            headerLink.href = "javascript:showComments('" + messageContacts[0].getElementsByTagName("a")[0].id.replace("lnkTopicReply", "post") + "')"
                             headerLink.innerHTML = postHeaders[h].innerText
                             postHeader.appendChild(headerLink)
 
@@ -267,33 +267,65 @@ function getGroupPosts(selectedGroups, numOfDays) {
 }
 function showComments(SelectedPostID) {
     let selectedPost = document.getElementById(SelectedPostID)
+    let allPosts = document.getElementById("recentPostsBody").getElementsByTagName("p")
+    for (let p = 0; p < allPosts.length; p++) {
+        if (allPosts[p].id !== SelectedPostID) {
+            if (allPosts[p].getElementsByClassName("postForm").length > 0) { allPosts[p].getElementsByClassName("postForm")[0].remove() }
+        }
+    }
 
-    let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
+    if (selectedPost.getElementsByClassName("postForm").length == 0) {
+        let formDiv = document.createElement("div")
+        let commentBox = document.createElement("textarea")
+        let saveButton = document.createElement("a")
+        let cancelButton = document.createElement("a")
+        let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
 
-    sessionStorage.setItem("selectedPostID", SelectedPostID)
-    sessionStorage.setItem("portalPostID", frameLink.split(",")[0])
-    sessionStorage.setItem("portalGroupID", frameLink.split(",")[1])
-    sessionStorage.setItem("portalReplyID", frameLink.split(",")[5])
 
-    document.getElementById("postComments").innerHTML = selectedPost.innerHTML
-    document.getElementById("woaFrame").src = "/Discussion/28118~" + sessionStorage.getItem("portalPostID") + "~" + sessionStorage.getItem("portalReplyID").replace("lnkTopicReply", "")
+        saveButton.innerHTML = "Save Comment"
+        saveButton.href = "javascript:addComments()"
+        saveButton.className = "btn btn-primary"
+        cancelButton.innerHTML = "Cancel"
+        cancelButton.className = "btn btn-primary"
+        cancelButton.href = "javascript:showComments('" + SelectedPostID + "')"
 
-    if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") }
+        formDiv.appendChild(commentBox)
+        formDiv.appendChild(saveButton)
+        formDiv.appendChild(cancelButton)
+        formDiv.className = "postForm"
+        selectedPost.appendChild(formDiv)
+
+        sessionStorage.setItem("selectedPostID", SelectedPostID)
+        sessionStorage.setItem("portalPostID", frameLink.split(",")[0])
+        sessionStorage.setItem("portalGroupID", frameLink.split(",")[1])
+        sessionStorage.setItem("portalReplyID", frameLink.split(",")[5])
+        if (window.location.hostname !== "localhost") {
+            document.getElementById("woaFrame").src = "/Discussion/28118~" + sessionStorage.getItem("portalPostID") + "~" + sessionStorage.getItem("portalReplyID").replace("lnkTopicReply", "")
+        }
+
+    } else {
+        selectedPost.getElementsByClassName("postForm")[0].remove()
+    }
+
 }
 function addComments() {
-    if (document.getElementById("replyContent").value.length < 2) { alert("Please enter your commments in the box below!"); return }
+    let commentForm = document.getElementById(sessionStorage.getItem("selectedPostID")).getElementsByTagName("textarea")[0]
+    if (commentForm.value.length == 0) { return }
     if (window.location.hostname == "localhost") {
-        alert("The comment cannot be saved because the application is being used on a local host.  This form will close and reopen to display your comment in the post feed.  The form does not currently have editing capabilities.")
-        $("#postSettingsAlert").modal("hide")
-        sessionStorage.setItem("showTheForm", "postSettingsAlert")
-        location.reload()
+        getGroups()
+        let waitforForm = setInterval(function () {
+            if (document.getElementById(sessionStorage.getItem("selectedPostID")) !== "null") {
+                clearInterval(waitforForm)
+                document.getElementById(sessionStorage.getItem("selectedPostID")).scrollIntoView()
+            }
+        }, 1000)
     } else {
         try {
             let frameWindow = document.getElementById('woaFrame').contentWindow
             frameWindow.AV.EditorLauncher.discussionTopic(sessionStorage.getItem("portalPostID"), sessionStorage.getItem("portalGroupID"), '', 'reply', 'Reply to Post', sessionStorage.getItem("portalReplyID"))
             let waitforForm = setInterval(function () {
                 if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-                    frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById("replyContent").value
+                    frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentForm.value
                     frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                     clearInterval(waitforForm)
                 }
@@ -302,10 +334,14 @@ function addComments() {
                 if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                     frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
                     clearInterval(waitforConfirm)
-                    alert("Your comments have been posted.  This form will close and reopen to display your comment in the post feed.  The form does not currently have editing capabilities.")
-                    $("#postSettingsAlert").modal("hide")
-                    sessionStorage.setItem("showTheForm", "postSettingsAlert")
-                    location.reload()
+                    getGroups()
+                    let waitforForm = setInterval(function () {
+                        if (document.getElementById(sessionStorage.getItem("selectedPostID")) !== "null") {
+                            clearInterval(waitforForm)
+                            document.getElementById(sessionStorage.getItem("selectedPostID")).scrollIntoView()
+                        }
+                    }, 1000)
+
                 }
             }, 1000)
 
@@ -338,17 +374,6 @@ $(window).load(function () {
     getGroups()
     getClassifiedAds()
     getResidentHomePage()
-    let waitforPosts = setInterval(function () {
-        if (document.getElementById("emailHeader").children[2].innerHTML == "(3)") {
-            clearInterval(waitforPosts)
-            if (sessionStorage.getItem("showTheForm") === "postSettingsAlert") {
-                showComments(sessionStorage.getItem("selectedPostID"))
-                sessionStorage.removeItem("showTheForm")
-                sessionStorage.removeItem("selectedPostID")
-                $("#recentPosts").collapse("show")
-            }
 
-        }
-    }, 1000)
 
 })

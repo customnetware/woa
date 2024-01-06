@@ -41,9 +41,6 @@
                 color: white;
                 padding: 5px;
             }
-
-
-
             .formatLink {
                 padding-left: 10px;
                 text-decoration: none !important;
@@ -164,6 +161,14 @@
                     padding-top: 10px;
                     padding-left: 2px
                 }
+
+            .postForm a{
+                margin-right: 10px
+            }
+
+            .postForm textarea {
+                width: 100%
+            }
         </style>
         <iframe id="woaFrame" src="/discussion/list/28118/discussion-groups" title="Final WOA Code" style="display:none"></iframe>
         <div class="row" id="notificationHeader">
@@ -227,7 +232,7 @@
                         <div class="card-body" id="recentPostsBody"></div>
                         <div class="card-footer" style="vertical-align:middle">
                             <input onchange="saveData()" type="range" class="form-control-range" id="formControlRange" min="1" max="72" value="14" onInput="$('#rangeval').html($(this).val())" style="width:100%">
-                            <i>Move the slider to view more posts. Currently viewing <span id="rangeval">14</span> months of history.</i> 
+                            <i>Move the slider to view more posts. Currently viewing <span id="rangeval">14</span> months of history.</i>
                         </div>
                     </div>
                 </div>
@@ -302,7 +307,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-secondary" onclick="javascript:addComments()">Save Comments</button>
-                   
+
                         </div>
                     </div>
                 </div>
