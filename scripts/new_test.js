@@ -1,9 +1,6 @@
 document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
 let currentDate = new Date()
 let emailCount = 0
-let viewedEmails = []
-
-
 
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
@@ -41,7 +38,6 @@ function viewSavedMessages(savedMessageURL) {
     }
     if (!$("#showEmailAlert").is(":visible")) { $("#showEmailAlert").modal("show") }
 }
-
 function getResidentHomePage() {
     $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         .done(function (responseText) {
@@ -65,11 +61,10 @@ function getResidentHomePage() {
                     let emailsToSave = JSON.stringify(emailData)
                     localStorage.setItem("emails", emailsToSave)
                 }
-                viewedEmails.push(emailList[p].id)
+
             }
             updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
             sessionStorage.setItem("currentEmails", document.getElementById("recentEmailsBody").innerHTML)
-
         })
 }
 function getNewsAndAnnouncements() {
@@ -231,7 +226,7 @@ function getGroupPosts(selectedGroups, numOfDays) {
                             currentPost.appendChild(postHeader)
                             currentPost.appendChild(postMessage)
 
-                            postAuthor.appendChild(document.createTextNode(" - Comments: (" + (messageTexts.length - 1) + ")"))
+
 
                             let postReply = document.createElement("a")
                             postReply.style.display = "none"
@@ -241,7 +236,10 @@ function getGroupPosts(selectedGroups, numOfDays) {
                             currentPost.id = messageContacts[0].getElementsByTagName("a")[0].id.replace("lnkTopicReply", "post")
 
 
-
+                            let postComment = document.createElement("a")
+                            postComment.innerHTML = " - Comments: (" + (messageTexts.length - 1) + ")"
+                            postComment.href = "javascript:showReplies('" + currentPost.id + "')"
+                            postAuthor.appendChild(postComment)
 
 
                             currentPost.appendChild(postAuthor)
@@ -328,22 +326,22 @@ function addComments() {
                     frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentForm.value
                     frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
                     clearInterval(waitforForm)
-                }
-            }, 1000)
-            let waitforConfirm = setInterval(function () {
-                if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
-                    frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
-                    clearInterval(waitforConfirm)
-                    getGroups()
-                    let waitforForm = setInterval(function () {
-                        if (document.getElementById(sessionStorage.getItem("selectedPostID")) !== "null") {
-                            clearInterval(waitforForm)
-                            document.getElementById(sessionStorage.getItem("selectedPostID")).scrollIntoView()
+                    let waitforConfirm = setInterval(function () {
+                        if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
+                            frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
+                            clearInterval(waitforConfirm)
+                            getGroups()
+                            let waitforPost = setInterval(function () {
+                                if (document.getElementById(sessionStorage.getItem("selectedPostID")) !== "null") {
+                                    clearInterval(waitforPost)
+                                    document.getElementById(sessionStorage.getItem("selectedPostID")).scrollIntoView()
+                                }
+                            }, 1000)
                         }
                     }, 1000)
-
                 }
             }, 1000)
+
 
         } catch (error) { alert(error.message) }
     }
@@ -351,6 +349,21 @@ function addComments() {
 function saveData() {
     localStorage.setItem("postRange", document.getElementById("formControlRange").value)
     getGroups()
+}
+function showReplies(postID) {
+    let posts = document.getElementsByClassName("groupPost")
+    for (let p = 0; p < posts.length; p++) {
+        let replies = posts[p].getElementsByTagName("span")
+        if (replies.length > 3) {
+            for (let r = 3; r < replies.length; r++) {
+                if (posts[p].id == postID) {
+                    if (replies[r].style.display == "block") {
+                        replies[r].style.display = "none"
+                    } else { replies[r].style.display = "block" }
+                } else { replies[r].style.display = "none" }
+            }
+        }
+    }
 }
 $(window).load(function () {
     let postRange = localStorage.getItem("postRange")
