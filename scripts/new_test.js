@@ -315,6 +315,15 @@ function addComments() {
             if (document.getElementById(sessionStorage.getItem("selectedPostID")) !== "null") {
                 clearInterval(waitforForm)
                 document.getElementById(sessionStorage.getItem("selectedPostID")).scrollIntoView()
+                let postReplies = document.getElementById(sessionStorage.getItem("selectedPostID")).getElementsByTagName("span")
+                if (postReplies.length =5) {
+                    postReplies[postReplies.length - 2].style.display = "block"
+                    postReplies[postReplies.length - 1].style.display = "block"
+                }
+                if (postReplies.length = 7) {
+                    postReplies[postReplies.length - 4].style.display = "block"
+                    postReplies[postReplies.length - 3].style.display = "block"
+                }
             }
         }, 1000)
     } else {
@@ -335,6 +344,17 @@ function addComments() {
                                 if (document.getElementById(sessionStorage.getItem("selectedPostID")) !== "null") {
                                     clearInterval(waitforPost)
                                     document.getElementById(sessionStorage.getItem("selectedPostID")).scrollIntoView()
+                                    document.getElementById(sessionStorage.getItem("selectedPostID")).scrollIntoView()
+                                    let postReplies = document.getElementById(sessionStorage.getItem("selectedPostID")).getElementsByTagName("span")
+                                    if (postReplies.length = 5) {
+                                        postReplies[postReplies.length - 2].style.display = "block"
+                                        postReplies[postReplies.length - 1].style.display = "block"
+                                    }
+                                    if (postReplies.length = 7) {
+                                        postReplies[postReplies.length - 4].style.display = "block"
+                                        postReplies[postReplies.length - 3].style.display = "block"
+                                    }
+
                                 }
                             }, 1000)
                         }
