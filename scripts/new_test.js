@@ -174,7 +174,7 @@ function getClassifiedAds() {
 function getDiscussionGroups() {
     let forums = ["8030", "8364"], forumNames = ["Recommendations", "General"], forumArray = []
     for (let f = 0; f < forums.length; f++) {
-        $.get("/Discussion/28118~" + forums[f] + ".html", function () { })
+        $.get("/Discussion/28118~" + forums[f], function () { })
             .done(function (responseText) {
                 let forum = new DOMParser().parseFromString(responseText, "text/html")
                 let posts = forum.getElementsByClassName("ThreadContainer")[0]
@@ -300,7 +300,7 @@ function addComments(selectedPostID, groupID) {
                             let waitforPost = setInterval(function () {
                                 if (document.getElementById(selectedPostID) !== "null") {
                                     clearInterval(waitforPost)
-                                    document.getElementById(selectedPostID).scrollIntoView()                             
+                                    document.getElementById(selectedPostID).scrollIntoView()
                                 }
                             }, 1000)
                         }
