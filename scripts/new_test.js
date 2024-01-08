@@ -283,7 +283,6 @@ function addComments(selectedPostID, groupID) {
                 let replyButton = frameWindow.document.getElementById(selectedPostID.replace("post", "lnkTopicReply"))
                 if (replyButton !== null) {
                     clearInterval(waitforButton)
-                    alert("found the button")
                     replyButton.click()
                 }
             }, 1000)
@@ -296,7 +295,7 @@ function addComments(selectedPostID, groupID) {
                         if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
                             frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
                             clearInterval(waitforConfirm)
-                            getGroups()
+                            getDiscussionGroups()
                             let waitforPost = setInterval(function () {
                                 if (document.getElementById(selectedPostID) !== "null") {
                                     clearInterval(waitforPost)
