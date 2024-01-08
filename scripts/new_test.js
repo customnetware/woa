@@ -172,7 +172,7 @@ function getClassifiedAds() {
         })
 }
 function getDiscussionGroups() {
-    let forums = ["8030", "8364"], forumNames = ["Recommendations", "General"], forumArray = []
+    let forums = ["8030", "8364", "11315"], forumNames = ["Recommendations", "General", "Using the HOA Portal"], forumArray = []
     for (let f = 0; f < forums.length; f++) {
         $.get("/Discussion/28118~" + forums[f], function () { })
             .done(function (responseText) {
