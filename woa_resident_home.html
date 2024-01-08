@@ -127,30 +127,21 @@
             }
 
                 #recentPostsBody p span {
-                    display: none;
+                    display: block
                 }
 
                     #recentPostsBody p span:first-child, #postComments span:first-child {
-                        font-weight: 700;
-                        display: block
+                        font-weight: 700;                  
                     }
 
-                    #recentPostsBody p span:nth-child(2) {
-                        display: block
+                    #recentPostsBody p span:nth-child(2n+4) {
+                        margin-top: 5px;
+                        border-top: 1px solid black;
                     }
 
-                    #recentPostsBody p span:nth-child(3) {
-                        display: block
+                    #recentPostsBody p span:nth-child(2n+5) {
+                        margin-top: 1px;
                     }
-
-            #recentPostsBody p span:nth-child(2n+4) {
-                margin-top: 5px;
-                border-top: 1px solid black;
-            }
-
-            #recentPostsBody p span:nth-child(2n+5) {
-                margin-top: 1px;
-            }
 
             #recentPhotos {
                 text-align: center;
@@ -172,11 +163,9 @@
                     padding-left: 2px
                 }
 
-            .postForm a {
-                margin-right: 10px
-            }
 
-            .postForm textarea {
+
+            #recentPostsBody textarea {
                 width: 100%
             }
         </style>
@@ -240,9 +229,10 @@
                     </div>
                     <div id="recentPosts" class="collapse" data-parent="#recentNotifications">
                         <div class="card-body" id="recentPostsBody"></div>
-                        <div class="card-footer" style="vertical-align:middle">
-                            <input onchange="saveData()" type="range" class="form-control-range" id="formControlRange" min="1" max="72" value="14" onInput="$('#rangeval').html($(this).val())" style="width:100%">
-                            <i>Move the slider to view more posts. Currently viewing <span id="rangeval">14</span> months of history.</i>
+                        <div class="card-footer">
+                            <button type="button" id="homeButton" class="btn btn-primary" onclick="javascript:emailNavigation('back')" style="cursor:pointer">&nbsp;<span class="fa fa-fast-backward"></span>&nbsp;View Current Posts</button>
+                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:emailNavigation('next')" style="float:right; cursor:pointer">Browse Previous Posts&nbsp;<span class="fa fa-forward"></span>&nbsp;</button>
+                          
                         </div>
                     </div>
                 </div>
@@ -363,7 +353,8 @@
             </div>
 
         </div>
-        <script src="scripts/new_test.js"></script>
+        <p id="demo"></p>
+        <script src="https://customnetware.github.io/woa/sscripts/new_test.js"></script>
 
     </div>
     <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->

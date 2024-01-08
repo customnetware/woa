@@ -171,165 +171,122 @@ function getClassifiedAds() {
             document.getElementById("classifiedHeader").children[2].innerHTML = "(" + classifiedsList.childElementCount + ")"
         })
 }
-function getGroups() {
-    const numOfDays = +document.getElementById("rangeval").innerText * 30
-    try {
-        let fileLocation = (window.location.hostname == "localhost") ? "/Discussion/list/28118/discussion-groups.html" : "/Discussion/list/28118/discussion-groups"
-        let selectedGroups = ["8364"]
-        let currentDate = new Date()
-        $.get(fileLocation, function () { })
+function getDiscussionGroups() {
+    let forums = ["8030", "8364"], forumNames = ["Recommendations", "General"], forumArray = []
+    for (let f = 0; f < forums.length; f++) {
+        $.get("/Discussion/28118~" + forums[f] + ".html", function () { })
             .done(function (responseText) {
                 let forum = new DOMParser().parseFromString(responseText, "text/html")
-                let groups = forum.getElementById("contentInner").children
-                for (let p = 2; p < groups.length; p++) {
-                    let lastPost = groups[p].getElementsByClassName("clsBodyItalic")[0].innerText
-                    let groupName = groups[p].getElementsByClassName("clsBodyText")[0].innerText
-                    let groupID = groups[p].getElementsByClassName("clsBodyText")[0].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
-                    let dateStart = lastPost.indexOf("Last Post:")
-                    let postDate = (dateStart > -1) ? new Date(lastPost.substr(dateStart + 10, 18)) : new Date("01/01/2001")
-                    let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-                    groupName = (groupName.includes(".")) ? groupName.split(".")[1] : groupName
-                    if (dayDiff < numOfDays && groupID !== "8364") { selectedGroups.push(groupID + "|" + groupName + "|" + postDate.toLocaleDateString) }
-                } getGroupPosts(selectedGroups, numOfDays)
+                let posts = forum.getElementsByClassName("ThreadContainer")[0]
+                let lst = document.getElementById("post")
+                for (let x = 0; x < posts.childElementCount; x++) {
+                    let post = posts.children[x]
+                    let lastDate = post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", "")
+                    let topic = post.getElementsByClassName("respDiscTopic")
+                    let comments = post.getElementsByClassName("respDiscChildPost")
+                    let posters = post.getElementsByClassName("respAuthorWrapper")
+                    let contacts = post.getElementsByClassName("respReplyWrapper")
+                    let dateSort = new Date(lastDate).getTime()
+                    forumArray.push({
+                        postSort: dateSort,
+                        lastPost: lastDate,
+                        subject: topic[0].innerText.trim(),
+                        postContent: topic[1].innerText.trim(),
+                        postAuthor: posters[0].innerText.trim(),
+                        postID: contacts[0].getElementsByTagName("a")[0].id,
+                        groupName: forumNames[f],
+                        groupID: forums[f]
+                    })
+                }
             })
-    } catch { }
-}
-function getGroupPosts(selectedGroups, numOfDays) {
-    let postList = document.getElementById("recentPostsBody")
-    while (postList.firstChild) { postList.removeChild(postList.firstChild) }
-
-    for (let h = 0; h < selectedGroups.length; h++) {
-        if (selectedGroups[h].split("|")[0] !== "6493") {
-            $.get(pageLocation("/Discussion/28118~" + selectedGroups[h].split("|")[0]), function () { })
-                .done(function (responseText) {
-                    let forum = new DOMParser().parseFromString(responseText, "text/html")
-                    let postHeaders = forum.querySelectorAll("[id^=msgHeader]")
-                    let postContents = forum.querySelectorAll("[id^=contents]")
-                    for (let h = 0; h < postHeaders.length; h++) {
-                        let messageTexts = postContents[h].getElementsByClassName("clsBodyText")
-                        let messageAuthor = postContents[h].getElementsByClassName("respAuthorWrapper")
-                        let messageContacts = postContents[h].getElementsByClassName("respReplyWrapper")
-                        let postDate = new Date(messageAuthor[messageAuthor.length - 1].innerText.split("-")[1])
-                        let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-                        if (dayDiff <= numOfDays || (selectedGroups.length == 1 && dayDiff > numOfDays)) {
-                            let currentPost = document.createElement("p")
-                            let postHeader = document.createElement("span")
-                            let postMessage = document.createElement("span")
-                            let postAuthor = document.createElement("span")
-                            let headerLink = document.createElement("a")
-                            headerLink.href = "javascript:showComments('" + messageContacts[0].getElementsByTagName("a")[0].id.replace("lnkTopicReply", "post") + "')"
-                            headerLink.innerHTML = postHeaders[h].innerText
-                            postHeader.appendChild(headerLink)
-
-                            postMessage.appendChild(document.createTextNode(messageTexts[0].innerText))
-                            postAuthor.appendChild(document.createTextNode(messageAuthor[0].innerText))
-                            currentPost.appendChild(postHeader)
-                            currentPost.appendChild(postMessage)
-
-
-
-                            let postReply = document.createElement("a")
-                            postReply.style.display = "none"
-                            postReply.innerHTML = messageContacts[0].getElementsByTagName("a")[0].innerHTML
-                            postReply.href = messageContacts[0].getElementsByTagName("a")[0].href
-                            postAuthor.appendChild(postReply)
-                            currentPost.id = messageContacts[0].getElementsByTagName("a")[0].id.replace("lnkTopicReply", "post")
-
-
-                            let postComment = document.createElement("a")
-                            postComment.innerHTML = " - Comments: (" + (messageTexts.length - 1) + ")"
-                            postComment.href = "javascript:showReplies('" + currentPost.id + "')"
-                            postAuthor.appendChild(postComment)
-
-
-                            currentPost.appendChild(postAuthor)
-                            for (let p = 1; p < messageTexts.length; p++) {
-                                let replyMessage = document.createElement("span")
-                                let replyAuthor = document.createElement("span")
-                                replyMessage.appendChild(document.createTextNode(messageTexts[p].innerText))
-                                replyAuthor.appendChild(document.createTextNode(messageAuthor[p].innerText))
-                                currentPost.appendChild(replyMessage)
-                                currentPost.appendChild(replyAuthor)
-                            }
-                            currentPost.className = "groupPost"
-                            postList.appendChild(currentPost)
-                        }
-                        if (selectedGroups.length == 1 && dayDiff > numOfDays) { break }
-                    }
-                })
-                .always(function () {
-                    document.getElementById("postHeader").children[2].innerHTML = "(" + postList.childElementCount + ")"
-                })
-        }
     }
+    let waitforPost = setInterval(function () {
+        if (forumArray.length > 0) {
+            clearInterval(waitforPost)
+
+            let postList = document.getElementById("recentPostsBody")
+            while (postList.firstChild) { postList.removeChild(postList.firstChild) }
+            forumArray.sort((a, b) => { return a.postSort - b.postSort })
+            forumArray.reverse()
+            for (let f = 0, c = 1; f < forumArray.length, c <= 3; f++, c++) {
+
+                let currentPost = document.createElement("p")
+                let postHeader = document.createElement("span")
+                let postMessage = document.createElement("span")
+                let postAuthor = document.createElement("span")
+                let headerLink = document.createElement("a")
+                currentPost.id = forumArray[f].postID.replace("lnkTopicReply", "post")
+                headerLink.href = "javascript:showComments('" + currentPost.id + "'," + forumArray[f].groupID + ")"
+                headerLink.innerHTML = forumArray[f].subject + " - Posted in  " + forumArray[f].groupName
+                postHeader.appendChild(headerLink)
+                postMessage.appendChild(document.createTextNode(forumArray[f].postContent))
+                postAuthor.appendChild(document.createTextNode(forumArray[f].postAuthor))
+
+                currentPost.appendChild(postHeader)
+                currentPost.appendChild(postMessage)
+                currentPost.appendChild(postAuthor)
+
+                let commentBox = document.createElement("textarea")
+                commentBox.id = forumArray[f].postID.replace("lnkTopicReply", "comment")
+                let saveButton = document.createElement("a")
+                saveButton.innerHTML = "Reply"
+                saveButton.href = "javascript:addComments('" + currentPost.id + "'," + forumArray[f].groupID + ")"
+                currentPost.appendChild(commentBox)
+                currentPost.appendChild(saveButton)
+
+                postList.appendChild(currentPost)
+            } document.getElementById("postHeader").children[2].innerHTML = "(" + postList.childElementCount + ")"
+        }
+    }, 1000)
 }
-function showComments(SelectedPostID) {
-    let selectedPost = document.getElementById(SelectedPostID)
-    let allPosts = document.getElementById("recentPostsBody").getElementsByTagName("p")
-    for (let p = 0; p < allPosts.length; p++) {
-        if (allPosts[p].id !== SelectedPostID) {
-            if (allPosts[p].getElementsByClassName("postForm").length > 0) { allPosts[p].getElementsByClassName("postForm")[0].remove() }
-        }
-    }
-
-    if (selectedPost.getElementsByClassName("postForm").length == 0) {
-        let formDiv = document.createElement("div")
-        let commentBox = document.createElement("textarea")
-        let saveButton = document.createElement("a")
-        let cancelButton = document.createElement("a")
-        let frameLink = /\(([^)]+)\)/.exec(selectedPost.getElementsByTagName("a")[1].href)[1].replaceAll("'", "")
-
-
-        saveButton.innerHTML = "Save Comment"
-        saveButton.href = "javascript:addComments()"
-        saveButton.className = "btn btn-primary"
-        cancelButton.innerHTML = "Cancel"
-        cancelButton.className = "btn btn-primary"
-        cancelButton.href = "javascript:showComments('" + SelectedPostID + "')"
-
-        formDiv.appendChild(commentBox)
-        formDiv.appendChild(saveButton)
-        formDiv.appendChild(cancelButton)
-        formDiv.className = "postForm"
-        selectedPost.appendChild(formDiv)
-
-        sessionStorage.setItem("selectedPostID", SelectedPostID)
-        sessionStorage.setItem("portalPostID", frameLink.split(",")[0])
-        sessionStorage.setItem("portalGroupID", frameLink.split(",")[1])
-        sessionStorage.setItem("portalReplyID", frameLink.split(",")[5])
-        if (window.location.hostname !== "localhost") {
-            document.getElementById("woaFrame").src = "/Discussion/28118~" + sessionStorage.getItem("portalPostID") + "~" + sessionStorage.getItem("portalReplyID").replace("lnkTopicReply", "")
-        }
-
+function showComments(selectedPostID, groupID) {
+    let selectedPost = document.getElementById(selectedPostID)
+    let groupPostContent = selectedPost.getElementsByTagName("span")
+    if (groupPostContent.length == 3) {
+        $.get("/Discussion/28118~" + groupID + ".html", function () { })
+            .done(function (responseText) {
+                let forum = new DOMParser().parseFromString(responseText, "text/html")
+                let comments = forum.getElementById(selectedPostID.replace("post", "contents"))
+                let replyText = comments.getElementsByClassName("respDiscChildPost")
+                let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
+                for (let p = 0; p < replyText.length; p++) {
+                    let replySpan = document.createElement("span")
+                    let authorSpan = document.createElement("span")
+                    replySpan.innerText = replyText[p].innerText.trim()
+                    authorSpan.innerText = replyAuthor[p + 1].innerText.trim()
+                    selectedPost.insertBefore(replySpan, document.getElementById(selectedPostID.replace("post", "comment")))
+                    selectedPost.insertBefore(authorSpan, document.getElementById(selectedPostID.replace("post", "comment")))
+                }
+            })
     } else {
-        selectedPost.getElementsByClassName("postForm")[0].remove()
+        for (r = groupPostContent.length - 1; r = 3; r--) { groupPostContent[r].remove() }
     }
-
 }
-function addComments() {
-    let commentForm = document.getElementById(sessionStorage.getItem("selectedPostID")).getElementsByTagName("textarea")[0]
+function addComments(selectedPostID, groupID) {
+    if (window.location.hostname !== "localhost") {
+        document.getElementById("woaFrame").src = "/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", "")
+    }
+    let commentForm = document.getElementById(selectedPostID).getElementsByTagName("textarea")[0]
     if (commentForm.value.length == 0) { return }
     if (window.location.hostname == "localhost") {
-        getGroups()
+        getDiscussionGroups()
         let waitforForm = setInterval(function () {
-            if (document.getElementById(sessionStorage.getItem("selectedPostID")) !== "null") {
+            if (document.getElementById(selectedPostID) !== "null") {
                 clearInterval(waitforForm)
-                document.getElementById(sessionStorage.getItem("selectedPostID")).scrollIntoView()
-                let postReplies = document.getElementById(sessionStorage.getItem("selectedPostID")).getElementsByTagName("span")
-                if (postReplies.length =5) {
-                    postReplies[postReplies.length - 2].style.display = "block"
-                    postReplies[postReplies.length - 1].style.display = "block"
-                }
-                if (postReplies.length = 7) {
-                    postReplies[postReplies.length - 4].style.display = "block"
-                    postReplies[postReplies.length - 3].style.display = "block"
-                }
+                document.getElementById(selectedPostID).scrollIntoView()
             }
         }, 1000)
     } else {
         try {
             let frameWindow = document.getElementById('woaFrame').contentWindow
-            frameWindow.AV.EditorLauncher.discussionTopic(sessionStorage.getItem("portalPostID"), sessionStorage.getItem("portalGroupID"), '', 'reply', 'Reply to Post', sessionStorage.getItem("portalReplyID"))
+            let waitforButton = setInterval(function () {
+                let replyButton = frameWindow.document.getElementById(selectedPostID.replace("post", "lnkTopicReply"))
+                if (replyButton !== null) {
+                    clearInterval(waitforButton)
+                    alert("found the button")
+                    replyButton.click()
+                }
+            }, 1000)
             let waitforForm = setInterval(function () {
                 if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
                     frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentForm.value
@@ -341,56 +298,19 @@ function addComments() {
                             clearInterval(waitforConfirm)
                             getGroups()
                             let waitforPost = setInterval(function () {
-                                if (document.getElementById(sessionStorage.getItem("selectedPostID")) !== "null") {
+                                if (document.getElementById(selectedPostID) !== "null") {
                                     clearInterval(waitforPost)
-                                    document.getElementById(sessionStorage.getItem("selectedPostID")).scrollIntoView()
-                                    document.getElementById(sessionStorage.getItem("selectedPostID")).scrollIntoView()
-                                    let postReplies = document.getElementById(sessionStorage.getItem("selectedPostID")).getElementsByTagName("span")
-                                    if (postReplies.length = 5) {
-                                        postReplies[postReplies.length - 2].style.display = "block"
-                                        postReplies[postReplies.length - 1].style.display = "block"
-                                    }
-                                    if (postReplies.length = 7) {
-                                        postReplies[postReplies.length - 4].style.display = "block"
-                                        postReplies[postReplies.length - 3].style.display = "block"
-                                    }
-
+                                    document.getElementById(selectedPostID).scrollIntoView()                             
                                 }
                             }, 1000)
                         }
                     }, 1000)
                 }
             }, 1000)
-
-
         } catch (error) { alert(error.message) }
     }
 }
-function saveData() {
-    localStorage.setItem("postRange", document.getElementById("formControlRange").value)
-    getGroups()
-}
-function showReplies(postID) {
-    let posts = document.getElementsByClassName("groupPost")
-    for (let p = 0; p < posts.length; p++) {
-        let replies = posts[p].getElementsByTagName("span")
-        if (replies.length > 3) {
-            for (let r = 3; r < replies.length; r++) {
-                if (posts[p].id == postID) {
-                    if (replies[r].style.display == "block") {
-                        replies[r].style.display = "none"
-                    } else { replies[r].style.display = "block" }
-                } else { replies[r].style.display = "none" }
-            }
-        }
-    }
-}
 $(window).load(function () {
-    let postRange = localStorage.getItem("postRange")
-    if (postRange !== null) {
-        document.getElementById("formControlRange").value = postRange
-        document.getElementById("rangeval").innerText = postRange
-    }
     $("#postSettingsAlert").on("hide.bs.modal", function () {
         document.getElementById("postComments").innerHTML = ""
         document.getElementById("replyContent").value = ""
@@ -404,9 +324,7 @@ $(window).load(function () {
     getProfilePage()
     getResourceCenter()
     getNewsAndAnnouncements()
-    getGroups()
+    getDiscussionGroups()
     getClassifiedAds()
     getResidentHomePage()
-
-
 })

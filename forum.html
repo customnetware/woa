@@ -16,39 +16,46 @@
 </head>
 <body>
     <div id="post"></div>
+    <a href="javascript:showArray()">Show Array</a>
 
     <script>
-
-        $(window).load(function () {
-            getGroups(365)
-        })
-
-        function getGroups(NumOfDays) {
-            try {
-                let fileLocation = (window.location.hostname == "localhost") ? "/Discussion/list/28118/discussion-groups.html" : "/Discussion/list/28118/discussion-groups"
-                let selectedGroups = []                
-                let currentDate = new Date()
-                $.get(fileLocation, function () { })
-                    .done(function (responseText) {
-                        let forum = new DOMParser().parseFromString(responseText, "text/html")
-                        let groups = forum.getElementById("contentInner").children
-                        for (let p = 2; p < groups.length; p++) {
-                            let lastPost = groups[p].getElementsByClassName("clsBodyItalic")[0].innerText
-                            let groupName = groups[p].getElementsByClassName("clsBodyText")[0].innerText
-                            let groupID = groups[p].getElementsByClassName("clsBodyText")[0].getElementsByTagName("a")[0].id.replace("titleEditForum", "")
-                            let dateStart = lastPost.indexOf("Last Post:")
-                            let postDate = (dateStart > -1) ? new Date(lastPost.substr(dateStart + 10, 18)) : new Date("01/01/1900")
-                            let dayDiff = (currentDate - postDate) / (1000 * 3600 * 24)
-                            if (dayDiff < NumOfDays) {
-                                groupName = (groupName.includes(".")) ? groupName.split(".")[1] : groupName
-                                document.getElementById("post").appendChild(document.createTextNode(groupName + " " + (postDate).toLocaleDateString() + " " + groupID))
-                                document.getElementById("post").appendChild(document.createElement("br"))
-                            }
-                        }
-                    })
-            } catch { }
+        let forums = ["8030", "8364"], forumNames = ["Recommendations", "General"], forumArray = []
+        for (let f = 0; f < forums.length; f++) {
+            $.get("/Discussion/28118~" + forums[f] + ".html", function () { })
+                .done(function (responseText) {
+                    let forum = new DOMParser().parseFromString(responseText, "text/html")
+                    let posts = forum.getElementsByClassName("ThreadContainer")[0]
+                    let lst = document.getElementById("post")
+                    for (let x = 0; x < posts.childElementCount; x++) {
+                        let post = posts.children[x]
+                        let lastDate = post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", "")
+                        let topic = post.getElementsByClassName("respDiscTopic")
+                        let comments = post.getElementsByClassName("respDiscChildPost")
+                        let posters = post.getElementsByClassName("respAuthorWrapper")
+                        let contacts = post.getElementsByClassName("respReplyWrapper")
+                        let dateSort = new Date(lastDate).getTime()
+                        forumArray.push({
+                            postSort: dateSort,
+                            lastPost: lastDate,
+                            subject: topic[0].innerText.trim(),
+                            postContent: topic[1].innerText.trim(),
+                            postAuthor: posters[0].innerText.trim(),
+                            postID: contacts[0].getElementsByTagName("a")[0].id,
+                            groupName: forumNames[f],
+                            groupID: forums[f]
+                        })
+                    }
+                })
         }
-
+        function showArray() {
+            let lst = document.getElementById("post")
+            forumArray.sort((a, b) => { return a.postSort - b.postSort })
+            forumArray.reverse()
+            for (let f = 0; f < forumArray.length; f++) {
+                lst.appendChild(document.createTextNode(forumArray[f].subject))
+                lst.appendChild(document.createElement("br"))
+            }
+        }
     </script>
 </body>
 </html>      
