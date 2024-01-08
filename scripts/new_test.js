@@ -243,7 +243,7 @@ function showComments(selectedPostID, groupID) {
     let selectedPost = document.getElementById(selectedPostID)
     let groupPostContent = selectedPost.getElementsByTagName("span")
     if (groupPostContent.length == 3) {
-        $.get("/Discussion/28118~" + groupID + ".html", function () { })
+        $.get("/Discussion/28118~" + groupID, function () { })
             .done(function (responseText) {
                 let forum = new DOMParser().parseFromString(responseText, "text/html")
                 let comments = forum.getElementById(selectedPostID.replace("post", "contents"))
