@@ -90,7 +90,7 @@
                     display: block
                 }
 
-                #recentNews p:nth-child(even), #recentEmails p:nth-child(even), #recentFlyers span:nth-child(even), #newsLetters span:nth-child(even), #recentAds p:nth-child(even), .groupPost:nth-child(even), #emailsSaved span:nth-child(even) {
+                #recentNews p:nth-child(even), #recentEmails p:nth-child(even), #recentFlyers span:nth-child(even), #newsLetters span:nth-child(even), #recentAds p:nth-child(even), #recentPostsBody p:nth-child(even), #emailsSaved span:nth-child(even) {
                     background-color: #eceeef
                 }
 
@@ -108,40 +108,41 @@
                 display: block;
             }
 
-            #postComments span {
-                display: block;
+            #recentPostsBody {
+                padding: 15px
             }
-
-                #postComments span:nth-child(2n+4) {
-                    margin-top: 5px;
-                    border-top: 1px solid black;
+            #recentPostsBody a {
+                text-decoration:none;
+            }
+                #recentPostsBody p {
+                    margin: 0px;
+                    padding: 10px !important
                 }
 
-                #postComments span:nth-child(2n+5) {
-                    margin-top: 1px;
+                #recentPostsBody textarea {
+                    width: 100%
                 }
-
-            #recentPostsBody p {
-                margin: 0px;
-                padding: 10px !important
-            }
 
                 #recentPostsBody p span {
                     display: block
                 }
 
-                    #recentPostsBody p span:first-child, #postComments span:first-child {
-                        font-weight: 700;                  
-                    }
+                #recentPostsBody p > span:first-child {
+                    font-weight: 700;
+                }
 
-                    #recentPostsBody p span:nth-child(2n+4) {
-                        margin-top: 5px;
-                        border-top: 1px solid black;
-                    }
+                #recentPostsBody p > span:nth-child(3) {
+                    font-weight: 700;
 
-                    #recentPostsBody p span:nth-child(2n+5) {
-                        margin-top: 1px;
-                    }
+                    border-bottom: 1px solid black;
+                }
+
+
+            .commentSpan > span:nth-child(even) {
+                border-bottom: 1px solid black;
+            }
+
+
 
             #recentPhotos {
                 text-align: center;
@@ -162,12 +163,6 @@
                     padding-top: 10px;
                     padding-left: 2px
                 }
-
-
-
-            #recentPostsBody textarea {
-                width: 100%
-            }
         </style>
         <iframe id="woaFrame" src="/discussion/list/28118/discussion-groups" title="Final WOA Code" style="display:none"></iframe>
         <div class="row" id="notificationHeader">
@@ -228,11 +223,15 @@
                         <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
                     </div>
                     <div id="recentPosts" class="collapse" data-parent="#recentNotifications">
-                        <div class="card-body" id="recentPostsBody"></div>
+                        <div class="card-body" id="recentPostsBody">
+                            <p id="post001"><span></span><span></span><span><span></span><a href=""></a></span><span class="commentSpan"></span><textarea></textarea><a href="">Reply</a></p>
+                            <p id="post002"><span></span><span></span><span><span></span><a href=""></a></span><span class="commentSpan"></span><textarea></textarea><a href="">Reply</a></p>
+                            <p id="post003"><span></span><span></span><span><span></span><a href=""></a></span><span class="commentSpan"></span><textarea></textarea><a href="">Reply</a></p>
+                        </div>
                         <div class="card-footer">
-                            <button type="button" id="homeButton" class="btn btn-primary" onclick="javascript:emailNavigation('back')" style="cursor:pointer">&nbsp;<span class="fa fa-fast-backward"></span>&nbsp;View Current Posts</button>
-                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:emailNavigation('next')" style="float:right; cursor:pointer">Browse Previous Posts&nbsp;<span class="fa fa-forward"></span>&nbsp;</button>
-                          
+                            <button type="button" id="postBackButton" class="btn btn-primary" onclick="javascript:postNavigation('back')" style="cursor:pointer">&nbsp;<span class="fa fa-fast-backward"></span>&nbsp;View Current Posts</button>
+                            <button type="button" id="postNexttButton" class="btn btn-primary" onclick="javascript:postNavigation('next')" style="float:right; cursor:pointer">Browse Previous Posts&nbsp;<span class="fa fa-forward"></span>&nbsp;</button>
+
                         </div>
                     </div>
                 </div>
@@ -354,7 +353,7 @@
 
         </div>
         <p id="demo"></p>
-        <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
+        <script src="scripts/new_test.js"></script>
 
     </div>
     <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->

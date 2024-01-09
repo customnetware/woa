@@ -16,7 +16,11 @@
 </head>
 <body>
     <div id="event"></div>
-
+    <div class="card-body" id="recentPostsBody">
+        <p><span></span><span></span><span><span></span><a href=""></a></span><textarea></textarea><a href=""></a></p>
+        <p><span></span><span></span><span><a href=""></a></span><textarea></textarea><a href=""></a></p>
+        <p><span></span><span></span><span><a href=""></a></span><textarea></textarea><a href=""></a></p>
+    </div>
     <table>
         <tr style="background-color:lightgray"><td>This is row 1 of my paging test for the portal</td></tr>
         <tr style="background-color:lightgray"><td>This is row 2 of my paging test for the portal</td></tr>
@@ -34,36 +38,37 @@
         <p>Unable to display PDF file. <a href="New Years Eve Party Flyer.pdf">Download</a> instead.</p>
     </object>-->
     <script>
-       // $.ajax({
-       //     url: "https://customnetware.github.io/woa/scripts/woa_resident_home.js",
-       //     method: "HEAD",
-       //     statusCode: {
-       //         404: function () {
-       //         /*    alert('file not found')*/
-       //         },
-       //         200: function () {
-       ///*             alert("file exists")*/
-       //         }
-       //     }
-       // })
+        alert(document.getElementById("recentPostsBody").getElementsByTagName("p")[0].getElementsByTagName("span").length)
+           // $.ajax({
+           //     url: "https://customnetware.github.io/woa/scripts/woa_resident_home.js",
+           //     method: "HEAD",
+           //     statusCode: {
+           //         404: function () {
+           //         /*    alert('file not found')*/
+           //         },
+           //         200: function () {
+           ///*             alert("file exists")*/
+           //         }
+           //     }
+           // })
 
 
 
-                        //let documentList = document.getElementById("event")
-                        //let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
-                        //$.get(fileLocation, function () { })
-                        //    .done(function (responseText) {
-                        //        let documents = new DOMParser().parseFromString(responseText, "text/html")
-                        //        let documentLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
-                        //        documentList.innerHTML = documentLink[documentLink.length - 1].href
-                        //    })
+                            //let documentList = document.getElementById("event")
+                            //let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
+                            //$.get(fileLocation, function () { })
+                            //    .done(function (responseText) {
+                            //        let documents = new DOMParser().parseFromString(responseText, "text/html")
+                            //        let documentLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
+                            //        documentList.innerHTML = documentLink[documentLink.length - 1].href
+                            //    })
 
-                        //    $("#event").load("/Calendar/28118~19555/", function (responseTxt, statusTxt, xhr) {
-                        //        if (statusTxt == "success")
-                        //            alert("External content loaded successfully!")
-                        //        if (statusTxt == "error")
-                        //            alert("Error: " + xhr.status + ": " + xhr.statusText)
-                        //    })
+                            //    $("#event").load("/Calendar/28118~19555/", function (responseTxt, statusTxt, xhr) {
+                            //        if (statusTxt == "success")
+                            //            alert("External content loaded successfully!")
+                            //        if (statusTxt == "error")
+                            //            alert("Error: " + xhr.status + ": " + xhr.statusText)
+                            //    })
     </script>
 </body>
 </html>
