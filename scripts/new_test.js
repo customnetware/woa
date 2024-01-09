@@ -219,23 +219,24 @@ function postNavigation(dir) {
     if (forumCount >= forumArray.length || dir == "back") { forumCount = 0 }
     if (dir == "current" && forumCount > 0) { forumCount = forumCount - 3 }
     for (let p = 0, f = forumCount; p < currentPosts.length && f < forumArray.length; p++, f++) {
-
+        let commentSpans = currentPosts[p].getElementsByClassName("commentSpan")
+        while (commentSpans.length > 0) commentSpans[0].remove()
+        let postContents = currentPosts[p].getElementsByTagName("span")
         currentPosts[p].id = forumArray[f].postID.replace("lnkTopicReply", "post")
-        currentPosts[p].children[0].innerText = forumArray[f].subject + " - Posted in  " + forumArray[f].groupName
-        currentPosts[p].children[1].innerText = forumArray[f].postContent
-
-        currentPosts[p].children[2].children[1].innerHTML = forumArray[f].postAuthor + " - Comments: (" + forumArray[f].numOfPost + ")"
-        currentPosts[p].children[2].children[1].href = "javascript:showComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ",false)"
-        currentPosts[p].children[3].innerHTML = ""
-        currentPosts[p].children[4].id = forumArray[f].postID.replace("lnkTopicReply", "comment")
-        currentPosts[p].children[4].value = ""
-        currentPosts[p].children[5].href = "javascript:addComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ")"
+        postContents[0].innerText = forumArray[f].subject + " - Posted in  " + forumArray[f].groupName
+        postContents[1].innerText = forumArray[f].postContent
+        currentPosts[p].getElementsByTagName("a")[0].innerHTML = forumArray[f].postAuthor + " - Comments: (" + forumArray[f].numOfPost + ")"
+        currentPosts[p].getElementsByTagName("a")[0].href = "javascript:showComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ",false)"
+        currentPosts[p].getElementsByTagName("textarea")[0].id = forumArray[f].postID.replace("lnkTopicReply", "comment")
+        currentPosts[p].getElementsByTagName("textarea").value = ""
+        currentPosts[p].getElementsByTagName("a")[1].href = "javascript:addComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ")"
         if (p == 2) { forumCount = f + 1 }
     }
 }
 function showComments(selectedPostID, groupID, showLast) {
     let selectedPost = document.getElementById(selectedPostID)
-    if (selectedPost.children[3].childElementCount == 0) {
+    let allSpans = selectedPost.getElementsByTagName("span")
+    if (allSpans.length === 2) {
         $.get(pageLocation("/Discussion/28118~" + groupID), function () { })
             .done(function (responseText) {
                 let forum = new DOMParser().parseFromString(responseText, "text/html")
@@ -243,16 +244,22 @@ function showComments(selectedPostID, groupID, showLast) {
                 let replyText = comments.getElementsByClassName("respDiscChildPost")
                 let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
                 for (let p = 0; p < replyText.length; p++) {
-                    if (showLast == true) { p = replyText.length-1 }
+                    if (showLast == true) { p = replyText.length - 1 }
                     let replySpan = document.createElement("span")
                     let authorSpan = document.createElement("span")
+                    replySpan.className = "commentSpan"
+                    authorSpan.className = "commentSpan"
                     replySpan.innerText = replyText[p].innerText.trim()
                     authorSpan.innerText = replyAuthor[p + 1].innerText.trim()
-                    selectedPost.children[3].appendChild(replySpan)
-                    selectedPost.children[3].appendChild(authorSpan)
+                    selectedPost.insertBefore(replySpan, selectedPost.getElementsByTagName("textarea")[0])
+                    selectedPost.insertBefore(authorSpan, selectedPost.getElementsByTagName("textarea")[0])
                 }
             })
-    } else[selectedPost.children[3].innerHTML = ""]
+    } else {
+        let commentSpans = selectedPost.getElementsByClassName("commentSpan")
+        while (commentSpans.length > 0) commentSpans[0].remove()
+    }
+
 }
 function addComments(selectedPostID, groupID) {
     if (window.location.hostname !== "localhost") {
@@ -266,7 +273,7 @@ function addComments(selectedPostID, groupID) {
             if (document.getElementById(selectedPostID) !== "null") {
                 clearInterval(waitforForm)
                 document.getElementById(selectedPostID).scrollIntoView()
-                showComments(selectedPostID, groupID,true)
+                showComments(selectedPostID, groupID, true)
             }
         }, 1000)
     } else {

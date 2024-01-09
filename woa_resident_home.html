@@ -111,9 +111,12 @@
             #recentPostsBody {
                 padding: 15px
             }
-            #recentPostsBody a {
-                text-decoration:none;
-            }
+
+                #recentPostsBody a {
+                    font-weight:bold;
+                    text-decoration: none;
+                }
+
                 #recentPostsBody p {
                     margin: 0px;
                     padding: 10px !important
@@ -127,19 +130,25 @@
                     display: block
                 }
 
-                #recentPostsBody p > span:first-child {
-                    font-weight: 700;
-                }
+                    #recentPostsBody p span:first-child {
+                        font-weight: 700;
+                    }
+                    #recentPostsBody p span:nth-child(4) {
+                        border-top: 1px solid black;
+                    }
 
-                #recentPostsBody p > span:nth-child(3) {
-                    font-weight: 700;
+                    #recentPostsBody p span:nth-child(2n+5) {
+                        font-weight: 700;
+                        border-bottom: 1px solid black;
+                    }
 
-                    border-bottom: 1px solid black;
-                }
 
 
-            .commentSpan > span:nth-child(even) {
-                border-bottom: 1px solid black;
+
+
+
+            .commentSpan {
+                display: inherit
             }
 
 
@@ -224,9 +233,9 @@
                     </div>
                     <div id="recentPosts" class="collapse" data-parent="#recentNotifications">
                         <div class="card-body" id="recentPostsBody">
-                            <p id="post001"><span></span><span></span><span><span></span><a href=""></a></span><span class="commentSpan"></span><textarea></textarea><a href="">Reply</a></p>
-                            <p id="post002"><span></span><span></span><span><span></span><a href=""></a></span><span class="commentSpan"></span><textarea></textarea><a href="">Reply</a></p>
-                            <p id="post003"><span></span><span></span><span><span></span><a href=""></a></span><span class="commentSpan"></span><textarea></textarea><a href="">Reply</a></p>
+                            <p id="post001"><span></span><span></span><a href=""></a><textarea></textarea><a href="">Reply</a></p>
+                            <p id="post002"><span></span><span></span><a href=""></a><textarea></textarea><a href="">Reply</a></p>
+                            <p id="post003"><span></span><span></span><a href=""></a><textarea></textarea><a href="">Reply</a></p>
                         </div>
                         <div class="card-footer">
                             <button type="button" id="postBackButton" class="btn btn-primary" onclick="javascript:postNavigation('back')" style="cursor:pointer">&nbsp;<span class="fa fa-fast-backward"></span>&nbsp;View Current Posts</button>
