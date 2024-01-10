@@ -13,19 +13,29 @@ function updateHeader(headerID, headerClass, headerTitle, headerLen) {
     cardHeader[1].innerHTML = headerTitle
     cardHeader[2].innerHTML = "(" + headerLen + ")"
 }
+
 function emailNavigation(dir) {
+
     if (dir == "next") {
         let retrievedData = localStorage.getItem("emails")
         let emailData = (retrievedData !== null) ? JSON.parse(retrievedData) : []
         let emailList = document.getElementById("recentEmailsBody").getElementsByTagName("p")
+        emailData.sort((a, b) => { return a.emailSort - b.emailSort })
+        emailData.reverse()
+
+        savedEmails: for (let i = 0; i < emailData.length; i++) {
+            for (let p = 0; p < emailList.length; p++) {
+                if (emailData[i].emailID === emailList[2].id) { emailCount = i + 1; break savedEmails }
+                if (emailData[emailData.length - 1].emailID === emailList[p].id) { emailCount = 0; break savedEmails }
+            }
+        }
+
         if (emailCount >= emailData.length) { emailCount = 0 }
         for (let p = 0, e = emailCount; e < emailData.length, p < 3; e++, p++) {
-            emailList[p].id = emailData[e][0]
-            emailList[p].children[0].innerHTML = emailData[e][1]
-            emailList[p].children[0].href = "javascript:viewSavedMessages('" + emailData[e][3] + "')"
-            emailList[p].children[1].innerHTML = emailData[e][2]
-            emailCount++
-            if (emailCount >= emailData.length) { emailCount = 0 }
+            emailList[p].id = emailData[e].emailID
+            emailList[p].children[0].innerHTML = emailData[e].emailSub
+            emailList[p].children[0].href = "javascript:viewSavedMessages('" + emailData[e].emailURL + "')"
+            emailList[p].children[1].innerHTML = emailData[e].emailBody
         }
     } else { document.getElementById("recentEmailsBody").innerHTML = sessionStorage.getItem("currentEmails") }
 }
@@ -50,23 +60,36 @@ function getResidentHomePage() {
 
             document.getElementById("notificationHeader").getElementsByTagName("span")[0].className = "fa fa-check-circle fa-lg formatLink"
             document.getElementById("notificationHeader").getElementsByTagName("span")[1].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
-            showPhotos(myWoodbridge)
+
             let recentItems = myWoodbridge.getElementsByClassName("message")
             for (let p = 0; p < recentItems.length; p++) {
                 let itemContent = recentItems[p].getElementsByTagName("a")[0]
                 emailList[p].id = itemContent.id.replace("link_", "")
                 emailList[p].children[0].href = "javascript:viewSavedMessages('" + itemContent.href + "')"
-                emailList[p].children[0].innerHTML = itemContent.getAttribute("data-tooltip-title").split("by")[0]
-                emailList[p].children[1].innerHTML = itemContent.getAttribute("data-tooltip-text")
-                if ((retrievedData !== null && retrievedData.includes(emailList[p].id) == false) || emailData.length == 0) {
-                    emailData.push([emailList[p].id, emailList[p].children[0].innerHTML, emailList[p].children[1].innerHTML, itemContent.href])
+                emailList[p].children[0].innerText = itemContent.getAttribute("data-tooltip-title").split("by")[0]
+                emailList[p].children[1].innerText = itemContent.getAttribute("data-tooltip-text")
+
+                let saved = false
+                for (let i = 0; i < emailData.length; i++) {
+                    if (emailData[i].emailID === emailList[p].id) { saved = true; break }
+                }
+                if (saved == false) {
+                    let dateSort = new Date(emailList[p].children[0].innerText.split("Sent")[1].trim()).getTime()
+                    emailData.push({
+                        emailSort: dateSort,
+                        emailDate: new Date(emailList[p].children[0].innerText.split("Sent")[1].trim()).toLocaleDateString,
+                        emailSub: emailList[p].children[0].innerText,
+                        emailBody: emailList[p].children[1].innerText,
+                        emailURL: itemContent.href,
+                        emailID: emailList[p].id
+                    })
                     let emailsToSave = JSON.stringify(emailData)
                     localStorage.setItem("emails", emailsToSave)
                 }
-
             }
             updateHeader("emailHeader", "fa fa-envelope-o", "Association Emails", emailList.length)
             sessionStorage.setItem("currentEmails", document.getElementById("recentEmailsBody").innerHTML)
+            showPhotos(myWoodbridge)
         })
 }
 function getNewsAndAnnouncements() {
@@ -182,7 +205,6 @@ function getDiscussionGroups() {
             .done(function (responseText) {
                 let forum = new DOMParser().parseFromString(responseText, "text/html")
                 let posts = forum.getElementsByClassName("ThreadContainer")[0]
-                let lst = document.getElementById("post")
                 for (let x = 0; x < posts.childElementCount; x++) {
                     let post = posts.children[x]
                     let lastDate = post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", "")
@@ -308,7 +330,7 @@ function addComments(selectedPostID, groupID) {
                                     frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
                                     clearInterval(waitforConfirm)
                                     getDiscussionGroups()
-                                    let waitforGroupsLive= setInterval(function () {
+                                    let waitforGroupsLive = setInterval(function () {
                                         if (sessionStorage.getItem("UpdateStatus") === "Done") {
                                             clearInterval(waitforGroupsLive)
                                             sessionStorage.removeItem("UpdateStatus")
