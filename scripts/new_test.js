@@ -174,6 +174,7 @@ function getClassifiedAds() {
         })
 }
 function getDiscussionGroups() {
+    sessionStorage.setItem("UpdateStatus", "Starting")
     forumArray = []
     let forums = ["8030", "8364", "11315"], forumNames = ["Recommendations", "General", "Using the HOA Portal"]
     for (let f = 0; f < forums.length; f++) {
@@ -211,6 +212,7 @@ function getDiscussionGroups() {
             forumArray.reverse()
             forumCount = 0
             postNavigation("start")
+            sessionStorage.setItem("UpdateStatus", "Done")
         }
     }, 1000)
 }
@@ -228,7 +230,9 @@ function postNavigation(dir) {
         currentPosts[p].getElementsByTagName("a")[0].innerHTML = forumArray[f].postAuthor + " - Comments: (" + forumArray[f].numOfPost + ")"
         currentPosts[p].getElementsByTagName("a")[0].href = "javascript:showComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ",false)"
         currentPosts[p].getElementsByTagName("textarea")[0].id = forumArray[f].postID.replace("lnkTopicReply", "comment")
-        currentPosts[p].getElementsByTagName("textarea").value = ""
+        currentPosts[p].getElementsByTagName("textarea")[0].value = ""
+        currentPosts[p].getElementsByTagName("a")[1].className = ""
+        currentPosts[p].getElementsByTagName("a")[1].innerHTML = "Reply"
         currentPosts[p].getElementsByTagName("a")[1].href = "javascript:addComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ")"
         if (p == 2) { forumCount = f + 1 }
     }
@@ -266,16 +270,26 @@ function addComments(selectedPostID, groupID) {
         document.getElementById("woaFrame").src = "/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", "")
     }
     let commentForm = document.getElementById(selectedPostID).getElementsByTagName("textarea")[0]
+    let replyWait = document.getElementById(selectedPostID).getElementsByTagName("a")[1]
     if (commentForm.value.length == 0) { return }
+    replyWait.className = "fa fa-refresh fa-spin fa-fw fa-lg"
+    replyWait.innerHTML = ""
     if (window.location.hostname == "localhost") {
         getDiscussionGroups()
-        let waitforForm = setInterval(function () {
-            if (document.getElementById(selectedPostID) !== "null") {
-                clearInterval(waitforForm)
-                document.getElementById(selectedPostID).scrollIntoView()
-                showComments(selectedPostID, groupID, true)
+        let waitforGroupsTest = setInterval(function () {
+            if (sessionStorage.getItem("UpdateStatus") === "Done") {
+                clearInterval(waitforGroupsTest)
+                sessionStorage.removeItem("UpdateStatus")
+                let waitForPostTest = setInterval(function () {
+                    if (document.getElementById(selectedPostID) !== null) {
+                        clearInterval(waitForPostTest)
+                        document.getElementById(selectedPostID).scrollIntoView()
+                        showComments(selectedPostID, groupID, true)
+                    } else { postNavigation("next") }
+
+                }, 250)
             }
-        }, 1000)
+        }, 250)
     } else {
         try {
             let frameWindow = document.getElementById('woaFrame').contentWindow
@@ -294,11 +308,18 @@ function addComments(selectedPostID, groupID) {
                                     frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
                                     clearInterval(waitforConfirm)
                                     getDiscussionGroups()
-                                    let waitforPost = setInterval(function () {
-                                        if (document.getElementById(selectedPostID) !== "null") {
-                                            clearInterval(waitforPost)
-                                            document.getElementById(selectedPostID).scrollIntoView()
-                                            showComments(selectedPostID, groupID, true)
+                                    let waitforGroupsLive= setInterval(function () {
+                                        if (sessionStorage.getItem("UpdateStatus") === "Done") {
+                                            clearInterval(waitforGroupsLive)
+                                            sessionStorage.removeItem("UpdateStatus")
+                                            let waitForPostLive = setInterval(function () {
+                                                if (document.getElementById(selectedPostID) !== null) {
+                                                    clearInterval(waitForPostLive)
+                                                    document.getElementById(selectedPostID).scrollIntoView()
+                                                    showComments(selectedPostID, groupID, true)
+                                                } else { postNavigation("next") }
+
+                                            }, 250)
                                         }
                                     }, 1000)
                                 }
@@ -308,7 +329,11 @@ function addComments(selectedPostID, groupID) {
                 }
             }, 1000)
 
-        } catch (error) { alert(error.message) }
+        } catch (error) {
+            sessionStorage.removeItem("UpdateStatus")
+            replyWait.className = ""
+            replyWait.innerHTML = "Error"
+        }
     }
 }
 $(window).load(function () {
