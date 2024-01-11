@@ -368,9 +368,10 @@ function closeForm(SendMessage) {
 
     if (SendMessage == true) {
         if (messageContent.value.length > 5) {
+            sendComment()
             messageContent.value = ""
             messageContent.placeholder = "Please wait..."
-            sendComment()
+
 
         }
     }
