@@ -1,0 +1,220 @@
+﻿#contentInner {
+    padding-top: 1% !important;
+    padding-left: 2% !important;
+    padding-right: 2% !important;
+}
+
+#notificationsSettings button {
+    cursor: pointer !important;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+#notificationsSettings span {
+    margin-right: 10px
+}
+
+.formatHeader {
+    background-color: #999999;
+    color: white;
+    padding: 5px;
+}
+
+.formatLink {
+    padding-left: 10px;
+    text-decoration: none !important;
+}
+
+#customContainer .card {
+    -webkit-box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+}
+
+#customContainer .card-body {
+    padding-left: 15px;
+}
+
+#customContainer .card-header {
+    cursor: pointer;
+    border-bottom: none;
+}
+
+    #customContainer .card-header:not(.collapsed) .rotate-icon {
+        transform: rotate(180deg);
+    }
+
+    #customContainer .card-header .accicon {
+        float: right;
+        font-size: 20px;
+        width: 1.2em;
+    }
+
+#userProfile img {
+    height: 120px;
+    filter: drop-shadow(5px 5px 5px grey);
+    float: left;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    padding-top: 5px;
+}
+
+#recentNews p, #recentEmails p, #recentAds p {
+    margin: 0px;
+    padding: 10px !important
+}
+
+    #recentNews p span:first-child, #recentEmails a:first-child, #recentAds p span:first-child {
+        font-weight: 700;
+        display: block
+    }
+
+    #recentNews p:nth-child(even), #recentEmails p:nth-child(even), #recentFlyers span:nth-child(even), #newsLetters span:nth-child(even), #recentAds p:nth-child(even), #recentPostsBody p:nth-child(even), #emailsSaved span:nth-child(even) {
+        background-color: #eceeef
+    }
+
+#recentEmails .card-body div {
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-bottom: 5px
+}
+
+#recentFlyers span, #newsLetters span, #emailsSaved span {
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-weight: 600;
+    display: block;
+}
+
+#recentPostsBody {
+    padding: 15px
+}
+
+    #recentPostsBody p a {
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    #recentPostsBody p {
+        margin: 0px;
+        padding: 10px !important
+    }
+
+        #recentPostsBody p textarea {
+            width: 100%
+        }
+
+        #recentPostsBody p span {
+            display: block
+        }
+
+            #recentPostsBody p span:first-child {
+                font-weight: 700;
+            }
+
+            #recentPostsBody p span:nth-child(4) {
+                border-top: 1px solid black;
+            }
+
+            #recentPostsBody p span:nth-child(2n+5) {
+                font-weight: 700;
+                border-bottom: 1px solid black;
+            }
+
+.commentSpan {
+    display: inherit
+}
+
+#recentPhotos {
+    text-align: center;
+    vertical-align: middle;
+    font-size: .75em;
+}
+
+    #recentPhotos .card-body div {
+        width: 33%;
+        float: left;
+        filter: drop-shadow(5px 5px 5px grey);
+    }
+
+    #recentPhotos img {
+        max-width: 100%;
+        max-height: 100%;
+        padding-right: 2px;
+        padding-top: 10px;
+        padding-left: 2px
+    }
+
+/* Start of chat */
+.open-button {
+    background-color: #555;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    width: 280px;
+}
+
+/* The popup chat - hidden by default */
+.chat-popup {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+}
+
+    /* Full-width textarea */
+    .form-container textarea {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+        resize: none;
+        min-height: 150px;
+    }
+
+    .form-container div {
+        padding-left: 22px
+    }
+    /* When the textarea gets focus, do something */
+    .form-container textarea:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+
+    /* Set a style for the submit/send button */
+    .form-container .btn {
+        background-color: #04AA6D;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 10px;
+        opacity: 0.8;
+    }
+
+    /* Add a red background color to the cancel button */
+    .form-container .cancel {
+        background-color: red;
+    }
+
+    /* Add some hover effects to buttons */
+    .form-container .btn:hover, .open-button:hover {
+        opacity: 1;
+    }

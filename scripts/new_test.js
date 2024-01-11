@@ -9,8 +9,9 @@ function pageLocation(URLString) {
 }
 function updateHeader(headerID, headerClass, headerTitle, headerLen) {
     let cardHeader = document.getElementById(headerID).children
-    cardHeader[0].className = headerClass
-    cardHeader[1].innerHTML = headerTitle
+
+    if (headerClass.length > 5) { cardHeader[0].className = headerClass }
+    if (headerTitle.length > 5) { cardHeader[1].innerHTML = headerTitle }
     cardHeader[2].innerHTML = "(" + headerLen + ")"
 }
 
@@ -77,7 +78,7 @@ function getResidentHomePage() {
                     let dateSort = new Date(emailList[p].children[0].innerText.split("Sent")[1].trim()).getTime()
                     emailData.push({
                         emailSort: dateSort,
-                        emailDate: new Date(emailList[p].children[0].innerText.split("Sent")[1].trim()).toLocaleDateString,
+                        emailDate: new Date(emailList[p].children[0].innerText.split("Sent")[1].trim()),
                         emailSub: emailList[p].children[0].innerText,
                         emailBody: emailList[p].children[1].innerText,
                         emailURL: itemContent.href,
@@ -257,7 +258,7 @@ function postNavigation(dir) {
         currentPosts[p].getElementsByTagName("a")[1].innerHTML = "Reply"
         currentPosts[p].getElementsByTagName("a")[1].href = "javascript:addComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ")"
         if (p == 2) { forumCount = f + 1 }
-    }
+    } updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", forumArray.length)
 }
 function showComments(selectedPostID, groupID, showLast) {
     let selectedPost = document.getElementById(selectedPostID)
@@ -356,6 +357,28 @@ function addComments(selectedPostID, groupID) {
             replyWait.className = ""
             replyWait.innerHTML = "Error"
         }
+    }
+}
+function openForm() {
+    document.getElementById("WOAComments").style.display = "block"
+}
+
+function closeForm(SendMessage) {
+    let messageContent = document.getElementById("WOAComments").getElementsByTagName("textarea")[0]
+
+    if (SendMessage == true) {
+        if (messageContent.value.length > 5) {
+            messageContent.value = ""
+            messageContent.placeholder = "Type message.."
+            document.getElementById("WOAComments").style.display = "none"
+
+            alert("Your message has been sent!")
+        }
+    }
+    if (SendMessage == false) {
+        messageContent.value = ""
+        messageContent.placeholder = "Type message.."
+        document.getElementById("WOAComments").style.display = "none"
     }
 }
 $(window).load(function () {
