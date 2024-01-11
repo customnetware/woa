@@ -18,7 +18,7 @@
         <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
     </div>
     <div class="container" id="customContainer">
-        <link rel="stylesheet" href="https://customnetware.github.io/woa/css/woaStyles.css">
+        <link rel="stylesheet" href="/css/woaStyles.css">
         <iframe id="woaFrame" src="/discussion/list/28118/discussion-groups" title="Final WOA Code" style="display:none"></iframe>
         <div class="row" id="notificationHeader">
             <div class="col-md-12">
@@ -64,8 +64,8 @@
                             <p><a></a><span></span></p>
                         </div>
                         <div class="card-footer">
-                            <button type="button" id="homeButton" class="btn btn-primary" onclick="javascript:emailNavigation('back')" style="cursor:pointer">&nbsp;<span class="fa fa-fast-backward"></span>&nbsp;View Current Emails</button>
-                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:emailNavigation('next')" style="float:right; cursor:pointer">Browse Saved Emails&nbsp;<span class="fa fa-forward"></span>&nbsp;</button>
+                            <button type="button" id="homeButton" class="btn btn-primary" onclick="javascript:emailNavigation('back')" style="cursor:pointer">&nbsp;<span class="fa fa-fast-backward"></span>&nbsp;</button>
+                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:emailNavigation('next')" style="float:right; cursor:pointer">&nbsp;<span class="fa fa-forward"></span>&nbsp;</button>
                         </div>
                     </div>
                 </div>
@@ -83,8 +83,8 @@
                             <p id="post003"><span></span><span></span><a href=""></a><textarea></textarea><a href="">Reply</a></p>
                         </div>
                         <div class="card-footer">
-                            <button type="button" id="postBackButton" class="btn btn-primary" onclick="javascript:postNavigation('back')" style="cursor:pointer">&nbsp;<span class="fa fa-fast-backward"></span>&nbsp;View Current Posts</button>
-                            <button type="button" id="postNexttButton" class="btn btn-primary" onclick="javascript:postNavigation('next')" style="float:right; cursor:pointer">Browse Previous Posts&nbsp;<span class="fa fa-forward"></span>&nbsp;</button>
+                            <button type="button" id="postBackButton" class="btn btn-primary" onclick="javascript:postNavigation('back')" style="cursor:pointer">&nbsp;<span class="fa fa-fast-backward"></span>&nbsp;</button>
+                            <button type="button" id="postNexttButton" class="btn btn-primary" onclick="javascript:postNavigation('next')" style="float:right; cursor:pointer">&nbsp;<span class="fa fa-forward"></span>&nbsp;</button>
 
                         </div>
                     </div>
@@ -217,15 +217,15 @@
                 <strong>Select Recipient</strong>
                 <div class="form-check" style="margin-bottom:0px">
                     <input type="radio" class="form-check-input" name="q" id="option1" checked>
-                    <label class="form-check-label" for="option1">Webmaster</label>
+                    <label class="form-check-label" for="option1">WOA Webmaster</label>
                 </div>
                 <div class="form-check" style="margin-bottom:0px">
                     <input type="radio" class="form-check-input" name="q" id="option2">
-                    <label class="form-check-label" for="option2">General Manager</label>
+                    <label class="form-check-label" for="option2">Silvercreek Management</label>
                 </div>
                 <div class="form-check" style="margin-bottom:0px">
                     <input type="radio" name="q" id="option3" class="form-check-input">
-                    <label class="form-check-label" for="option3">Front Office</label>
+                    <label class="form-check-label" for="option3">Clubhouse Front Desk</label>
                 </div>
                 <div class="form-check">
                     <input type="radio" name="q" id="option4" class="form-check-input">
@@ -234,11 +234,11 @@
 
 
 
-                <button type="button" class="btn" onclick="closeForm(true)">Send</button>
-                <button type="button" class="btn cancel" onclick="closeForm(false)">Close</button>
+                <button id="woaSendButton" type="button" class="btn" onclick="closeForm(true)">Send&nbsp;<i class="fa fa-share fa-lg"></i></button>
+                <button type="button" class="btn cancel" onclick="closeForm(false)">Close&nbsp;<i class="fa fa-window-close-o fa-lg"></i></button>
             </div>
         </div>
-        <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
+        <script src="/scripts/new_test.js"></script>
 
     </div>
     <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->

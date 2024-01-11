@@ -366,12 +366,14 @@ function openForm() {
 function closeForm(SendMessage) {
     let messageContent = document.getElementById("WOAComments").getElementsByTagName("textarea")[0]
 
+
+    let k = "fa fa-share fa-lg"
     if (SendMessage == true) {
         if (messageContent.value.length > 5) {
             sendComment(messageContent.value)
             messageContent.value = ""
             messageContent.placeholder = "Please wait..."
-
+            document.getElementById("woaSendButton").getElementsByTagName("i")[0].className = "fa fa-refresh fa-spin fa-fw fa-lg"
 
         }
     }
@@ -383,7 +385,8 @@ function closeForm(SendMessage) {
 }
 
 function sendComment(messageToSend) {
-    document.getElementById("woaFrame").src = "/form/28118~327323/social-media-help"
+    /*/form/28118~116540/ask-a-manager*/
+    document.getElementById("woaFrame").src = "/form/28118~327323/social-media-help.html"
     let frameWindow = document.getElementById('woaFrame').contentWindow
     let messageContent = document.getElementById("WOAComments").getElementsByTagName("textarea")[0]
     let formCount = 0
@@ -400,6 +403,7 @@ function sendComment(messageToSend) {
             let waitForConfirmation = setInterval(function () {
                 if (frameWindow.document.getElementById("frmSubmitFields") !== null || window.location.hostname == "localhost") {
                     clearInterval(waitForConfirmation)
+                    document.getElementById("woaSendButton").getElementsByTagName("i")[0].className = "fa fa-share fa-lg"
                     messageContent.placeholder = "Your message has been sent.  Use the Close button to exit this form."
                 }
             }, 1000)
