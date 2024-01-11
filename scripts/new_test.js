@@ -369,10 +369,9 @@ function closeForm(SendMessage) {
     if (SendMessage == true) {
         if (messageContent.value.length > 5) {
             messageContent.value = ""
-            messageContent.placeholder = "Type message.."
-            document.getElementById("WOAComments").style.display = "none"
+            messageContent.placeholder = "Please wait..."
+            sendComment()
 
-            alert("Your message has been sent!")
         }
     }
     if (SendMessage == false) {
@@ -380,6 +379,34 @@ function closeForm(SendMessage) {
         messageContent.placeholder = "Type message.."
         document.getElementById("WOAComments").style.display = "none"
     }
+}
+
+function sendComment() {
+    document.getElementById("woaFrame").src = "/form/28118~327323/social-media-help.html"
+    let frameWindow = document.getElementById('woaFrame').contentWindow
+    let messageContent = document.getElementById("WOAComments").getElementsByTagName("textarea")[0]
+    let formCount = 0
+    let btnCount = 0
+
+    let waitForCommentForm = setInterval(function () {
+        let responseForm = frameWindow.document.getElementById("fld_5028954")
+        let responseBtn = frameWindow.document.getElementById("btnSubmit")
+
+        if (responseForm !== null && responseBtn !== null) {
+            clearInterval(waitForCommentForm)
+            responseForm.value = document.getElementById("WOAComments").getElementsByTagName("textarea")[0].value
+            responseBtn.click()
+            let waitForConfirmation = setInterval(function () {
+                if (frameWindow.document.getElementById("frmSubmitFields") !== null || window.location.hostname == "localhost") {
+                    clearInterval(waitForConfirmation)
+                    messageContent.value = ""
+                    messageContent.placeholder = "Your message has been sent.  Use the Close button to exit this form."
+                }
+            }, 1000)
+        }
+
+    }, 1000)
+
 }
 $(window).load(function () {
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
