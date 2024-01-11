@@ -41,16 +41,49 @@ function emailNavigation(dir) {
     } else { document.getElementById("recentEmailsBody").innerHTML = sessionStorage.getItem("currentEmails") }
 }
 function viewSavedMessages(savedMessageURL) {
-    let emailPopUp = document.getElementById("emailsSaved")
-    while (emailPopUp.firstChild) { emailPopUp.removeChild(emailPopUp.firstChild) }
+    $.get(pageLocation(savedMessageURL), function () { })
+        .done(function (responseText) {
+            let emailSaved = new DOMParser().parseFromString(responseText, "text/html")
+            let emailContent = emailSaved.getElementById("AV").getElementsByTagName("td")
+            document.getElementById("emailsSaved").innerHTML = emailContent[0].innerHTML
+  
 
-    if (savedMessageURL.includes("/Messenger/MessageView/")) {
-        $("#emailsSaved").load(pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
-            if (statusTxt == "error") { emailPopUp.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
+            //for (let p = 0; p < emailContent.length; p++) {
+            //    document.getElementById("emailsSaved").appendChild(emailContent[p])
+
+            //}
+      
+        
+            //let articleTitle = newsArticles.getElementsByClassName("clsHeader")
+            //let articleContent = newsArticles.getElementsByClassName("clsBodyText")
+            //for (let p = 0; p < articleContent.length; p++) {
+            //    let currentItem = document.createElement("p")
+            //    let itemTitle = document.createElement("span")
+            //    let itemLink = document.createElement("a")
+            //    itemLink.href = articleTitle[p].parentElement.getElementsByTagName("div")[2].getElementsByTagName("a")[0].href
+            //    itemLink.className = "fa fa-arrow-right fa-lg formatLink"
+            //    itemTitle.appendChild(document.createTextNode(articleTitle[p].innerText))
+            //    currentItem.appendChild(itemTitle)
+            //    currentItem.appendChild(document.createTextNode(articleContent[p].innerText))
+            //    currentItem.appendChild(itemLink)
+            //    newsList.appendChild(currentItem)
+            //}
+            //document.getElementById("newsHeader").children[2].innerHTML = "(" + newsList.childElementCount + ")"
+            if (!$("#showEmailAlert").is(":visible")) { $("#showEmailAlert").modal("show") }
         })
-    }
-    document.getElementById("AV").children[0].style ="width:auto"
-    if (!$("#showEmailAlert").is(":visible")) { $("#showEmailAlert").modal("show") }
+    //let emailPopUp = document.getElementById("emailsSaved")
+    //while (emailPopUp.firstChild) { emailPopUp.removeChild(emailPopUp.firstChild) }
+
+    //if (savedMessageURL.includes("/Messenger/MessageView/")) {
+    //    $("#emailsSaved").load(pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
+    //        if (statusTxt == "error") { emailPopUp.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
+
+    //    })
+    //}
+
+
+
+
 }
 function getResidentHomePage() {
     $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
