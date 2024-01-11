@@ -368,7 +368,7 @@ function closeForm(SendMessage) {
 
     if (SendMessage == true) {
         if (messageContent.value.length > 5) {
-            sendComment()
+            sendComment(messageContent.value)
             messageContent.value = ""
             messageContent.placeholder = "Please wait..."
 
@@ -382,7 +382,7 @@ function closeForm(SendMessage) {
     }
 }
 
-function sendComment() {
+function sendComment(messageToSend) {
     document.getElementById("woaFrame").src = "/form/28118~327323/social-media-help"
     let frameWindow = document.getElementById('woaFrame').contentWindow
     let messageContent = document.getElementById("WOAComments").getElementsByTagName("textarea")[0]
@@ -395,12 +395,11 @@ function sendComment() {
 
         if (responseForm !== null && responseBtn !== null) {
             clearInterval(waitForCommentForm)
-            responseForm.value = document.getElementById("WOAComments").getElementsByTagName("textarea")[0].value
+            responseForm.value = messageToSend
             responseBtn.click()
             let waitForConfirmation = setInterval(function () {
                 if (frameWindow.document.getElementById("frmSubmitFields") !== null || window.location.hostname == "localhost") {
                     clearInterval(waitForConfirmation)
-                    messageContent.value = ""
                     messageContent.placeholder = "Your message has been sent.  Use the Close button to exit this form."
                 }
             }, 1000)
