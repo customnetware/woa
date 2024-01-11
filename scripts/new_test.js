@@ -382,7 +382,7 @@ function closeForm(SendMessage) {
 }
 
 function sendComment() {
-    document.getElementById("woaFrame").src = "/form/28118~327323/social-media-help.html"
+    document.getElementById("woaFrame").src = "/form/28118~327323/social-media-help"
     let frameWindow = document.getElementById('woaFrame').contentWindow
     let messageContent = document.getElementById("WOAComments").getElementsByTagName("textarea")[0]
     let formCount = 0
