@@ -49,6 +49,7 @@ function viewSavedMessages(savedMessageURL) {
             if (statusTxt == "error") { emailPopUp.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
         })
     }
+    document.getElementById("AV").children[0].style ="width:auto"
     if (!$("#showEmailAlert").is(":visible")) { $("#showEmailAlert").modal("show") }
 }
 function getResidentHomePage() {
@@ -288,13 +289,13 @@ function showComments(selectedPostID, groupID, showLast) {
     }
 
 }
+function newComment() { }
 function addComments(selectedPostID, groupID) {
-    if (window.location.hostname !== "localhost") {
-        document.getElementById("woaFrame").src = "/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", "")
-    }
+    if (commentForm.value.length == 0) { return }
+    if (window.location.hostname !== "localhost") { document.getElementById("woaFrame").src = "/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", "") }
     let commentForm = document.getElementById(selectedPostID).getElementsByTagName("textarea")[0]
     let replyWait = document.getElementById(selectedPostID).getElementsByTagName("a")[1]
-    if (commentForm.value.length == 0) { return }
+
     replyWait.className = "fa fa-refresh fa-spin fa-fw fa-lg"
     replyWait.innerHTML = ""
     if (window.location.hostname == "localhost") {
@@ -362,19 +363,15 @@ function addComments(selectedPostID, groupID) {
 function openForm() {
     document.getElementById("WOAComments").style.display = "block"
 }
-
 function closeForm(SendMessage) {
     let messageContent = document.getElementById("WOAComments").getElementsByTagName("textarea")[0]
 
-
-    let k = "fa fa-share fa-lg"
     if (SendMessage == true) {
         if (messageContent.value.length > 5) {
             sendComment(messageContent.value)
             messageContent.value = ""
             messageContent.placeholder = "Please wait..."
             document.getElementById("woaSendButton").className = "fa fa-refresh fa-spin fa-fw fa-lg"
-
         }
     }
     if (SendMessage == false) {
@@ -393,6 +390,7 @@ function sendComment(messageToSend) {
     let btnCount = 0
 
     let waitForCommentForm = setInterval(function () {
+        formCount++
         let responseForm = frameWindow.document.getElementById("fld_5028954")
         let responseBtn = frameWindow.document.getElementById("btnSubmit")
 
@@ -401,6 +399,7 @@ function sendComment(messageToSend) {
             responseForm.value = messageToSend
             responseBtn.click()
             let waitForConfirmation = setInterval(function () {
+                btnCount++
                 if (frameWindow.document.getElementById("frmSubmitFields") !== null || window.location.hostname == "localhost") {
                     clearInterval(waitForConfirmation)
                     document.getElementById("woaSendButton").className = "fa fa-share fa-lg"
@@ -410,7 +409,6 @@ function sendComment(messageToSend) {
         }
 
     }, 1000)
-
 }
 $(window).load(function () {
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
