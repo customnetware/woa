@@ -373,7 +373,7 @@ function closeForm(SendMessage) {
             sendComment(messageContent.value)
             messageContent.value = ""
             messageContent.placeholder = "Please wait..."
-            document.getElementById("woaSendButton").getElementsByTagName("i")[0].className = "fa fa-refresh fa-spin fa-fw fa-lg"
+            document.getElementById("woaSendButton").className = "fa fa-refresh fa-spin fa-fw fa-lg"
 
         }
     }
@@ -403,7 +403,7 @@ function sendComment(messageToSend) {
             let waitForConfirmation = setInterval(function () {
                 if (frameWindow.document.getElementById("frmSubmitFields") !== null || window.location.hostname == "localhost") {
                     clearInterval(waitForConfirmation)
-                    document.getElementById("woaSendButton").getElementsByTagName("i")[0].className = "fa fa-share fa-lg"
+                    document.getElementById("woaSendButton").className = "fa fa-share fa-lg"
                     messageContent.placeholder = "Your message has been sent.  Use the Close button to exit this form."
                 }
             }, 1000)
