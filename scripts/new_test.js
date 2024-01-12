@@ -41,19 +41,29 @@ function emailNavigation(dir) {
     } else { document.getElementById("recentEmailsBody").innerHTML = sessionStorage.getItem("currentEmails") }
 }
 function viewSavedMessages(savedMessageURL) {
+    let emailPopUp = document.getElementById("emailsSaved")
+    while (emailPopUp.firstChild) { emailPopUp.removeChild(emailPopUp.firstChild) }
     $.get(pageLocation(savedMessageURL), function () { })
         .done(function (responseText) {
             let emailSaved = new DOMParser().parseFromString(responseText, "text/html")
             let emailContent = emailSaved.getElementById("AV").getElementsByTagName("td")
-            document.getElementById("emailsSaved").innerHTML = emailContent[0].innerHTML
-  
+            let emailHeaders = emailSaved.getElementsByClassName("clsGridDetail")
+            document.getElementById("showEmailAlertLabel").innerHTML = emailHeaders[3].innerHTML + " - " + emailHeaders[1].innerHTML + " - " + emailHeaders[0].innerHTML
+
+ 
+
+
+
+            emailPopUp.innerHTML = emailContent[0].innerHTML
+
+
 
             //for (let p = 0; p < emailContent.length; p++) {
             //    document.getElementById("emailsSaved").appendChild(emailContent[p])
 
             //}
-      
-        
+
+
             //let articleTitle = newsArticles.getElementsByClassName("clsHeader")
             //let articleContent = newsArticles.getElementsByClassName("clsBodyText")
             //for (let p = 0; p < articleContent.length; p++) {
