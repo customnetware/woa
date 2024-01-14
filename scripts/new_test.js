@@ -381,13 +381,13 @@ function addComments(selectedPostID, groupID) {
 }
 function portalOpenForm(selectedPostID, groupID) {
     document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
-    alert(selectedPostID+groupID)
+
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
         if (buttonID !== null || window.location.hostname == "localhost") {
          buttonID.click() 
-     
+            alert(buttonID.id)
             portalFormInput(selectedPostID, groupID)
         } else {
             portalOpenForm(selectedPostID, groupID)
@@ -399,10 +399,10 @@ function portalFormInput(selectedPostID, groupID) {
     commentSubject = document.getElementById("replySubject").value
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
-        if (portal.getElementById("txt_post_body") !== null || window.location.hostname == "localhost") {
+        if (portal.getElementById("txt_post_body") !== null) {
           
                 portal.getElementById("txt_post_body").innerHTML = commentForm.value
-                portal.getElementsByClassName("x-btn-text save-button")[0].click()
+                portal.getElementsByClassName(" x-btn-text save-button")[0].click()
      
 
             commentForm.value = ""
