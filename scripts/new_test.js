@@ -320,7 +320,7 @@ function showComments(selectedPostID, groupID, showLast) {
 }
 function newComment() {
     if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") } else {
-       
+
         addComments("replyContent", document.getElementById("selectGroup").value)
         $("#postSettingsAlert").modal("hide")
     }
@@ -386,7 +386,7 @@ function addComments(selectedPostID, groupID) {
         let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
         while (commentSpans.length > 0) commentSpans[0].remove()
         portalOpenForm(selectedPostID, groupID)
-    } catch (error) {}
+    } catch (error) { }
 
 }
 function portalOpenForm(selectedPostID, groupID) {
@@ -405,16 +405,16 @@ function portalOpenForm(selectedPostID, groupID) {
 function portalFormInput(selectedPostID, groupID) {
     commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
     commentSubject = document.getElementById("replySubject").value
-  
+
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
-        if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {        
+        if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
-            alert(portal.getElementsByClassName("x-form-text x-form-field form-items-container")[0].getElementsByTagName("input").length)
+
             let waitForText = setInterval(function () {
                 if (portal.getElementById("txt_post_body").innerHTML == commentForm.value) {
                     clearInterval(waitForText)
-
+                    alert(portal.getElementsByClassName("x-form-text x-form-field form-items-container")[0].getElementsByTagName("input").length)
                     portal.getElementsByClassName(" x-btn-text save-button")[0].click()
                     commentForm.value = ""
                     portalInputConfirm(selectedPostID, groupID)
@@ -443,8 +443,8 @@ function portalClient(selectedPostID, groupID) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
         if (buttonID !== null) {
-            if (selectedPostID !== "replyContent") { showComments(selectedPostID, groupID, true) }else(getDiscussionGroups())
-           
+            if (selectedPostID !== "replyContent") { showComments(selectedPostID, groupID, true) } else (getDiscussionGroups())
+
         }
         else {
             portalClient(selectedPostID, groupID)
