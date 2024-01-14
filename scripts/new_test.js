@@ -439,6 +439,7 @@ function portalInputConfirm(selectedPostID, groupID) {
 
 function portalClient(selectedPostID, groupID) {
     setTimeout(function () {
+        let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
         if (buttonID !== null) {
             showComments(selectedPostID, groupID, true)
