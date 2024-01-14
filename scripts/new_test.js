@@ -401,7 +401,8 @@ function portalFormInput(selectedPostID, groupID) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementById("txt_post_body") !== null) {
           
-                portal.getElementById("txt_post_body").innerHTML = commentForm.value
+            portal.getElementById("txt_post_body").innerHTML = commentForm.value
+            alert(commentForm.value)
                 portal.getElementsByClassName(" x-btn-text save-button")[0].click()
      
 
