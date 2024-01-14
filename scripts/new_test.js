@@ -387,7 +387,7 @@ function portalOpenForm(selectedPostID, groupID) {
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
         if (buttonID !== null || window.location.hostname == "localhost") {
          buttonID.click() 
-            alert(buttonID.id)
+
             portalFormInput(selectedPostID, groupID)
         } else {
             portalOpenForm(selectedPostID, groupID)
@@ -403,8 +403,9 @@ function portalFormInput(selectedPostID, groupID) {
           
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
             alert(commentForm.value)
-                portal.getElementsByClassName(" x-btn-text save-button")[0].click()
-     
+            setTimeout(function () {
+            portal.getElementsByClassName(" x-btn-text save-button")[0].click()
+            }, 100)
 
             commentForm.value = ""
             portalInputConfirm(selectedPostID, groupID)
