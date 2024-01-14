@@ -405,7 +405,7 @@ function portalFormInput(selectedPostID, groupID) {
          
             setTimeout(function () {
             portal.getElementsByClassName(" x-btn-text save-button")[0].click()
-            }, 100)
+            }, 500)
 
             commentForm.value = ""
             portalInputConfirm(selectedPostID, groupID)
