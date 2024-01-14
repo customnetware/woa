@@ -405,7 +405,8 @@ function portalFormInput(selectedPostID, groupID) {
     commentSubject = document.getElementById("replySubject").value
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
-        if (portal.getElementById("txt_post_body") !== null && commentForm.value !=="") {
+        if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {
+            alert(portal.getElementsByClassName("x-form-element").length)
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
             let waitForText = setInterval(function () {
                 if (portal.getElementById("txt_post_body").innerHTML == commentForm.value) {
@@ -423,7 +424,7 @@ function portalFormInput(selectedPostID, groupID) {
 function portalInputConfirm(selectedPostID, groupID) {
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
-        if (portal.getElementsByClassName(" x-btn-text").length > 0 || window.location.hostname == "localhost") {
+        if (portal.getElementsByClassName(" x-btn-text").length > 0) {
             portal.getElementsByClassName(" x-btn-text")[4].click()
             portalClient(selectedPostID, groupID)
 
@@ -432,7 +433,6 @@ function portalInputConfirm(selectedPostID, groupID) {
         }
     }, 500)
 }
-
 
 function portalClient(selectedPostID, groupID) {
     setTimeout(function () {
