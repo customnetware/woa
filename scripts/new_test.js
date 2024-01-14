@@ -410,11 +410,9 @@ function portalFormInput(selectedPostID, groupID) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {        
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
-            alert(portal.getElementById("ext-comp-1094"))
-            if (portal.getElementById("ext-comp-1094") !== null) { portal.getElementById("ext-comp-1094").value = "test" }
+            alert(portal.getElementsByClassName("x-form-text x-form-field form-items-container").length)
+ 
             let waitForText = setInterval(function () {
-                alert(document.getElementById("replySubject").value)
-                alert(commentForm.value)
                 if (portal.getElementById("txt_post_body").innerHTML == commentForm.value) {
                     clearInterval(waitForText)
 
