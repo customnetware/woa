@@ -421,7 +421,7 @@ function portalInputConfirm(selectedPostID, groupID) {
             portal.getElementsByClassName(" x-btn-text")[4].click() 
             setTimeout(function () {
                 showComments(selectedPostID, groupID, true)
-            }, 500)
+            }, 1000)
                    
         } else {
             portalInputConfirm(selectedPostID, groupID)
