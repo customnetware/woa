@@ -406,7 +406,7 @@ function portalFormInput(selectedPostID, groupID) {
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {
-            alert(portal.getElementsByClassName("x-form-element").length)
+            alert(portal.getElementById("ext-comp-1094"))
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
             let waitForText = setInterval(function () {
                 if (portal.getElementById("txt_post_body").innerHTML == commentForm.value) {
