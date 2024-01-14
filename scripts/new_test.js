@@ -412,7 +412,7 @@ function portalFormInput(selectedPostID, groupID) {
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
             if (portal.getElementById("ext-comp-1094") !== null) { portal.getElementById("ext-comp-1094").value = "test" }
             let waitForText = setInterval(function () {
-                alert(commentSubject.value)
+                alert(document.getElementById("replySubject").value)
                 alert(commentForm.value)
                 if (portal.getElementById("txt_post_body").innerHTML == commentForm.value) {
                     clearInterval(waitForText)
