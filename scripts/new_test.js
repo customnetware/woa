@@ -413,10 +413,9 @@ function portalFormInput(selectedPostID, groupID) {
             if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + "..." }
 
             setTimeout(function () {
-            portal.getElementsByClassName(" x-btn-text save-button")[0].click()
-            commentForm.value = ""
+            portal.getElementsByClassName(" x-btn-text save-button")[0].click()        
             portalInputConfirm(selectedPostID, groupID)
-            }, 400)
+            }, 250)
 
 
         } else {
