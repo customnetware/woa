@@ -408,13 +408,12 @@ function portalFormInput(selectedPostID, groupID) {
   
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
-        if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {
-        
+        if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {        
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
-            alert(commentSubject.value)
-            alert(commentForm.value)
-            if (portal.getElementById("ext-comp-1094") !== null) { portal.getElementById("ext-comp-1094").value = commentSubject.value }
+            if (portal.getElementById("ext-comp-1094") !== null) { portal.getElementById("ext-comp-1094").value = "test" }
             let waitForText = setInterval(function () {
+                alert(commentSubject.value)
+                alert(commentForm.value)
                 if (portal.getElementById("txt_post_body").innerHTML == commentForm.value) {
                     clearInterval(waitForText)
 
