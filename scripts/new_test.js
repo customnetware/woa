@@ -376,7 +376,8 @@ function sendComment(messageToSend) {
 }
 
 function addComments(selectedPostID, groupID) {
-    portalOpenForm(selectedPostID, groupID)
+    try { portalOpenForm(selectedPostID, groupID) } catch (error) { alert(error.message) }
+   
 }
 function portalOpenForm(selectedPostID, groupID) {
     document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
@@ -384,7 +385,7 @@ function portalOpenForm(selectedPostID, groupID) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
         if (buttonID !== null || window.location.hostname == "localhost") {
-            try { buttonID.click() } catch { }
+         buttonID.click() 
      
             portalFormInput(selectedPostID, groupID)
         } else {
@@ -398,10 +399,10 @@ function portalFormInput(selectedPostID, groupID) {
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementById("txt_post_body") !== null || window.location.hostname == "localhost") {
-            try {
+          
                 portal.getElementById("txt_post_body").innerHTML = commentForm.value
                 portal.getElementsByClassName("x-btn-text save-button")[0].click()
-            } catch { }
+     
 
             commentForm.value = ""
             portalInputConfirm(selectedPostID, groupID)
@@ -414,7 +415,7 @@ function portalInputConfirm(selectedPostID, groupID) {
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementsByClassName(" x-btn-text").length > 0 || window.location.hostname == "localhost") {
-            try { portal.getElementsByClassName(" x-btn-text")[4].click() } catch { }  
+           portal.getElementsByClassName(" x-btn-text")[4].click() 
             showComments(selectedPostID, groupID,true)         
         } else {
             portalInputConfirm(selectedPostID, groupID)
