@@ -320,6 +320,7 @@ function showComments(selectedPostID, groupID, showLast) {
 }
 function newComment() {
     if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") } else {
+       
         addComments("replyContent", document.getElementById("selectGroup").value)
         $("#postSettingsAlert").modal("hide")
     }
@@ -404,6 +405,7 @@ function portalOpenForm(selectedPostID, groupID) {
 function portalFormInput(selectedPostID, groupID) {
     commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
     commentSubject = document.getElementById("replySubject").value
+    alert(alert(document.getElementById("replySubject").value))
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {
