@@ -410,17 +410,11 @@ function portalFormInput(selectedPostID, groupID) {
 
         if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
-        console.log(commentForm.value)
-        console.log(post_subject.length)
-           /* if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10 + "...") }*/
-            let waitForText = setInterval(function () {
-                if (portal.getElementById("txt_post_body").innerHTML.length>10) {
-                    clearInterval(waitForText)
-                    portal.getElementsByClassName(" x-btn-text save-button")[0].click()
-                    commentForm.value = ""
-                    portalInputConfirm(selectedPostID, groupID)
-                }
-            }, 100)
+            if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + "..." }
+            portal.getElementsByClassName(" x-btn-text save-button")[0].click()
+            commentForm.value = ""
+            portalInputConfirm(selectedPostID, groupID)
+
         } else {
             portalFormInput(selectedPostID, groupID)
         }
