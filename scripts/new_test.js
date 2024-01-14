@@ -285,26 +285,28 @@ function showComments(selectedPostID, groupID, showLast) {
                     let comments = forum.getElementById(selectedPostID.replace("post", "contents"))
                     let replyText = comments.getElementsByClassName("respDiscChildPost")
                     let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
-                    for (let p = 0; p < replyText.length; p++) {
-                        if (showLast == true) { p = replyText.length - 1 }
+
+                    if (showLast == true) {
+                        lastPost = replyText.length - 1
                         let replySpan = document.createElement("span")
                         let authorSpan = document.createElement("span")
                         replySpan.className = "commentSpan"
                         authorSpan.className = "commentSpan"
-                        replySpan.innerText = replyText[p].innerText.trim()
-                        authorSpan.innerText = replyAuthor[p + 1].innerText.trim()
+                        replySpan.innerText = replyText[lastPost].innerText.trim()
+                        authorSpan.innerText = replyAuthor[lastPost + 1].innerText.trim()
                         selectedPost.insertBefore(replySpan, selectedPost.getElementsByTagName("textarea")[0])
                         selectedPost.insertBefore(authorSpan, selectedPost.getElementsByTagName("textarea")[0])
-                    }
-                    if (window.location.hostname == "localhost" && selectedText !== "") {
-                        let replySpan = document.createElement("span")
-                        let authorSpan = document.createElement("span")
-                        replySpan.className = "commentSpan"
-                        authorSpan.className = "commentSpan"
-                        replySpan.innerText = selectedText
-                        authorSpan.innerText = memberName + " - " + new Date().toLocaleString().replace(",", "")
-                        selectedPost.insertBefore(replySpan, selectedPost.getElementsByTagName("textarea")[0])
-                        selectedPost.insertBefore(authorSpan, selectedPost.getElementsByTagName("textarea")[0])
+                    } else {
+                        for (let p = 0; p < replyText.length; p++) {
+                            let replySpan = document.createElement("span")
+                            let authorSpan = document.createElement("span")
+                            replySpan.className = "commentSpan"
+                            authorSpan.className = "commentSpan"
+                            replySpan.innerText = replyText[p].innerText.trim()
+                            authorSpan.innerText = replyAuthor[p + 1].innerText.trim()
+                            selectedPost.insertBefore(replySpan, selectedPost.getElementsByTagName("textarea")[0])
+                            selectedPost.insertBefore(authorSpan, selectedPost.getElementsByTagName("textarea")[0])
+                        }
                     }
                 })
         } else {
@@ -411,7 +413,7 @@ function portalFormInput(selectedPostID, groupID) {
                 }
             }, 100)
 
-           
+
         } else {
             portalFormInput(selectedPostID, groupID)
         }
