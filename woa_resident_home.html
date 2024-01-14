@@ -19,7 +19,13 @@
     </div>
     <div class="container" id="customContainer">
         <link rel="stylesheet" href="https://customnetware.github.io/woa/css/woaStyles.css">
-
+        <style>
+            .button-center {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        </style>
         <iframe id="woaFrame" src="/discussion/list/28118/discussion-groups" title="Final WOA Code" style="display:none"></iframe>
         <div class="row" id="notificationHeader">
             <div class="col-md-12">
@@ -90,6 +96,7 @@
                         </div>
                         <div class="card-footer">
                             <button type="button" id="postBackButton" class="btn btn-primary" onclick="javascript:postNavigation('back')" style="cursor:pointer">&nbsp;<span class="fa fa-fast-backward"></span>&nbsp;</button>
+                            <button type="button" id="newPostButton" class="btn btn-secondary button-center" onclick="javascript:newComment()" style="cursor:pointer">&nbsp;<span class="fa fa-plus"></span>&nbsp;New Post</button>
                             <button type="button" id="postNexttButton" class="btn btn-primary" onclick="javascript:postNavigation('next')" style="float:right; cursor:pointer">&nbsp;<span class="fa fa-forward"></span>&nbsp;</button>
 
                         </div>
@@ -149,23 +156,29 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="postSettingsAlertLabel">Viewing Selected Post</h5>
+                            <h5 class="modal-title" id="postSettingsAlertLabel">New Discussion Group Post</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
 
-                        <div class="modal-body" id="postComments"></div>
-
-                        <div class="modal-footer">
-
-                            <textarea id="replyContent" class="form-control" rows="2" placeholder="Enter your comments here." style="width:100%; float:left"></textarea>
-
-
+                        <div class="modal-body" id="postComments">
+                            <input id="replySubject" type="text" class="form-control" placeholder="Enter the subject of your post here." />
+                            <textarea id="replyContent" class="form-control" rows="3" placeholder="Enter your comments here." style="width:100%; float:left"></textarea>
                         </div>
+
+
                         <div class="modal-footer">
+                            <select id="selectGroup" class="form-control" style="cursor:pointer; padding:5px">
+                                <option value="8364">Select A Discussion Group</option>
+                                <option value="11315">Portal and Email Help</option>
+                                <option value="8364">General Discussion</option>
+                                <option value="8030">Recommendations</option>
+
+                            </select>
+
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-secondary" onclick="javascript:addComments()">Save Comments</button>
+                            <button type="button" class="btn btn-secondary" onclick="javascript:newComment()">Post</button>
 
                         </div>
                     </div>
@@ -182,7 +195,6 @@
                         </div>
                         <div class="modal-body">
                             Only the emails you are currently viewing have been saved to your computer.  New emails will added to your saved emails the next time you visit this page.  Clearing your browser's cache will remove saved emails from this computer.
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -244,7 +256,7 @@
                 <button type="button" class="btn cancel" onclick="closeForm(false)">Close&nbsp;<span class="fa fa-window-close-o fa-lg"></span></button>
             </div>
         </div>
-        <script src="scripts/new_test.js"></script>
+        <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
 
     </div>
     <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->

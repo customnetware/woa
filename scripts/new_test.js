@@ -3,6 +3,7 @@ let currentDate = new Date()
 let emailCount = 0
 let forumCount = 0
 let forumArray = []
+let memberName = ""
 
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
@@ -14,7 +15,6 @@ function updateHeader(headerID, headerClass, headerTitle, headerLen) {
     if (headerTitle.length > 5) { cardHeader[1].innerHTML = headerTitle }
     cardHeader[2].innerHTML = "(" + headerLen + ")"
 }
-
 function emailNavigation(dir) {
 
     if (dir == "next") {
@@ -49,51 +49,15 @@ function viewSavedMessages(savedMessageURL) {
             let emailContent = emailSaved.getElementById("AV").getElementsByTagName("td")
             let emailHeaders = emailSaved.getElementsByClassName("clsGridDetail")
             document.getElementById("showEmailAlertLabel").innerHTML = emailHeaders[3].innerHTML + " - " + emailHeaders[1].innerHTML + " - " + emailHeaders[0].innerHTML
-
- 
-
-
-
             emailPopUp.innerHTML = emailContent[0].innerHTML
-
-
-
-            //for (let p = 0; p < emailContent.length; p++) {
-            //    document.getElementById("emailsSaved").appendChild(emailContent[p])
-
-            //}
-
-
-            //let articleTitle = newsArticles.getElementsByClassName("clsHeader")
-            //let articleContent = newsArticles.getElementsByClassName("clsBodyText")
-            //for (let p = 0; p < articleContent.length; p++) {
-            //    let currentItem = document.createElement("p")
-            //    let itemTitle = document.createElement("span")
-            //    let itemLink = document.createElement("a")
-            //    itemLink.href = articleTitle[p].parentElement.getElementsByTagName("div")[2].getElementsByTagName("a")[0].href
-            //    itemLink.className = "fa fa-arrow-right fa-lg formatLink"
-            //    itemTitle.appendChild(document.createTextNode(articleTitle[p].innerText))
-            //    currentItem.appendChild(itemTitle)
-            //    currentItem.appendChild(document.createTextNode(articleContent[p].innerText))
-            //    currentItem.appendChild(itemLink)
-            //    newsList.appendChild(currentItem)
-            //}
-            //document.getElementById("newsHeader").children[2].innerHTML = "(" + newsList.childElementCount + ")"
+        })
+        .fail(function () {
+            document.getElementById("showEmailAlertLabel").innerHTML = "Email Not Found!"
+            emailPopUp.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it."
+        })
+        .always(function () {
             if (!$("#showEmailAlert").is(":visible")) { $("#showEmailAlert").modal("show") }
         })
-    //let emailPopUp = document.getElementById("emailsSaved")
-    //while (emailPopUp.firstChild) { emailPopUp.removeChild(emailPopUp.firstChild) }
-
-    //if (savedMessageURL.includes("/Messenger/MessageView/")) {
-    //    $("#emailsSaved").load(pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
-    //        if (statusTxt == "error") { emailPopUp.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
-
-    //    })
-    //}
-
-
-
-
 }
 function getResidentHomePage() {
     $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
@@ -105,6 +69,7 @@ function getResidentHomePage() {
 
             document.getElementById("notificationHeader").getElementsByTagName("span")[0].className = "fa fa-check-circle fa-lg formatLink"
             document.getElementById("notificationHeader").getElementsByTagName("span")[1].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
+            memberName = document.getElementById("notificationHeader").getElementsByTagName("span")[1].innerHTML.split(",")[1]
 
             let recentItems = myWoodbridge.getElementsByClassName("message")
             for (let p = 0; p < recentItems.length; p++) {
@@ -241,8 +206,8 @@ function getClassifiedAds() {
             document.getElementById("classifiedHeader").children[2].innerHTML = "(" + classifiedsList.childElementCount + ")"
         })
 }
-function getDiscussionGroups() {
-    sessionStorage.setItem("UpdateStatus", "Starting")
+function getDiscussionGroups(selectedPostID, groupID) {
+    let downLoadComple = false
     forumArray = []
     let forums = ["8030", "8364", "11315"], forumNames = ["Recommendations", "General", "Using the HOA Portal"]
     for (let f = 0; f < forums.length; f++) {
@@ -270,26 +235,28 @@ function getDiscussionGroups() {
                         numOfPost: comments.length
                     })
                 }
+                downLoadComple = true
             })
     }
     let waitforPost = setInterval(function () {
-        if (forumArray.length > 0) {
+        if (downLoadComple == true) {
             clearInterval(waitforPost)
             forumArray.sort((a, b) => { return a.postSort - b.postSort })
             forumArray.reverse()
-            forumCount = 0
+            formCount = 0
             postNavigation("start")
-            sessionStorage.setItem("UpdateStatus", "Done")
         }
     }, 1000)
 }
+
 function postNavigation(dir) {
     let currentPosts = document.getElementById("recentPostsBody").getElementsByTagName("p")
     if (forumCount >= forumArray.length || dir == "back") { forumCount = 0 }
-    if (dir == "current" && forumCount > 0) { forumCount = forumCount - 3 }
+
     for (let p = 0, f = forumCount; p < currentPosts.length && f < forumArray.length; p++, f++) {
         let commentSpans = currentPosts[p].getElementsByClassName("commentSpan")
         while (commentSpans.length > 0) commentSpans[0].remove()
+
         let postContents = currentPosts[p].getElementsByTagName("span")
         currentPosts[p].id = forumArray[f].postID.replace("lnkTopicReply", "post")
         postContents[0].innerText = forumArray[f].subject + " - Posted in  " + forumArray[f].groupName
@@ -302,107 +269,62 @@ function postNavigation(dir) {
         currentPosts[p].getElementsByTagName("a")[1].innerHTML = "Reply"
         currentPosts[p].getElementsByTagName("a")[1].href = "javascript:addComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ")"
         if (p == 2) { forumCount = f + 1 }
-    } updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", forumArray.length)
+    }
+    updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", forumArray.length)
+
 }
 function showComments(selectedPostID, groupID, showLast) {
-    let selectedPost = document.getElementById(selectedPostID)
-    let allSpans = selectedPost.getElementsByTagName("span")
-    if (allSpans.length === 2) {
-        $.get(pageLocation("/Discussion/28118~" + groupID), function () { })
-            .done(function (responseText) {
-                let forum = new DOMParser().parseFromString(responseText, "text/html")
-                let comments = forum.getElementById(selectedPostID.replace("post", "contents"))
-                let replyText = comments.getElementsByClassName("respDiscChildPost")
-                let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
-                for (let p = 0; p < replyText.length; p++) {
-                    if (showLast == true) { p = replyText.length - 1 }
-                    let replySpan = document.createElement("span")
-                    let authorSpan = document.createElement("span")
-                    replySpan.className = "commentSpan"
-                    authorSpan.className = "commentSpan"
-                    replySpan.innerText = replyText[p].innerText.trim()
-                    authorSpan.innerText = replyAuthor[p + 1].innerText.trim()
-                    selectedPost.insertBefore(replySpan, selectedPost.getElementsByTagName("textarea")[0])
-                    selectedPost.insertBefore(authorSpan, selectedPost.getElementsByTagName("textarea")[0])
-                }
-            })
-    } else {
-        let commentSpans = selectedPost.getElementsByClassName("commentSpan")
-        while (commentSpans.length > 0) commentSpans[0].remove()
-    }
-
-}
-function newComment() { }
-function addComments(selectedPostID, groupID) {
-    if (commentForm.value.length == 0) { return }
-    if (window.location.hostname !== "localhost") { document.getElementById("woaFrame").src = "/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", "") }
-    let commentForm = document.getElementById(selectedPostID).getElementsByTagName("textarea")[0]
-    let replyWait = document.getElementById(selectedPostID).getElementsByTagName("a")[1]
-
-    replyWait.className = "fa fa-refresh fa-spin fa-fw fa-lg"
-    replyWait.innerHTML = ""
-    if (window.location.hostname == "localhost") {
-        getDiscussionGroups()
-        let waitforGroupsTest = setInterval(function () {
-            if (sessionStorage.getItem("UpdateStatus") === "Done") {
-                clearInterval(waitforGroupsTest)
-                sessionStorage.removeItem("UpdateStatus")
-                let waitForPostTest = setInterval(function () {
-                    if (document.getElementById(selectedPostID) !== null) {
-                        clearInterval(waitForPostTest)
-                        document.getElementById(selectedPostID).scrollIntoView()
-                        showComments(selectedPostID, groupID, true)
-                    } else { postNavigation("next") }
-
-                }, 250)
-            }
-        }, 250)
-    } else {
-        try {
-            let frameWindow = document.getElementById('woaFrame').contentWindow
-            let waitforButton = setInterval(function () {
-                let replyButton = frameWindow.document.getElementById(selectedPostID.replace("post", "lnkTopicReply"))
-                if (replyButton !== null) {
-                    clearInterval(waitforButton)
-                    replyButton.click()
-                    let waitforForm = setInterval(function () {
-                        if (frameWindow.document.getElementsByTagName("iframe").length > 0) {
-                            frameWindow.document.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentForm.value
-                            frameWindow.document.getElementsByClassName("x-btn-text save-button")[0].click()
-                            clearInterval(waitforForm)
-                            let waitforConfirm = setInterval(function () {
-                                if (frameWindow.document.getElementsByClassName(" x-btn-text").length > 0) {
-                                    frameWindow.document.getElementsByClassName(" x-btn-text")[4].click()
-                                    clearInterval(waitforConfirm)
-                                    getDiscussionGroups()
-                                    let waitforGroupsLive = setInterval(function () {
-                                        if (sessionStorage.getItem("UpdateStatus") === "Done") {
-                                            clearInterval(waitforGroupsLive)
-                                            sessionStorage.removeItem("UpdateStatus")
-                                            let waitForPostLive = setInterval(function () {
-                                                if (document.getElementById(selectedPostID) !== null) {
-                                                    clearInterval(waitForPostLive)
-                                                    document.getElementById(selectedPostID).scrollIntoView()
-                                                    showComments(selectedPostID, groupID, true)
-                                                } else { postNavigation("next") }
-
-                                            }, 250)
-                                        }
-                                    }, 1000)
-                                }
-                            }, 1000)
-                        }
-                    }, 1000)
-                }
-            }, 1000)
-
-        } catch (error) {
-            sessionStorage.removeItem("UpdateStatus")
-            replyWait.className = ""
-            replyWait.innerHTML = "Error"
+    if (selectedPostID !== "" && groupID !== "") {
+        let selectedPost = document.getElementById(selectedPostID)
+        let selectedText = selectedPost.getElementsByTagName("textarea")[0].value
+        let allSpans = selectedPost.getElementsByTagName("span")
+        if (allSpans.length === 2) {
+            $.get(pageLocation("/Discussion/28118~" + groupID), function () { })
+                .done(function (responseText) {
+                    let forum = new DOMParser().parseFromString(responseText, "text/html")
+                    let comments = forum.getElementById(selectedPostID.replace("post", "contents"))
+                    let replyText = comments.getElementsByClassName("respDiscChildPost")
+                    let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
+                    for (let p = 0; p < replyText.length; p++) {
+                        if (showLast == true) { p = replyText.length - 1 }
+                        let replySpan = document.createElement("span")
+                        let authorSpan = document.createElement("span")
+                        replySpan.className = "commentSpan"
+                        authorSpan.className = "commentSpan"
+                        replySpan.innerText = replyText[p].innerText.trim()
+                        authorSpan.innerText = replyAuthor[p + 1].innerText.trim()
+                        selectedPost.insertBefore(replySpan, selectedPost.getElementsByTagName("textarea")[0])
+                        selectedPost.insertBefore(authorSpan, selectedPost.getElementsByTagName("textarea")[0])
+                    }
+                    if (window.location.hostname == "localhost" && selectedText !== "") {
+                        let replySpan = document.createElement("span")
+                        let authorSpan = document.createElement("span")
+                        replySpan.className = "commentSpan"
+                        authorSpan.className = "commentSpan"
+                        replySpan.innerText = selectedText
+                        authorSpan.innerText = memberName + " - " + new Date().toLocaleString().replace(",", "")
+                        selectedPost.insertBefore(replySpan, selectedPost.getElementsByTagName("textarea")[0])
+                        selectedPost.insertBefore(authorSpan, selectedPost.getElementsByTagName("textarea")[0])
+                    }
+                })
+        } else {
+            let commentSpans = selectedPost.getElementsByClassName("commentSpan")
+            while (commentSpans.length > 0) commentSpans[0].remove()
         }
     }
+
 }
+function newComment() {
+    if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") } else {
+        addComments("replyContent", document.getElementById("selectGroup").value)
+        $("#postSettingsAlert").modal("hide")
+    }
+}
+
+
+
+
+
 function openForm() {
     document.getElementById("WOAComments").style.display = "block"
 }
@@ -423,7 +345,6 @@ function closeForm(SendMessage) {
         document.getElementById("WOAComments").style.display = "none"
     }
 }
-
 function sendComment(messageToSend) {
     /*/form/28118~116540/ask-a-manager*/
     document.getElementById("woaFrame").src = pageLocation("/form/28118~327323/social-media-help")
@@ -453,6 +374,54 @@ function sendComment(messageToSend) {
 
     }, 1000)
 }
+
+function addComments(selectedPostID, groupID) {
+    portalOpenForm(selectedPostID, groupID)
+}
+function portalOpenForm(selectedPostID, groupID) {
+    document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
+    setTimeout(function () {
+        let portal = document.getElementById('woaFrame').contentWindow.document
+        let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
+        if (buttonID !== null || window.location.hostname == "localhost") {
+            try { buttonID.click() } catch { }
+     
+            portalFormInput(selectedPostID, groupID)
+        } else {
+            portalOpenForm(selectedPostID, groupID)
+        }
+    }, 500)
+}
+function portalFormInput(selectedPostID, groupID) {  
+    commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
+    commentSubject = document.getElementById("replySubject").value
+    setTimeout(function () {
+        let portal = document.getElementById('woaFrame').contentWindow.document
+        if (portal.getElementById("txt_post_body") !== null || window.location.hostname == "localhost") {
+            try {
+                portal.getElementById("txt_post_body").innerHTML = commentForm.value
+                portal.getElementsByClassName("x-btn-text save-button")[0].click()
+            } catch { }
+
+            commentForm.value = ""
+            portalInputConfirm(selectedPostID, groupID)
+        } else {
+            portalFormInput(selectedPostID, groupID)
+        }
+    }, 500)
+}
+function portalInputConfirm(selectedPostID, groupID) {
+    setTimeout(function () {
+        let portal = document.getElementById('woaFrame').contentWindow.document
+        if (portal.getElementsByClassName(" x-btn-text").length > 0 || window.location.hostname == "localhost") {
+            try { portal.getElementsByClassName(" x-btn-text")[4].click() } catch { }  
+            showComments(selectedPostID, groupID,true)         
+        } else {
+            portalInputConfirm(selectedPostID, groupID)
+        }
+    }, 500)
+}
+
 $(window).load(function () {
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
@@ -463,7 +432,7 @@ $(window).load(function () {
     getProfilePage()
     getResourceCenter()
     getNewsAndAnnouncements()
-    getDiscussionGroups()
+    getDiscussionGroups("", "")
     getClassifiedAds()
     getResidentHomePage()
 })
