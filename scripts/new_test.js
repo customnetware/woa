@@ -286,7 +286,7 @@ function showComments(selectedPostID, groupID, showLast) {
                     let replyText = comments.getElementsByClassName("respDiscChildPost")
                     let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
                     for (let p = 0; p < replyText.length; p++) {
-                       /* if (showLast == true) { p = replyText.length - 1 }*/
+                        if (showLast == true) { p = replyText.length - 1 }
                         let replySpan = document.createElement("span")
                         let authorSpan = document.createElement("span")
                         replySpan.className = "commentSpan"
@@ -420,8 +420,9 @@ function portalInputConfirm(selectedPostID, groupID) {
         if (portal.getElementsByClassName(" x-btn-text").length > 0 || window.location.hostname == "localhost") {
             portal.getElementsByClassName(" x-btn-text")[4].click() 
             setTimeout(function () {
-                showComments(selectedPostID, groupID, true)  
-            }, 100)
+                showComments(selectedPostID, groupID, true)
+                showComments(selectedPostID, groupID, true) 
+            }, 500)
                    
         } else {
             portalInputConfirm(selectedPostID, groupID)
