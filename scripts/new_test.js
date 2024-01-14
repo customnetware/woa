@@ -286,7 +286,7 @@ function showComments(selectedPostID, groupID, showLast) {
                     let replyText = comments.getElementsByClassName("respDiscChildPost")
                     let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
                     for (let p = 0; p < replyText.length; p++) {
-                        if (showLast == true) { p = replyText.length - 1 }
+                       /* if (showLast == true) { p = replyText.length - 1 }*/
                         let replySpan = document.createElement("span")
                         let authorSpan = document.createElement("span")
                         replySpan.className = "commentSpan"
