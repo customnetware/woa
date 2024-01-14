@@ -405,12 +405,13 @@ function portalOpenForm(selectedPostID, groupID) {
 function portalFormInput(selectedPostID, groupID) {
     commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
     commentSubject = document.getElementById("replySubject").value
-    alert(document.getElementById("replySubject").value)
+  
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {
         
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
+            alert(document.getElementById("replySubject").value)
             if (portal.getElementById("ext-comp-1094") !== null) { portal.getElementById("ext-comp-1094").value = commentSubject.value }
             let waitForText = setInterval(function () {
                 if (portal.getElementById("txt_post_body").innerHTML == commentForm.value) {
