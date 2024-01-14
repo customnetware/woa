@@ -402,7 +402,7 @@ function portalFormInput(selectedPostID, groupID) {
         if (portal.getElementById("txt_post_body") !== null) {
           
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
-            alert(commentForm.value)
+         
             setTimeout(function () {
             portal.getElementsByClassName(" x-btn-text save-button")[0].click()
             }, 100)
