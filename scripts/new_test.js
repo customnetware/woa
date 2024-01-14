@@ -414,7 +414,7 @@ function portalFormInput(selectedPostID, groupID) {
             let waitForText = setInterval(function () {
                 if (portal.getElementById("txt_post_body").innerHTML == commentForm.value) {
                     clearInterval(waitForText)
-                    alert(portal.getElementsByClassName("x-form-text x-form-field form-items-container")[0].getElementsByTagName("input").length)
+                    portal.getElementsByClassName("x-form-text x-form-field form-items-container")[0].value = "test"
                     portal.getElementsByClassName(" x-btn-text save-button")[0].click()
                     commentForm.value = ""
                     portalInputConfirm(selectedPostID, groupID)
