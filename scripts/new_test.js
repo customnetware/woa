@@ -378,7 +378,11 @@ function sendComment(messageToSend) {
 }
 
 function addComments(selectedPostID, groupID) {
-    try { portalOpenForm(selectedPostID, groupID) } catch (error) { alert("error") }
+    try {
+        let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
+        while (commentSpans.length > 0) commentSpans[0].remove()
+        portalOpenForm(selectedPostID, groupID)
+    } catch (error) { alert("error") }
 
 }
 function portalOpenForm(selectedPostID, groupID) {
