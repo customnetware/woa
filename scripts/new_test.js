@@ -410,8 +410,7 @@ function portalFormInput(selectedPostID, groupID) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {        
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
-            alert(portal.getElementsByClassName("x-form-text x-form-field form-items-container").length)
- 
+            alert(portal.getElementsByClassName("x-form-text x-form-field form-items-container")[0].getElementsByTagName("input").length)
             let waitForText = setInterval(function () {
                 if (portal.getElementById("txt_post_body").innerHTML == commentForm.value) {
                     clearInterval(waitForText)
