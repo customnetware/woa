@@ -406,13 +406,11 @@ function portalFormInput(selectedPostID, groupID) {
     commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
-       
-        if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {
-            let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
+        let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
 
+        if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
-            if (post_subject.length > 0) {post_subject[0].value = commentForm.value.substring(0, 10+"...") }
-            
+            if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10 + "...") }
             let waitForText = setInterval(function () {
                 if (portal.getElementById("txt_post_body").innerHTML == commentForm.value) {
                     clearInterval(waitForText)
