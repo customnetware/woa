@@ -407,7 +407,8 @@ function portalFormInput(selectedPostID, groupID) {
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
-
+        console.log(commentForm.value)
+        console.log(post_subject.length+"\n")
         if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
             if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10 + "...") }
