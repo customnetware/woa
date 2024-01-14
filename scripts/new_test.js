@@ -286,6 +286,8 @@ function showComments(selectedPostID, groupID, showLast) {
                     let replyText = comments.getElementsByClassName("respDiscChildPost")
                     let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
 
+                    updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", replyAuthor.length)
+
                     if (showLast == true) {
                         lastPost = replyText.length - 1
                         let replySpan = document.createElement("span")
