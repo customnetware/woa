@@ -380,6 +380,7 @@ function sendComment(messageToSend) {
 }
 
 function addComments(selectedPostID, groupID) {
+    alert(selectedPostID)
     try {
         let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
         while (commentSpans.length > 0) commentSpans[0].remove()
@@ -406,11 +407,13 @@ function portalFormInput(selectedPostID, groupID) {
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {
-            alert(portal.getElementById("ext-comp-1094"))
+        
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
+            if (portal.getElementById("ext-comp-1094") !== null) { portal.getElementById("ext-comp-1094").value = commentSubject.value }
             let waitForText = setInterval(function () {
                 if (portal.getElementById("txt_post_body").innerHTML == commentForm.value) {
                     clearInterval(waitForText)
+
                     portal.getElementsByClassName(" x-btn-text save-button")[0].click()
                     commentForm.value = ""
                     portalInputConfirm(selectedPostID, groupID)
@@ -439,7 +442,8 @@ function portalClient(selectedPostID, groupID) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
         if (buttonID !== null) {
-            showComments(selectedPostID, groupID, true)
+            if (selectedPostID !== "replyContent") { showComments(selectedPostID, groupID, true) }else(getDiscussionGroups())
+           
         }
         else {
             portalClient(selectedPostID, groupID)
