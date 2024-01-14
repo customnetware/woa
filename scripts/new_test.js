@@ -376,11 +376,12 @@ function sendComment(messageToSend) {
 }
 
 function addComments(selectedPostID, groupID) {
-    try { portalOpenForm(selectedPostID, groupID) } catch (error) { alert(error.message) }
+    try { portalOpenForm(selectedPostID, groupID) } catch (error) { alert("error") }
    
 }
 function portalOpenForm(selectedPostID, groupID) {
     document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
+    alert(selectedPostID+groupID)
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
