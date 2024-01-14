@@ -380,12 +380,12 @@ function sendComment(messageToSend) {
 }
 
 function addComments(selectedPostID, groupID) {
-    alert(selectedPostID)
+
     try {
         let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
         while (commentSpans.length > 0) commentSpans[0].remove()
         portalOpenForm(selectedPostID, groupID)
-    } catch (error) { alert("error") }
+    } catch (error) {}
 
 }
 function portalOpenForm(selectedPostID, groupID) {
