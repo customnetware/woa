@@ -392,9 +392,8 @@ function portalOpenForm(selectedPostID, groupID) {
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-        if (buttonID !== null || window.location.hostname == "localhost") {
+        if (buttonID !== null) {
             buttonID.click()
-
             portalFormInput(selectedPostID, groupID)
         } else {
             portalOpenForm(selectedPostID, groupID)
@@ -406,7 +405,7 @@ function portalFormInput(selectedPostID, groupID) {
     commentSubject = document.getElementById("replySubject").value
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
-        if (portal.getElementById("txt_post_body") !== null) {
+        if (portal.getElementById("txt_post_body") !== null && commentForm.value !=="") {
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
             let waitForText = setInterval(function () {
                 if (portal.getElementById("txt_post_body").innerHTML == commentForm.value) {
