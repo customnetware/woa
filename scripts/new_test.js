@@ -428,19 +428,30 @@ function portalInputConfirm(selectedPostID, groupID) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementsByClassName(" x-btn-text").length > 0 || window.location.hostname == "localhost") {
             portal.getElementsByClassName(" x-btn-text")[4].click()
-            let waitForGroup = setInterval(function () {
-                let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-                if (buttonID !== null) {
-                    clearInterval(waitForGroup)
-                    showComments(selectedPostID, groupID, true)
-                }
-            }, 100)
+            portalClient(selectedPostID, groupID)
 
         } else {
             portalInputConfirm(selectedPostID, groupID)
         }
     }, 500)
 }
+
+
+function portalClient(selectedPostID, groupID) {
+    setTimeout(function () {
+        let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
+        if (buttonID !== null) {
+            showComments(selectedPostID, groupID, true)
+        }
+        else {
+            portalClient(selectedPostID, groupID)
+        }
+    }, 500)
+}
+
+
+
+
 
 $(window).load(function () {
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
