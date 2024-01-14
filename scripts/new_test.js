@@ -418,8 +418,11 @@ function portalInputConfirm(selectedPostID, groupID) {
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementsByClassName(" x-btn-text").length > 0 || window.location.hostname == "localhost") {
-           portal.getElementsByClassName(" x-btn-text")[4].click() 
-            showComments(selectedPostID, groupID,true)         
+            portal.getElementsByClassName(" x-btn-text")[4].click() 
+            setTimeout(function () {
+                showComments(selectedPostID, groupID, true)  
+            }, 100)
+                   
         } else {
             portalInputConfirm(selectedPostID, groupID)
         }
