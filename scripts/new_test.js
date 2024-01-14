@@ -377,7 +377,7 @@ function sendComment(messageToSend) {
 
 function addComments(selectedPostID, groupID) {
     try { portalOpenForm(selectedPostID, groupID) } catch (error) { alert("error") }
-   
+
 }
 function portalOpenForm(selectedPostID, groupID) {
     document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
@@ -386,7 +386,7 @@ function portalOpenForm(selectedPostID, groupID) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
         if (buttonID !== null || window.location.hostname == "localhost") {
-         buttonID.click() 
+            buttonID.click()
 
             portalFormInput(selectedPostID, groupID)
         } else {
@@ -394,21 +394,24 @@ function portalOpenForm(selectedPostID, groupID) {
         }
     }, 500)
 }
-function portalFormInput(selectedPostID, groupID) {  
+function portalFormInput(selectedPostID, groupID) {
     commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
     commentSubject = document.getElementById("replySubject").value
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementById("txt_post_body") !== null) {
-          
-            portal.getElementById("txt_post_body").innerHTML = commentForm.value
-         
-            setTimeout(function () {
-            portal.getElementsByClassName(" x-btn-text save-button")[0].click()
-            }, 500)
 
-            commentForm.value = ""
-            portalInputConfirm(selectedPostID, groupID)
+            portal.getElementById("txt_post_body").innerHTML = commentForm.value
+            let waitForText = setInterval(function () {
+                if (portal.getElementById("txt_post_body").innerHTML = commentForm.value) {
+                    clearInterval(waitForText)
+                    portal.getElementsByClassName(" x-btn-text save-button")[0].click()
+                    commentForm.value = ""
+                    portalInputConfirm(selectedPostID, groupID)
+                }
+            }, 100)
+
+           
         } else {
             portalFormInput(selectedPostID, groupID)
         }
@@ -418,11 +421,11 @@ function portalInputConfirm(selectedPostID, groupID) {
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementsByClassName(" x-btn-text").length > 0 || window.location.hostname == "localhost") {
-            portal.getElementsByClassName(" x-btn-text")[4].click() 
+            portal.getElementsByClassName(" x-btn-text")[4].click()
             setTimeout(function () {
                 showComments(selectedPostID, groupID, true)
             }, 1000)
-                   
+
         } else {
             portalInputConfirm(selectedPostID, groupID)
         }
