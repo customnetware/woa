@@ -428,9 +428,13 @@ function portalInputConfirm(selectedPostID, groupID) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         if (portal.getElementsByClassName(" x-btn-text").length > 0 || window.location.hostname == "localhost") {
             portal.getElementsByClassName(" x-btn-text")[4].click()
-            setTimeout(function () {
-                showComments(selectedPostID, groupID, true)
-            }, 1000)
+            let waitForGroup = setInterval(function () {
+                let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
+                if (buttonID !== null) {
+                    clearInterval(waitForGroup)
+                    showComments(selectedPostID, groupID, true)
+                }
+            }, 100)
 
         } else {
             portalInputConfirm(selectedPostID, groupID)
