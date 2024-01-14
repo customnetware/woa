@@ -410,9 +410,9 @@ function portalFormInput(selectedPostID, groupID) {
 
         if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {
         console.log(commentForm.value)
-        console.log(post_subject.length+"\n")
+        console.log(post_subject.length)
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
-            if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10 + "...") }
+           /* if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10 + "...") }*/
             let waitForText = setInterval(function () {
                 if (portal.getElementById("txt_post_body").innerHTML == commentForm.value) {
                     clearInterval(waitForText)
