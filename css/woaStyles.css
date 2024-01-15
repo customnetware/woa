@@ -117,8 +117,11 @@
                 border-top: 1px solid black;
             }
 
-            #recentPostsBody p span:nth-child(2n+5) {
+            #recentPostsBody p span:nth-child(2n+4) {
                 font-weight: 700;
+               
+            }
+            #recentPostsBody p span:nth-child(2n+5) {
                 border-bottom: 1px solid black;
             }
 

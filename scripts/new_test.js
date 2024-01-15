@@ -243,12 +243,11 @@ function getDiscussionGroups(selectedPostID, groupID) {
             clearInterval(waitforPost)
             forumArray.sort((a, b) => { return a.postSort - b.postSort })
             forumArray.reverse()
-            formCount = 0
+            forumCount = 0
             postNavigation("start")
         }
     }, 1000)
 }
-
 function postNavigation(dir) {
     let currentPosts = document.getElementById("recentPostsBody").getElementsByTagName("p")
     if (forumCount >= forumArray.length || dir == "back") { forumCount = 0 }
@@ -259,8 +258,9 @@ function postNavigation(dir) {
 
         let postContents = currentPosts[p].getElementsByTagName("span")
         currentPosts[p].id = forumArray[f].postID.replace("lnkTopicReply", "post")
-        postContents[0].innerText = forumArray[f].subject + " - Posted in  " + forumArray[f].groupName
-        postContents[1].innerText = forumArray[f].postContent
+        postContents[0].innerText = forumArray[f].postContent
+        postContents[1].innerText = "Posted in  " + forumArray[f].groupName
+
         currentPosts[p].getElementsByTagName("a")[0].innerHTML = forumArray[f].postAuthor + " - Comments: (" + forumArray[f].numOfPost + ")"
         currentPosts[p].getElementsByTagName("a")[0].href = "javascript:showComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ",false)"
         currentPosts[p].getElementsByTagName("textarea")[0].id = forumArray[f].postID.replace("lnkTopicReply", "comment")
@@ -268,7 +268,7 @@ function postNavigation(dir) {
         currentPosts[p].getElementsByTagName("a")[1].className = ""
         currentPosts[p].getElementsByTagName("a")[1].innerHTML = "Reply"
         currentPosts[p].getElementsByTagName("a")[1].href = "javascript:addComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ")"
-        if (p == 2) { forumCount = f + 1 }
+        forumCount = f + 1
     }
     updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", forumArray.length)
 
@@ -285,30 +285,24 @@ function showComments(selectedPostID, groupID, showLast) {
                     let comments = forum.getElementById(selectedPostID.replace("post", "contents"))
                     let replyText = comments.getElementsByClassName("respDiscChildPost")
                     let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
-
-                    updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", replyAuthor.length)
-
-                    if (showLast == true) {
-                        lastPost = replyText.length - 1
+                    for (let p = 0; p < replyText.length; p++) {
                         let replySpan = document.createElement("span")
                         let authorSpan = document.createElement("span")
                         replySpan.className = "commentSpan"
                         authorSpan.className = "commentSpan"
-                        replySpan.innerText = replyText[lastPost].innerText.trim()
-                        authorSpan.innerText = replyAuthor[lastPost + 1].innerText.trim()
-                        selectedPost.insertBefore(replySpan, selectedPost.getElementsByTagName("textarea")[0])
-                        selectedPost.insertBefore(authorSpan, selectedPost.getElementsByTagName("textarea")[0])
-                    } else {
-                        for (let p = 0; p < replyText.length; p++) {
-                            let replySpan = document.createElement("span")
-                            let authorSpan = document.createElement("span")
-                            replySpan.className = "commentSpan"
-                            authorSpan.className = "commentSpan"
+
+                        if (showLast == true) {
+                            lastPost = replyText.length - 1
+                            replySpan.innerText = replyText[lastPost].innerText.trim()
+                            authorSpan.innerText = replyAuthor[lastPost + 1].innerText.trim()
+                        }
+                        else {
                             replySpan.innerText = replyText[p].innerText.trim()
                             authorSpan.innerText = replyAuthor[p + 1].innerText.trim()
-                            selectedPost.insertBefore(replySpan, selectedPost.getElementsByTagName("textarea")[0])
-                            selectedPost.insertBefore(authorSpan, selectedPost.getElementsByTagName("textarea")[0])
                         }
+                        selectedPost.insertBefore(authorSpan, selectedPost.getElementsByTagName("textarea")[0])
+                        selectedPost.insertBefore(replySpan, selectedPost.getElementsByTagName("textarea")[0])
+                        if (showLast == true) { break }
                     }
                 })
         } else {
@@ -325,7 +319,6 @@ function newComment() {
         $("#postSettingsAlert").modal("hide")
     }
 }
-
 function openForm() {
     document.getElementById("WOAComments").style.display = "block"
 }
@@ -375,7 +368,6 @@ function sendComment(messageToSend) {
 
     }, 1000)
 }
-
 function addComments(selectedPostID, groupID) {
 
     try {
@@ -413,7 +405,7 @@ function portalFormInput(selectedPostID, groupID) {
                 portalInputConfirm(selectedPostID, groupID)
 
             } else { portalFormInput(selectedPostID, groupID) }
-        } else { portalFormInput(selectedPostID, groupID) } 
+        } else { portalFormInput(selectedPostID, groupID) }
     }, 500)
 }
 function portalInputConfirm(selectedPostID, groupID) {
@@ -428,7 +420,6 @@ function portalInputConfirm(selectedPostID, groupID) {
         }
     }, 500)
 }
-
 function portalClient(selectedPostID, groupID) {
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
@@ -441,11 +432,6 @@ function portalClient(selectedPostID, groupID) {
         }
     }, 500)
 }
-
-
-
-
-
 $(window).load(function () {
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
