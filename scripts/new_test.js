@@ -403,8 +403,8 @@ function portalOpenForm(selectedPostID, groupID) {
     }, 500)
 }
 function portalFormInput(selectedPostID, groupID) {
-    commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
     setTimeout(function () {
+        commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
         portal.getElementById("txt_post_body").innerHTML = commentForm.value
