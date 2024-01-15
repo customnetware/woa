@@ -4,7 +4,6 @@ let emailCount = 0
 let forumCount = 0
 let forumArray = []
 let memberName = ""
-
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
 }
@@ -206,6 +205,62 @@ function getClassifiedAds() {
             document.getElementById("classifiedHeader").children[2].innerHTML = "(" + classifiedsList.childElementCount + ")"
         })
 }
+function newComment() {
+    if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") } else {
+
+        addComments("replyContent", document.getElementById("selectGroup").value)
+        $("#postSettingsAlert").modal("hide")
+    }
+}
+function openForm() {
+    document.getElementById("WOAComments").style.display = "block"
+}
+function closeForm(SendMessage) {
+    let messageContent = document.getElementById("WOAComments").getElementsByTagName("textarea")[0]
+
+    if (SendMessage == true) {
+        if (messageContent.value.length > 5) {
+            sendComment(messageContent.value)
+            messageContent.value = ""
+            messageContent.placeholder = "Please wait..."
+            document.getElementById("woaSendButton").className = "fa fa-refresh fa-spin fa-fw fa-lg"
+        }
+    }
+    if (SendMessage == false) {
+        messageContent.value = ""
+        messageContent.placeholder = "Type message.."
+        document.getElementById("WOAComments").style.display = "none"
+    }
+}
+function sendComment(messageToSend) {
+    /*/form/28118~116540/ask-a-manager*/
+    document.getElementById("woaFrame").src = pageLocation("/form/28118~327323/social-media-help")
+    let frameWindow = document.getElementById('woaFrame').contentWindow
+    let messageContent = document.getElementById("WOAComments").getElementsByTagName("textarea")[0]
+    let formCount = 0
+    let btnCount = 0
+
+    let waitForCommentForm = setInterval(function () {
+        formCount++
+        let responseForm = frameWindow.document.getElementById("fld_5028954")
+        let responseBtn = frameWindow.document.getElementById("btnSubmit")
+
+        if (responseForm !== null && responseBtn !== null) {
+            clearInterval(waitForCommentForm)
+            responseForm.value = messageToSend
+            responseBtn.click()
+            let waitForConfirmation = setInterval(function () {
+                btnCount++
+                if (frameWindow.document.getElementById("frmSubmitFields") !== null || window.location.hostname == "localhost") {
+                    clearInterval(waitForConfirmation)
+                    document.getElementById("woaSendButton").className = "fa fa-share fa-lg"
+                    messageContent.placeholder = "Your message has been sent.  Use the Close button to exit this form."
+                }
+            }, 1000)
+        }
+
+    }, 1000)
+}
 function getDiscussionGroups(selectedPostID, groupID) {
     let downLoadComple = false
     forumArray = []
@@ -273,6 +328,21 @@ function postNavigation(dir) {
     updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", forumArray.length)
 
 }
+function addComments(selectedPostID, groupID) {
+    console.log("the Reply button was clicked (addComments)")
+    if (selectedPostID !== "replyContent") {
+        document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = "fa fa-refresh fa-spin fa-fw fa-lg"
+        document.getElementById(selectedPostID).getElementsByTagName("a")[1].innerHTML = ""
+    } else { document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-refresh fa-spin fa-fw fa-lg" }
+
+    try {
+
+        let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
+        while (commentSpans.length > 0) commentSpans[0].remove()
+        portalOpenForm(selectedPostID, groupID)
+
+    } catch (err) { console.log(err.message) }
+}
 function showComments(selectedPostID, groupID, showLast) {
     if (selectedPostID !== "" && groupID !== "") {
         let selectedPost = document.getElementById(selectedPostID)
@@ -312,120 +382,70 @@ function showComments(selectedPostID, groupID, showLast) {
     }
 
 }
-function newComment() {
-    if (!$("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("show") } else {
-
-        addComments("replyContent", document.getElementById("selectGroup").value)
-        $("#postSettingsAlert").modal("hide")
-    }
-}
-function openForm() {
-    document.getElementById("WOAComments").style.display = "block"
-}
-function closeForm(SendMessage) {
-    let messageContent = document.getElementById("WOAComments").getElementsByTagName("textarea")[0]
-
-    if (SendMessage == true) {
-        if (messageContent.value.length > 5) {
-            sendComment(messageContent.value)
-            messageContent.value = ""
-            messageContent.placeholder = "Please wait..."
-            document.getElementById("woaSendButton").className = "fa fa-refresh fa-spin fa-fw fa-lg"
-        }
-    }
-    if (SendMessage == false) {
-        messageContent.value = ""
-        messageContent.placeholder = "Type message.."
-        document.getElementById("WOAComments").style.display = "none"
-    }
-}
-function sendComment(messageToSend) {
-    /*/form/28118~116540/ask-a-manager*/
-    document.getElementById("woaFrame").src = pageLocation("/form/28118~327323/social-media-help")
-    let frameWindow = document.getElementById('woaFrame').contentWindow
-    let messageContent = document.getElementById("WOAComments").getElementsByTagName("textarea")[0]
-    let formCount = 0
-    let btnCount = 0
-
-    let waitForCommentForm = setInterval(function () {
-        formCount++
-        let responseForm = frameWindow.document.getElementById("fld_5028954")
-        let responseBtn = frameWindow.document.getElementById("btnSubmit")
-
-        if (responseForm !== null && responseBtn !== null) {
-            clearInterval(waitForCommentForm)
-            responseForm.value = messageToSend
-            responseBtn.click()
-            let waitForConfirmation = setInterval(function () {
-                btnCount++
-                if (frameWindow.document.getElementById("frmSubmitFields") !== null || window.location.hostname == "localhost") {
-                    clearInterval(waitForConfirmation)
-                    document.getElementById("woaSendButton").className = "fa fa-share fa-lg"
-                    messageContent.placeholder = "Your message has been sent.  Use the Close button to exit this form."
-                }
-            }, 1000)
-        }
-
-    }, 1000)
-}
-function addComments(selectedPostID, groupID) {
-
-    try {
-        let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
-        while (commentSpans.length > 0) commentSpans[0].remove()
-        portalOpenForm(selectedPostID, groupID)
-    } catch (error) { }
-
-}
 function portalOpenForm(selectedPostID, groupID) {
+    console.log("loading the requested group page form: " + pageLocation("/Discussion/28118~" + groupID) + " (portalOpenForm)")
     document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-        if (buttonID !== null) {
-            buttonID.click()
+        if (buttonID !== null || window.location.hostname == "localhost") {
+            try { buttonID.click() } catch (err) { console.log(err.message) }
+            console.log("group page form loaded")
             portalFormInput(selectedPostID, groupID)
         } else {
+            console.log("waiting for group page form to load")
             portalOpenForm(selectedPostID, groupID)
         }
     }, 500)
 }
 function portalFormInput(selectedPostID, groupID) {
+    console.log("adding content to the group page form")
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
         let commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
+        if ((portal !== null && portal.getElementById("txt_post_body") !== null && commentForm !== null && commentForm.value.length > 10) || window.location.hostname == "localhost") {
 
-        if (portal !== null && portal.getElementById("txt_post_body") !== null && commentForm !== null && commentForm.value.length > 10) {
-            portal.getElementById("txt_post_body").innerHTML = commentForm.value
-            if (post_subject !== null && post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + "..." }
+            try {
+                portal.getElementById("txt_post_body").innerHTML = commentForm.value
+                if (post_subject !== null && post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + " ..." }
+            } catch (err) { console.log(err.message) }
 
-            if (portal.getElementById("txt_post_body").value.length > 10) {
-                portal.getElementsByClassName(" x-btn-text save-button")[0].click()
+            if ((portal.getElementById("txt_post_body") !== null && portal.getElementById("txt_post_body").value.length > 10) || window.location.hostname == "localhost") {
+                try { portal.getElementsByClassName(" x-btn-text save-button")[0].click() } catch (err) { console.log(err.message) }
+                console.log("content added to the group page form")
+                commentForm.value = ""
                 portalInputConfirm(selectedPostID, groupID)
-
             } else { portalFormInput(selectedPostID, groupID) }
         } else { portalFormInput(selectedPostID, groupID) }
     }, 500)
 }
 function portalInputConfirm(selectedPostID, groupID) {
+    console.log("confirming form entry (portalInputConfirm)")
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
-        if (portal.getElementsByClassName(" x-btn-text").length > 0) {
-            portal.getElementsByClassName(" x-btn-text")[4].click()
-            portalClient(selectedPostID, groupID)
+        if (portal.getElementsByClassName(" x-btn-text").length > 0 || window.location.hostname == "localhost") {
+            try { portal.getElementsByClassName(" x-btn-text")[4].click() } catch (err) { console.log(err.message) }
 
+            console.log("form entries confirmed")
+            portalClient(selectedPostID, groupID)
         } else {
             portalInputConfirm(selectedPostID, groupID)
         }
     }, 500)
 }
 function portalClient(selectedPostID, groupID) {
+    console.log("updating client (portalClient)")
+    if (selectedPostID !== "replyContent") {
+        document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = ""
+        document.getElementById(selectedPostID).getElementsByTagName("a")[1].innerHTML = "Reply"
+    } else { document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-plus" }
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-        if (buttonID !== null) {
+        if (buttonID !== null || window.location.hostname == "localhost") {
             if (selectedPostID !== "replyContent") { showComments(selectedPostID, groupID, true) } else (getDiscussionGroups())
+            console.log("client updated")
         }
         else {
             portalClient(selectedPostID, groupID)
