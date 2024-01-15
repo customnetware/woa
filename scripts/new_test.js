@@ -407,18 +407,17 @@ function portalFormInput(selectedPostID, groupID) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
         let commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
+
         if (portal !== null && portal.getElementById("txt_post_body") !== null && commentForm !== null && commentForm.value.length > 10) {
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
-            if (portal.getElementById("txt_post_body").innerHTML.length > 10) {
+            if (post_subject !== null && post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + "..." }
+
+            if (portal.getElementById("txt_post_body").value.length > 10) {
                 portal.getElementsByClassName(" x-btn-text save-button")[0].click()
                 portalInputConfirm(selectedPostID, groupID)
-            } else {
-                portalFormInput(selectedPostID, groupID)
-            }
-        } else {
-            portalFormInput(selectedPostID, groupID)
-        }
 
+            } else { portalFormInput(selectedPostID, groupID) }
+        } else { portalFormInpu(selectedPostID, groupID) t }
     }, 500)
 }
 function portalInputConfirm(selectedPostID, groupID) {
