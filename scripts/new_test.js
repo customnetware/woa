@@ -417,7 +417,7 @@ function portalFormInput(selectedPostID, groupID) {
                 portalInputConfirm(selectedPostID, groupID)
 
             } else { portalFormInput(selectedPostID, groupID) }
-        } else { portalFormInput(selectedPostID, groupID) }
+        } else { portalFormInput(selectedPostID, groupID) } 
     }, 500)
 }
 function portalInputConfirm(selectedPostID, groupID) {
