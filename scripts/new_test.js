@@ -326,10 +326,6 @@ function newComment() {
     }
 }
 
-
-
-
-
 function openForm() {
     document.getElementById("WOAComments").style.display = "block"
 }
@@ -437,7 +433,7 @@ function portalClient(selectedPostID, groupID) {
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-        if (buttonID !== null) {
+        if (buttonID == null) {
             if (selectedPostID !== "replyContent") { showComments(selectedPostID, groupID, true) } else (getDiscussionGroups())
         }
         else {
