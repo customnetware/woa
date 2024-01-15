@@ -3,9 +3,10 @@ let currentDate = new Date()
 let emailCount = 0
 let forumCount = 0
 let forumArray = []
+let isLocal = (window.location.hostname == "localhost") ? true : false
 let memberName = ""
 function pageLocation(URLString) {
-    return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
+    return (isLocal = true) ? URLString + ".html" : URLString
 }
 function updateHeader(headerID, headerClass, headerTitle, headerLen) {
     let cardHeader = document.getElementById(headerID).children
@@ -251,7 +252,7 @@ function sendComment(messageToSend) {
             responseBtn.click()
             let waitForConfirmation = setInterval(function () {
                 btnCount++
-                if (frameWindow.document.getElementById("frmSubmitFields") !== null || window.location.hostname == "localhost") {
+                if (frameWindow.document.getElementById("frmSubmitFields") !== null || isLocal == true) {
                     clearInterval(waitForConfirmation)
                     document.getElementById("woaSendButton").className = "fa fa-share fa-lg"
                     messageContent.placeholder = "Your message has been sent.  Use the Close button to exit this form."
@@ -388,8 +389,8 @@ function portalOpenForm(selectedPostID, groupID) {
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-        if (buttonID !== null || window.location.hostname == "localhost") {
-            try { buttonID.click() } catch (err) { console.log(err.message) }
+        if (portal !== null && buttonID !== null || isLocal == true) {
+            if (isLocal == false) { buttonID.click() }
             console.log("group page form loaded")
             portalFormInput(selectedPostID, groupID)
         } else {
@@ -398,25 +399,28 @@ function portalOpenForm(selectedPostID, groupID) {
         }
     }, 500)
 }
+
 function portalFormInput(selectedPostID, groupID) {
     console.log("adding content to the group page form")
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
+        let post_body = portal.getElementById("txt_post_body")
         let commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
-        if ((portal !== null && portal.getElementById("txt_post_body") !== null && commentForm !== null && commentForm.value.length > 10) || window.location.hostname == "localhost") {
-
-            try {
-                portal.getElementById("txt_post_body").innerHTML = commentForm.value
-                if (post_subject !== null && post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + " ..." }
-            } catch (err) { console.log(err.message) }
-
-            if ((portal.getElementById("txt_post_body") !== null && portal.getElementById("txt_post_body").value.length > 10) || window.location.hostname == "localhost") {
-                try { portal.getElementsByClassName(" x-btn-text save-button")[0].click() } catch (err) { console.log(err.message) }
-                console.log("content added to the group page form")
-                commentForm.value = ""
-                portalInputConfirm(selectedPostID, groupID)
-            } else { portalFormInput(selectedPostID, groupID) }
+        if ((portal !== null && post_body !== null && commentForm !== null && commentForm.value.length > 10) || isLocal == true) {
+            if (isLocal == false) {
+                post_body.innerText = commentForm.value
+                if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + " ..." }
+                let chectForText = setInterval(function () {
+                    if (post_body.innerText.length > 0) {
+                        portal.getElementsByClassName(" x-btn-text save-button")[0].click()
+                        clearInterval(chectForText)
+                    }
+                }, 100)
+            }
+            commentForm.value = ""
+            console.log("content added to the group page form")
+            portalInputConfirm(selectedPostID, groupID)
         } else { portalFormInput(selectedPostID, groupID) }
     }, 500)
 }
@@ -424,9 +428,9 @@ function portalInputConfirm(selectedPostID, groupID) {
     console.log("confirming form entry (portalInputConfirm)")
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
-        if (portal.getElementsByClassName(" x-btn-text").length > 0 || window.location.hostname == "localhost") {
-            try { portal.getElementsByClassName(" x-btn-text")[4].click() } catch (err) { console.log(err.message) }
-
+        let confirmBtn = portal.getElementsByClassName(" x-btn-text")
+        if (portal !== null && confirmBtn.length > 0 || isLocal == true) {
+            if (isLocal == false) { confirmBtn[4].click() }
             console.log("form entries confirmed")
             portalClient(selectedPostID, groupID)
         } else {
@@ -436,15 +440,16 @@ function portalInputConfirm(selectedPostID, groupID) {
 }
 function portalClient(selectedPostID, groupID) {
     console.log("updating client (portalClient)")
-    if (selectedPostID !== "replyContent") {
-        document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = ""
-        document.getElementById(selectedPostID).getElementsByTagName("a")[1].innerHTML = "Reply"
-    } else { document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-plus" }
+
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-        if (buttonID !== null || window.location.hostname == "localhost") {
+        if (portal !== null && buttonID !== null || isLocal == true) {
             if (selectedPostID !== "replyContent") { showComments(selectedPostID, groupID, true) } else (getDiscussionGroups())
+            if (selectedPostID !== "replyContent") {
+                document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = ""
+                document.getElementById(selectedPostID).getElementsByTagName("a")[1].innerHTML = "Reply"
+            } else { document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-plus" }
             console.log("client updated")
         }
         else {
