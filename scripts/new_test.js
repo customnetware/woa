@@ -411,13 +411,14 @@ function portalFormInput(selectedPostID, groupID) {
         if (portal.getElementById("txt_post_body") !== null && commentForm.value !== "") {
             portal.getElementById("txt_post_body").innerHTML = commentForm.value
             if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + "..." }
-
             setTimeout(function () {
-            portal.getElementsByClassName(" x-btn-text save-button")[0].click()        
-            portalInputConfirm(selectedPostID, groupID)
+                if (portal.getElementById("txt_post_body").innerHTML.length > 10) {
+                    portal.getElementsByClassName(" x-btn-text save-button")[0].click()
+                    portalInputConfirm(selectedPostID, groupID)
+                } else {
+                    portalFormInput(selectedPostID, groupID)
+                }
             }, 250)
-
-
         } else {
             portalFormInput(selectedPostID, groupID)
         }
