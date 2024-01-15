@@ -6,7 +6,7 @@ let forumArray = []
 let isLocal = (window.location.hostname == "localhost") ? true : false
 let memberName = ""
 function pageLocation(URLString) {
-    return (isLocal = true) ? URLString + ".html" : URLString
+    return (isLocal == true) ? URLString + ".html" : URLString
 }
 function updateHeader(headerID, headerClass, headerTitle, headerLen) {
     let cardHeader = document.getElementById(headerID).children
