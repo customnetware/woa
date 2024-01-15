@@ -329,21 +329,6 @@ function postNavigation(dir) {
     updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", forumArray.length)
 
 }
-function addComments(selectedPostID, groupID) {
-    console.log("the Reply button was clicked (addComments)")
-    if (selectedPostID !== "replyContent") {
-        document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = "fa fa-refresh fa-spin fa-fw fa-lg"
-        document.getElementById(selectedPostID).getElementsByTagName("a")[1].innerHTML = ""
-    } else { document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-refresh fa-spin fa-fw fa-lg" }
-
-    try {
-
-        let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
-        while (commentSpans.length > 0) commentSpans[0].remove()
-        portalOpenForm(selectedPostID, groupID)
-
-    } catch (err) { console.log(err.message) }
-}
 function showComments(selectedPostID, groupID, showLast) {
     if (selectedPostID !== "" && groupID !== "") {
         let selectedPost = document.getElementById(selectedPostID)
@@ -383,9 +368,25 @@ function showComments(selectedPostID, groupID, showLast) {
     }
 
 }
+function addComments(selectedPostID, groupID) {
+    console.log("the Reply button was clicked (addComments)")
+
+    if (selectedPostID !== "replyContent") {
+        document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = "fa fa-refresh fa-spin fa-fw fa-lg"
+        document.getElementById(selectedPostID).getElementsByTagName("a")[1].innerHTML = ""
+    } else { document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-refresh fa-spin fa-fw fa-lg" }
+
+    let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
+    while (commentSpans.length > 0) commentSpans[0].remove()
+    portalOpenForm(selectedPostID, groupID)
+
+
+}
+
 function portalOpenForm(selectedPostID, groupID) {
     console.log("loading the requested group page form: " + pageLocation("/Discussion/28118~" + groupID) + " (portalOpenForm)")
-    document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
+
+
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
@@ -411,12 +412,11 @@ function portalFormInput(selectedPostID, groupID) {
             if (isLocal == false) {
                 post_body.innerText = commentForm.value
                 if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + " ..." }
-                let chectForText = setInterval(function () {
+                setTimeout(function () {
                     if (post_body.innerText.length > 0) {
                         portal.getElementsByClassName(" x-btn-text save-button")[0].click()
-                        clearInterval(chectForText)
-                    }
-                }, 100)
+                    } else { portalFormInput(selectedPostID, groupID) }
+                }, 400)
             }
             commentForm.value = ""
             console.log("content added to the group page form")
@@ -458,6 +458,14 @@ function portalClient(selectedPostID, groupID) {
     }, 500)
 }
 $(window).load(function () {
+
+
+
+    document.getElementById('woaFrame').addEventListener('DOMContentLoaded', function () {
+        alert("loaded")
+    }, true)
+    document.getElementById('woaFrame').src = "/discussion/list/28118/discussion-groups.html"
+
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
     })
