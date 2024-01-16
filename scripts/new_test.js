@@ -308,7 +308,7 @@ function getDiscussionGroups(selectedPostID, groupID) {
     }, 1000)
 }
 function postNavigation(dir) {
-    let commentPostIDs = ""
+
     let currentPosts = document.getElementById("recentPostsBody").getElementsByTagName("p")
     if (forumCount >= forumArray.length || dir == "back") { forumCount = 0 }
 
@@ -332,15 +332,7 @@ function postNavigation(dir) {
         currentPosts[p].getElementsByTagName("a")[1].href = "javascript:addComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ")"
         forumCount = f + 1
     }
-
-
-
     updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", forumArray.length)
-    if (commentPostIDs !== "") {
-        showComments(commentPostIDs.split("|")[0], commentPostIDs.split("|")[1], true)
-        $("#recentPosts").collapse('show')
-    }
-
 }
 function showComments(selectedPostID, groupID, showLast) {
     if (selectedPostID !== "" && groupID !== "") {
