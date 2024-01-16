@@ -288,7 +288,7 @@ function getDiscussionGroups(selectedPostID, groupID) {
                         lastPost: lastDate,
                         subject: topic[0].innerText.trim(),
                         postContent: topic[1].innerText.trim(),
-                        postAuthor: posters[0].innerText.trim(),
+                        postAuthor: posters[0].innerText.trim() + lastDate,
                         postID: contacts[0].getElementsByTagName("a")[0].id,
                         groupName: forumNames[f],
                         groupID: forums[f],
@@ -431,10 +431,13 @@ function portalFormInput(selectedPostID, groupID) {
     }, 750)
 }
 function portalSaveButton(selectedPostID, groupID) {
+    let retries=0
     console.log("saving form entry (portalSaveButton)")
     setTimeout(function () {
+        retries++
         let portal = document.getElementById('woaFrame').contentWindow.document
         let formContents = portal.getElementById("txt_post_body")
+        if (retries = 1) { alert("The system is not responding");getDiscussionGroups }
         if ((portal !== null && formContents !== null && formContents.value.length > 0) || isLocal==true) {
             if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
             portalInputConfirm(selectedPostID, groupID)
