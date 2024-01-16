@@ -350,10 +350,10 @@ function postNavigation(dir) {
 
     updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", forumArray.length)
     if (commentPostIDs !== "") {
-
         showComments(commentPostIDs.split("|")[0], commentPostIDs.split("|")[1], true)
+        $("#recentPosts").collapse('show')
     }
-    $("#recentPosts").collapse('show')
+
 }
 function showComments(selectedPostID, groupID, showLast) {
     if (selectedPostID !== "" && groupID !== "") {
@@ -472,7 +472,7 @@ function portalClient(selectedPostID, groupID) {
         if (portal !== null && buttonID !== null || isLocal == true) {
             /* if (selectedPostID !== "replyContent") { showComments(selectedPostID, groupID, true) } else (getDiscussionGroups())*/
             sessionStorage.setItem("currentPostID", selectedPostID)
-            window.location.replace("woa_resident_home.html")
+            window.location.replace("https://ourwoodbridge.net/page/28118~1101528/resident-home-beta")
             console.log("client updated")
         }
         else {
