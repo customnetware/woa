@@ -428,7 +428,7 @@ function portalFormInput(selectedPostID, groupID) {
             console.log("content added to the group page form")
             portalSaveButton(selectedPostID, groupID)
         } else { portalFormInput(selectedPostID, groupID) }
-    }, 500)
+    }, 750)
 }
 function portalSaveButton(selectedPostID, groupID) {
     console.log("saving form entry (portalSaveButton)")
@@ -439,7 +439,7 @@ function portalSaveButton(selectedPostID, groupID) {
             if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
             portalInputConfirm(selectedPostID, groupID)
         } else { portalSaveButton(selectedPostID, groupID) }
-    }, 500)
+    }, 750)
 }
 function portalInputConfirm(selectedPostID, groupID) {
     console.log("confirming form entry (portalInputConfirm)")
@@ -453,7 +453,7 @@ function portalInputConfirm(selectedPostID, groupID) {
         } else {
             portalInputConfirm(selectedPostID, groupID)
         }
-    }, 500)
+    }, 750)
 }
 
 
@@ -474,7 +474,7 @@ function portalClient(selectedPostID, groupID) {
         else {
             portalClient(selectedPostID, groupID)
         }
-    }, 500)
+    }, 750)
 }
 $(window).load(function () {
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
