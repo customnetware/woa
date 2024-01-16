@@ -450,7 +450,10 @@ function portalClient(selectedPostID, groupID) {
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
         if ((portal !== null && buttonID !== null) || isLocal == true) {
              if (selectedPostID !== "replyContent") { showComments(selectedPostID, groupID, true) } else (getDiscussionGroups())
-
+            if (selectedPostID !== "replyContent") {
+                document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = "fa fa-refresh fa-spin fa-fw fa-lg"
+                document.getElementById(selectedPostID).getElementsByTagName("a")[1].innerHTML = ""
+            } else { document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-refresh fa-spin fa-fw fa-lg" }
             console.log("client updated")
         }
         else {
