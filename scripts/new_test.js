@@ -311,20 +311,7 @@ function postNavigation(dir) {
     let commentPostIDs = ""
     let currentPosts = document.getElementById("recentPostsBody").getElementsByTagName("p")
     if (forumCount >= forumArray.length || dir == "back") { forumCount = 0 }
-    if (sessionStorage.getItem("currentPostID") !== null) {
-        for (let k = 0; k < forumArray.length; k++) {
-            if (sessionStorage.getItem("currentPostID") == forumArray[k].postID.replace("lnkTopicReply", "post")) {
-                commentPostIDs = sessionStorage.getItem("currentPostID") + "|" + forumArray[k].groupID
-                forumCount = k
-                break
 
-
-            }
-        }
-
-        sessionStorage.removeItem("currentPostID")
-
-    }
 
 
     for (let p = 0, f = forumCount; p < currentPosts.length && f < forumArray.length; p++, f++) {
@@ -469,10 +456,9 @@ function portalClient(selectedPostID, groupID) {
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-        if (portal !== null && buttonID !== null || isLocal == true) {
-            /* if (selectedPostID !== "replyContent") { showComments(selectedPostID, groupID, true) } else (getDiscussionGroups())*/
-            sessionStorage.setItem("currentPostID", selectedPostID)
-            window.location.replace("https://ourwoodbridge.net/page/28118~1101528/resident-home-beta")
+        if ((portal !== null && buttonID !== null) || isLocal == true) {
+             if (selectedPostID !== "replyContent") { showComments(selectedPostID, groupID, true) } else (getDiscussionGroups())
+
             console.log("client updated")
         }
         else {
