@@ -5,6 +5,8 @@ let forumCount = 0
 let forumArray = []
 let isLocal = (window.location.hostname == "localhost") ? true : false
 let memberName = ""
+
+if (isLocal == true) { document.getElementById("woaFrame").src = "/discussion/list/28118/discussion-groups.html" }
 function pageLocation(URLString) {
     return (isLocal == true) ? URLString + ".html" : URLString
 }
@@ -370,6 +372,7 @@ function showComments(selectedPostID, groupID, showLast) {
 }
 function addComments(selectedPostID, groupID) {
     console.log("the Reply button was clicked (addComments)")
+    document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
 
     if (selectedPostID !== "replyContent") {
         document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = "fa fa-refresh fa-spin fa-fw fa-lg"
@@ -385,12 +388,10 @@ function addComments(selectedPostID, groupID) {
 
 function portalOpenForm(selectedPostID, groupID) {
     console.log("loading the requested group page form: " + pageLocation("/Discussion/28118~" + groupID) + " (portalOpenForm)")
-
-
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-        if (portal !== null && buttonID !== null || isLocal == true) {
+        if (portal !== null && buttonID !== null) {
             if (isLocal == false) { buttonID.click() }
             console.log("group page form loaded")
             portalFormInput(selectedPostID, groupID)
@@ -458,14 +459,6 @@ function portalClient(selectedPostID, groupID) {
     }, 500)
 }
 $(window).load(function () {
-
-
-
-    document.getElementById('woaFrame').addEventListener('DOMContentLoaded', function () {
-        alert("loaded")
-    }, true)
-    document.getElementById('woaFrame').src = "/discussion/list/28118/discussion-groups.html"
-
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
     })
