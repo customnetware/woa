@@ -393,10 +393,7 @@ function addComments(selectedPostID, groupID) {
     let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
     while (commentSpans.length > 0) commentSpans[0].remove()
     portalOpenForm(selectedPostID, groupID)
-
-
 }
-
 function portalOpenForm(selectedPostID, groupID) {
     let checkCount = 0
     let waitForForm = setInterval(function () {
@@ -410,7 +407,6 @@ function portalOpenForm(selectedPostID, groupID) {
         }
     }, 500)
 }
-
 function portalFormInput(selectedPostID, groupID) {
     let checkCount = 0
     let waitForInput = setInterval(function () {
@@ -432,7 +428,6 @@ function portalFormInput(selectedPostID, groupID) {
 function portalSaveButton(selectedPostID, groupID) {
     let checkCount = 0
     let waitForSave = setInterval(function () {
-
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
         let formContents = portal.getElementById("txt_post_body")
@@ -448,7 +443,7 @@ function portalSaveButton(selectedPostID, groupID) {
                 portalOpenForm(selectedPostID, groupID)
             } else {
                 clearInterval(waitForSave)
-                getDiscussionGroups()
+                getDiscussionGroups("", "", "start")
             }
         }
 
@@ -467,8 +462,6 @@ function portalInputConfirm(selectedPostID, groupID) {
         }
     }, 500)
 }
-
-
 function portalClient(selectedPostID, groupID) {
     let checkCount = 0
     let waitForClient = setInterval(function () {
@@ -483,8 +476,6 @@ function portalClient(selectedPostID, groupID) {
     }, 500)
 }
 $(window).load(function () {
-
-
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
     })
