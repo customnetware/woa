@@ -463,6 +463,7 @@ function portalClient(selectedPostID, groupID) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
         if ((portal !== null && buttonID !== null) || isLocal == true) {
+            document.getElementById("woaFrame").src = pageLocation("/discussion/list/28118/discussion-groups")
             getDiscussionGroups(selectedPostID, groupID)
             if (selectedPostID !== "replyContent") {
                 document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = ""
