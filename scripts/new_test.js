@@ -382,30 +382,34 @@ function showComments(selectedPostID, groupID, showLast) {
 
 }
 function addComments(selectedPostID, groupID) {
-    console.log("the Reply button was clicked (addComments)")
-    document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
+    //console.log("the Reply button was clicked (addComments)")
+    //document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
 
-    if (selectedPostID !== "replyContent") {
-        document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = "fa fa-refresh fa-spin fa-fw fa-lg"
-        document.getElementById(selectedPostID).getElementsByTagName("a")[1].innerHTML = ""
-    } else { document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-refresh fa-spin fa-fw fa-lg" }
+    //if (selectedPostID !== "replyContent") {
+    //    document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = "fa fa-refresh fa-spin fa-fw fa-lg"
+    //    document.getElementById(selectedPostID).getElementsByTagName("a")[1].innerHTML = ""
+    //} else { document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-refresh fa-spin fa-fw fa-lg" }
 
-    let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
-    while (commentSpans.length > 0) commentSpans[0].remove()
+    //let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
+    //while (commentSpans.length > 0) commentSpans[0].remove()
     portalOpenForm(selectedPostID, groupID)
 }
 function portalOpenForm(selectedPostID, groupID) {
     let checkCount = 0
-    let waitForForm = setInterval(function () {
-        checkCount = checkCount + 1
-        let portal = document.getElementById('woaFrame').contentWindow.document
-        let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-        if (portal !== null && buttonID !== null) {
-            if (isLocal == false) { buttonID.click() }
-            clearInterval(waitForForm)
-            portalFormInput(selectedPostID, groupID)
-        }
-    }, 500)
+    let portal = document.getElementById('woaFrame').contentWindow.document
+    portal.AV.EditorLauncher.discussionTopic(selectedPostID.replace("post", ""), groupID, '', 'reply', 'Reply to Post', selectedPostID.replace("post", "lnkTopicReply"));
+    //let waitForForm = setInterval(function () {
+    //    checkCount = checkCount + 1
+    //    let portal = document.getElementById('woaFrame').contentWindow.document
+    //    portal.AV.EditorLauncher.discussionTopic(selectedPostID.replace("post", ""), groupID, '', 'reply', 'Reply to Post', selectedPostID.replace("post", "lnkTopicReply"));
+
+    //    //let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
+    //    if (portal !== null && buttonID !== null) {
+    //        if (isLocal == false) { buttonID.click() }
+    //        clearInterval(waitForForm)
+    //        portalFormInput(selectedPostID, groupID)
+    //    }
+    //}, 500)
 }
 function portalFormInput(selectedPostID, groupID) {
     let checkCount = 0
@@ -431,7 +435,7 @@ function portalSaveButton(selectedPostID, groupID) {
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
         let formContents = portal.getElementById("txt_post_body")
-        if ((portal !== null && formContents !== null && formContents.value.length > 0) || isLocal == true) {
+        if ((portal !== null && formContents !== null && formContents.value.length > 10) || isLocal == true) {
             clearInterval(waitForSave)
             if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
 
