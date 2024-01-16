@@ -424,21 +424,22 @@ function portalFormInput(selectedPostID, groupID) {
                 post_body.innerText = commentForm.value
                 if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + " ..." }
             }
-            
+
             console.log("content added to the group page form")
             portalSaveButton(selectedPostID, groupID)
         } else { portalFormInput(selectedPostID, groupID) }
     }, 750)
 }
+let retries = 0
 function portalSaveButton(selectedPostID, groupID) {
-    let retries=0
+
     console.log("saving form entry (portalSaveButton)")
+    retries = retries + 1
     setTimeout(function () {
-        retries++
         let portal = document.getElementById('woaFrame').contentWindow.document
         let formContents = portal.getElementById("txt_post_body")
-        if (retries == 5) { alert("The system is not responding");getDiscussionGroups("","","start") }
-        if ((portal !== null && formContents !== null && formContents.value.length > 0) || isLocal==true) {
+        if (retries == 5) { alert("The system is not responding"); retries == 0; getDiscussionGroups("", "", "start") }
+        if ((portal !== null && formContents !== null && formContents.value.length > 0) || isLocal == true) {
             if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
             portalInputConfirm(selectedPostID, groupID)
         } else { portalSaveButton(selectedPostID, groupID) }
