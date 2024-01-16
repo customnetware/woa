@@ -304,6 +304,7 @@ function getDiscussionGroups(selectedPostID, groupID) {
             clearInterval(waitforPost)
             forumArray.sort((a, b) => { return a.postSort - b.postSort })
             forumArray.reverse()
+            document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-plus" 
             postNavigation(selectedPostID, groupID, "start")
         }
     }, 1000)
