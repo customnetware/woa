@@ -17,6 +17,7 @@ function updateHeader(headerID, headerClass, headerTitle, headerLen) {
     if (headerClass.length > 5) { cardHeader[0].className = headerClass }
     if (headerTitle.length > 5) { cardHeader[1].innerHTML = headerTitle }
     cardHeader[2].innerHTML = "(" + headerLen + ")"
+
 }
 function emailNavigation(dir) {
 
