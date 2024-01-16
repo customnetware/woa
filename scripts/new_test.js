@@ -304,7 +304,7 @@ function getDiscussionGroups(selectedPostID, groupID) {
             clearInterval(waitforPost)
             forumArray.sort((a, b) => { return a.postSort - b.postSort })
             forumArray.reverse()
-            document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-plus" 
+            document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-plus"
             postNavigation(selectedPostID, groupID, "start")
         }
     }, 1000)
@@ -432,7 +432,7 @@ function portalFormInput(selectedPostID, groupID) {
 function portalSaveButton(selectedPostID, groupID) {
     let checkCount = 0
     let waitForSave = setInterval(function () {
-        if (checkCount == 5) { alert("Cannot save post, the system is not responding"); clearInterval(waitForSave) }
+
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
         let formContents = portal.getElementById("txt_post_body")
@@ -442,6 +442,16 @@ function portalSaveButton(selectedPostID, groupID) {
 
             portalInputConfirm(selectedPostID, groupID)
         }
+        if (checkCount == 6) {
+            if (confirm("The system is not responding, do you want to try again?") == true) {
+                if (isLocal == false) { portal.getElementsByClassName(" x-btn-text cancel-button")[0].click() }
+                portalOpenForm(selectedPostID, groupID)
+            } else {
+                clearInterval(waitForSave)
+                getDiscussionGroups()
+            }
+        }
+
     }, 500)
 }
 function portalInputConfirm(selectedPostID, groupID) {
@@ -468,7 +478,7 @@ function portalClient(selectedPostID, groupID) {
         if ((portal !== null && buttonID !== null) || isLocal == true) {
             clearInterval(waitForClient)
             document.getElementById("woaFrame").src = pageLocation("/discussion/list/28118/discussion-groups")
-            getDiscussionGroups(selectedPostID, groupID)      
+            getDiscussionGroups(selectedPostID, groupID)
         }
     }, 500)
 }
