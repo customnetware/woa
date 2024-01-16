@@ -397,7 +397,7 @@ function addComments(selectedPostID, groupID) {
 function portalOpenForm(selectedPostID, groupID) {
     let checkCount = 0
     let portal = document.getElementById('woaFrame').contentWindow.document
-    portal.AV.EditorLauncher.discussionTopic(selectedPostID.replace("post", ""), groupID, '', 'reply', 'Reply to Post', selectedPostID.replace("post", "lnkTopicReply"));
+    portal.discussionTopic(selectedPostID.replace("post", ""), groupID, '', 'reply', 'Reply to Post', selectedPostID.replace("post", "lnkTopicReply"));
     //let waitForForm = setInterval(function () {
     //    checkCount = checkCount + 1
     //    let portal = document.getElementById('woaFrame').contentWindow.document
