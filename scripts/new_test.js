@@ -267,6 +267,7 @@ function sendComment(messageToSend) {
 }
 function getDiscussionGroups(selectedPostID, groupID) {
     let downLoadComple = false
+    forumCount = 0
     forumArray = []
     let forums = ["8030", "8364", "11315"], forumNames = ["Recommendations", "General", "Using the HOA Portal"]
     for (let f = 0; f < forums.length; f++) {
@@ -303,16 +304,21 @@ function getDiscussionGroups(selectedPostID, groupID) {
             clearInterval(waitforPost)
             forumArray.sort((a, b) => { return a.postSort - b.postSort })
             forumArray.reverse()
-            postNavigation("start")
+            postNavigation(selectedPostID, groupID, "start")
         }
     }, 1000)
 }
-function postNavigation(dir) {
+function postNavigation(selectedPostID, groupID, dir) {
 
     let currentPosts = document.getElementById("recentPostsBody").getElementsByTagName("p")
-    if (forumCount >= forumArray.length || dir == "back") { forumCount = 0 }
 
-
+    if (forumCount >= forumArray.length || dir == "back") { forumCount = 0 } else {
+        if (selectedPostID.indexOf("post") == 0) {
+            for (let a = 0; a < forumArray.length; a++) {
+                if (forumArray[a].postID.replace("lnkTopicReply", "post") == selectedPostID) { forumCount = a; break }
+            }
+        }
+    }
 
     for (let p = 0, f = forumCount; p < currentPosts.length && f < forumArray.length; p++, f++) {
         let commentSpans = currentPosts[p].getElementsByClassName("commentSpan")
@@ -332,6 +338,7 @@ function postNavigation(dir) {
         currentPosts[p].getElementsByTagName("a")[1].href = "javascript:addComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ")"
         forumCount = f + 1
     }
+    if (selectedPostID.indexOf("post") == 0) { showComments(selectedPostID, groupID, true) }
     updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", forumArray.length)
 }
 function showComments(selectedPostID, groupID, showLast) {
@@ -416,16 +423,22 @@ function portalFormInput(selectedPostID, groupID) {
             if (isLocal == false) {
                 post_body.innerText = commentForm.value
                 if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + " ..." }
-                setTimeout(function () {
-                    if (post_body.innerText.length > 0) {
-                        portal.getElementsByClassName(" x-btn-text save-button")[0].click()
-                    } else { portalFormInput(selectedPostID, groupID) }
-                }, 400)
             }
             commentForm.value = ""
             console.log("content added to the group page form")
-            portalInputConfirm(selectedPostID, groupID)
+            portalSaveButton(selectedPostID, groupID)
         } else { portalFormInput(selectedPostID, groupID) }
+    }, 500)
+}
+function portalSaveButton(selectedPostID, groupID) {
+    console.log("saving form entry (portalSaveButton)")
+    setTimeout(function () {
+        let portal = document.getElementById('woaFrame').contentWindow.document
+        let formContents = portal.getElementById("txt_post_body")
+        if ((portal !== null && formContents !== null && formContents.value.length > 0) || isLocal==true) {
+            if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
+            portalInputConfirm(selectedPostID, groupID)
+        } else { portalSaveButton(selectedPostID, groupID) }
     }, 500)
 }
 function portalInputConfirm(selectedPostID, groupID) {
@@ -442,18 +455,19 @@ function portalInputConfirm(selectedPostID, groupID) {
         }
     }, 500)
 }
+
+
 function portalClient(selectedPostID, groupID) {
     console.log("updating client (portalClient)")
-
     setTimeout(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
         if ((portal !== null && buttonID !== null) || isLocal == true) {
-             if (selectedPostID !== "replyContent") { showComments(selectedPostID, groupID, true) } else (getDiscussionGroups())
+            getDiscussionGroups(selectedPostID, groupID)
             if (selectedPostID !== "replyContent") {
-                document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = "fa fa-refresh fa-spin fa-fw fa-lg"
-                document.getElementById(selectedPostID).getElementsByTagName("a")[1].innerHTML = ""
-            } else { document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-refresh fa-spin fa-fw fa-lg" }
+                document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = ""
+                document.getElementById(selectedPostID).getElementsByTagName("a")[1].innerHTML = "Reply"
+            } else { document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-plus" }
             console.log("client updated")
         }
         else {
