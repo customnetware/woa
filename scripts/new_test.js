@@ -437,7 +437,7 @@ function portalSaveButton(selectedPostID, groupID) {
         retries++
         let portal = document.getElementById('woaFrame').contentWindow.document
         let formContents = portal.getElementById("txt_post_body")
-        if (retries = 5) { alert("The system is not responding");getDiscussionGroups }
+        if (retries = 5) { alert("The system is not responding");getDiscussionGroups("","","start") }
         if ((portal !== null && formContents !== null && formContents.value.length > 0) || isLocal==true) {
             if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
             portalInputConfirm(selectedPostID, groupID)
