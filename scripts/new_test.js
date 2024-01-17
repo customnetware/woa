@@ -422,7 +422,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
             if (isLocal == false) {
 
                 setTimeout(function () {
-                    post_body.value = commentText
+                    post_body.value = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID).value
                     if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) + " ..." }
                 }, 500)
 
