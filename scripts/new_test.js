@@ -423,7 +423,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
                     if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) + " ..." }
                 }
                 /*portalSaveButton(selectedPostID, groupID, commentText)*/
-            } else { portalOpenForm(selectedPostID, groupID, commentText) }
+            } /*else { portalOpenForm(selectedPostID, groupID, commentText) }*/
         }, 750)
    
 }
