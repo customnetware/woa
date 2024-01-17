@@ -422,7 +422,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
                 if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) + " ..." }
             }
            /* portalSaveButton(selectedPostID, groupID, commentText)*/
-       } /*else { clearInterval(waitForInput); portalOpenForm(selectedPostID, groupID, commentText) }*/
+       } 
     }, 750)
 }
 function portalSaveButton(selectedPostID, groupID, commentText) {
@@ -432,21 +432,11 @@ function portalSaveButton(selectedPostID, groupID, commentText) {
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_body = portal.getElementById("txt_post_body")
-        //if ((portal !== null && post_body !== null && post_body.value.length > 10) || isLocal == true) {
-        //    clearInterval(waitForSave)
-        //    if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
-        //    portalInputConfirm(selectedPostID, groupID, commentText)
-        //}
-        //if (checkCount == 6) {
-        //    clearInterval(waitForSave)
-        //    if (confirm("The system is not responding, do you want to try again? The comment text is ") == true) {
-        //        if (isLocal == false) { portal.getElementsByClassName(" x-btn-text cancel-button")[0].click() }
-        //        portalOpenForm(selectedPostID, groupID, commentText)
-        //    } else {
-        //        clearInterval(waitForSave); getDiscussionGroups("", "", "start")
-        //    }
-        //}
-
+        if ((portal !== null && post_body !== null && post_body.value.length > 10) || isLocal == true) {
+            clearInterval(waitForSave)
+            if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
+            portalInputConfirm(selectedPostID, groupID, commentText)
+        }
     }, 500)
 }
 function portalInputConfirm(selectedPostID, groupID, commentText) {
