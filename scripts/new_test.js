@@ -394,11 +394,10 @@ function addComments(selectedPostID, groupID) {
     if (selectedPostID == "replyContent" || isLocal == true) {
         document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
     } else { document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", "")) }
-    document.getElementById("woaFrame").onload = function () {
-        alert("iframe loaded")
-    }
+    document.getElementById("woaFrame").onload = portalOpenForm(selectedPostID, groupID, commentText)
 
-    portalOpenForm(selectedPostID, groupID, commentText)
+
+
 }
 function portalOpenForm(selectedPostID, groupID, commentText) {
     let checkCount = 0
@@ -430,7 +429,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
 
                 setTimeout(function () {
                     document.getElementById('woaFrame').contentWindow.document.getElementById("txt_post_body").innerHTML = "This is a manual test"
-                   /* if (post_subject.length > 0) { post_subject[0].value = post_body.value.substring(0, 10) + " ..." }*/
+                    /* if (post_subject.length > 0) { post_subject[0].value = post_body.value.substring(0, 10) + " ..." }*/
                 }, 500)
 
             }
