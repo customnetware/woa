@@ -409,7 +409,7 @@ function portalOpenForm(selectedPostID, groupID, commentText) {
     }, 500)
 }
 function portalFormInput(selectedPostID, groupID, commentText) {
-
+    alert(commentText)
         let checkCount = 0
         let waitForInput = setInterval(function () {
             let portal = document.getElementById('woaFrame').contentWindow.document
