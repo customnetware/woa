@@ -422,31 +422,29 @@ function portalFormInput(selectedPostID, groupID, commentText) {
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
-        let post_body = portal.getElementsByClassName("clsMainPane clsBodyText editorOverrides")[0]
+   /*     let post_body = portal.getElementsByClassName("clsMainPane clsBodyText editorOverrides")[0]*/
 
-     
-        alert(portal.getElementsByClassName("clsMainPane clsBodyText editorOverrides").length)
+        //let frameWindow = document.getElementById('woaFrame').contentWindow
+        //frameWindow.AV.EditorLauncher.discussionTopic(id01, id02, '', 'reply', 'Reply to Post', id03)
 
-        alert("portal: " + portal + "\npost_body: " + post_body + "\nisLocal: " + isLocal)
+
         if (portal !== null && post_body !== null || isLocal == true) {
-            alert("portal: " + portal + "\npost_body: " + post_body + "\nisLocal: " + isLocal)
+
             clearInterval(waitForInput)
             if (isLocal == false) {
+
+                let post_body = portal.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body")
+                //if (portal.getElementsByTagName("iframe").length > 0) {
+                //    portal.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
+                //    portal.getElementsByClassName("x-btn-text save-button")[0].click()
+                //}
                 const position = post_body.selectionStart
                 const before = post_body.value.substring(0, position)
                 const after = post_body.value.substring(position, post_body.value.length)
-
-                alert(position)
-                alert(before)
-                alert(after)
-
                 post_body.value = before + commentText + after
                 post_body.selectionStart = post_body.selectionEnd = position + post_body.length
-
-
                 /*    post_body.innerText = commentText*/
                 /* if (post_subject.length > 0) { post_subject[0].value = post_body.value.substring(0, 10) + " ..." }*/
-
 
             }
             /* portalSaveButton(selectedPostID, groupID, commentText)*/
