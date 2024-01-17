@@ -415,13 +415,17 @@ function portalFormInput(selectedPostID, groupID, commentText) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
         let post_body = portal.getElementById("txt_post_body")
-   
+
         if (portal !== null && post_body !== null || isLocal == true) {
 
             clearInterval(waitForInput)
             if (isLocal == false) {
-                post_body.value = commentText
-                if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) + " ..." }
+
+                setTimeout(function () {
+                    post_body.value = commentText
+                    if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) + " ..." }
+                }, 500)
+
             }
             /* portalSaveButton(selectedPostID, groupID, commentText)*/
         }
