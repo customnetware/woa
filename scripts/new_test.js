@@ -439,11 +439,11 @@ function portalSaveButton(selectedPostID, groupID) {
             portalInputConfirm(selectedPostID, groupID)
         }
         if (checkCount == 6) {
+            clearInterval(waitForSave)
             if (confirm("The system is not responding, do you want to try again?") == true) {
                 if (isLocal == false) { portal.getElementsByClassName(" x-btn-text cancel-button")[0].click() }
                 portalOpenForm(selectedPostID, groupID)
-            } else {
-                clearInterval(waitForSave)
+            } else {              
                 getDiscussionGroups("", "", "start")
             }
         }
