@@ -394,6 +394,7 @@ function addComments(selectedPostID, groupID) {
     if (selectedPostID == "replyContent" || isLocal == true) {
         document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
     } else { document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", "")) }
+
     document.getElementById("woaFrame").onload = portalOpenForm(selectedPostID, groupID, commentText)
 
 
