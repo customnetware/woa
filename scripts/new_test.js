@@ -404,12 +404,12 @@ function portalOpenForm(selectedPostID, groupID, commentText) {
             clearInterval(waitForForm)
             if (isLocal == false) { buttonID.click() }
 
-            portalFormInput(selectedPostID, groupID, commentText)
+            /*portalFormInput(selectedPostID, groupID, commentText)*/
         }
     }, 500)
 }
 function portalFormInput(selectedPostID, groupID, commentText) {
-    if (confirm("Is the form open?") == true) {
+
         let checkCount = 0
         let waitForInput = setInterval(function () {
             let portal = document.getElementById('woaFrame').contentWindow.document
@@ -425,7 +425,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
                 portalSaveButton(selectedPostID, groupID, commentText)
             } else { portalOpenForm(selectedPostID, groupID, commentText) }
         }, 750)
-    } else { return }
+   
 }
 function portalSaveButton(selectedPostID, groupID, commentText) {
 
