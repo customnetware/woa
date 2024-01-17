@@ -428,12 +428,14 @@ function portalFormInput(selectedPostID, groupID, commentText) {
         //let frameWindow = document.getElementById('woaFrame').contentWindow
         //frameWindow.AV.EditorLauncher.discussionTopic(id01, id02, '', 'reply', 'Reply to Post', id03)
 
-
+        alert(portal)
+        alert(post_body)
+        alert(document.getElementById('replyContent').value)
         if (portal !== null && post_body !== null || isLocal == true) {
 
             clearInterval(waitForInput)
             if (isLocal == false) {
-                post_body.innerHTML = document.getElementById('replyContent').value
+                post_body.value = document.getElementById('replyContent').value
 
                 //if (portal.getElementsByTagName("iframe").length > 0) {
                 //    portal.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
