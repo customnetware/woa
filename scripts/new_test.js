@@ -420,14 +420,15 @@ function portalFormInput(selectedPostID, groupID, commentText) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
         let post_body = portal.getElementById("txt_post_body")
-
+        alert("portal: " + portal + "post_body: " + post_body + "isLocal: " + isLocal)
         if (portal !== null && post_body !== null || isLocal == true) {
-
+            alert("portal: " + portal + "post_body: " + post_body + "isLocal: " + isLocal)
             clearInterval(waitForInput)
             if (isLocal == false) {
 
                 setTimeout(function () {
-                    document.getElementById('woaFrame').contentWindow.document.getElementById("txt_post_body").innerHTML += "This is a manual test"
+                    alert(post_body.innerHTML)
+                    post_body.innerHTML += "This is a manual test"
                     /* if (post_subject.length > 0) { post_subject[0].value = post_body.value.substring(0, 10) + " ..." }*/
                 }, 500)
 
