@@ -415,6 +415,10 @@ function portalFormInput(selectedPostID, groupID, commentText) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
         let post_body = portal.getElementById("txt_post_body")
+        alert(portal)
+        alert(post_subject.length)
+        alert(post_body)
+        alert(isLocal)
        if (portal !== null && post_body !== null || isLocal == true) {
             clearInterval(waitForInput)
             if (isLocal == false) {
