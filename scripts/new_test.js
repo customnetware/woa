@@ -414,6 +414,8 @@ function portalOpenForm(selectedPostID, groupID, commentText) {
         }
     }, 500)
 }
+
+
 function portalFormInput(selectedPostID, groupID, commentText) {
     let checkCount = 0
     let waitForInput = setInterval(function () {
@@ -426,12 +428,16 @@ function portalFormInput(selectedPostID, groupID, commentText) {
             alert("portal: " + portal + "\npost_body: " + post_body + "\nisLocal: " + isLocal)
             clearInterval(waitForInput)
             if (isLocal == false) {
+                const position = post_body.selectionStart
+                const before = post_body.value.substring(0, position)
+                const after = post_body.value.substring(position, post_body.value.length)
+                post_body.value = before + commentText + after
+                post_body.selectionStart = post_body.selectionEnd = position + text.length
 
-              
-                    alert(commentText)
-                    post_body.innerText = commentText
-                    /* if (post_subject.length > 0) { post_subject[0].value = post_body.value.substring(0, 10) + " ..." }*/
-         
+
+                /*    post_body.innerText = commentText*/
+                /* if (post_subject.length > 0) { post_subject[0].value = post_body.value.substring(0, 10) + " ..." }*/
+
 
             }
             /* portalSaveButton(selectedPostID, groupID, commentText)*/
