@@ -402,7 +402,6 @@ function addComments(selectedPostID, groupID) {
 }
 function portalOpenForm(selectedPostID, groupID, commentText) {
     let checkCount = 0
-
     let waitForForm = setInterval(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         checkCount = checkCount + 1
@@ -414,8 +413,6 @@ function portalOpenForm(selectedPostID, groupID, commentText) {
         }
     }, 500)
 }
-
-
 function portalFormInput(selectedPostID, groupID, commentText) {
     let checkCount = 0
     let waitForInput = setInterval(function () {
@@ -427,20 +424,19 @@ function portalFormInput(selectedPostID, groupID, commentText) {
             clearInterval(waitForInput)
             if (isLocal == false) {
                 post_body.innerHTML = commentText
-                if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10); }
+                if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) }
             }
             portalSaveButton(selectedPostID, groupID, commentText)
         }
     }, 750)
 }
 function portalSaveButton(selectedPostID, groupID, commentText) {
-
     let checkCount = 0
     let waitForSave = setInterval(function () {
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_body = portal.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body")
-        if ((portal !== null && post_body.innerHTML.length > 0) || isLocal == true) {
+        if ((portal !== null && post_body !== null && post_body.innerHTML.length > 0) || isLocal == true) {
             clearInterval(waitForSave)
             if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
             portalInputConfirm(selectedPostID, groupID, commentText)
@@ -468,7 +464,6 @@ function portalClient(selectedPostID, groupID, commentText) {
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
         if ((portal !== null && buttonID !== null) || isLocal == true) {
             clearInterval(waitForClient)
-            document.getElementById("woaFrame").src = pageLocation("/discussion/list/28118/discussion-groups")
             getDiscussionGroups(selectedPostID, groupID)
         }
     }, 500)
@@ -486,5 +481,4 @@ $(window).load(function () {
     getDiscussionGroups("", "")
     getClassifiedAds()
     getResidentHomePage()
-
 })
