@@ -421,7 +421,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
         let post_body = portal.getElementById("txt_post_body")
-        alert("portal: " + portal + "post_body: " + post_body + "isLocal: " + isLocal)
+        alert("portal: " + portal + "\npost_body: " + post_body + "\nisLocal: " + isLocal)
         if (portal !== null && post_body !== null || isLocal == true) {
             alert("portal: " + portal + "\npost_body: " + post_body + "\nisLocal: " + isLocal)
             clearInterval(waitForInput)
@@ -429,7 +429,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
 
               
                     alert(commentText)
-                    post_body.value = commentText
+                    post_body.innerText = commentText
                     /* if (post_subject.length > 0) { post_subject[0].value = post_body.value.substring(0, 10) + " ..." }*/
          
 
