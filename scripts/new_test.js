@@ -409,28 +409,24 @@ function portalOpenForm(selectedPostID, groupID, commentText) {
     }, 500)
 }
 function portalFormInput(selectedPostID, groupID, commentText) {
-    alert(commentText.length)
-        let checkCount = 0
+    let checkCount = 0
     let waitForInput = setInterval(function () {
         checkCount = checkCount + 1
-
-            let portal = document.getElementById('woaFrame').contentWindow.document
-            let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
+        let portal = document.getElementById('woaFrame').contentWindow.document
+        let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
         let post_body = portal.getElementById("txt_post_body")
-        alert(portal)
-        alert(post_body)
-        alert(isLocal)
-
-            if ((portal !== null && post_body !== null && commentText > 10) || isLocal == true) {
-                clearInterval(waitForInput)
-                if (isLocal == false) {
-                    post_body.value = commentText
-                    if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) + " ..." }
-                }
-                /*portalSaveButton(selectedPostID, groupID, commentText)*/
-            } /*else { portalOpenForm(selectedPostID, groupID, commentText) }*/
-        }, 750)
-   
+        if ((portal !== null && post_body !== null && commentText > 10) || isLocal == true) {
+            alert(post_body)
+            alert(portal)
+            alert(commentText)
+            clearInterval(waitForInput)
+            if (isLocal == false) {
+                post_body.value = commentText
+                if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) + " ..." }
+            }
+            /*portalSaveButton(selectedPostID, groupID, commentText)*/
+        } /*else { portalOpenForm(selectedPostID, groupID, commentText) }*/
+    }, 750)
 }
 function portalSaveButton(selectedPostID, groupID, commentText) {
 
