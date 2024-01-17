@@ -425,7 +425,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
         let post_body = portal.getElementsByClassName("clsMainPane clsBodyText editorOverrides")[0]
 
      
-
+        alert(post_body.length)
 
         alert("portal: " + portal + "\npost_body: " + post_body + "\nisLocal: " + isLocal)
         if (portal !== null && post_body !== null || isLocal == true) {
