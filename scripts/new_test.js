@@ -397,8 +397,9 @@ function addComments(selectedPostID, groupID) {
 }
 function portalOpenForm(selectedPostID, groupID) {
     let checkCount = 0
-    let portal = document.getElementById('woaFrame').contentWindow.document
+
     let waitForForm = setInterval(function () {
+        let portal = document.getElementById('woaFrame').contentWindow.document
         checkCount = checkCount + 1
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
         if (portal !== null && buttonID !== null) {
@@ -410,11 +411,11 @@ function portalOpenForm(selectedPostID, groupID) {
 }
 function portalFormInput(selectedPostID, groupID) {
     let checkCount = 0
-    let portal = document.getElementById('woaFrame').contentWindow.document
-    let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
-    let post_body = portal.getElementById("txt_post_body")
-    let commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
     let waitForInput = setInterval(function () {
+        let portal = document.getElementById('woaFrame').contentWindow.document
+        let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
+        let post_body = portal.getElementById("txt_post_body")
+        let commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
         checkCount = checkCount + 1
         if ((portal !== null && post_body !== null && commentForm !== null && commentForm.value.length > 10) || isLocal == true) {
             clearInterval(waitForInput)
@@ -427,11 +428,11 @@ function portalFormInput(selectedPostID, groupID) {
     }, 500)
 }
 function portalSaveButton(selectedPostID, groupID) {
-    let portal = document.getElementById('woaFrame').contentWindow.document
+
     let checkCount = 0
     let waitForSave = setInterval(function () {
         checkCount = checkCount + 1
-
+        let portal = document.getElementById('woaFrame').contentWindow.document
         let formContents = portal.getElementById("txt_post_body")
         if ((portal !== null && formContents !== null && formContents.value.length > 10) || isLocal == true) {
             clearInterval(waitForSave)
@@ -452,10 +453,10 @@ function portalSaveButton(selectedPostID, groupID) {
 }
 
 function portalInputConfirm(selectedPostID, groupID) {
-    let portal = document.getElementById('woaFrame').contentWindow.document
     let checkCount = 0
     let waitForConfirm = setInterval(function () {
         checkCount = checkCount + 1
+        let portal = document.getElementById('woaFrame').contentWindow.document
         let confirmBtn = portal.getElementsByClassName(" x-btn-text")
         if (portal !== null && confirmBtn.length > 0 || isLocal == true) {
             clearInterval(waitForConfirm)
