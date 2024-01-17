@@ -421,8 +421,8 @@ function portalFormInput(selectedPostID, groupID, commentText) {
                 post_body.value = commentText
                 if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) + " ..." }
             }
-            portalSaveButton(selectedPostID, groupID, commentText)
-       } else { clearInterval(waitForInput); portalOpenForm(selectedPostID, groupID, commentText) }
+           /* portalSaveButton(selectedPostID, groupID, commentText)*/
+       } /*else { clearInterval(waitForInput); portalOpenForm(selectedPostID, groupID, commentText) }*/
     }, 750)
 }
 function portalSaveButton(selectedPostID, groupID, commentText) {
