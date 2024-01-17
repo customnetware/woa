@@ -409,7 +409,6 @@ function portalOpenForm(selectedPostID, groupID, commentText) {
         if (portal !== null && buttonID !== null && commentText.length > 10) {
             clearInterval(waitForForm)
             if (isLocal == false) { buttonID.click() }
-
             portalFormInput(selectedPostID, groupID, commentText)
         }
     }, 500)
@@ -428,7 +427,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
             if (isLocal == false) {
 
                 setTimeout(function () {
-                    document.getElementById('woaFrame').contentWindow.document.getElementById("txt_post_body").innerHTML = "This is a manual test"
+                    document.getElementById('woaFrame').contentWindow.document.getElementById("txt_post_body").innerHTML += "This is a manual test"
                     /* if (post_subject.length > 0) { post_subject[0].value = post_body.value.substring(0, 10) + " ..." }*/
                 }, 500)
 
