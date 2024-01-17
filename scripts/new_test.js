@@ -384,6 +384,7 @@ function showComments(selectedPostID, groupID, showLast) {
 }
 function addComments(selectedPostID, groupID) {
     let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
+    let portal_text = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID).value
     while (commentSpans.length > 0) commentSpans[0].remove()
     if (selectedPostID !== "replyContent") {
         document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = "fa fa-refresh fa-spin fa-fw fa-lg"
@@ -392,58 +393,57 @@ function addComments(selectedPostID, groupID) {
 
 
 
-    portalOpenForm(selectedPostID, groupID)
+    portalOpenForm(selectedPostID, groupID, portal_text)
 }
-function portalOpenForm(selectedPostID, groupID) {
+function portalOpenForm(selectedPostID, groupID, post_text) {
     let checkCount = 0
     document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", ""))
     let waitForForm = setInterval(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         checkCount = checkCount + 1
         let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-        if (portal !== null && buttonID !== null) {
+        if (portal !== null && buttonID !== null && post_text.length > 10) {
             if (isLocal == false) { buttonID.click() }
             clearInterval(waitForForm)
             portalFormInput(selectedPostID, groupID)
         }
     }, 500)
 }
-function portalFormInput(selectedPostID, groupID) {
+function portalFormInput(selectedPostID, groupID, post_text) {
     let checkCount = 0
     let waitForInput = setInterval(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
         let post_body = portal.getElementById("txt_post_body")
-        let commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
         checkCount = checkCount + 1
-        if ((portal !== null && post_body !== null && commentForm !== null && commentForm.value.length > 10) || isLocal == true) {
+        if ((portal !== null && post_body !== null && portal_text !== null && portal_text.value.length > 10 && post_text.length > 10) || isLocal == true) {
             clearInterval(waitForInput)
             if (isLocal == false) {
-                post_body.appendChild(document.createTextNode(commentForm.value))
-                if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + " ..." }
+                post_body.innerHTML = post_text
+                if (post_subject.length > 0) { post_subject[0].value = portal_text.value.substring(0, 10) + " ..." }
             }
             portalSaveButton(selectedPostID, groupID)
         } else { portalOpenForm(selectedPostID, groupID) }
     }, 750)
 }
-function portalSaveButton(selectedPostID, groupID) {
+function portalSaveButton(selectedPostID, groupID, post_text) {
 
     let checkCount = 0
     let waitForSave = setInterval(function () {
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
-        let formContents = portal.getElementById("txt_post_body")
-        if ((portal !== null && formContents !== null && formContents.value.length > 10) || isLocal == true) {
+        let post_body = portal.getElementById("txt_post_body")
+        if ((portal !== null && post_body !== null && post_body.value.length > 10) || isLocal == true) {
             clearInterval(waitForSave)
             if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
             portalInputConfirm(selectedPostID, groupID)
         }
         if (checkCount == 6) {
             clearInterval(waitForSave)
-            if (confirm("The system is not responding, do you want to try again?") == true) {
+            if (confirm("The system is not responding, do you want to try again? The comment text is ") == true) {
                 if (isLocal == false) { portal.getElementsByClassName(" x-btn-text cancel-button")[0].click() }
                 portalOpenForm(selectedPostID, groupID)
-            } else {              
+            } else {
                 getDiscussionGroups("", "", "start")
             }
         }
@@ -451,7 +451,7 @@ function portalSaveButton(selectedPostID, groupID) {
     }, 500)
 }
 
-function portalInputConfirm(selectedPostID, groupID) {
+function portalInputConfirm(selectedPostID, groupID, post_text) {
     let checkCount = 0
     let waitForConfirm = setInterval(function () {
         checkCount = checkCount + 1
@@ -464,7 +464,7 @@ function portalInputConfirm(selectedPostID, groupID) {
         }
     }, 500)
 }
-function portalClient(selectedPostID, groupID) {
+function portalClient(selectedPostID, groupID, post_text) {
     let checkCount = 0
     let waitForClient = setInterval(function () {
         checkCount = checkCount + 1
