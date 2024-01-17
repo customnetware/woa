@@ -405,7 +405,7 @@ function portalOpenForm(selectedPostID, groupID, post_text) {
         if (portal !== null && buttonID !== null && post_text.length > 10) {
             if (isLocal == false) { buttonID.click() }
             clearInterval(waitForForm)
-            portalFormInput(selectedPostID, groupID)
+            portalFormInput(selectedPostID, groupID, post_text)
         }
     }, 500)
 }
@@ -416,14 +416,14 @@ function portalFormInput(selectedPostID, groupID, post_text) {
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
         let post_body = portal.getElementById("txt_post_body")
         checkCount = checkCount + 1
-        if ((portal !== null && post_body !== null && portal_text !== null && portal_text.value.length > 10 && post_text.length > 10) || isLocal == true) {
+        if ((portal !== null && post_body !== null && post_text > 10) || isLocal == true) {
             clearInterval(waitForInput)
             if (isLocal == false) {
                 post_body.innerHTML = post_text
                 if (post_subject.length > 0) { post_subject[0].value = portal_text.value.substring(0, 10) + " ..." }
             }
-            portalSaveButton(selectedPostID, groupID)
-        } else { portalOpenForm(selectedPostID, groupID) }
+            portalSaveButton(selectedPostID, groupID,post_text)
+        } else { portalOpenForm(selectedPostID, groupID, post_text) }
     }, 750)
 }
 function portalSaveButton(selectedPostID, groupID, post_text) {
@@ -436,13 +436,13 @@ function portalSaveButton(selectedPostID, groupID, post_text) {
         if ((portal !== null && post_body !== null && post_body.value.length > 10) || isLocal == true) {
             clearInterval(waitForSave)
             if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
-            portalInputConfirm(selectedPostID, groupID)
+            portalInputConfirm(selectedPostID, groupID, post_text)
         }
         if (checkCount == 6) {
             clearInterval(waitForSave)
             if (confirm("The system is not responding, do you want to try again? The comment text is ") == true) {
                 if (isLocal == false) { portal.getElementsByClassName(" x-btn-text cancel-button")[0].click() }
-                portalOpenForm(selectedPostID, groupID)
+                portalOpenForm(selectedPostID, groupID, post_text)
             } else {
                 getDiscussionGroups("", "", "start")
             }
@@ -460,7 +460,7 @@ function portalInputConfirm(selectedPostID, groupID, post_text) {
         if (portal !== null && confirmBtn.length > 0 || isLocal == true) {
             clearInterval(waitForConfirm)
             if (isLocal == false) { confirmBtn[4].click() }
-            portalClient(selectedPostID, groupID)
+            portalClient(selectedPostID, groupID, post_text)
         }
     }, 500)
 }
