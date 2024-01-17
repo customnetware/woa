@@ -424,7 +424,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
             if ((portal !== null && post_body !== null && commentText > 10) || isLocal == true) {
                 clearInterval(waitForInput)
                 if (isLocal == false) {
-                    post_body.innerHTML = commentText
+                    post_body.value = commentText
                     if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) + " ..." }
                 }
                 /*portalSaveButton(selectedPostID, groupID, commentText)*/
