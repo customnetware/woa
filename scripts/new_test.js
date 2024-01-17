@@ -419,6 +419,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
         alert(post_subject.length)
         alert(post_body)
         alert(isLocal)
+        alert(commentText)
        if (portal !== null && post_body !== null || isLocal == true) {
             clearInterval(waitForInput)
             if (isLocal == false) {
