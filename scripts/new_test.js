@@ -478,11 +478,6 @@ function portalClient(selectedPostID, groupID) {
     }, 500)
 }
 $(window).load(function () {
-    navigator.permissions.query({ name: "write-on-clipboard" }).then((result) => {
-        if (result.state == "granted" || result.state == "prompt") {
-            alert("Write access granted!")
-        } else { "not granted" }
-    })
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
     })
