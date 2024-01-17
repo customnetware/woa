@@ -432,7 +432,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
                 const before = post_body.value.substring(0, position)
                 const after = post_body.value.substring(position, post_body.value.length)
                 post_body.value = before + commentText + after
-                post_body.selectionStart = post_body.selectionEnd = position + text.length
+                post_body.selectionStart = post_body.selectionEnd = position + post_body.length
 
 
                 /*    post_body.innerText = commentText*/
