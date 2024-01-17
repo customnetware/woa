@@ -409,13 +409,18 @@ function portalOpenForm(selectedPostID, groupID, commentText) {
     }, 500)
 }
 function portalFormInput(selectedPostID, groupID, commentText) {
-    alert(commentText)
+    alert(commentText.length)
         let checkCount = 0
-        let waitForInput = setInterval(function () {
+    let waitForInput = setInterval(function () {
+        checkCount = checkCount + 1
+
             let portal = document.getElementById('woaFrame').contentWindow.document
             let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
-            let post_body = portal.getElementById("txt_post_body")
-            checkCount = checkCount + 1
+        let post_body = portal.getElementById("txt_post_body")
+        alert(portal)
+        alert(post_body)
+        alert(isLocal)
+
             if ((portal !== null && post_body !== null && commentText > 10) || isLocal == true) {
                 clearInterval(waitForInput)
                 if (isLocal == false) {
