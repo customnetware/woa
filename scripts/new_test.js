@@ -422,12 +422,9 @@ function portalFormInput(selectedPostID, groupID) {
                 post_body.innerHTML = commentForm.value
                 if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + " ..." }
             }
-            if (post_body.innerHTML == commentForm.value) {
-                portalSaveButton(selectedPostID, groupID)
-            }
-           
-        }
-    }, 500)
+            portalSaveButton(selectedPostID, groupID)
+        } else { portalOpenForm(selectedPostID, groupID) }
+    }, 750)
 }
 function portalSaveButton(selectedPostID, groupID) {
 
