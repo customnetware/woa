@@ -422,7 +422,11 @@ function portalFormInput(selectedPostID, groupID, commentText) {
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
-        let post_body = portal.getElementById("txt_post_body")
+        let post_body = portal.getElementsByClassName("clsMainPane clsBodyText editorOverrides")[0]
+
+     
+
+
         alert("portal: " + portal + "\npost_body: " + post_body + "\nisLocal: " + isLocal)
         if (portal !== null && post_body !== null || isLocal == true) {
             alert("portal: " + portal + "\npost_body: " + post_body + "\nisLocal: " + isLocal)
