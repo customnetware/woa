@@ -422,6 +422,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
+            let post_body = portal.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body")
    /*     let post_body = portal.getElementsByClassName("clsMainPane clsBodyText editorOverrides")[0]*/
 
         //let frameWindow = document.getElementById('woaFrame').contentWindow
@@ -433,7 +434,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
             clearInterval(waitForInput)
             if (isLocal == false) {
 
-                let post_body = portal.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body")
+    
                 //if (portal.getElementsByTagName("iframe").length > 0) {
                 //    portal.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = document.getElementById('replyContent').innerHTML
                 //    portal.getElementsByClassName("x-btn-text save-button")[0].click()
