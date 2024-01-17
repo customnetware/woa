@@ -428,11 +428,8 @@ function portalFormInput(selectedPostID, groupID, commentText) {
             clearInterval(waitForInput)
             if (isLocal == false) {
 
-                setTimeout(function () {
-                    alert(document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID).value)
-                    post_body.value = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID).value
-                    post_body.value = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID).value
-                    post_body.value = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID).value
+                setTimeout(function () {               
+                    portal.getElementById("txt_post_body")="This is a manual test"
                     if (post_subject.length > 0) { post_subject[0].value = post_body.value.substring(0, 10) + " ..." }
                 }, 500)
 
