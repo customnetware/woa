@@ -438,8 +438,8 @@ function portalSaveButton(selectedPostID, groupID, commentText) {
     let waitForSave = setInterval(function () {
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
-        let post_body = portal.getElementById("txt_post_body")
-        if ((portal !== null && post_body !== null && post_body.value.length > 10) || isLocal == true) {
+        let post_body = portal.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body")
+        if ((portal !== null && post_body.innerHTML.length > 0) || isLocal == true) {
             clearInterval(waitForSave)
             if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
             portalInputConfirm(selectedPostID, groupID, commentText)
