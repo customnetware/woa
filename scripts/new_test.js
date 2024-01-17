@@ -391,12 +391,12 @@ function addComments(selectedPostID, groupID) {
         document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = "fa fa-refresh fa-spin fa-fw fa-lg"
     } else { document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-refresh fa-spin fa-fw fa-lg" }
 
-    if (selectedPostID == "replyContent" || isLocal==true) {
+    if (selectedPostID == "replyContent" || isLocal == true) {
         document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
     } else { document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", "")) }
     document.getElementById("woaFrame").onload = function () {
-      alert("iframe loaded")
-    };
+        alert("iframe loaded")
+    }
 
     portalOpenForm(selectedPostID, groupID, commentText)
 }
@@ -428,9 +428,9 @@ function portalFormInput(selectedPostID, groupID, commentText) {
             clearInterval(waitForInput)
             if (isLocal == false) {
 
-                setTimeout(function () {               
-                    portal.getElementById("txt_post_body")="This is a manual test"
-                    if (post_subject.length > 0) { post_subject[0].value = post_body.value.substring(0, 10) + " ..." }
+                setTimeout(function () {
+                    document.getElementById('woaFrame').contentWindow.document.portal.getElementById("txt_post_body") = "This is a manual test"
+                   /* if (post_subject.length > 0) { post_subject[0].value = post_body.value.substring(0, 10) + " ..." }*/
                 }, 500)
 
             }
