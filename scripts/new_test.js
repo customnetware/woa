@@ -381,6 +381,7 @@ function showComments(selectedPostID, groupID, showLast) {
 
 }
 function addComments(selectedPostID, groupID) {
+
     let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
     let commentText = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID).value
     while (commentSpans.length > 0) commentSpans[0].remove()
@@ -389,13 +390,19 @@ function addComments(selectedPostID, groupID) {
         document.getElementById(selectedPostID).getElementsByTagName("a")[1].innerHTML = ""
         document.getElementById(selectedPostID).getElementsByTagName("a")[1].className = "fa fa-refresh fa-spin fa-fw fa-lg"
     } else { document.getElementById("newPostButton").getElementsByTagName("span")[0].className = "fa fa-refresh fa-spin fa-fw fa-lg" }
+
+    if (selectedPostID == "replyContent" || isLocal==true) {
+        document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
+    } else { document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", "")) }
+    document.getElementById("woaFrame").onload = function () {
+      alert("iframe loaded")
+    };
+
     portalOpenForm(selectedPostID, groupID, commentText)
 }
 function portalOpenForm(selectedPostID, groupID, commentText) {
     let checkCount = 0
-    if (selectedPostID !== "replyContent") {
-        document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", ""))
-    } else { document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID) }
+
     let waitForForm = setInterval(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         checkCount = checkCount + 1
