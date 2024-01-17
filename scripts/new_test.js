@@ -415,16 +415,14 @@ function portalFormInput(selectedPostID, groupID, commentText) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
         let post_body = portal.getElementById("txt_post_body")
-
        if (portal !== null && post_body !== null || isLocal == true) {
-
             clearInterval(waitForInput)
             if (isLocal == false) {
                 post_body.value = commentText
                 if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) + " ..." }
             }
-            /*portalSaveButton(selectedPostID, groupID, commentText)*/
-        } /*else { portalOpenForm(selectedPostID, groupID, commentText) }*/
+            portalSaveButton(selectedPostID, groupID, commentText)
+       } else { clearInterval(waitForInput); portalOpenForm(selectedPostID, groupID, commentText) }
     }, 750)
 }
 function portalSaveButton(selectedPostID, groupID, commentText) {
@@ -445,7 +443,7 @@ function portalSaveButton(selectedPostID, groupID, commentText) {
                 if (isLocal == false) { portal.getElementsByClassName(" x-btn-text cancel-button")[0].click() }
                 portalOpenForm(selectedPostID, groupID, commentText)
             } else {
-                getDiscussionGroups("", "", "start")
+                clearInterval(waitForSave); getDiscussionGroups("", "", "start")
             }
         }
 
