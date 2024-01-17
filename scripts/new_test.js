@@ -395,7 +395,9 @@ function addComments(selectedPostID, groupID) {
 }
 function portalOpenForm(selectedPostID, groupID, commentText) {
     let checkCount = 0
-    document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", ""))
+    if (selectedPostID !== "replyContent") {
+        document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", ""))
+    } else { document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID) }
     let waitForForm = setInterval(function () {
         let portal = document.getElementById('woaFrame').contentWindow.document
         checkCount = checkCount + 1
