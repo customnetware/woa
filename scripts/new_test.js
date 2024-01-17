@@ -398,32 +398,29 @@ function addComments(selectedPostID, groupID) {
 function portalOpenForm(selectedPostID, groupID) {
     let checkCount = 0
     let portal = document.getElementById('woaFrame').contentWindow.document
-    portal.AV.EditorLauncher.discussionTopic(selectedPostID.replace("post", ""), groupID, '', 'reply', 'Reply to Post', selectedPostID.replace("post", "lnkTopicReply"))
-    //let waitForForm = setInterval(function () {
-    //    checkCount = checkCount + 1
-    //    let portal = document.getElementById('woaFrame').contentWindow
-
-
-    //    //let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-    //    //if (portal !== null && buttonID !== null) {
-    //    //    if (isLocal == false) { buttonID.click() }
-    //    //    clearInterval(waitForForm)
-    //    //    portalFormInput(selectedPostID, groupID)
-    //    //}
-/*}, 500)*/
+    let waitForForm = setInterval(function () {
+        checkCount = checkCount + 1
+        let buttonID = portal.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
+        if (portal !== null && buttonID !== null) {
+            if (isLocal == false) { buttonID.click() }
+            clearInterval(waitForForm)
+            portalFormInput(selectedPostID, groupID)
+        }
+    }, 500)
 }
 function portalFormInput(selectedPostID, groupID) {
     let checkCount = 0
+    let portal = document.getElementById('woaFrame').contentWindow.document
+    let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
+    let post_body = portal.getElementById("txt_post_body")
+    let commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
+
     let waitForInput = setInterval(function () {
         checkCount = checkCount + 1
-        let portal = document.getElementById('woaFrame').contentWindow.document
-        let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
-        let post_body = portal.getElementById("txt_post_body")
-        let commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
         if ((portal !== null && post_body !== null && commentForm !== null && commentForm.value.length > 10) || isLocal == true) {
             clearInterval(waitForInput)
             if (isLocal == false) {
-                post_body.innerText = commentForm.value
+                post_body.innerHTML = commentForm.value
                 if (post_subject.length > 0) { post_subject[0].value = commentForm.value.substring(0, 10) + " ..." }
             }
             portalSaveButton(selectedPostID, groupID)
@@ -431,15 +428,15 @@ function portalFormInput(selectedPostID, groupID) {
     }, 500)
 }
 function portalSaveButton(selectedPostID, groupID) {
+    let portal = document.getElementById('woaFrame').contentWindow.document
     let checkCount = 0
     let waitForSave = setInterval(function () {
         checkCount = checkCount + 1
-        let portal = document.getElementById('woaFrame').contentWindow.document
+
         let formContents = portal.getElementById("txt_post_body")
         if ((portal !== null && formContents !== null && formContents.value.length > 10) || isLocal == true) {
             clearInterval(waitForSave)
             if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
-
             portalInputConfirm(selectedPostID, groupID)
         }
         if (checkCount == 6) {
@@ -454,11 +451,12 @@ function portalSaveButton(selectedPostID, groupID) {
 
     }, 500)
 }
+
 function portalInputConfirm(selectedPostID, groupID) {
+    let portal = document.getElementById('woaFrame').contentWindow.document
     let checkCount = 0
     let waitForConfirm = setInterval(function () {
         checkCount = checkCount + 1
-        let portal = document.getElementById('woaFrame').contentWindow.document
         let confirmBtn = portal.getElementsByClassName(" x-btn-text")
         if (portal !== null && confirmBtn.length > 0 || isLocal == true) {
             clearInterval(waitForConfirm)
@@ -481,6 +479,11 @@ function portalClient(selectedPostID, groupID) {
     }, 500)
 }
 $(window).load(function () {
+    navigator.permissions.query({ name: "write-on-clipboard" }).then((result) => {
+        if (result.state == "granted" || result.state == "prompt") {
+            alert("Write access granted!")
+        } else { "not granted" }
+    })
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
     })
