@@ -404,7 +404,7 @@ function portalOpenForm(selectedPostID, groupID, commentText) {
             clearInterval(waitForForm)
             if (isLocal == false) { buttonID.click() }
 
-            /*portalFormInput(selectedPostID, groupID, commentText)*/
+            portalFormInput(selectedPostID, groupID, commentText)
         }
     }, 500)
 }
@@ -422,7 +422,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
                     post_body.innerHTML = commentText
                     if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) + " ..." }
                 }
-                portalSaveButton(selectedPostID, groupID, commentText)
+                /*portalSaveButton(selectedPostID, groupID, commentText)*/
             } else { portalOpenForm(selectedPostID, groupID, commentText) }
         }, 750)
    
