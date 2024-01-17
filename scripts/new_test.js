@@ -423,18 +423,12 @@ function portalFormInput(selectedPostID, groupID, commentText) {
         let portal = document.getElementById('woaFrame').contentWindow.document
         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
         let post_body = portal.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body")
-
-
         if (portal !== null && post_body !== null || isLocal == true) {
-
             clearInterval(waitForInput)
             if (isLocal == false) {
-
                 post_body.innerHTML = commentText
-
-
             }
-           portalSaveButton(selectedPostID, groupID, commentText)
+            portalSaveButton(selectedPostID, groupID, commentText)
         }
     }, 750)
 }
