@@ -426,11 +426,11 @@ function portalFormInput(selectedPostID, groupID, commentText) {
             clearInterval(waitForInput)
             if (isLocal == false) {
 
-                setTimeout(function () {
+              
                     alert(commentText)
-                    post_body.value += commentText
+                    post_body.value = commentText
                     /* if (post_subject.length > 0) { post_subject[0].value = post_body.value.substring(0, 10) + " ..." }*/
-                }, 500)
+         
 
             }
             /* portalSaveButton(selectedPostID, groupID, commentText)*/
