@@ -414,7 +414,6 @@ function portalFormInput(selectedPostID, groupID) {
     let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
     let post_body = portal.getElementById("txt_post_body")
     let commentForm = document.getElementById((selectedPostID !== "replyContent") ? selectedPostID.replace("post", "comment") : selectedPostID)
-
     let waitForInput = setInterval(function () {
         checkCount = checkCount + 1
         if ((portal !== null && post_body !== null && commentForm !== null && commentForm.value.length > 10) || isLocal == true) {
