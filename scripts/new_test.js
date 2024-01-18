@@ -208,7 +208,6 @@ function getClassifiedAds() {
             document.getElementById("classifiedHeader").children[2].innerHTML = "(" + classifiedsList.childElementCount + ")"
         })
 }
-
 function openForm() {
     document.getElementById("WOAComments").style.display = "block"
 }
@@ -411,7 +410,7 @@ function portalOpenForm(selectedPostID, groupID, commentText) {
             if (isLocal == false) { buttonID.click() }
             portalFormInput(selectedPostID, groupID, commentText)
         }
-    }, 500)
+    }, 250)
 }
 function portalFormInput(selectedPostID, groupID, commentText) {
     let checkCount = 0
@@ -428,7 +427,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
             }
             portalSaveButton(selectedPostID, groupID, commentText)
         }
-    }, 500)
+    }, 250)
 }
 function portalSaveButton(selectedPostID, groupID, commentText) {
     let checkCount = 0
@@ -441,7 +440,7 @@ function portalSaveButton(selectedPostID, groupID, commentText) {
             if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
             portalInputConfirm(selectedPostID, groupID, commentText)
         }
-    }, 500)
+    }, 250)
 }
 function portalInputConfirm(selectedPostID, groupID, commentText) {
     let checkCount = 0
@@ -454,7 +453,7 @@ function portalInputConfirm(selectedPostID, groupID, commentText) {
             if (isLocal == false) { confirmBtn[4].click() }
             portalClient(selectedPostID, groupID, commentText)
         }
-    }, 500)
+    }, 250)
 }
 function portalClient(selectedPostID, groupID, commentText) {
     let checkCount = 0
@@ -466,7 +465,7 @@ function portalClient(selectedPostID, groupID, commentText) {
             clearInterval(waitForClient)
             getDiscussionGroups(selectedPostID, groupID)
         }
-    }, 500)
+    }, 250)
 }
 $(window).load(function () {
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
