@@ -30,7 +30,7 @@
         <div class="row" id="notificationHeader">
             <div class="col-md-12">
                 <div class="card mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-refresh fa-spin fa-fw fa-lg" style="margin-right:5px"></span><span>Checking for new emails and flyers...</span> </div>
+                    <div class="card-header border-success formatHeader"><span class="fa fa-refresh fa-spin fa-fw fa-lg" style="margin-right:5px"></span><span>Checking for new emails and flyers...</span>                             <button type="button" id="newPostButton" class="btn btn-secondary" onclick="javascript:addComments('000000','000000')" style="cursor:pointer; float:right">&nbsp;<span class="fa fa-plus"></span>&nbsp;New Discussion Group Post</button></div>
                     <div id="userProfile" class="card-body">
 
                     </div>
@@ -90,13 +90,13 @@
                     </div>
                     <div id="recentPosts" class="collapse" data-parent="#recentNotifications">
                         <div class="card-body" id="recentPostsBody">
-                            <p id="post001"><a href=""></a><span></span><span></span><textarea></textarea><a href="">Reply</a></p>
-                            <p id="post002"><a href=""></a><span></span><span></span><textarea></textarea><a href="">Reply</a></p>
-                            <p id="post003"><a href=""></a><span></span><span></span><textarea></textarea><a href="">Reply</a></p>
+                            <p id="post001"><a href=""></a><span></span><span></span><a href="">Reply</a></p>
+                            <p id="post002"><a href=""></a><span></span><span></span><a href="">Reply</a></p>
+                            <p id="post003"><a href=""></a><span></span><span></span><a href="">Reply</a></p>
                         </div>
                         <div class="card-footer">
                             <button type="button" id="postBackButton" class="btn btn-primary" onclick="javascript:postNavigation('','','back')" style="cursor:pointer">&nbsp;<span class="fa fa-fast-backward"></span>&nbsp;</button>
-                            <button type="button" id="newPostButton" class="btn btn-secondary button-center" onclick="javascript:newComment()" style="cursor:pointer">&nbsp;<span class="fa fa-plus"></span>&nbsp;New Post</button>
+
                             <button type="button" id="postNexttButton" class="btn btn-primary" onclick="javascript:postNavigation('','','next')" style="float:right; cursor:pointer">&nbsp;<span class="fa fa-forward"></span>&nbsp;</button>
 
                         </div>
@@ -151,34 +151,29 @@
                     </div>
                 </div>
             </div>
-
             <div class="modal fade" id="postSettingsAlert" tabindex="-1" aria-labelledby="postSettingsAlertLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="postSettingsAlertLabel">New Discussion Group Post</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span id="postWait"class="fa fa-times" aria-hidden="true"></span>
                             </button>
                         </div>
-
                         <div class="modal-body" id="postComments">
+                            <div id="postContent"></div>
                             <textarea id="replyContent" class="form-control" rows="3" placeholder="Enter your comments here." style="width:100%; float:left"></textarea>
                         </div>
-
-
                         <div class="modal-footer">
                             <select id="selectGroup" class="form-control" style="cursor:pointer; padding:5px">
-                                <option value="11315">Select A Discussion Group</option>
+                                <option value="000000">Select A Discussion Group</option>
                                 <option value="11315">Portal and Email Help</option>
                                 <option value="8364">General Discussion</option>
                                 <option value="8030">Recommendations</option>
-
                             </select>
-
+                            <input id="postIDselected" type="text" class="form-control" disabled style="width:125px" />
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-secondary" onclick="javascript:newComment()">Post</button>
-
+                            <button type="button" class="btn btn-secondary" onclick="javascript:addComments('000000','000000')">Post</button>
                         </div>
                     </div>
                 </div>
@@ -252,7 +247,8 @@
                 <button type="button" class="btn cancel" onclick="closeForm(false)">Close&nbsp;<span class="fa fa-window-close-o fa-lg"></span></button>
             </div>
         </div>
-        <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
+
+        <script src="scripts/new_test.js"></script>
 
     </div>
     <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
