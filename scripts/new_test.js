@@ -429,7 +429,7 @@ function portalFormInput(selectedPostID, groupID, commentText) {
                         clearInterval(waitForInput)
                         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
                         if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) }
-                        portalFrame[0].contentWindow.document.getElementById("txt_post_body") = commentText
+                        portalFrame[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
                         portalSaveButton(selectedPostID, groupID, commentText)
                     }
                 }
