@@ -329,9 +329,11 @@ function postNavigation(selectedPostID, groupID, dir) {
     }
     if (selectedPostID.indexOf("post") == 0) { showComments(selectedPostID, groupID, true) }
     updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", forumArray.length)
+    if (selectedPostID !== "") { $('#recentPosts').collapse('show') }
     if ($("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("hide") }
 }
 function showComments(selectedPostID, groupID, showLast) {
+
     if (selectedPostID !== "" && groupID !== "") {
         let selectedPost = document.getElementById(selectedPostID)
 
@@ -369,6 +371,8 @@ function showComments(selectedPostID, groupID, showLast) {
     }
 }
 function addComments(selectedPostID, groupID) {
+    console.log("addComments function is running")
+
     if (!$("#postSettingsAlert").is(":visible")) {
         document.getElementById("selectGroup").value = groupID
         document.getElementById("postIDselected").value = selectedPostID
@@ -402,6 +406,7 @@ function addComments(selectedPostID, groupID) {
 
 }
 function portalOpenForm(selectedPostID, groupID, commentText) {
+    console.log("portalOpenForm function is running")
     let checkCount = 0
     let waitForForm = setInterval(function () {
         checkCount = checkCount + 1
@@ -413,10 +418,11 @@ function portalOpenForm(selectedPostID, groupID, commentText) {
                 buttonID.click()
                 portalFormInput(selectedPostID, groupID, commentText)
             }
-        } if (isLocal == true) { portalFormInput(selectedPostID, groupID, commentText); clearInterval(waitForForm) }
+        } else { clearInterval(waitForForm); portalFormInput(selectedPostID, groupID, commentText) }
     }, 250)
 }
 function portalFormInput(selectedPostID, groupID, commentText) {
+    console.log("portalFormInput function is running")
     let checkCount = 0
     let waitForInput = setInterval(function () {
         checkCount = checkCount + 1
@@ -428,16 +434,17 @@ function portalFormInput(selectedPostID, groupID, commentText) {
                     if (portalFrame[0].contentWindow.document.getElementById("txt_post_body") !== null) {
                         clearInterval(waitForInput)
                         let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
-                        if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) }
+                        if (post_subject.length > 0) { post_subject[0].value = (commentText.length > 30) ? commentText.substring(0, 20) : commentText }
                         portalFrame[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
                         portalSaveButton(selectedPostID, groupID, commentText)
                     }
                 }
             }
-        } if (isLocal == true) { portalSaveButton(selectedPostID, groupID, commentText); clearInterval(waitForInput) }
+        } else { clearInterval(waitForInput); portalSaveButton(selectedPostID, groupID, commentText) }
     }, 250)
 }
 function portalSaveButton(selectedPostID, groupID, commentText) {
+    console.log("portalSaveButton function is running")
     let checkCount = 0
     let waitForSave = setInterval(function () {
         checkCount = checkCount + 1
@@ -449,10 +456,11 @@ function portalSaveButton(selectedPostID, groupID, commentText) {
                 saveButton[0].click()
                 portalInputConfirm(selectedPostID, groupID, commentText)
             }
-        } if (isLocal == true) { portalInputConfirm(selectedPostID, groupID, commentText); clearInterval(waitForSave) }
+        } else { clearInterval(waitForSave); portalInputConfirm(selectedPostID, groupID, commentText) }
     }, 250)
 }
 function portalInputConfirm(selectedPostID, groupID, commentText) {
+    console.log("portalInputConfirm function is running")
     let checkCount = 0
     let waitForConfirm = setInterval(function () {
         checkCount = checkCount + 1
@@ -464,10 +472,11 @@ function portalInputConfirm(selectedPostID, groupID, commentText) {
                 confirmBtn[4].click()
                 portalClient(selectedPostID, groupID, commentText)
             }
-        } if (isLocal == true) { portalClient(selectedPostID, groupID, commentText); clearInterval(waitForConfirm) }
+        } else { clearInterval(waitForConfirm); portalClient(selectedPostID, groupID, commentText) }
     }, 250)
 }
 function portalClient(selectedPostID, groupID, commentText) {
+    console.log("portalClient function is running")
     let checkCount = 0
     let waitForClient = setInterval(function () {
         checkCount = checkCount + 1
