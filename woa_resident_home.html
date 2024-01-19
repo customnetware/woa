@@ -30,7 +30,11 @@
         <div class="row" id="notificationHeader">
             <div class="col-md-12">
                 <div class="card mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-refresh fa-spin fa-fw fa-lg" style="margin-right:5px"></span><span>Checking for new emails and flyers...</span>                             <button type="button" id="newPostButton" class="btn btn-secondary" onclick="javascript:addComments('000000','000000')" style="cursor:pointer; float:right">&nbsp;<span class="fa fa-plus"></span>&nbsp;New Discussion Group Post</button></div>
+                    <div class="card-header border-success formatHeader">
+                        <span class="fa fa-refresh fa-spin fa-fw fa-lg" style="margin-right:5px"></span><span>Checking for new emails and flyers...</span>
+                        <a href="javascript:addComments('000000','000000')" style="cursor:pointer; float:right; color:white">New Discussion Group Post</a>
+                        <span class="fa fa-plus" style="cursor:pointer; margin-right:10px; float:right; vertical-align:middle; line-height:inherit"></span>
+                    </div>
                     <div id="userProfile" class="card-body">
 
                     </div>
@@ -157,7 +161,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="postSettingsAlertLabel">New Discussion Group Post</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span id="postWait"class="fa fa-times" aria-hidden="true"></span>
+                                <span id="postWait" class="fa fa-times" aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body" id="postComments">
@@ -248,7 +252,7 @@
             </div>
         </div>
 
-        <script src="scripts/new_test.js"></script>
+        <script src="https://customnetware.github.io/woa/scripts/new_test.js"></script>
 
     </div>
     <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->

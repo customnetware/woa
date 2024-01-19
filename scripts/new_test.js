@@ -404,14 +404,16 @@ function addComments(selectedPostID, groupID) {
 function portalOpenForm(selectedPostID, groupID, commentText) {
     let checkCount = 0
     let waitForForm = setInterval(function () {
-        let portal = document.getElementById('woaFrame').contentWindow.document
         checkCount = checkCount + 1
-        let buttonID = portal.getElementById((selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-        if (portal !== null && buttonID !== null) {
-            clearInterval(waitForForm)
-            if (isLocal == false) { buttonID.click() }
-            portalFormInput(selectedPostID, groupID, commentText)
-        }
+        let portal = document.getElementById('woaFrame').contentWindow.document
+        if (portal !== null && isLocal == false) {
+            let buttonID = portal.getElementById((selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
+            if (buttonID !== null) {
+                clearInterval(waitForForm)
+                buttonID.click()
+                portalFormInput(selectedPostID, groupID, commentText)
+            }
+        } if (isLocal == true) { portalFormInput(selectedPostID, groupID, commentText); clearInterval(waitForForm) }
     }, 250)
 }
 function portalFormInput(selectedPostID, groupID, commentText) {
@@ -419,16 +421,20 @@ function portalFormInput(selectedPostID, groupID, commentText) {
     let waitForInput = setInterval(function () {
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
-        let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
-        let post_body = (isLocal == false) ? portal.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body") : null
-        if (portal !== null && post_body !== null || isLocal == true) {
-            clearInterval(waitForInput)
-            if (isLocal == false) {
-                post_body.innerHTML = commentText
-                if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) }
+        if (portal !== null && isLocal == false) {
+            let portalFrame = portal.getElementsByTagName("iframe")
+            if (portalFrame.length > 0) {
+                if (portalFrame[0].contentWindow.document !== null) {
+                    if (portalFrame[0].contentWindow.document.getElementById("txt_post_body") !== null) {
+                        clearInterval(waitForInput)
+                        let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
+                        if (post_subject.length > 0) { post_subject[0].value = commentText.substring(0, 10) }
+                        portalFrame[0].contentWindow.document.getElementById("txt_post_body") = commentText
+                        portalSaveButton(selectedPostID, groupID, commentText)
+                    }
+                }
             }
-            portalSaveButton(selectedPostID, groupID, commentText)
-        }
+        } if (isLocal == true) { portalSaveButton(selectedPostID, groupID, commentText); clearInterval(waitForInput) }
     }, 250)
 }
 function portalSaveButton(selectedPostID, groupID, commentText) {
@@ -436,12 +442,14 @@ function portalSaveButton(selectedPostID, groupID, commentText) {
     let waitForSave = setInterval(function () {
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
-        let post_body = (isLocal == false) ? portal.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body") : null
-        if ((portal !== null && post_body !== null && post_body.innerHTML.length > 0) || isLocal == true) {
-            clearInterval(waitForSave)
-            if (isLocal == false) { portal.getElementsByClassName(" x-btn-text save-button")[0].click() }
-            portalInputConfirm(selectedPostID, groupID, commentText)
-        }
+        if (portal !== null && isLocal == false) {
+            let saveButton = portal.getElementsByClassName(" x-btn-text save-button")
+            if (saveButton.length > 0) {
+                clearInterval(waitForSave)
+                saveButton[0].click()
+                portalInputConfirm(selectedPostID, groupID, commentText)
+            }
+        } if (isLocal == true) { portalInputConfirm(selectedPostID, groupID, commentText); clearInterval(waitForSave) }
     }, 250)
 }
 function portalInputConfirm(selectedPostID, groupID, commentText) {
@@ -449,12 +457,14 @@ function portalInputConfirm(selectedPostID, groupID, commentText) {
     let waitForConfirm = setInterval(function () {
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
-        let confirmBtn = portal.getElementsByClassName(" x-btn-text")
-        if (portal !== null && confirmBtn.length > 0 || isLocal == true) {
-            clearInterval(waitForConfirm)
-            if (isLocal == false) { confirmBtn[4].click() }
-            portalClient(selectedPostID, groupID, commentText)
-        }
+        if (portal !== null && isLocal == false) {
+            let confirmBtn = portal.getElementsByClassName(" x-btn-text")
+            if (confirmBtn.length > 4) {
+                clearInterval(waitForConfirm)
+                confirmBtn[4].click()
+                portalClient(selectedPostID, groupID, commentText)
+            }
+        } if (isLocal == true) { portalClient(selectedPostID, groupID, commentText); clearInterval(waitForConfirm) }
     }, 250)
 }
 function portalClient(selectedPostID, groupID, commentText) {
@@ -462,11 +472,12 @@ function portalClient(selectedPostID, groupID, commentText) {
     let waitForClient = setInterval(function () {
         checkCount = checkCount + 1
         let portal = document.getElementById('woaFrame').contentWindow.document
-        let buttonID = portal.getElementById((selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-        if ((portal !== null && buttonID !== null) || isLocal == true) {
-            clearInterval(waitForClient)
-            getDiscussionGroups(selectedPostID, groupID)
-
+        if (portal !== null) {
+            let portalFrame = portal.getElementsByTagName("iframe")
+            if (portalFrame.length == 0) {
+                clearInterval(waitForClient)
+                getDiscussionGroups(selectedPostID, groupID)
+            }
         }
     }, 250)
 }
