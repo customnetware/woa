@@ -406,7 +406,6 @@ function woaGroups(selectedPostID, groupID, commentText) {
                      group = groups.contentWindow.document
                     if (group !== null) { clearInterval(waitForFrame); console.log("frame found..."); showCommentForm() }
                 }
-
             }, 250)
             function showCommentForm() {
                 let waitForOpenButton = setInterval(function () {
