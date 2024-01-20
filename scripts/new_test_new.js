@@ -409,7 +409,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                     if (openButton !== null) {
                         clearInterval(waitForOpenButton)
                         console.log("open button found...")
-                        if (isLocal !== false) { openButton.click() };
+                        if (isLocal == false) { openButton.click() };
                         commentForm()
                     }
                 }, 250)
