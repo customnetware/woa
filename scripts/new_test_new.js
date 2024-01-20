@@ -455,6 +455,8 @@ function woaGroups(selectedPostID, groupID, commentText) {
                 console.log("comment saved...")
                 let waitForScreen = setInterval(function () {
                     clearInterval(waitForScreen)
+                    console.log("calling getDiscussionGroups function")
+                    alert("calling getDiscussionGroups function")
                     getDiscussionGroups(selectedPostID, groupID)
                 }, 250)
             }
