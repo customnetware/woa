@@ -395,13 +395,17 @@ function addComments(selectedPostID, groupID) {
 
 function woaGroups(selectedPostID, groupID, commentText) {
     try {
+        let isLoaded = false
         document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
         let groups = document.getElementById("woaFrame")
         if (groups !== null) {
             groups.src = pageLocation("/Discussion/28118~" + groupID)
+            groups.onload = function () { isLoaded = true }
             let waitForFrame = setInterval(function () {
-                let group = groups.contentWindow.document
-                if (group !== null) { clearInterval(waitForFrame); console.log("frame found..."); showCommentForm() }
+                if (isLoaded == true) {
+                    let group = groups.contentWindow.document
+                    if (group !== null) { clearInterval(waitForFrame); console.log("frame found..."); showCommentForm() }
+                }
 
             }, 250)
             function showCommentForm() {
