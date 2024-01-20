@@ -447,7 +447,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                 console.log("waiting for Save button...")
                 let waitForConfirmButton = setInterval(function () {
                     let confirmBtn = group.getElementsByClassName(" x-btn-text")
-                    if (confirmBtn.length > 0) {
+                    if (confirmBtn.length > 4) {
                         console.log("Save button found...")
                         clearInterval(waitForConfirmButton); confirmBtn[4].click(); updateScreen()
                     } else {
@@ -460,7 +460,6 @@ function woaGroups(selectedPostID, groupID, commentText) {
                 let waitForScreen = setInterval(function () {
                     clearInterval(waitForScreen)
                     console.log("calling getDiscussionGroups function")
-                    alert("calling getDiscussionGroups function")
                     getDiscussionGroups(selectedPostID, groupID)
                 }, 250)
             }
