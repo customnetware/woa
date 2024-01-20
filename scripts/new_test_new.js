@@ -419,6 +419,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                 let waitForForm = setInterval(function () {
                     let portalFrame = group.getElementsByTagName("iframe")
                     if (portalFrame.length > 0) {
+                        console.log("page iframe found...")
                         if (portalFrame[0].contentWindow.document.getElementById("txt_post_body") !== null) {
                             clearInterval(waitForForm)
                             console.log("form found...")
