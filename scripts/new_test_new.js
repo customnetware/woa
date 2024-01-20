@@ -394,7 +394,7 @@ function addComments(selectedPostID, groupID) {
 }
 
 function woaGroups(selectedPostID, groupID, commentText) {
-    try {
+/*    try { } catch (err) { document.getElementById("postWait").className = "fa fa-exclamation" }*/
         document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
         let groups = document.getElementById("woaFrame")
         if (groups !== null) {
@@ -446,7 +446,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                 }
             }
         }
-    } catch (err) { document.getElementById("postWait").className = "fa fa-exclamation" }
+
 }
 $(window).load(function () {
 
