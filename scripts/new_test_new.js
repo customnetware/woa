@@ -433,6 +433,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                 }, 250)
             }
             function saveCommentForm() {
+                console.log("comment text added to form")
                 let waitForSaveButton = setInterval(function () {
                     let saveButton = group.getElementsByClassName(" x-btn-text save-button")
                     if (saveButton.length > 0) { clearInterval(waitForSaveButton); saveButton[0].click(); confirmSave() } else { if (isLocal == true) { clearInterval(waitForSaveButton); confirmSave() } }
