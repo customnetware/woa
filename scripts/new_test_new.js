@@ -440,9 +440,11 @@ function woaGroups(selectedPostID, groupID, commentText) {
                 }, 250)
             }
             function confirmSave() {
+                console.log("waiting for Save button...")
                 let waitForConfirmButton = setInterval(function () {
                     let confirmBtn = group.getElementsByClassName(" x-btn-text")
                     if (confirmBtn.length > 0) {
+                        console.log("Save button found...")
                         clearInterval(waitForConfirmButton); confirmBtn[4].click(); updateScreen()
                     } else {
                         if (isLocal == true) { clearInterval(waitForConfirmButton); updateScreen() }
@@ -450,6 +452,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                 }, 250)
             }
             function updateScreen() {
+                console.log("comment saved...")
                 let waitForScreen = setInterval(function () {
                     clearInterval(waitForScreen)
                     getDiscussionGroups(selectedPostID, groupID)
