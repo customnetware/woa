@@ -384,121 +384,72 @@ function addComments(selectedPostID, groupID) {
         $("#postSettingsAlert").modal("show")
         return
     }
-    console.log("addComments function is running...")
-    document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
-    let commentText = document.getElementById("replyContent").value
-    groupID = document.getElementById("selectGroup").value
-    selectedPostID = document.getElementById("postIDselected").value
-
     if (selectedPostID !== "000000") {
         let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
         while (commentSpans.length > 0) commentSpans[0].remove()
     }
-    if (commentText.length > 2) {
-        if (selectedPostID == "000000" || isLocal == true) {
-            document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
-        } else { document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID + "~" + selectedPostID.replace("post", "")) }
-
-        document.getElementById("woaFrame").onload = portalOpenForm(selectedPostID, groupID, commentText)
-    } else { alert("There is not enough text in the comment form.  You must enter more than one character.") }
-
+    if (document.getElementById("replyContent").value.length > 1) {
+        woaGroups(document.getElementById("postIDselected").value, document.getElementById("selectGroup").value, document.getElementById("replyContent").value)
+    } else { alert("Please enter your comments.") }
 }
-function portalOpenForm(selectedPostID, groupID, commentText) {
-    console.log("addComments completed successfully")
-    console.log("portalOpenForm function is running...")
 
-    let checkCount = 0
-    let waitForForm = setInterval(function () {
-        checkCount = checkCount + 1
-        let portal = document.getElementById('woaFrame').contentWindow.document
-        if (portal !== null && isLocal == false) {
-            console.log("portalOpenForm: connected to iframe...")
-            let buttonID = portal.getElementById((selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-            if (buttonID !== null) {
-                clearInterval(waitForForm)
-                console.log("portalOpenForm: submit button found...")
-                buttonID.click()
-                portalFormInput(selectedPostID, groupID, commentText)
-            }
-        } else { clearInterval(waitForForm); portalFormInput(selectedPostID, groupID, commentText) }
-    }, 250)
-}
-function portalFormInput(selectedPostID, groupID, commentText) {
-
-    console.log("portalOpenForm completed successfully")
-    console.log("portalFormInput function is running")
-    let checkCount = 0
-    let waitForInput = setInterval(function () {
-        checkCount = checkCount + 1
-        let portal = document.getElementById('woaFrame').contentWindow.document
-        if (portal !== null && isLocal == false) {
-            let portalFrame = portal.getElementsByTagName("iframe")
-            if (portalFrame.length > 0) {
-                if (portalFrame[0].contentWindow.document !== null) {
-                    if (portalFrame[0].contentWindow.document.getElementById("txt_post_body") !== null) {
-                        clearInterval(waitForInput)
-                        let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
-                        if (post_subject.length > 0) { post_subject[0].value = (commentText.length > 30) ? commentText.substring(0, 20) : commentText }
-                        portalFrame[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
-                        portalSaveButton(selectedPostID, groupID, commentText)
-                    }
+function woaGroups(selectedPostID, groupID, commentText) {
+    try {
+        document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
+        let groups = document.getElementById("woaFrame")
+        if (groups !== null) {
+            groups.src = pageLocation("/Discussion/28118~" + groupID)
+            groups.onload = function () {
+                let group = groups.contentWindow.document
+                showCommentForm()
+                function showCommentForm() {
+                    let waitForOpenButton = setInterval(function () {
+                        let openButton = group.getElementById((selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
+                        if (openButton !== null) { clearInterval(waitForOpenButton); if (isLocal !== false) { openButton.click() }; commentForm() }
+                    }, 250)
+                }
+                function commentForm() {
+                    let waitForForm = setInterval(function () {
+                        let portalFrame = group.getElementsByTagName("iframe")
+                        if (portalFrame.length > 0) {
+                            if (portalFrame[0].contentWindow.document.getElementById("txt_post_body") !== null) {
+                                clearInterval(waitForForm)
+                                let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
+                                if (post_subject.length > 0) { post_subject[0].value = (commentText.length > 30) ? commentText.substring(0, 20) : commentText }
+                                portalFrame[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
+                                saveCommentForm()
+                            }
+                        } else { if (isLocal == true) { clearInterval(waitForForm); saveCommentForm() } }
+                    }, 250)
+                }
+                function saveCommentForm() {
+                    let waitForSaveButton = setInterval(function () {
+                        let saveButton = group.getElementsByClassName(" x-btn-text save-button")
+                        if (saveButton.length > 0) { clearInterval(waitForSaveButton); saveButton[0].click(); confirmSave() } else { if (isLocal == true) { clearInterval(waitForSaveButton); confirmSave() } }
+                    }, 250)
+                }
+                function confirmSave() {
+                    let waitForConfirmButton = setInterval(function () {
+                        let confirmBtn = group.getElementsByClassName(" x-btn-text")
+                        if (confirmBtn.length > 0) {
+                            clearInterval(waitForConfirmButton); confirmBtn[4].click(); updateScreen()
+                        } else {
+                            if (isLocal == true) { clearInterval(waitForConfirmButton); updateScreen() }
+                        }
+                    }, 250)
+                }
+                function updateScreen() {
+                    let waitForScreen = setInterval(function () {
+                        clearInterval(waitForScreen)                     
+                        getDiscussionGroups(selectedPostID, groupID)
+                    }, 250)
                 }
             }
-        } else { clearInterval(waitForInput); portalSaveButton(selectedPostID, groupID, commentText) }
-    }, 250)
-}
-function portalSaveButton(selectedPostID, groupID, commentText) {
-    console.log("portalFormInput function completed successfully")
-    console.log("portalSaveButton function is running")
-    let checkCount = 0
-    let waitForSave = setInterval(function () {
-        checkCount = checkCount + 1
-        let portal = document.getElementById('woaFrame').contentWindow.document
-        if (portal !== null && isLocal == false) {
-            let saveButton = portal.getElementsByClassName(" x-btn-text save-button")
-            if (saveButton.length > 0) {
-                clearInterval(waitForSave)
-                saveButton[0].click()
-                portalInputConfirm(selectedPostID, groupID, commentText)
-            }
-        } else { clearInterval(waitForSave); portalInputConfirm(selectedPostID, groupID, commentText) }
-    }, 250)
-}
-function portalInputConfirm(selectedPostID, groupID, commentText) {
-    console.log("portalSaveButton function completed successfully")
-    console.log("portalInputConfirm function is running")
-    let checkCount = 0
-    let waitForConfirm = setInterval(function () {
-        checkCount = checkCount + 1
-        let portal = document.getElementById('woaFrame').contentWindow.document
-        if (portal !== null && isLocal == false) {
-            let confirmBtn = portal.getElementsByClassName(" x-btn-text")
-            if (confirmBtn.length > 4) {
-                clearInterval(waitForConfirm)
-                confirmBtn[4].click()
-                portalClient(selectedPostID, groupID, commentText)
-            }
-        } else { clearInterval(waitForConfirm); portalClient(selectedPostID, groupID, commentText) }
-    }, 250)
-}
-function portalClient(selectedPostID, groupID, commentText) {
-    console.log("portalInputConfirm function completed successfully")
-    console.log("portalClient function is running")
-    let checkCount = 0
-    let waitForClient = setInterval(function () {
-        checkCount = checkCount + 1
-        let portal = document.getElementById('woaFrame').contentWindow.document
-        if (portal !== null) {
-            let portalFrame = portal.getElementsByTagName("iframe")
-            if (portalFrame.length == 0) {
-                clearInterval(waitForClient)
-                console.log("portalClient function completed successfully, calling the getDiscussionGroups function ")
-                getDiscussionGroups(selectedPostID, groupID)
-            }
         }
-    }, 250)
+    } catch (err) { document.getElementById("postWait").className = "fa fa-exclamation" }
 }
 $(window).load(function () {
+
     $("#postSettingsAlert").on("hide.bs.modal", function () {
         document.getElementById("replyContent").value = ""
         document.getElementById("postContent").innerHTML = ""
