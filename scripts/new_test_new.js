@@ -415,11 +415,13 @@ function woaGroups(selectedPostID, groupID, commentText) {
                 }, 250)
             }
             function commentForm() {
+                console.log("waiting for form...")
                 let waitForForm = setInterval(function () {
                     let portalFrame = group.getElementsByTagName("iframe")
                     if (portalFrame.length > 0) {
                         if (portalFrame[0].contentWindow.document.getElementById("txt_post_body") !== null) {
                             clearInterval(waitForForm)
+                            console.log("form found...")
                             let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
                             if (post_subject.length > 0) { post_subject[0].value = (commentText.length > 30) ? commentText.substring(0, 20) : commentText }
                             portalFrame[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
