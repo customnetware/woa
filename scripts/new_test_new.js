@@ -398,11 +398,12 @@ function woaGroups(selectedPostID, groupID, commentText) {
     document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
     let groups = document.getElementById("woaFrame")
     if (groups !== null) {
-        groups.src = pageLocation("/Discussion/28118~" + groupID)
-        groups.onload = function () {
-            console.log("group page loaded sucessfully...")
+        groups.src = pageLocation("/Discussion/28118~" + groupID)     
+        let waitForFrame = setInterval(function () {
             let group = groups.contentWindow.document
-            showCommentForm()
+            if (group !== null) { clearInterval(waitForFrame); console.log("frame found..."); showCommentForm() }
+            
+        }, 250)
             function showCommentForm() {
                 let waitForOpenButton = setInterval(function () {
                     let openButton = group.getElementById((selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
@@ -460,7 +461,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                     getDiscussionGroups(selectedPostID, groupID)
                 }, 250)
             }
-        }
+        
     }
 
 }
