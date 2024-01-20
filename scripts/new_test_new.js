@@ -400,6 +400,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
         if (groups !== null) {
             groups.src = pageLocation("/Discussion/28118~" + groupID)
             groups.onload = function () {
+                console.log("group page loaded sucessfully")
                 let group = groups.contentWindow.document
                 showCommentForm()
                 function showCommentForm() {
