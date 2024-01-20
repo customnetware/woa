@@ -394,59 +394,64 @@ function addComments(selectedPostID, groupID) {
 }
 
 function woaGroups(selectedPostID, groupID, commentText) {
-/*    try { } catch (err) { document.getElementById("postWait").className = "fa fa-exclamation" }*/
-        document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
-        let groups = document.getElementById("woaFrame")
-        if (groups !== null) {
-            groups.src = pageLocation("/Discussion/28118~" + groupID)
-            groups.onload = function () {
-                console.log("group page loaded sucessfully")
-                let group = groups.contentWindow.document
-                showCommentForm()
-                function showCommentForm() {
-                    let waitForOpenButton = setInterval(function () {
-                        let openButton = group.getElementById((selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-                        if (openButton !== null) { clearInterval(waitForOpenButton); if (isLocal !== false) { openButton.click() }; commentForm() }
-                    }, 250)
-                }
-                function commentForm() {
-                    let waitForForm = setInterval(function () {
-                        let portalFrame = group.getElementsByTagName("iframe")
-                        if (portalFrame.length > 0) {
-                            if (portalFrame[0].contentWindow.document.getElementById("txt_post_body") !== null) {
-                                clearInterval(waitForForm)
-                                let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
-                                if (post_subject.length > 0) { post_subject[0].value = (commentText.length > 30) ? commentText.substring(0, 20) : commentText }
-                                portalFrame[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
-                                saveCommentForm()
-                            }
-                        } else { if (isLocal == true) { clearInterval(waitForForm); saveCommentForm() } }
-                    }, 250)
-                }
-                function saveCommentForm() {
-                    let waitForSaveButton = setInterval(function () {
-                        let saveButton = group.getElementsByClassName(" x-btn-text save-button")
-                        if (saveButton.length > 0) { clearInterval(waitForSaveButton); saveButton[0].click(); confirmSave() } else { if (isLocal == true) { clearInterval(waitForSaveButton); confirmSave() } }
-                    }, 250)
-                }
-                function confirmSave() {
-                    let waitForConfirmButton = setInterval(function () {
-                        let confirmBtn = group.getElementsByClassName(" x-btn-text")
-                        if (confirmBtn.length > 0) {
-                            clearInterval(waitForConfirmButton); confirmBtn[4].click(); updateScreen()
-                        } else {
-                            if (isLocal == true) { clearInterval(waitForConfirmButton); updateScreen() }
+    /*    try { } catch (err) { document.getElementById("postWait").className = "fa fa-exclamation" }*/
+    document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
+    let groups = document.getElementById("woaFrame")
+    if (groups !== null) {
+        groups.src = pageLocation("/Discussion/28118~" + groupID)
+        groups.onload = function () {
+            console.log("group page loaded sucessfully...")
+            let group = groups.contentWindow.document
+            showCommentForm()
+            function showCommentForm() {
+                let waitForOpenButton = setInterval(function () {
+                    let openButton = group.getElementById((selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
+                    if (openButton !== null) {
+                        clearInterval(waitForOpenButton)
+                        console.log("open button found...")
+                        if (isLocal !== false) { openButton.click() };
+                        commentForm()
+                    }
+                }, 250)
+            }
+            function commentForm() {
+                let waitForForm = setInterval(function () {
+                    let portalFrame = group.getElementsByTagName("iframe")
+                    if (portalFrame.length > 0) {
+                        if (portalFrame[0].contentWindow.document.getElementById("txt_post_body") !== null) {
+                            clearInterval(waitForForm)
+                            let post_subject = portal.getElementsByClassName("x-form-text x-form-field form-items-container")
+                            if (post_subject.length > 0) { post_subject[0].value = (commentText.length > 30) ? commentText.substring(0, 20) : commentText }
+                            portalFrame[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
+                            saveCommentForm()
                         }
-                    }, 250)
-                }
-                function updateScreen() {
-                    let waitForScreen = setInterval(function () {
-                        clearInterval(waitForScreen)                     
-                        getDiscussionGroups(selectedPostID, groupID)
-                    }, 250)
-                }
+                    } else { if (isLocal == true) { clearInterval(waitForForm); saveCommentForm() } }
+                }, 250)
+            }
+            function saveCommentForm() {
+                let waitForSaveButton = setInterval(function () {
+                    let saveButton = group.getElementsByClassName(" x-btn-text save-button")
+                    if (saveButton.length > 0) { clearInterval(waitForSaveButton); saveButton[0].click(); confirmSave() } else { if (isLocal == true) { clearInterval(waitForSaveButton); confirmSave() } }
+                }, 250)
+            }
+            function confirmSave() {
+                let waitForConfirmButton = setInterval(function () {
+                    let confirmBtn = group.getElementsByClassName(" x-btn-text")
+                    if (confirmBtn.length > 0) {
+                        clearInterval(waitForConfirmButton); confirmBtn[4].click(); updateScreen()
+                    } else {
+                        if (isLocal == true) { clearInterval(waitForConfirmButton); updateScreen() }
+                    }
+                }, 250)
+            }
+            function updateScreen() {
+                let waitForScreen = setInterval(function () {
+                    clearInterval(waitForScreen)
+                    getDiscussionGroups(selectedPostID, groupID)
+                }, 250)
             }
         }
+    }
 
 }
 $(window).load(function () {
