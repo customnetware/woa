@@ -428,10 +428,9 @@ function woaGroups(selectedPostID, groupID, commentText) {
                                         }, 500)
                                     }
                                 }, 500)
-
                             }
                         }
-                    }, 500)
+                    }, 1000)
 
                 }
             }
