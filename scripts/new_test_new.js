@@ -395,80 +395,54 @@ function addComments(selectedPostID, groupID) {
 
 function woaGroups(selectedPostID, groupID, commentText) {
     let groups = document.getElementById("woaFrame"), group = null, isLoaded = false
+    let formOpenBtnID = (selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic"
+    document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
+    groups.src = pageLocation("/Discussion/28118~" + groupID)
+    groups.onload = function () { isLoaded = true }
+    let frameTimer = setTimeout(function waitForFrame() {
+        if (isLoaded == true) {
+            group = groups.contentWindow.document
+            if (group !== null) {
+                let openButton = group.getElementById(formOpenBtnID)
+                if (openButton !== null) {
+                    if (isLocal == false) { openButton.click() };
+                    let commentTimer = setTimeout(function waitForCommentForm() {
+                        let portalFrame = group.getElementsByTagName("iframe")
+                        if (portalFrame.length > 0) {
+                            if (portalFrame[0].contentWindow.document.getElementById("txt_post_body") !== null) {
+                                let post_subject = group.getElementsByClassName("x-form-text x-form-field form-items-container")
+                                if (post_subject.length > 0) { post_subject[0].value = (commentText.length > 30) ? commentText.substring(0, 20) : commentText }
+                                portalFrame[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
+                                let saveTimer = setTimeout(function waitForSaveButton() {
+                                    let saveButton = group.getElementsByClassName(" x-btn-text save-button")
+                                    if (saveButton.length > 0) {
+                                        saveButton[0].click()
+                                        let confirmTimer = setTimeout(function waitForConfirmButton() {
+                                            let confirmBtn = group.getElementsByClassName(" x-btn-text")
+                                            if (confirmBtn.length > 4) {
+                                                confirmBtn[4].click()
+                                                let clientTimer = setTimeout(function waitForClient() {
+                                                    getDiscussionGroups(selectedPostID, groupID)
+                                                }, 500)
+                                            }
+                                        }, 500)
+                                    }
+                                }, 500)
 
-    try {
-        document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
-        if (groups !== null) {
-            groups.src = pageLocation("/Discussion/28118~" + groupID)
-            groups.onload = function () { isLoaded = true }
-            let waitForFrame = setInterval(function () {
-                if (isLoaded == true) {
-                     group = groups.contentWindow.document
-                    if (group !== null) { clearInterval(waitForFrame); console.log("frame found..."); showCommentForm() }
-                }
-            }, 250)
-            function showCommentForm() {
-                let waitForOpenButton = setInterval(function () {
-                    let openButton = group.getElementById((selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic")
-                    if (openButton !== null) {
-                        clearInterval(waitForOpenButton)
-                        console.log("open button found...")
-                        if (isLocal == false) { openButton.click() };
-                        commentForm()
-                    }
-                }, 250)
-            }
-            function commentForm() {
-                console.log("waiting for form...")
-                let waitForForm = setInterval(function () {
-                    let portalFrame = group.getElementsByTagName("iframe")
-                    console.log("portalFrame.length = " + portalFrame.length)
-                    if (portalFrame.length > 0) {
-                        console.log("page iframe found...")
-                        if (portalFrame[0].contentWindow.document.getElementById("txt_post_body") !== null) {
-                            clearInterval(waitForForm)
-                            console.log("form found...")
-                            let post_subject = group.getElementsByClassName("x-form-text x-form-field form-items-container")
-                            if (post_subject.length > 0) { post_subject[0].value = (commentText.length > 30) ? commentText.substring(0, 20) : commentText }
-                            portalFrame[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
-                            saveCommentForm()
+                            }
                         }
-                    } else { if (isLocal == true) { clearInterval(waitForForm); saveCommentForm() } }
-                }, 250)
-            }
-            function saveCommentForm() {
-                console.log("comment text added to form")
-                let waitForSaveButton = setInterval(function () {
-                    let saveButton = group.getElementsByClassName(" x-btn-text save-button")
-                    if (saveButton.length > 0) { clearInterval(waitForSaveButton); saveButton[0].click(); confirmSave() } else { if (isLocal == true) { clearInterval(waitForSaveButton); confirmSave() } }
-                }, 250)
-            }
-            function confirmSave() {
-                console.log("waiting for Save button...")
-                let waitForConfirmButton = setInterval(function () {
-                    let confirmBtn = group.getElementsByClassName(" x-btn-text")
-                    if (confirmBtn.length > 4) {
-                        console.log("Save button found...")
-                        clearInterval(waitForConfirmButton); confirmBtn[4].click(); updateScreen()
-                    } else {
-                        if (isLocal == true) { clearInterval(waitForConfirmButton); updateScreen() }
-                    }
-                }, 250)
-            }
-            function updateScreen() {
-                console.log("comment saved...")
-                let waitForScreen = setInterval(function () {
-                    clearInterval(waitForScreen)
-                    console.log("calling getDiscussionGroups function")
-                    getDiscussionGroups(selectedPostID, groupID)
-                }, 250)
-            }
+                    }, 500)
 
+                }
+            }
         }
-    } catch (err) { document.getElementById("postWait").className = "fa fa-exclamation" }
+        /*frameTimer = setTimeout(waitForFrame, 500) */
+    }, 500)
+
 
 }
 $(window).load(function () {
+
 
     $("#postSettingsAlert").on("hide.bs.modal", function () {
         document.getElementById("replyContent").value = ""
