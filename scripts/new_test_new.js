@@ -371,6 +371,7 @@ function showComments(selectedPostID, groupID, showLast) {
     }
 }
 function addComments(selectedPostID, groupID) {
+
     if (!$("#postSettingsAlert").is(":visible")) {
         document.getElementById("selectGroup").value = groupID
         document.getElementById("postIDselected").value = selectedPostID
@@ -394,52 +395,58 @@ function addComments(selectedPostID, groupID) {
 }
 
 function woaGroups(selectedPostID, groupID, commentText) {
-    let groups = document.getElementById("woaFrame"), group = null, isLoaded = false
+    let groups = document.getElementById("woaFrame"), group = null
     let formOpenBtnID = (selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic"
     document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
     groups.src = pageLocation("/Discussion/28118~" + groupID)
-    groups.onload = function () { isLoaded = true }
+    groups.onload = function () { group = groups.contentWindow.document }
+    let ftCount = 0
     let frameTimer = setTimeout(function waitForFrame() {
-        if (isLoaded == true) {
-            group = groups.contentWindow.document
-            if (group !== null) {
-                let openButton = group.getElementById(formOpenBtnID)
-                if (openButton !== null) {
-                    if (isLocal == false) { openButton.click() };
-                    let commentTimer = setTimeout(function waitForCommentForm() {
-                        let portalFrame = group.getElementsByTagName("iframe")
-                        if (portalFrame.length > 0) {
-                            if (portalFrame[0].contentWindow.document.getElementById("txt_post_body") !== null) {
-                                let post_subject = group.getElementsByClassName("x-form-text x-form-field form-items-container")
-                                if (post_subject.length > 0) { post_subject[0].value = (commentText.length > 30) ? commentText.substring(0, 20) : commentText }
-                                portalFrame[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
-                                let saveTimer = setTimeout(function waitForSaveButton() {
-                                    let saveButton = group.getElementsByClassName(" x-btn-text save-button")
-                                    if (saveButton.length > 0) {
-                                        saveButton[0].click()
-                                        let confirmTimer = setTimeout(function waitForConfirmButton() {
-                                            let confirmBtn = group.getElementsByClassName(" x-btn-text")
-                                            if (confirmBtn.length > 4) {
-                                                confirmBtn[4].click()
-                                                let clientTimer = setTimeout(function waitForClient() {
-                                                    getDiscussionGroups(selectedPostID, groupID)
-                                                }, 500)
-                                            }
+        ftCount++
+        if (group.getElementById(formOpenBtnID) !== null) {
+            group.getElementById(formOpenBtnID).click()
+            let ctCount = 0
+            let commentTimer = setTimeout(function waitForCommentForm() {
+                ctCount++
+                if (group.getElementsByTagName("iframe").length > 0) {
+                    if (group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body") !== null) {
+                        let post_subject = group.getElementsByClassName("x-form-text x-form-field form-items-container")
+                        if (post_subject.length > 0) { post_subject[0].value = (commentText.length > 30) ? commentText.substring(0, 20) : commentText }
+                        group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
+                        let svCount
+                        let saveTimer = setTimeout(function waitForSaveButton() {
+                            if (group.getElementsByClassName(" x-btn-text save-button").length > 0) {
+                                svCount++
+                                group.getElementsByClassName(" x-btn-text save-button")[0].click()
+                                let cfCount
+                                let confirmTimer = setTimeout(function waitForConfirmButton() {
+                                    cfCount++
+                                    if (group.getElementsByClassName(" x-btn-text").length > 4) {
+                                        group.getElementsByClassName(" x-btn-text")[4].click()
+                                        let clientTimer = setTimeout(function waitForClient() {
+                                            getDiscussionGroups(selectedPostID, groupID)
                                         }, 500)
-                                    }
+                                    } else if (cfCount < 3) {
+                                        confirmTimer = setTimeout(waitForConfirmButton, 500)
+                                    } else { console.log("unable to find save button " + cfCount) }
                                 }, 500)
-                            }
-                        }
-                    }, 1000)
-
-                }
-            }
-        }
-        /*frameTimer = setTimeout(waitForFrame, 500) */
+                            } else if (svCount < 3) {
+                                saveTimer = setTimeout(waitForSaveButton, 500)
+                            } else { console.log("unable to find save button " + svCount) }
+                        }, 500)
+                    } else if (ctCount < 3) {
+                        commentTimer = setTimeout(waitForCommentForm, 500)
+                    } else { console.log("unable to connect to post form " + ctCount) }
+                } else if (ctCount < 3) {
+                    commentTimer = setTimeout(waitForCommentForm, 500)
+                } else { console.log("unable to connect to inner frame " + ctCount) }
+            }, 500)
+        } else if (ftCount < 3) {
+            frameTimer = setTimeout(waitForFrame, 500)
+        } else { console.log("unable to connect to groups page " + ftCount) }
     }, 500)
-
-
 }
+
 $(window).load(function () {
 
 
