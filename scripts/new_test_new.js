@@ -404,28 +404,24 @@ function woaGroups(selectedPostID, groupID, commentText) {
 
     let frameTimer = setTimeout(function waitForFrame() {
         if (group.getElementById(formOpenBtnID) !== null) {
-            group.getElementById(formOpenBtnID).click()    
-            let commentTimer = setTimeout(function waitForCommentForm() {          
+            group.getElementById(formOpenBtnID).click()
+            let commentTimer = setTimeout(function waitForCommentForm() {
                 if (group.getElementsByTagName("iframe").length > 0) {
-                    if (group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body") !== null) {                      
+                    if (group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body") !== null) {
                         if (group.getElementById("ext-comp-1035") !== null) { group.getElementById("ext-comp-1035").value = commentSubject }
-                        group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText        
-                        let   = setTimeout(function waitForSaveButton() {
-                            if (group.getElementById("ext-gen37")!== null) {                     
+                        group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
+                        let = setTimeout(function waitForSaveButton() {
+                            if (group.getElementById("ext-gen37") !== null) {
                                 group.getElementById("ext-gen37").click()
-                                let confirmTimer = setTimeout(function waitForConfirmButton() {  
-
-                                    let buttons = group.querySelectorAll('button')
-                                    for (var i = 0, l = buttons.length; i < l; i++) {
-                                        if (buttons[i].firstChild.nodeValue == "Confirm")
-                                            alert( buttons[i].id)
+                                let confirmTimer = setTimeout(function waitForConfirmButton() {
+                                    let buttons = group.querySelectorAll("button")
+                                    for (let i = 0; i < buttons.length; i++) {
+                                        if (buttons[i].firstChild.nodeValue == "Confirm") {
+                                            buttons[i].click()
+                                            break
+                                        }
                                     }
-
-
-
-
-                                    if (group.getElementById("ext-gen83") !==null) {
-                                        group.getElementById("ext-gen83").click()
+                                    if (group.getElementsByTagName("iframe").length == 0) {
                                         let clientTimer = setTimeout(function waitForClient() {
                                             getDiscussionGroups(selectedPostID, groupID)
                                         }, 2000)
