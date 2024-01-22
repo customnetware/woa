@@ -401,38 +401,46 @@ function woaGroups(selectedPostID, groupID, commentText) {
     document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
     document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
     document.getElementById("woaFrame").onload = function () { group = document.getElementById("woaFrame").contentWindow.document }
-
     let frameTimer = setTimeout(function waitForFrame() {
         if (group.getElementById(formOpenBtnID) !== null) {
             group.getElementById(formOpenBtnID).click()
-            let commentTimer = setTimeout(function waitForCommentForm() {
-                if (group.getElementsByTagName("iframe").length > 0) {
-                    if (group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body") !== null) {
-                        if (group.getElementById("ext-comp-1035") !== null) { group.getElementById("ext-comp-1035").value = commentSubject }
-                        group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
-                        let = setTimeout(function waitForSaveButton() {
-                            if (group.getElementById("ext-gen37") !== null) {
-                                group.getElementById("ext-gen37").click()
-                                let confirmTimer = setTimeout(function waitForConfirmButton() {
-                                    let buttons = group.querySelectorAll("button")
-                                    for (let i = 0; i < buttons.length; i++) {
-                                        if (buttons[i].firstChild.nodeValue == "Confirm") {
-                                            buttons[i].click()
-                                            break
-                                        }
-                                    }
-                                    let clientTimer = setTimeout(function waitForClient() {
-                                        getDiscussionGroups(selectedPostID, groupID)
-                                    }, 2000)
-
-                                }, 2000)
-                            }
-                        }, 2000)
-                    }
-                }
-            }, 2000)
+            addPostContent()
         }
     }, 2000)
+    function addPostContent() {
+        let commentTimer = setTimeout(function waitForCommentForm() {
+            if (group.getElementsByTagName("iframe").length > 0) {
+                if (group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body") !== null) {
+                    if (group.getElementById("ext-comp-1035") !== null) { group.getElementById("ext-comp-1035").value = commentSubject }
+                    group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
+                    savePost()
+                }
+            }
+        }, 2000)
+    }
+    function savePost() {
+        let saveTimer = setTimeout(function waitForSaveButton() {
+            let buttons = group.querySelectorAll("button")
+            for (let i = 0; i < buttons.length; i++) {
+                if (buttons[i].firstChild.nodeValue == "Post") {
+                    buttons[i].click()
+                    confirmSave()
+                    break
+                }
+            }
+        }, 2000)
+    }
+    function confirmSave() {
+        let confirmTimer = setTimeout(function waitForConfirmButton() {
+            let buttons = group.querySelectorAll("button")
+            for (let i = 0; i < buttons.length; i++) {
+                if (buttons[i].firstChild.nodeValue == "Confirm") {
+                    buttons[i].click()
+                    break
+                }
+            }
+        }, 2000)
+    }
 }
 
 $(window).load(function () {
