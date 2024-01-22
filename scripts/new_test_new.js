@@ -408,13 +408,10 @@ function woaGroups(selectedPostID, groupID, commentText) {
                 waitCount++
                 if ((group.getElementById("ext-comp-1020") !== null && group.getElementById("ext-comp-1020").style.visibility == "visible") || waitCount == 5) {
                     clearInterval(waitForForm)
-                    if (waitCount < 5) { addPostContent() } else {"the form was not shown" }                  
+                    if (waitCount < 5) { addPostContent() } else { "the form was not shown" }
                 }
             }, 500)
-
-
-
-        }, 1000)
+        }, 500)
     }
 
     function addPostContent() {
@@ -431,7 +428,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                     }
                 }
             }
-        }, 1000)
+        }, 500)
     }
     function savePost() {
         let saveTimer = setTimeout(function waitForSaveButton() {
@@ -443,7 +440,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                     break
                 }
             }
-        }, 1000)
+        }, 500)
     }
     function confirmSave() {
         let confirmTimer = setTimeout(function waitForConfirmButton() {
@@ -455,10 +452,10 @@ function woaGroups(selectedPostID, groupID, commentText) {
                     break
                 }
             }
-        }, 1000)
+        }, 500)
     }
     function refreshPage() {
-        let refreshTimer = setTimeout(function waitForConfirmButton() { getDiscussionGroups(selectedPostID, groupID) }, 1000)
+        let refreshTimer = setTimeout(function waitForConfirmButton() { getDiscussionGroups(selectedPostID, groupID) }, 250)
     }
 }
 
