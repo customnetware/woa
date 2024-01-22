@@ -403,14 +403,17 @@ function woaGroups(selectedPostID, groupID, commentText) {
             group = document.getElementById("woaFrame").contentWindow.document
             if (selectedPostID == "000000") { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic('', groupID, '', 'new', 'New Topic', 'lnkAddTopic') }
             else { testValue = document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic(postID, groupID, '', 'reply', 'Reply to Post', 'lnkTopicReply' + postID) }
-            if (group.getElementById("ext-comp-1020") !== null && group.getElementById("ext-comp-1020").style.visibility == "visible") {
-                addPostContent()
-            } else {alert("the form was not shown") }
+      addPostContent()
+
         }, 1000)
     }
 
     function addPostContent() {
         let commentTimer = setTimeout(function waitForCommentForm() {
+            if (group.getElementById("ext-comp-1020") !== null && group.getElementById("ext-comp-1020").style.visibility == "visible") {
+                alert("the form was shown")
+            } else {alert("the form was not shown") }
+
             let subFrame = group.getElementsByTagName("iframe")
             if (group.getElementById("ext-comp-1035") !== null) { group.getElementById("ext-comp-1035").value = commentSubject }
 
