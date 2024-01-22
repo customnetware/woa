@@ -400,20 +400,19 @@ function woaGroups(selectedPostID, groupID, commentText) {
     document.getElementById("woaFrame").onload = showTheForm()
     function showTheForm() {
         let getTheForm = setTimeout(function () {
-            let testValue
             group = document.getElementById("woaFrame").contentWindow.document
-            if (selectedPostID == "000000") {testValue= document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic('', groupID, '', 'new', 'New Topic', 'lnkAddTopic') }
-            else { testValue=document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic(postID, groupID, '', 'reply', 'Reply to Post', 'lnkTopicReply' + postID) }
-            alert(testValue)
-            addPostContent()
+            if (selectedPostID == "000000") { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic('', groupID, '', 'new', 'New Topic', 'lnkAddTopic') }
+            else { testValue = document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic(postID, groupID, '', 'reply', 'Reply to Post', 'lnkTopicReply' + postID) }
+            if (group.getElementById("ext-comp-1020") !== null && group.getElementById("ext-comp-1020").style.visibility == "visible") {
+                addPostContent()
+            } else {alert("the form was not shown") }
         }, 1000)
     }
 
     function addPostContent() {
         let commentTimer = setTimeout(function waitForCommentForm() {
             let subFrame = group.getElementsByTagName("iframe")
-            let postSubject = group.getElementById("ext-comp-1035")
-            if (postSubject !== null) { postSubject.value = commentSubject }
+            if (group.getElementById("ext-comp-1035") !== null) { group.getElementById("ext-comp-1035").value = commentSubject }
 
             if (subFrame.length > 0) {
                 let postContent = subFrame[0].contentWindow.document.getElementById("txt_post_body")
