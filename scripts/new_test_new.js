@@ -400,10 +400,6 @@ function woaGroups(selectedPostID, groupID, commentText) {
         if (selectedPostID == "000000") { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic("", groupID, "", "new", "New Topic", "lnkAddTopic") }
         else { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic(postID, groupID, '', 'reply', 'Reply to Post', 'lnkTopicReply' + postID) }
     }, 1000)
-
-
-
-
     return
     let group = null
     let formOpenBtnID = (selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic"
