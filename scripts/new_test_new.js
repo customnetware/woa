@@ -394,8 +394,15 @@ function addComments(selectedPostID, groupID) {
 }
 
 function woaGroups(selectedPostID, groupID, commentText) {
+    document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~11315")
 
-    document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic('', '11315', '', 'new', 'New Topic', 'lnkAddTopic')
+    let testTimeOut = setTimeout(function () {
+        document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic('', '11315', '', 'new', 'New Topic', 'lnkAddTopic')
+    }, 1000)
+
+
+
+
     return
     let group = null
     let formOpenBtnID = (selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic"
