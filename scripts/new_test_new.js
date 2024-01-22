@@ -413,7 +413,17 @@ function woaGroups(selectedPostID, groupID, commentText) {
                         let   = setTimeout(function waitForSaveButton() {
                             if (group.getElementById("ext-gen37")!== null) {                     
                                 group.getElementById("ext-gen37").click()
-                                let confirmTimer = setTimeout(function waitForConfirmButton() {                            
+                                let confirmTimer = setTimeout(function waitForConfirmButton() {  
+
+                                    let buttons = group.querySelectorAll('button')
+                                    for (var i = 0, l = buttons.length; i < l; i++) {
+                                        if (buttons[i].firstChild.nodeValue == "Confirm")
+                                            alert( buttons[i].id)
+                                    }
+
+
+
+
                                     if (group.getElementById("ext-gen83") !==null) {
                                         group.getElementById("ext-gen83").click()
                                         let clientTimer = setTimeout(function waitForClient() {
