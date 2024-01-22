@@ -400,9 +400,11 @@ function woaGroups(selectedPostID, groupID, commentText) {
     document.getElementById("woaFrame").onload = showTheForm()
     function showTheForm() {
         let getTheForm = setTimeout(function () {
+            let testValue
             group = document.getElementById("woaFrame").contentWindow.document
-            if (selectedPostID == "000000") { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic("", groupID, "", "new", "New Topic", "lnkAddTopic") }
-            else { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic(postID, groupID, '', 'reply', 'Reply to Post', 'lnkTopicReply' + postID) }
+            if (selectedPostID == "000000") {testValue= document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic('', groupID, '', 'new', 'New Topic', 'lnkAddTopic') }
+            else { testValue=document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic(postID, groupID, '', 'reply', 'Reply to Post', 'lnkTopicReply' + postID) }
+            alert(testValue)
             addPostContent()
         }, 1000)
     }
