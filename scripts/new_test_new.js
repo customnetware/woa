@@ -394,6 +394,9 @@ function addComments(selectedPostID, groupID) {
 }
 
 function woaGroups(selectedPostID, groupID, commentText) {
+
+    document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic('', '11315', '', 'new', 'New Topic', 'lnkAddTopic')
+    return
     let group = null
     let formOpenBtnID = (selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic"
     let commentSubject = (commentText.length > 30) ? commentText.substring(0, 20) : commentText
@@ -418,7 +421,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                     postContent.innerHTML = commentText
                     if (postContent.innerHTML == commentText) {
                         savePost()
-                    } else { commentTimer = setTimeout(waitForCommentForm, 500) }
+                    }
                 }
             }
         }, 1000)
