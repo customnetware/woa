@@ -408,14 +408,20 @@ function woaGroups(selectedPostID, groupID, commentText) {
     }, 500)
     function addPostContent() {
         let commentTimer = setTimeout(function waitForCommentForm() {
-            if (group.getElementsByTagName("iframe").length > 0) {
-                if (group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body") !== null) {
-                    if (group.getElementById("ext-comp-1035") !== null) { group.getElementById("ext-comp-1035").value = commentSubject }
-                    group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
-                    savePost()
+            let subFrame = group.getElementsByTagName("iframe")
+            let postSubject = group.getElementById("ext-comp-1035")
+            if (subFrame.length > 0) {
+                let frameWindow = subFrame[0].contentWindow.document
+                if (frameWindow.getElementById("txt_post_body") !== null) {
+                    frameWindow.getElementById("txt_post_body").innerHTML = commentText
+                    if (postSubject !== null) { postSubject.value = commentSubject }
+                    if (frameWindow.getElementById("txt_post_body").innerHTML.length > 0) {
+                        savePost()
+                        
+                    } else { commentTimer = setTimeout(waitForCommentForm, 500) }
                 }
             }
-        }, 1000)
+        }, 500)
     }
     function savePost() {
         let saveTimer = setTimeout(function waitForSaveButton() {
@@ -441,10 +447,8 @@ function woaGroups(selectedPostID, groupID, commentText) {
             }
         }, 500)
     }
-
     function refreshPage() {
         let refreshTimer = setTimeout(function waitForConfirmButton() { getDiscussionGroups(selectedPostID, groupID) }, 500)
-
     }
 }
 
