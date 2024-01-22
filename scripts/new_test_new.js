@@ -420,7 +420,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                                             buttons[i].click()
                                             break
                                         }
-                                    }
+                                    } alert(group.getElementsByTagName("iframe").length)
                                     if (group.getElementsByTagName("iframe").length == 0) {
                                         let clientTimer = setTimeout(function waitForClient() {
                                             getDiscussionGroups(selectedPostID, groupID)
