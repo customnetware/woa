@@ -371,7 +371,6 @@ function showComments(selectedPostID, groupID, showLast) {
     }
 }
 function addComments(selectedPostID, groupID) {
-
     if (!$("#postSettingsAlert").is(":visible")) {
         document.getElementById("selectGroup").value = groupID
         document.getElementById("postIDselected").value = selectedPostID
@@ -406,7 +405,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
             group.getElementById(formOpenBtnID).click()
             addPostContent()
         }
-    }, 2000)
+    }, 500)
     function addPostContent() {
         let commentTimer = setTimeout(function waitForCommentForm() {
             if (group.getElementsByTagName("iframe").length > 0) {
@@ -416,7 +415,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                     savePost()
                 }
             }
-        }, 2000)
+        }, 500)
     }
     function savePost() {
         let saveTimer = setTimeout(function waitForSaveButton() {
@@ -428,7 +427,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                     break
                 }
             }
-        }, 2000)
+        }, 500)
     }
     function confirmSave() {
         let confirmTimer = setTimeout(function waitForConfirmButton() {
@@ -436,10 +435,16 @@ function woaGroups(selectedPostID, groupID, commentText) {
             for (let i = 0; i < buttons.length; i++) {
                 if (buttons[i].firstChild.nodeValue == "Confirm") {
                     buttons[i].click()
+                    refreshPage()
                     break
                 }
             }
-        }, 2000)
+        }, 500)
+    }
+
+    function refreshPage() {
+        let refreshTimer = setTimeout(function waitForConfirmButton() { getDiscussionGroups(selectedPostID, groupID) }, 500)
+
     }
 }
 
