@@ -415,7 +415,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                     savePost()
                 }
             }
-        }, 500)
+        }, 1000)
     }
     function savePost() {
         let saveTimer = setTimeout(function waitForSaveButton() {
