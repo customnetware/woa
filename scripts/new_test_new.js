@@ -394,10 +394,11 @@ function addComments(selectedPostID, groupID) {
 }
 
 function woaGroups(selectedPostID, groupID, commentText) {
-    document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~11315")
-
+    let postID = selectedPostID.replace("post", "")
+    document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
     let testTimeOut = setTimeout(function () {
-        document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic('', '11315', '', 'new', 'New Topic', 'lnkAddTopic')
+        if (selectedPostID == "000000") { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic("", groupID, "", "new", "New Topic", "lnkAddTopic") }
+        else { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic(postID, groupID, '', 'reply', 'Reply to Post', 'lnkTopicReply' + postID) }
     }, 1000)
 
 
