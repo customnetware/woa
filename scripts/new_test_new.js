@@ -396,6 +396,7 @@ function addComments(selectedPostID, groupID) {
 function woaGroups(selectedPostID, groupID, commentText) {
     document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
     let postID = selectedPostID.replace("post", ""), group = null, commentSubject = (commentText.length > 30) ? commentText.substring(0, 20) : commentText
+
     document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
     document.getElementById("woaFrame").onload = showTheForm()
     function showTheForm() {
@@ -408,24 +409,22 @@ function woaGroups(selectedPostID, groupID, commentText) {
                 waitCount++
                 if ((group.getElementById("ext-comp-1020") !== null && group.getElementById("ext-comp-1020").style.visibility == "visible") || waitCount == 5) {
                     clearInterval(waitForForm)
-                    if (waitCount < 5) { addPostContent() } else { "the form was not shown" }
+                    if (waitCount < 5) {
+                        addPostContent()
+                    } else { "the form was not shown" }
                 }
-            }, 500)
-        }, 500)
+            }, 250)
+        }, 250)
     }
-
     function addPostContent() {
         let commentTimer = setTimeout(function waitForCommentForm() {
             let subFrame = group.getElementsByTagName("iframe")
             if (group.getElementById("ext-comp-1035") !== null) { group.getElementById("ext-comp-1035").value = commentSubject }
-
             if (subFrame.length > 0) {
                 let postContent = subFrame[0].contentWindow.document.getElementById("txt_post_body")
-                if (postContent !== null) {
+                if ((group.getElementById("ext-comp-1035") == null || group.getElementById("ext-comp-1035").value == commentSubject) && postContent !== null) {
                     postContent.innerHTML = commentText
-                    if (postContent.innerHTML == commentText) {
-                        savePost()
-                    }
+                    if (postContent.innerHTML == commentText) { savePost() }
                 }
             }
         }, 500)
@@ -433,25 +432,13 @@ function woaGroups(selectedPostID, groupID, commentText) {
     function savePost() {
         let saveTimer = setTimeout(function waitForSaveButton() {
             let buttons = group.querySelectorAll("button")
-            for (let i = 0; i < buttons.length; i++) {
-                if (buttons[i].firstChild.nodeValue == "Post") {
-                    buttons[i].click()
-                    confirmSave()
-                    break
-                }
-            }
+            for (let i = 0; i < buttons.length; i++) { if (buttons[i].firstChild.nodeValue == "Post") { buttons[i].click(); break; confirmSave() } }
         }, 500)
     }
     function confirmSave() {
         let confirmTimer = setTimeout(function waitForConfirmButton() {
             let buttons = group.querySelectorAll("button")
-            for (let i = 0; i < buttons.length; i++) {
-                if (buttons[i].firstChild.nodeValue == "Confirm") {
-                    buttons[i].click()
-                    refreshPage()
-                    break
-                }
-            }
+            for (let i = 0; i < buttons.length; i++) { if (buttons[i].firstChild.nodeValue == "Confirm") { buttons[i].click(); break ; refreshPage()} }
         }, 500)
     }
     function refreshPage() {
