@@ -394,25 +394,19 @@ function addComments(selectedPostID, groupID) {
 }
 
 function woaGroups(selectedPostID, groupID, commentText) {
-    let postID = selectedPostID.replace("post", "")
-    document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
-    let testTimeOut = setTimeout(function () {
-        if (selectedPostID == "000000") { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic("", groupID, "", "new", "New Topic", "lnkAddTopic") }
-        else { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic(postID, groupID, '', 'reply', 'Reply to Post', 'lnkTopicReply' + postID) }
-    }, 1000)
-    return
-    let group = null
-    let formOpenBtnID = (selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic"
-    let commentSubject = (commentText.length > 30) ? commentText.substring(0, 20) : commentText
     document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
+    let postID = selectedPostID.replace("post", ""), group = null, commentSubject = (commentText.length > 30) ? commentText.substring(0, 20) : commentText
     document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
-    document.getElementById("woaFrame").onload = function () { group = document.getElementById("woaFrame").contentWindow.document }
-    let frameTimer = setTimeout(function waitForFrame() {
-        if (group.getElementById(formOpenBtnID) !== null) {
-            group.getElementById(formOpenBtnID).click()
+    document.getElementById("woaFrame").onload = showTheForm()
+    function showTheForm() {
+        let getTheForm = setTimeout(function () {
+            group = document.getElementById("woaFrame").contentWindow.document
+            if (selectedPostID == "000000") { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic("", groupID, "", "new", "New Topic", "lnkAddTopic") }
+            else { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic(postID, groupID, '', 'reply', 'Reply to Post', 'lnkTopicReply' + postID) }
             addPostContent()
-        }
-    }, 500)
+        }, 1000)
+    }
+
     function addPostContent() {
         let commentTimer = setTimeout(function waitForCommentForm() {
             let subFrame = group.getElementsByTagName("iframe")
