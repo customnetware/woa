@@ -395,61 +395,42 @@ function addComments(selectedPostID, groupID) {
 }
 
 function woaGroups(selectedPostID, groupID, commentText) {
-    let groups = document.getElementById("woaFrame"), group = null
+    let group = null
     let formOpenBtnID = (selectedPostID !== "000000") ? selectedPostID.replace("post", "lnkTopicReply") : "lnkAddTopic"
+    let commentSubject = (commentText.length > 30) ? commentText.substring(0, 20) : commentText
     document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
-    groups.src = pageLocation("/Discussion/28118~" + groupID)
-    groups.onload = function () { group = groups.contentWindow.document }
-    let ftCount = 0
+    document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
+    document.getElementById("woaFrame").onload = function () { group = document.getElementById("woaFrame").contentWindow.document }
+
     let frameTimer = setTimeout(function waitForFrame() {
-        ftCount++
         if (group.getElementById(formOpenBtnID) !== null) {
-            group.getElementById(formOpenBtnID).click()
-            let ctCount = 0
-            let commentTimer = setTimeout(function waitForCommentForm() {
-                ctCount++
+            group.getElementById(formOpenBtnID).click()    
+            let commentTimer = setTimeout(function waitForCommentForm() {          
                 if (group.getElementsByTagName("iframe").length > 0) {
-                    if (group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body") !== null) {
-                        let post_subject = group.getElementsByClassName("x-form-text x-form-field form-items-container")
-                        if (post_subject.length > 0) { post_subject[0].value = (commentText.length > 30) ? commentText.substring(0, 20) : commentText }
-                        group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText
-                        let svCount
-                        let saveTimer = setTimeout(function waitForSaveButton() {
-                            if (group.getElementsByClassName(" x-btn-text save-button").length > 0) {
-                                svCount++
-                                group.getElementsByClassName(" x-btn-text save-button")[0].click()
-                                let cfCount
-                                let confirmTimer = setTimeout(function waitForConfirmButton() {
-                                    cfCount++
-                                    if (group.getElementsByClassName(" x-btn-text").length > 4) {
-                                        group.getElementsByClassName(" x-btn-text")[4].click()
+                    if (group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body") !== null) {                      
+                        if (group.getElementById("ext-comp-1035") !== null) { group.getElementById("ext-comp-1035").value = commentSubject }
+                        group.getElementsByTagName("iframe")[0].contentWindow.document.getElementById("txt_post_body").innerHTML = commentText        
+                        let   = setTimeout(function waitForSaveButton() {
+                            if (group.getElementById("ext-gen37")!== null) {                     
+                                group.getElementById("ext-gen37").click()
+                                let confirmTimer = setTimeout(function waitForConfirmButton() {                            
+                                    if (group.getElementById("ext-gen83") !==null) {
+                                        group.getElementById("ext-gen83").click()
                                         let clientTimer = setTimeout(function waitForClient() {
                                             getDiscussionGroups(selectedPostID, groupID)
-                                        }, 500)
-                                    } else if (cfCount < 3) {
-                                        confirmTimer = setTimeout(waitForConfirmButton, 500)
-                                    } else { console.log("unable to find save button " + cfCount) }
-                                }, 500)
-                            } else if (svCount < 3) {
-                                saveTimer = setTimeout(waitForSaveButton, 500)
-                            } else { console.log("unable to find save button " + svCount) }
-                        }, 500)
-                    } else if (ctCount < 3) {
-                        commentTimer = setTimeout(waitForCommentForm, 500)
-                    } else { console.log("unable to connect to post form " + ctCount) }
-                } else if (ctCount < 3) {
-                    commentTimer = setTimeout(waitForCommentForm, 500)
-                } else { console.log("unable to connect to inner frame " + ctCount) }
-            }, 500)
-        } else if (ftCount < 3) {
-            frameTimer = setTimeout(waitForFrame, 500)
-        } else { console.log("unable to connect to groups page " + ftCount) }
-    }, 500)
+                                        }, 1000)
+                                    }
+                                }, 1000)
+                            }
+                        }, 1000)
+                    }
+                }
+            }, 1000)
+        }
+    }, 1000)
 }
 
 $(window).load(function () {
-
-
     $("#postSettingsAlert").on("hide.bs.modal", function () {
         document.getElementById("replyContent").value = ""
         document.getElementById("postContent").innerHTML = ""
