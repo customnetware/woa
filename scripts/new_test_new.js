@@ -410,14 +410,13 @@ function woaGroups(selectedPostID, groupID, commentText) {
         let commentTimer = setTimeout(function waitForCommentForm() {
             let subFrame = group.getElementsByTagName("iframe")
             let postSubject = group.getElementById("ext-comp-1035")
+            if (postSubject !== null) { postSubject.value = commentSubject }
             if (subFrame.length > 0) {
-                let frameWindow = subFrame[0].contentWindow.document
-                if (frameWindow.getElementById("txt_post_body") !== null) {
-                    frameWindow.getElementById("txt_post_body").innerHTML = commentText
-                    if (postSubject !== null) { postSubject.value = commentSubject }
-                    if (frameWindow.getElementById("txt_post_body").innerHTML.length > 0) {
+                let postContent = subFrame[0].contentWindow.document.getElementById("txt_post_body")
+                if (postContent !== null) {
+                    postContent.innerHTML = commentText
+                    if (postContent.innerHTML == commentText) {
                         savePost()
-                        
                     } else { commentTimer = setTimeout(waitForCommentForm, 500) }
                 }
             }
