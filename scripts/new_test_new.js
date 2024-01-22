@@ -418,16 +418,16 @@ function woaGroups(selectedPostID, groupID, commentText) {
                                         group.getElementById("ext-gen83").click()
                                         let clientTimer = setTimeout(function waitForClient() {
                                             getDiscussionGroups(selectedPostID, groupID)
-                                        }, 1000)
+                                        }, 2000)
                                     }
-                                }, 1000)
+                                }, 2000)
                             }
-                        }, 1000)
+                        }, 2000)
                     }
                 }
-            }, 1000)
+            }, 2000)
         }
-    }, 1000)
+    }, 2000)
 }
 
 $(window).load(function () {
