@@ -411,6 +411,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
             let subFrame = group.getElementsByTagName("iframe")
             let postSubject = group.getElementById("ext-comp-1035")
             if (postSubject !== null) { postSubject.value = commentSubject }
+
             if (subFrame.length > 0) {
                 let postContent = subFrame[0].contentWindow.document.getElementById("txt_post_body")
                 if (postContent !== null) {
@@ -420,7 +421,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                     } else { commentTimer = setTimeout(waitForCommentForm, 500) }
                 }
             }
-        }, 500)
+        }, 1000)
     }
     function savePost() {
         let saveTimer = setTimeout(function waitForSaveButton() {
