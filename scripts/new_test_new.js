@@ -434,7 +434,7 @@ function woaGroups(selectedPostID, groupID, commentText) {
                     break
                 }
             }
-        }, 500)
+        }, 1000)
     }
     function confirmSave() {
         let confirmTimer = setTimeout(function waitForConfirmButton() {
@@ -446,10 +446,10 @@ function woaGroups(selectedPostID, groupID, commentText) {
                     break
                 }
             }
-        }, 500)
+        }, 1000)
     }
     function refreshPage() {
-        let refreshTimer = setTimeout(function waitForConfirmButton() { getDiscussionGroups(selectedPostID, groupID) }, 500)
+        let refreshTimer = setTimeout(function waitForConfirmButton() { getDiscussionGroups(selectedPostID, groupID) }, 1000)
     }
 }
 
