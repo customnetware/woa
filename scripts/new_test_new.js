@@ -282,6 +282,7 @@ function getDiscussionGroups(selectedPostID, groupID) {
                         postContent: topic[1].innerText.trim(),
                         postAuthor: posters[0].innerText.trim(),
                         postID: contacts[0].getElementsByTagName("a")[0].id,
+                        replyLink: contacts[0].getElementsByTagName("a")[0].href,
                         groupName: forumNames[f],
                         groupID: forums[f],
                         numOfPost: comments.length
@@ -324,7 +325,7 @@ function postNavigation(selectedPostID, groupID, dir) {
 
         currentPosts[p].getElementsByTagName("a")[1].className = ""
         currentPosts[p].getElementsByTagName("a")[1].innerHTML = "Reply"
-        currentPosts[p].getElementsByTagName("a")[1].href = "javascript:addComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ")"
+        currentPosts[p].getElementsByTagName("a")[1].href = forumArray[f].replyLink
         forumCount = f + 1
     }
     if (selectedPostID.indexOf("post") == 0) { showComments(selectedPostID, groupID, true) }
@@ -372,98 +373,13 @@ function showComments(selectedPostID, groupID, showLast) {
 }
 function addComments(selectedPostID, groupID) {
     if (!$("#postSettingsAlert").is(":visible")) {
-        document.getElementById("selectGroup").value = groupID
-        document.getElementById("postIDselected").value = selectedPostID
-        for (let f = 0; f < forumArray.length; f++) {
-            if (forumArray[f].postID.replace("lnkTopicReply", "post") == selectedPostID) {
-                document.getElementById("postContent").insertBefore(document.createTextNode(forumArray[f].postContent), document.getElementById("postContent").lastElementChild)
-                document.getElementById("postSettingsAlertLabel").innerHTML = forumArray[f].postAuthor + " - Comments: (" + forumArray[f].numOfPost + ")"
-                break
-            }
-        }
         $("#postSettingsAlert").modal("show")
-        return
-    }
-    if (selectedPostID !== "000000") {
-        let commentSpans = document.getElementById(selectedPostID).getElementsByClassName("commentSpan")
-        while (commentSpans.length > 0) commentSpans[0].remove()
-    }
-    if (document.getElementById("replyContent").value.length > 1) {
-        woaGroups(document.getElementById("postIDselected").value, document.getElementById("selectGroup").value, document.getElementById("replyContent").value)
-    } else { alert("Please enter your comments.") }
+    } else { AV.EditorLauncher.discussionTopic('', '11315', '', 'new', 'New Topic', 'lnkAddTopic') }
 }
 
-function woaGroups(selectedPostID, groupID, commentText) {
-    document.getElementById("postWait").className = "fa fa-refresh fa-spin fa-fw fa-lg"
-    let postID = selectedPostID.replace("post", ""), group = null, commentSubject = (commentText.length > 30) ? commentText.substring(0, 20) : commentText
-
-    document.getElementById("woaFrame").src = pageLocation("/Discussion/28118~" + groupID)
-    document.getElementById("woaFrame").onload = showTheForm()
-    function showTheForm() {
-        let getTheForm = setTimeout(function () {
-            group = document.getElementById("woaFrame").contentWindow.document
-            if (selectedPostID == "000000") { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic('', groupID, '', 'new', 'New Topic', 'lnkAddTopic') }
-            else { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic(postID, groupID, '', 'reply', 'Reply to Post', 'lnkTopicReply' + postID) }
-            let waitCount = 0
-            let waitForForm = setInterval(function () {
-                waitCount++
-                if ((group.getElementById("ext-comp-1020") !== null && group.getElementById("ext-comp-1020").style.visibility == "visible") || waitCount == 5) {
-                    clearInterval(waitForForm)
-                    if (waitCount < 5) { addPostContent() } else { "the form was not shown" }
-                }
-            }, 500)
-        }, 500)
-    }
-    function addPostContent() {
-        let commentTimer = setTimeout(function waitForCommentForm() {
-            let subFrame = group.getElementsByTagName("iframe")
-            if (group.getElementById("ext-comp-1035") !== null) { group.getElementById("ext-comp-1035").value = commentSubject }
-            if (subFrame.length > 0) {
-                let postContent = subFrame[0].contentWindow.document.getElementById("txt_post_body")
-                if ((group.getElementById("ext-comp-1035") == null || group.getElementById("ext-comp-1035").value == commentSubject) && postContent !== null) {
-                    postContent.innerHTML = commentText
-                    if (postContent.innerHTML == commentText) { savePost() }
-                }
-            }
-        }, 500)
-    }
-    function savePost() {
-        let saveTimer = setTimeout(function waitForSaveButton() {
-            let buttons = group.querySelectorAll("button")
-            for (let i = 0; i < buttons.length; i++) {
-                if (buttons[i].firstChild.nodeValue == "Post") {
-                    buttons[i].click()
-                    break
-                    confirmSave()
-
-                }
-            }
-        }, 500)
-    }
-    function confirmSave() {
-        let confirmTimer = setTimeout(function waitForConfirmButton() {
-            let buttons = group.querySelectorAll("button")
-            for (let i = 0; i < buttons.length; i++) {
-                if (buttons[i].firstChild.nodeValue == "Confirm") {
-                    buttons[i].click()
-                    break
-                    refreshPage()
-                }
-            }
-        }, 500)
-    }
-    function refreshPage() {
-        let refreshTimer = setTimeout(function waitForConfirmButton() { getDiscussionGroups(selectedPostID, groupID) }, 500)
-    }
-}
 
 $(window).load(function () {
-    $("#postSettingsAlert").on("hide.bs.modal", function () {
-        document.getElementById("replyContent").value = ""
-        document.getElementById("postContent").innerHTML = ""
-        document.getElementById("postSettingsAlertLabel").innerHTML = "New Discussion Group Post"
-        document.getElementById("postWait").className = "fa fa-times"
-    })
+
     $("#recentFlyers, #newsLetters").on("hide.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
     })

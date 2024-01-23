@@ -33,7 +33,7 @@
 
                     <div class="card-header border-success formatHeader">
                         <span class="fa fa-refresh fa-spin fa-fw fa-lg" style="margin-right:5px"></span><span>Checking for new emails and flyers...</span>
-                        <a class="fa fa-commenting-o" href="javascript:addComments('000000','000000')" style="float:right; color:white; font-size:1.75em; padding-right:10px"></a>
+                        <a class="fa fa-commenting-o" href="javascript:addComments()" style="float:right; color:white; font-size:1.75em; padding-right:10px"></a>
 
                     </div>
                     <div id="userProfile" class="card-body">
@@ -157,7 +157,7 @@
                 </div>
             </div>
             <div class="modal fade" id="postSettingsAlert" tabindex="-1" aria-labelledby="postSettingsAlertLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="postSettingsAlertLabel">New Discussion Group Post</h5>
@@ -165,92 +165,90 @@
                                 <span id="postWait" class="fa fa-times" aria-hidden="true"></span>
                             </button>
                         </div>
-                        <div class="modal-body" id="postComments">
-                            <div id="postContent"></div>
-                            <textarea id="replyContent" class="form-control" rows="3" placeholder="Enter your comments here." style="width:100%; float:left"></textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <select id="selectGroup" class="form-control" style="cursor:pointer; padding:5px">
-                                <option value="000000">Select A Discussion Group</option>
-                                <option value="11315">Portal and Email Help</option>
-                                <option value="8364">General Discussion</option>
-                                <option value="8030">Recommendations</option>
-                            </select>
-                            <input id="postIDselected" type="text" class="form-control" disabled style="width:125px" />
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-secondary" onclick="javascript:addComments('000000','000000')">Post</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="saveEmailAlert" tabindex="-1" aria-labelledby="saveEmailAlertLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="saveEmailAlertLabel">No saved emails found</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Only the emails you are currently viewing have been saved to your computer.  New emails will added to your saved emails the next time you visit this page.  Clearing your browser's cache will remove saved emails from this computer.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <div class="modal-body" id="postComments" style="margin-left:20px">
+                            <div class="btn-group-vertical" style="width:100%">
+                                <button type="button" class="btn btn-secondary">Portal and Email Help</button><br />
+                                <button type="button" class="btn btn-secondary">General Discussion</button><br />
+                                <button type="button" class="btn btn-secondary">Recommendations</button><br />
+                            </div>
 
+                            <div class="modal-footer">
+
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width:100%">Close</button>
+             
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal fade" id="showEmailAlert" tabindex="-1" aria-labelledby="showEmailAlertLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="showEmailAlertLabel">Viewing Saved Email Messages</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                <div class="modal fade" id="saveEmailAlert" tabindex="-1" aria-labelledby="saveEmailAlertLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="saveEmailAlertLabel">No saved emails found</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Only the emails you are currently viewing have been saved to your computer.  New emails will added to your saved emails the next time you visit this page.  Clearing your browser's cache will remove saved emails from this computer.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            </div>
                         </div>
-                        <div class="modal-body" id="emailsSaved"></div>
-                        <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
                     </div>
                 </div>
+                <div class="modal fade" id="showEmailAlert" tabindex="-1" aria-labelledby="showEmailAlertLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="showEmailAlertLabel">Viewing Saved Email Messages</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="emailsSaved"></div>
+                            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <button class="open-button" onclick="openForm()">Question or Comment?</button>
+
+            <div class="chat-popup" id="WOAComments">
+                <div class="form-container">
+
+                    <label for="msg"><b>Message</b></label>
+                    <textarea placeholder="Type message.." name="msg" required></textarea>
+                    <strong>Select Recipient</strong>
+                    <div class="form-check" style="margin-bottom:0px">
+                        <input type="radio" class="form-check-input" name="q" id="option1" checked>
+                        <label class="form-check-label" for="option1">WOA Webmaster</label>
+                    </div>
+                    <div class="form-check" style="margin-bottom:0px">
+                        <input type="radio" class="form-check-input" name="q" id="option2">
+                        <label class="form-check-label" for="option2">Silvercreek Management</label>
+                    </div>
+                    <div class="form-check" style="margin-bottom:0px">
+                        <input type="radio" name="q" id="option3" class="form-check-input">
+                        <label class="form-check-label" for="option3">Clubhouse Front Desk</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" name="q" id="option4" class="form-check-input">
+                        <label class="form-check-label" for="option4">Discussion Group</label>
+                    </div>
+
+                    <button type="button" class="btn" onclick="closeForm(true)">Send&nbsp;<span id="woaSendButton" class="fa fa-share fa-lg"></span></button>
+                    <button type="button" class="btn cancel" onclick="closeForm(false)">Close&nbsp;<span class="fa fa-window-close-o fa-lg"></span></button>
+                </div>
             </div>
 
-        </div>
-        <button class="open-button" onclick="openForm()">Question or Comment?</button>
+            <script src="scripts/new_test_new.js"></script>
 
-        <div class="chat-popup" id="WOAComments">
-            <div class="form-container">
-
-                <label for="msg"><b>Message</b></label>
-                <textarea placeholder="Type message.." name="msg" required></textarea>
-                <strong>Select Recipient</strong>
-                <div class="form-check" style="margin-bottom:0px">
-                    <input type="radio" class="form-check-input" name="q" id="option1" checked>
-                    <label class="form-check-label" for="option1">WOA Webmaster</label>
-                </div>
-                <div class="form-check" style="margin-bottom:0px">
-                    <input type="radio" class="form-check-input" name="q" id="option2">
-                    <label class="form-check-label" for="option2">Silvercreek Management</label>
-                </div>
-                <div class="form-check" style="margin-bottom:0px">
-                    <input type="radio" name="q" id="option3" class="form-check-input">
-                    <label class="form-check-label" for="option3">Clubhouse Front Desk</label>
-                </div>
-                <div class="form-check">
-                    <input type="radio" name="q" id="option4" class="form-check-input">
-                    <label class="form-check-label" for="option4">Discussion Group</label>
-                </div>
-
-                <button type="button" class="btn" onclick="closeForm(true)">Send&nbsp;<span id="woaSendButton" class="fa fa-share fa-lg"></span></button>
-                <button type="button" class="btn cancel" onclick="closeForm(false)">Close&nbsp;<span class="fa fa-window-close-o fa-lg"></span></button>
-            </div>
-        </div>
-
-        <script src="https://customnetware.github.io/woa/scripts/new_test_new.js"></script>
-
-    </div>
-    <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
+        </div></div>
+        <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
 </body>
 </html>
