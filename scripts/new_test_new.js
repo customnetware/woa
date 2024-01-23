@@ -43,6 +43,7 @@ function emailNavigation(dir) {
     } else { document.getElementById("recentEmailsBody").innerHTML = sessionStorage.getItem("currentEmails") }
 }
 function viewSavedMessages(savedMessageURL) {
+
     let emailPopUp = document.getElementById("emailsSaved")
     while (emailPopUp.firstChild) { emailPopUp.removeChild(emailPopUp.firstChild) }
     $.get(pageLocation(savedMessageURL), function () { })
@@ -313,7 +314,7 @@ function postNavigation(dir) {
         postContents[1].innerText = "Posted in  " + forumArray[f].groupName + "  (Last Post:" + forumArray[f].lastPost + ")"
         currentPosts[p].getElementsByTagName("a")[0].innerHTML = forumArray[f].postAuthor + " - Comments: (" + forumArray[f].numOfPost + ")"
         currentPosts[p].getElementsByTagName("a")[0].href = "javascript:showComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ",false)"
-        currentPosts[p].getElementsByTagName("a")[1].href = forumArray[f].replyLink
+        currentPosts[p].getElementsByTagName("a")[1].href = (isLocal == false) ? forumArray[f].replyLink : "javascript:alert('" + forumArray[f].postID+"')"
         forumCount = f + 1
     }
     updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", forumArray.length)
@@ -385,7 +386,7 @@ function addComments() {
                     AV.EditorLauncher.discussionTopic('', '11315', '', 'new', 'New Topic', 'lnkAddTopic')
             }
         }
-        catch (err) { alert(err.message + "\nGroup ID: " + postGroup.split("|")[0] + "\nGroup Sub ID: " + postGroup.split("|")[1]) }
+        catch (err) { alert(err.message + "\nRequested Group: " + postGroup) }
 
 
     }
