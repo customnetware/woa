@@ -403,18 +403,16 @@ function woaGroups(selectedPostID, groupID, commentText) {
         let getTheForm = setTimeout(function () {
             group = document.getElementById("woaFrame").contentWindow.document
             if (selectedPostID == "000000") { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic('', groupID, '', 'new', 'New Topic', 'lnkAddTopic') }
-            else { testValue = document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic(postID, groupID, '', 'reply', 'Reply to Post', 'lnkTopicReply' + postID) }
+            else { document.getElementById("woaFrame").contentWindow.AV.EditorLauncher.discussionTopic(postID, groupID, '', 'reply', 'Reply to Post', 'lnkTopicReply' + postID) }
             let waitCount = 0
             let waitForForm = setInterval(function () {
                 waitCount++
                 if ((group.getElementById("ext-comp-1020") !== null && group.getElementById("ext-comp-1020").style.visibility == "visible") || waitCount == 5) {
                     clearInterval(waitForForm)
-                    if (waitCount < 5) {
-                        addPostContent()
-                    } else { "the form was not shown" }
+                    if (waitCount < 5) { addPostContent() } else { "the form was not shown" }
                 }
-            }, 250)
-        }, 250)
+            }, 500)
+        }, 500)
     }
     function addPostContent() {
         let commentTimer = setTimeout(function waitForCommentForm() {
@@ -432,17 +430,29 @@ function woaGroups(selectedPostID, groupID, commentText) {
     function savePost() {
         let saveTimer = setTimeout(function waitForSaveButton() {
             let buttons = group.querySelectorAll("button")
-            for (let i = 0; i < buttons.length; i++) { if (buttons[i].firstChild.nodeValue == "Post") { buttons[i].click(); break; confirmSave() } }
+            for (let i = 0; i < buttons.length; i++) {
+                if (buttons[i].firstChild.nodeValue == "Post") {
+                    buttons[i].click()
+                    confirmSave()
+                    break
+                }
+            }
         }, 500)
     }
     function confirmSave() {
         let confirmTimer = setTimeout(function waitForConfirmButton() {
             let buttons = group.querySelectorAll("button")
-            for (let i = 0; i < buttons.length; i++) { if (buttons[i].firstChild.nodeValue == "Confirm") { buttons[i].click(); break ; refreshPage()} }
+            for (let i = 0; i < buttons.length; i++) {
+                if (buttons[i].firstChild.nodeValue == "Confirm") {
+                    buttons[i].click()
+                    refreshPage()
+                    break
+                }
+            }
         }, 500)
     }
     function refreshPage() {
-        let refreshTimer = setTimeout(function waitForConfirmButton() { getDiscussionGroups(selectedPostID, groupID) }, 250)
+        let refreshTimer = setTimeout(function waitForConfirmButton() { getDiscussionGroups(selectedPostID, groupID) }, 500)
     }
 }
 
