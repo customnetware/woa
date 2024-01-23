@@ -433,8 +433,9 @@ function woaGroups(selectedPostID, groupID, commentText) {
             for (let i = 0; i < buttons.length; i++) {
                 if (buttons[i].firstChild.nodeValue == "Post") {
                     buttons[i].click()
-                    confirmSave()
                     break
+                    confirmSave()
+
                 }
             }
         }, 500)
@@ -445,8 +446,8 @@ function woaGroups(selectedPostID, groupID, commentText) {
             for (let i = 0; i < buttons.length; i++) {
                 if (buttons[i].firstChild.nodeValue == "Confirm") {
                     buttons[i].click()
-                    refreshPage()
                     break
+                    refreshPage()
                 }
             }
         }, 500)
