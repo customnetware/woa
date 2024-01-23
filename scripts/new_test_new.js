@@ -331,7 +331,7 @@ function postNavigation(selectedPostID, groupID, dir) {
     if (selectedPostID.indexOf("post") == 0) { showComments(selectedPostID, groupID, true) }
     updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", forumArray.length)
     if (selectedPostID !== "") { $('#recentPosts').collapse('show') }
-    if ($("#postSettingsAlert").is(":visible")) { $("#postSettingsAlert").modal("hide") }
+
 }
 function showComments(selectedPostID, groupID, showLast) {
 
@@ -371,10 +371,22 @@ function showComments(selectedPostID, groupID, showLast) {
         }
     }
 }
-function addComments(selectedPostID, groupID) {
+function addComments() {
+    let postGroup = ""
     if (!$("#postSettingsAlert").is(":visible")) {
         $("#postSettingsAlert").modal("show")
-    } else { AV.EditorLauncher.discussionTopic('', '11315', '', 'new', 'New Topic', 'lnkAddTopic') }
+    } else {
+        $("#postSettingsAlert").modal("hide")
+        for (let x = 0; x < document.getElementsByName("portalGroups").length; x++) {
+            if (document.getElementsByName("portalGroups")[x].checked == true) {
+                postGroup = document.getElementsByName("portalGroups")[x].value
+            }
+        }
+        try { AV.EditorLauncher.discussionTopic('', postGroup.split("|")[0], postGroup.split("|")[1], 'new', 'New Topic', 'lnkAddTopic') }
+        catch (err) { alert(err.message + "\nGroup ID: " + postGroup.split("|")[0] + "\nGroup Sub ID: " + postGroup.split("|")[1]) }
+
+
+    }
 }
 
 

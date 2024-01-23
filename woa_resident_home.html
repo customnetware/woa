@@ -166,17 +166,31 @@
                             </button>
                         </div>
                         <div class="modal-body" id="postComments" style="margin-left:20px">
-                            <div class="btn-group-vertical" style="width:100%">
-                                <button type="button" class="btn btn-secondary">Portal and Email Help</button><br />
-                                <button type="button" class="btn btn-secondary">General Discussion</button><br />
-                                <button type="button" class="btn btn-secondary">Recommendations</button><br />
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="portalGroups" id="portal_help" value="11315|" checked>
+                                <label class="form-check-label" for="portal_help">
+                                    Portal and Email Help
+                                </label>
                             </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="portalGroups" id="portal_general" value="8364|20703">
+                                <label class="form-check-label" for="portal_general">
+                                    General Discussion
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="portalGroups" id="portal_recommend" value="8030|19301" >
+                                <label class="form-check-label" for="portal_recommend">
+                                    Recommendations
+                                </label>
+                            </div>
+
 
                             <div class="modal-footer">
 
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width:50%">Close</button>
+                                <button onclick="javascript:addComments()" type="button" class="btn btn-secondary" style="width:50%">Next</button>
 
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width:100%">Close</button>
-             
                             </div>
                         </div>
                     </div>
@@ -246,7 +260,7 @@
                 </div>
             </div>
 
-            <script src="scripts/new_test_new.js"></script>
+            <script src="https://customnetware.github.io/woa/scripts/new_test_new.js"></script>
 
         </div></div>
         <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
