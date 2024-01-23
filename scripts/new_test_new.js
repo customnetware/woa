@@ -379,11 +379,24 @@ function addComments() {
         $("#postSettingsAlert").modal("hide")
         for (let x = 0; x < document.getElementsByName("portalGroups").length; x++) {
             if (document.getElementsByName("portalGroups")[x].checked == true) {
-                postGroup = document.getElementsByName("portalGroups")[x].value
+                postGroup = document.getElementsByName("portalGroups")[x].id
             }
         }
         try {
-            AV.EditorLauncher.discussionTopic('', '11315', '', 'new', 'New Topic', 'lnkAddTopic') }
+            switch (postGroup) {
+                case "portal_help":
+                    AV.EditorLauncher.discussionTopic('', '11315', '', 'new', 'New Topic', 'lnkAddTopic')
+                    break
+                case "portal_general":
+                    AV.EditorLauncher.discussionTopic('', '8364', '20703', 'new', 'New Topic', 'lnkAddTopic')
+                    break
+                case "portal_recommend":
+                    AV.EditorLauncher.discussionTopic('', '8030', '19301', 'new', 'New Topic', 'lnkAddTopic')
+                    break
+                default:
+                    AV.EditorLauncher.discussionTopic('', '11315', '', 'new', 'New Topic', 'lnkAddTopic')
+            }
+        }
         catch (err) { alert(err.message + "\nGroup ID: " + postGroup.split("|")[0] + "\nGroup Sub ID: " + postGroup.split("|")[1]) }
 
 
