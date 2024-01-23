@@ -257,7 +257,7 @@ function sendComment(messageToSend) {
 
     }, 1000)
 }
-function getDiscussionGroups(selectedPostID, groupID) {
+function getDiscussionGroups() {
     let downLoadComple = false
     forumCount = 0
     forumArray = []
@@ -296,41 +296,28 @@ function getDiscussionGroups(selectedPostID, groupID) {
             clearInterval(waitforPost)
             forumArray.sort((a, b) => { return a.postSort - b.postSort })
             forumArray.reverse()
-            postNavigation(selectedPostID, groupID, "start")
+            postNavigation("start")
         }
     }, 1000)
 }
-function postNavigation(selectedPostID, groupID, dir) {
+function postNavigation(dir) {
     let currentPosts = document.getElementById("recentPostsBody").getElementsByTagName("p")
-
-    if (forumCount >= forumArray.length || dir == "back") { forumCount = 0 } else {
-        if (selectedPostID.indexOf("post") == 0) {
-            for (let a = 0; a < forumArray.length; a++) {
-                if (forumArray[a].postID.replace("lnkTopicReply", "post") == selectedPostID) { forumCount = a; break }
-            }
-        }
-    }
+    if (forumCount >= forumArray.length || dir == "back") { forumCount = 0 }
 
     for (let p = 0, f = forumCount; p < currentPosts.length && f < forumArray.length; p++, f++) {
         let commentSpans = currentPosts[p].getElementsByClassName("commentSpan")
         while (commentSpans.length > 0) commentSpans[0].remove()
-
         let postContents = currentPosts[p].getElementsByTagName("span")
         currentPosts[p].id = forumArray[f].postID.replace("lnkTopicReply", "post")
         postContents[0].innerText = forumArray[f].postContent
         postContents[1].innerText = "Posted in  " + forumArray[f].groupName + "  (Last Post:" + forumArray[f].lastPost + ")"
-
         currentPosts[p].getElementsByTagName("a")[0].innerHTML = forumArray[f].postAuthor + " - Comments: (" + forumArray[f].numOfPost + ")"
         currentPosts[p].getElementsByTagName("a")[0].href = "javascript:showComments('" + currentPosts[p].id + "'," + forumArray[f].groupID + ",false)"
-
-        currentPosts[p].getElementsByTagName("a")[1].className = ""
-        currentPosts[p].getElementsByTagName("a")[1].innerHTML = "Reply"
         currentPosts[p].getElementsByTagName("a")[1].href = forumArray[f].replyLink
         forumCount = f + 1
     }
-    if (selectedPostID.indexOf("post") == 0) { showComments(selectedPostID, groupID, true) }
     updateHeader("postHeader", "fa fa-comments-o fa-lg", "Discussion Group Posts", forumArray.length)
-    if (selectedPostID !== "") { $('#recentPosts').collapse('show') }
+    /*    if (selectedPostID !== "") { $('#recentPosts').collapse('show') }*/
 
 }
 function showComments(selectedPostID, groupID, showLast) {
@@ -380,6 +367,7 @@ function addComments() {
         for (let x = 0; x < document.getElementsByName("portalGroups").length; x++) {
             if (document.getElementsByName("portalGroups")[x].checked == true) {
                 postGroup = document.getElementsByName("portalGroups")[x].id
+                break
             }
         }
         try {
