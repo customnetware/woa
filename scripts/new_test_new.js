@@ -382,7 +382,8 @@ function addComments() {
                 postGroup = document.getElementsByName("portalGroups")[x].value
             }
         }
-        try { AV.EditorLauncher.discussionTopic('', postGroup.split("|")[0], postGroup.split("|")[1], 'new', 'New Topic', 'lnkAddTopic') }
+        try {
+            AV.EditorLauncher.discussionTopic('', '11315', '', 'new', 'New Topic', 'lnkAddTopic') }
         catch (err) { alert(err.message + "\nGroup ID: " + postGroup.split("|")[0] + "\nGroup Sub ID: " + postGroup.split("|")[1]) }
 
 
