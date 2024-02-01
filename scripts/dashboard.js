@@ -118,7 +118,6 @@ function getDiscussionGroups() {
 
                 recentPosts[a].children[1].getElementsByTagName("a")[0].href = forumArray[p].replyLink
                 recentPosts[a].children[1].getElementsByTagName("a")[1].setAttribute("href", "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')")
-                /*     recentPosts[a].children[1].getElementsByTagName("a")[1].href = "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"*/
             }
         }
     })
@@ -210,5 +209,5 @@ $(window).load(function () {
         localStorage.setItem("timeOfNotifications", new Date().getTime())
         localStorage.setItem("recentFlyers", document.getElementById("flyers").innerHTML)
         localStorage.setItem("timeOfFlyers", new Date().getTime())
-    }, 2000)
+    }, 3000)
 })
