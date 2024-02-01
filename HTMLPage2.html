@@ -10,76 +10,18 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-    <style>
-        .card-header .title {
-            font-size: 17px;
-            color: #000;
-        }
-
-        .card-header .accicon {
-            float: right;
-            font-size: 20px;
-            width: 1.2em;
-        }
-
-        .card-header {
-            cursor: pointer;
-            border-bottom: none;
-        }
-
-        .card {
-            border: 1px solid #ddd;
-        }
-
-        .card-body {
-            border-top: 1px solid #ddd;
-        }
-
-        .card-header:not(.collapsed) .rotate-icon {
-            transform: rotate(180deg);
-        }
-    </style>
-    <div class="row">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-6">
-            <div class="accordion" id="accordionExample">
-                <div class="card">
-                    <div class="card-header collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false">
-                        <span class="title"><i class="fa fa-envelope-o" style="margin-right:20px"></i>Recent Association Emails </span>
-                        <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
-                    </div>
-                    <div id="collapseOne" class="collapse" data-parent="#accordionExample">
-                        <div class="card-body" style="padding:20px">
-                            Hello Woodbridge!This is your reminder of the Finance Committee Meeting being held Today Monday November 27th at 1pm in the Westport Room. Come join in on the conversation about the finances for the Clubhouse!20231127 - November Finance Committee Meeting ...
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        <span class="title"><i class="fa fa-envelope-o" style="margin-right:20px"></i>Recent Discussion Group Posts</span>
-                        <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
-                    </div>
-                    <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
-                        <div class="card-body" style="padding:20px">
-                            Hello Woodbridge Residents!GP Landscaping has planted beautiful annual flowers in the entrance of our Clubhouse and we would like to keep them in great condition. We have noticed recently that there are people stepping on the flowers and/or taking them
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false">
-                        <span class="title"><i class="fa fa-envelope-o" style="margin-right:20px"></i>Recent News and Announcements</span>
-                        <span class="accicon"><i class="fa fa-angle-down rotate-icon"></i></span>
-                    </div>
-                    <div id="collapseThree" class="collapse" data-parent="#accordionExample">
-                        <div class="card-body" style="padding:20px">
-                            Hello Woodbridge Residents! GP Landscaping has planted beautiful annual flowers in the entrance of our Clubhouse and we would like to keep them in great condition. We have noticed recently that there are people stepping on the flowers and/or taking
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3"></div>
+    <div class="card mb-1">
+        <div class="card-header" data-toggle="collapse" data-target="#card01" aria-expanded="true">
+            <span class="" style="margin-right: 5px; margin-left: 10px"></span>
+            <span style="margin-left:5px"></span>
+        </div><div class="card-body collapse" id="card01" data-parent="#recentNotifications"></div>
     </div>
-
+    <script>
+        let newItem = document.getElementById("recentDocuments").querySelector(".card").cloneNode(true)
+        newItem.querySelector(".card-header").setAttribute("data-target", "#card02")
+        newItem.querySelector(".card-body").setAttribute("id", "card02")
+        newItem.getElementsByClassName("card-body")[0].innerHTML="This is a test"
+        document.body.appendChild(newItem);
+    </script>
 </body>
 </html>
