@@ -47,7 +47,7 @@ function getMessage(rawMessage, cardID, classname) {
         })
 }
 function getNewsAndAnnouncements() {
-    $.get(pageLocation("/news/list/28118/news-announcements"), function () { })
+    $.get("https://ourwoodbridge.net/news/list/28118/news-announcements", function () { })
         .done(function (responseText) {
             let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
             let articleTitle = newsArticles.getElementsByClassName("clsHeader")
