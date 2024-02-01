@@ -122,7 +122,6 @@ function getDiscussionGroups() {
         }
     })
 }
-
 function getProfilePage() {
     let profileImg = document.createElement("img")
     let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]

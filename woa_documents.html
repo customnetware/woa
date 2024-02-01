@@ -10,43 +10,43 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-    <div id="testDate"></div>
-    <div id="document"></div>
-    <script>
-        function showDocuments() {
-            let documentList = document.getElementById("document")
-            let fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
-            $.get(fileLocation, function () { })
-                .done(function (responseText, responseStatus, request) {
-
-                    let d = new Date()
-                    alert(request.getResponseHeader("Last-Modified"))
-                    var currentMonth = d.getMonth()
-                    var currentDay = d.getDate()
-                    let documents = new DOMParser().parseFromString(responseText, "text/html")
-                    let documentName = documents.getElementById("contents540434").getElementsByClassName("clsTreeNde")
-                    let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
-                    for (let p = 0; p < documentName.length; p++) {
-                        let selectedDoc = document.createElement("a")
-                        let docBreak = document.createElement("br")
-                        let dateCheck = documentName[p].innerHTML.trim().split(" ")
-                        let docMonth = dateCheck[0].split("/")[0]
-                        let docDay = dateCheck[0].split("/")[1]
-                        let testDay = new Date("2023," + dateCheck[0].split("/")[0] + "," + dateCheck[0].split("/")[1])
-                       
-
-                        if ((currentMonth + 1 == docMonth && currentDay <= docDay) || (currentMonth + 1 < docMonth)) { 
-                            selectedDoc.innerHTML = documentName[p].innerHTML
-                            selectedDoc.href = documentLink[p].href
-                            documentList.appendChild(selectedDoc)
-                            documentList.appendChild(docBreak)
-                        }
-                    }
-                })
+    <style>
+        #document {
+            width: 800px;
+            float: left;
         }
-        $(window).load(function () {
-            showDocuments()
-        })
-    </script>
+
+            #document span {
+                padding-left: 10px;
+                padding-bottom: 5px;
+                padding-top: 5px;
+                font-weight: 600;
+                display: block;
+            }
+
+                #document span:nth-child(odd) {
+                    background-color: #eceeef
+                }
+
+        .formatRight {
+            text-decoration: none !important;
+            vertical-align: top !important;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .formatIcon {
+            padding-right: 20px;
+        }
+    </style>
+    <div style="width: 800px; margin-top:20px">
+        <div style="float: right; width: 800px; text-align: right; vertical-align:middle">
+            <a href="javascript:screenSort('D')" class="fa fa-arrow-down fa-lg formatRight"></a>
+            <a href="javascript:screenSort('U')" class="fa fa-arrow-up fa-lg formatRight"></a>
+        </div>
+        <div id="document"><span><i class="fa fa-folder-o formatIcon"></i><i class="fa fa-spinner fa-pulse fa-fw"></i> The requested folders and files are loading...</span> </div>
+    </div>
+
+    <script src="scripts/folders_new.js"></script>
 </body>
 </html>
