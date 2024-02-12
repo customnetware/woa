@@ -1,3 +1,4 @@
+let currentDate = new Date()
 document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
 function showPopUp() {
     alert("here")
@@ -87,7 +88,6 @@ function getDiscussionGroups() {
     let grp1 = $.get(pageLocation("/Discussion/28118~" + forums[0]), function () { })
     let grp2 = $.get(pageLocation("/Discussion/28118~" + forums[1]), function () { })
     let grp3 = $.get(pageLocation("/Discussion/28118~" + forums[2]), function () { })
-
     $.when(grp1, grp2, grp3).done(function (responseText1, responseText2, responseText3) {
         let testArray = [responseText1, responseText2, responseText3]
         for (let f = 0; f < testArray.length; f++) {
@@ -96,16 +96,19 @@ function getDiscussionGroups() {
             for (let x = 0; x < posts.childElementCount; x++) {
                 let post = posts.children[x]
                 let lastDate = post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", "")
-                let topic = post.getElementsByClassName("respDiscTopic")
-                let comments = post.getElementsByClassName("respDiscChildPost")
-                let posters = post.getElementsByClassName("respAuthorWrapper")
-                let contacts = post.getElementsByClassName("respReplyWrapper")
-                let dateSort = new Date(lastDate).getTime()
-                forumArray.push({
-                    postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
-                    postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: forumNames[f], groupID: forums[f],
-                    numOfPost: comments.length
-                })
+                let dayDiff = (currentDate - lastDate) / (1000 * 3600 * 24)
+                if (dayDiff < 32) {
+                    let topic = post.getElementsByClassName("respDiscTopic")
+                    let comments = post.getElementsByClassName("respDiscChildPost")
+                    let posters = post.getElementsByClassName("respAuthorWrapper")
+                    let contacts = post.getElementsByClassName("respReplyWrapper")
+                    let dateSort = new Date(lastDate).getTime()
+                    forumArray.push({
+                        postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
+                        postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: forumNames[f], groupID: forums[f],
+                        numOfPost: comments.length
+                    })
+                }
             }
         }
         let recentPosts = document.getElementById("recentNotifications").children
@@ -207,7 +210,7 @@ function getContacts() {
             contactList[c + 1].children[0].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactName[1].children[0].innerText.trim() + "</a>"
             contactList[c + 1].children[1].innerText = contactTitle[0].innerText.trim()
             contactList[c + 1].children[2].innerText = contactData[1].innerText.trim()
-            contactList[c + 1].children[3].innerText = contactData[0].children[0].innerText.trim()
+            contactList[c + 1].children[3].innerHTML = "<a href='mailto:" + contactData[0].children[0].innerText.trim() + "'>" + contactData[0].children[0].innerText.trim() + "</a>"
         }
     })
 }
@@ -240,5 +243,5 @@ $(window).load(function () {
         localStorage.setItem("timeOfNotifications", new Date().getTime())
         localStorage.setItem("recentFlyers", document.getElementById("flyers").innerHTML)
         localStorage.setItem("timeOfFlyers", new Date().getTime())
-    }, 3000)
+    }, 2000)
 })
