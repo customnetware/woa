@@ -17,8 +17,8 @@ function getResidentHomePage() {
     $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
-            document.getElementById("profileHeader").getElementsByTagName("span")[0].className = "fa fa-check-circle fa-lg formatLink"
-            document.getElementById("profileHeader").getElementsByTagName("span")[1].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
+            document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-gear"
+            document.getElementById("profileHeader").getElementsByTagName("span")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
             let recentItems = myWoodbridge.getElementsByClassName("message")
             let recentEmails = document.getElementById("recentNotifications").children
             for (let p = 0, a = 3; a < 6; p++, a++) {
@@ -209,7 +209,7 @@ function getContacts() {
             let contactList = document.getElementById("contactsTable").getElementsByTagName("tr")
             contactList[c + 1].children[0].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactName[1].children[0].innerText.trim() + "</a>"
             contactList[c + 1].children[1].innerText = contactTitle[0].innerText.trim()
-            contactList[c + 1].children[2].innerText = contactData[1].innerText.trim()
+            contactList[c + 1].children[2].innerText = (contactData.length !== 3) ? contactData[1].innerText.trim() : contactData[1].innerText.trim() +" "+ contactData[2].innerText.trim()
             contactList[c + 1].children[3].innerHTML = "<a href='mailto:" + contactData[0].children[0].innerText.trim() + "'>" + contactData[0].children[0].innerText.trim() + "</a>"
         }
     })

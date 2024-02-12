@@ -15,7 +15,7 @@
                             <span>Publish</span>
                         </a>
                         <input type="hidden" id="isAamLogin" value="0" data-sso-profile-url="https://aamidp.azurewebsites.net/profile">
-                        <a id="HeaderPublishAuthProfile" title="Click to view or edit your profile" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(7371954,28118,11132570,11035990);">
+                        <a id="HeaderPublishAuthProfile" title="Click to view or edit your profile" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);">
                             <span>My Profile</span>
                         </a>
 
@@ -71,7 +71,7 @@
                                 </div><ul id="mobile-menu-profile-links" class="hidden-lg-up">
 
                                     <li class="menu-item"><a class="menu-link" href="#" onclick="AV.MyProfileMenu.changePage('/Member/' + AV.assn_id + '~' + AV.member_id);">Edit My Profile</a></li>
-                                    <li class="menu-item"><a class="menu-link" href="/Security/SignInInfo/28118?login_id=11035990" target="_blank">Edit Sign In Information</a></li>
+                                    <li class="menu-item"><a class="menu-link" href="/Security/SignInInfo/28118?login_id=16764170" target="_blank">Edit Sign In Information</a></li>
                                     <li class="menu-item"><a class="menu-link" href="#" onclick="AV.MyProfileMenu.changePage('/Member/Contact/' + AV.assn_id + '~' + AV.member_id + '~' + AV.contact_id + '#CommPrefs');">Manage Subscriptions</a></li>
                                     <li class="menu-item"><a class="menu-link" href="#" onclick="AV.MyProfileMenu.changePage('/Member/MyDocs/' + AV.assn_id + '~' + AV.member_id + '~' + AV.contact_id + '#MyDocs');">Access My Documents</a></li>
                                 </ul><ul class="menu-wrapper" id="mobile-menu-publish-links">
@@ -81,8 +81,10 @@
                                             <li class="menu-item"><a target="_blank" href="https://ourwoodbridge.net/Form/28118~188011/Complaint-or-CCRs-Rules-Violation" class="menu-link">File a Complaint or CC&amp;Rs Rules Violation</a></li>
                                             <li class="menu-item"><a target="_blank" href="https://portal.sc-manage.com/Home_v2/Login" class="menu-link">Pay Monthly Assessment Online (Silvercreek Website)</a></li>
                                             <li class="menu-item"><a target="_blank" href="https://ourwoodbridge.net/Form/28118~188049/Repair-or-Maintenance" class="menu-link">Submit Maintenance Request (Common Area)</a></li>
+                                            <li class="menu-item"><a href="/Form/28118~169617/Submit-A-News-Announcements-Posting" class="menu-link">Submit A News Article</a></li>
                                             <li class="menu-item"><a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds" class="menu-link">Submit A Classified Ad</a></li>
                                             <li class="menu-item"><a href="/form/list/28118/view-all-online-forms" class="menu-link">View All Online Forms</a></li>
+                                            <li class="menu-item"><a href="/page/28118~1102988/clubhouse-office-contacts" class="menu-link">View Clubhouse Contacts &amp; Office Hours</a></li>
                                             <li class="menu-item"><a target="_blank" href="https://portal.sc-manage.com/Home_v2/Login" class="menu-link">Visit The Silvercreek Website</a></li>
                                         </ul>
                                     </li>
@@ -96,6 +98,7 @@
                                             <li class="menu-item has-sub">
                                                 <span class="submenu-button"></span><a href="https://ourwoodbridge.net/GroupPage/List/28118/Group-Pages" class="menu-link">Woodbridge Group Pages</a><ul class="menu-sub-group">
                                                     <li class="menu-item"><a href="https://ourwoodbridge.net/page/28118~1087738/grouptest" class="menu-link">Woodbridge Group Members</a></li>
+                                                    <li class="menu-item"><a href="https://ourwoodbridge.net/page/28118~1082467/new-groups-list" class="menu-link">Woodbridge Group List</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -112,7 +115,13 @@
                                         </ul>
                                     </li>
                                     <li class="menu-item"><a href="/resourcecenter/28118/resource-center" class="menu-link">Resource Center</a></li>
-                                    <li class="menu-item"><a target="_blank" href="https://portal.sc-manage.com/Home_v2/Login" class="menu-link">Silvercreek</a></li>
+                                    <li class="menu-item has-sub">
+                                        <span class="submenu-button"></span><a href="https://portal.sc-manage.com/Home_v2/Login" class="menu-link">Silvercreek</a><ul class="menu-sub-group" style="left: -999999em;">
+                                            <li class="menu-item"><a href="/page/28118~1101019/maintenance-report-summary" class="menu-link">Maintenance Report Summary</a></li>
+                                            <li class="menu-item"><a href="/page/28118~1101018/safety-report-summary" class="menu-link">Safety Report Summary</a></li>
+                                            <li class="menu-item"><a href="/page/28118~1098177/management-forms-summary" class="menu-link">Management Forms Summary</a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </nav>
 
@@ -152,7 +161,7 @@
 
                             <br>
                             <form name="form1" class="divForm" method="post" action="/Member/Post/28118~10544936">
-                                <input type="hidden" value="/HOA/assn28118/images/11035990/" name="virtual_base">
+                                <input type="hidden" value="/HOA/assn28118/images/16764170/" name="virtual_base">
                                 <input type="hidden" value="1" name="publish" id="publish">
                                 <input type="hidden" value="0" name="isAamLogin" id="isAamLogin">
                                 <div class="row no-gutters">
@@ -163,6 +172,10 @@
 
 
                                         <div class="text-right">
+                                            <button type="button" id="memEdit" class="btn btn-secondary" title="Edit directory name and address" onclick="location.href='/Member/Edit/28118~10544936'; return false;">
+
+                                                Edit
+                                            </button>
 
 
                                             <button type="button" id="memDirectory" class="btn btn-secondary" title="View the member directory" onclick="location.href='/Member/Search/28118'; return false;">
@@ -192,6 +205,13 @@
                                                             Mailing Address
                                                         </div>
 
+                                                        <div class="text-right">
+
+                                                            <button type="button" id="butMailAddr" class="btn btn-secondary" title="Add Mailing Address" onclick="javascript: checkloadMailWindow('member_id=10544936', '10544936', '28118');">
+
+                                                                Add
+                                                            </button>
+                                                        </div>
                                                         <div class="clearfix"></div>
 
                                                         <div>
@@ -232,6 +252,12 @@
                                                         Contacts
                                                     </h3>
                                                 </div>
+                                                <div class="text-right">
+                                                    <button type="button" id="butAddContact" class="btn btn-secondary mb-2" title="Add a contact" onclick="location.href='/Member/Contact/28118~10544936?new=1'; return false;">
+
+                                                        Add
+                                                    </button>
+                                                </div>
                                                 <div class="clearfix"></div>
                                                 <div class="row no-gutters">
 
@@ -247,6 +273,13 @@
 
                                                         </div>
 
+                                                        <div class="text-right">
+
+                                                            <button type="button" id="butEditContact" class="btn btn-secondary" title="Edit contact information" onclick="location.href='/Member/Contact/28118~10544936~17298734'; return false;">
+
+                                                                Edit
+                                                            </button>
+                                                        </div>
 
                                                         <div class="clearfix"></div>
 
@@ -257,8 +290,7 @@
 
                                                                     <div class="clsBodyText text-muted float-left contactLabel">Email</div>
                                                                     <div class="clsBodyText contactData overflowEllipsis">
-                                                                        <a href="mailto:jross@ourwoodbridge.net" title="Send email to jross@ourwoodbridge.net" class="hidden-xs-down">jross@ourwoodbridge.net</a>
-                                                                        <a href="mailto:jross@ourwoodbridge.net" title="Send email to jross@ourwoodbridge.net" class="hidden-sm-up">jross@ ourwoodbridge.net</a>
+                                                                        <a href="mailto:jross@ourwoodbridge.net" title="Send email to jross@ourwoodbridge.net" class="hidden-xs-down">jross@ourwoodbridge.net</a><a href="mailto:jross@ourwoodbridge.net" title="Send email to jross@ourwoodbridge.net" class="hidden-sm-up">jross@ ourwoodbridge.net</a>
                                                                     </div>
                                                                 </div>
                                                                 <div class="clearfix"></div>
@@ -276,6 +308,14 @@
                                                                     <span class="text-muted font-italic text-nowrap clsDMNotSpecified">Not Specified</span>
                                                                 </div>
                                                                 <div class="clearfix"></div>
+                                                                <div class="clsBodyText">
+
+                                                                    <div class="clsBodyText text-muted float-left contactLabel">Other</div>
+                                                                    <div class="clsBodyText contactData overflowEllipsis">
+                                                                        Ext 101
+                                                                    </div>
+                                                                </div>
+                                                                <div class="clearfix"></div>
 
                                                             </div>
 
@@ -289,6 +329,22 @@
                                                                 <span class="text-muted font-italic text-nowrap clsDMNotSpecified">Not Specified</span>
                                                             </div>
 
+                                                            <div class="mt-1">
+                                                                <div class="clsBodyText text-muted float-left contactLabel">Contact Preference</div>
+                                                                <div class="clsBodyText">
+                                                                    <span>Email</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div class="mt-2">
+                                                                <button type="button" id="aSignIn-17202295" class="btn btn-secondary mb-2 hidden-md-down" style="font-size: smaller;" title="Edit sign in information for this contact" onclick="AV.Security.MyProfileSecureWin.showSignInInfo('aSignIn-17202295', 17202295);">
+
+                                                                    Edit Sign In Information
+                                                                </button>
+                                                                <a href="/Security/SignInInfo/28118?login_id=17202295" target="_blank">
+                                                                    <input type="button" id="aSignInMobile-17202295" class="btn btn-secondary mb-2 hidden-lg-up" style="font-size: smaller;" title="Edit sign in information for this contact" target="_blank" value="Edit Sign In Information">
+                                                                </a>
+                                                            </div>
 
 
                                                         </div>
@@ -305,6 +361,12 @@
                                                         Pets
                                                     </h3>
                                                 </div>
+                                                <div class="mt-sm-0 pt-sm-0 col-xs-12 text-right">
+                                                    <button type="button" id="butAddPet" class="btn btn-secondary mb-2" title="Add a pet" onclick="location.href='/Member/Pet/28118~10544936'; return false;">
+
+                                                        Add
+                                                    </button>
+                                                </div>
                                                 <div class="clearfix"></div>
                                                 <div class="text-muted font-italic pl-4">No pets found.</div>
 
@@ -314,6 +376,12 @@
                                                     <h3 class="clsHeader m-0">
                                                         Emergency Contacts
                                                     </h3>
+                                                </div>
+                                                <div class="mt-sm-0 pt-sm-0 col-xs-12 text-right">
+                                                    <button type="button" id="butAddEmerg" class="btn btn-secondary mb-2" title="Add/Change Emergency Contacts" onclick="location.href='/Member/EmergencyContacts/28118~10544936'; return false;">
+
+                                                        Edit
+                                                    </button>
                                                 </div>
                                                 <div class="clearfix"></div>
                                                 <div class="text-muted font-italic pl-4">No emergency contacts found.</div>
@@ -326,6 +394,36 @@
 
 
                                         <div id="listingInstructions" class="col-sm-12 col-lg-3 pl-3">
+                                            <div class="clsInstructions" style="float: left;">
+                                                <img alt="" src="/images/1ptrans.gif" height="16" width="16">
+                                            </div>
+                                            <div class="clsInstructions" style="margin-left: 22px;">
+                                                <span class="dirPublicPrivate" style="font-weight: bold;"> Public:</span>
+                                                <xsl:text> Visible to residents and property owners who are registered on the website, as well as office staff.</xsl:text>
+                                            </div>
+                                            <div class="clsInstructions" style="float: left;">
+                                                <img alt="Not displayed in directory" title="Not displayed in directory" src="/images/icons/icon-lock.png" height="16" width="16" style="margin-right: 3px;" class="pngFix">
+                                            </div>
+                                            <div class="clsInstructions" style="margin-left: 22px;">
+                                                <xsl:text> </xsl:text>
+                                                <span class="dirPublicPrivate" style="font-weight: bold;"> Private:</span>
+                                                <xsl:text> Visible only to your household and office staff.</xsl:text>
+                                            </div>
+                                            <div style="margin-left: 22px;">
+                                                <div class="clsInstructions mt-2 mb-1">
+                                                    <span>
+                                                        To update information, select the corresponding Add or Edit button.
+                                                    </span>
+                                                </div>
+
+                                                <div class="mb-3 pl-3">
+                                                    <div class="clsInstructions">Then, </div>
+                                                    <ul class="clsInstructions" style="margin: 0; margin-left: 1em;">
+                                                        <li class="clsInstructions">Check boxes to make information public, or</li>
+                                                        <li class="clsInstructions">Uncheck boxes to make information private.</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                         <!-- bottom button -->
                                         <div class="text-left fs-mobile-hide-edit">
@@ -599,19 +697,19 @@
         var _beta = ' compress~ edExtPop~ ExtMyProfile~ ExtPublish~ kendoCal~ kendoEditor~ myDocs~ passwordPolicy~ SSLSignIn~  edExtPop~ compress~ passwordPolicy~ '
         var _user_default_assn_beta = ' edExtPop~ ExtPublish~ compress~ SSLSignIn~ passwordPolicy~ ExtMyProfile~ myDocs~ kendoEditor~ kendoCal~  edExtPop~ compress~ passwordPolicy~ '
         AV.isMvc = true
-        AV.privs = 'CR-2, DR-2, FR-2, GPR-2, HH-2, IR-2, KR-2, LR-2, MC-2, NR-2, PE-2, PR-2, RR-2, VP-2, VR-2, YR-2'
+        AV.privs = 'AI-2, BE-2, CA-2, CE-2, CR-2, DA-2, DE-2, DO-2, DR-2, DS-2, EE-2, FA-2, FE-2, FR-2, FT-2, FUZ-2, GPA-2, GPE-2, GPR-2, HA-2, HH-2, IR-2, KA-2, KE-2, KR-2, LA-2, LE-2, LP-2, LR-2, MA-2, MC-2, NA-2, NE-2, NR-2, PA-2, PE-2, PLN-2, PR-2, RA-2, RE-2, RR-2, SA-2, TR-2, VA-2, VE-2, VP-2, VR-2, YA-2, YE-2, YR-2'
         AV.site_type_id = '1'
         AV.assn_id = '28118'
         AV.has_subs = '0'
-        AV.login_id_curr = '11035990'
-        AV.member_id = '7371954'
-        AV.contact_id = '11132570'
+        AV.login_id_curr = '16764170'
+        AV.member_id = '10518615'
+        AV.contact_id = '16860439'
         AV.cdnUrl = ''
         AV.cssFile = 'resp_005.css'
         AV.baseFldr = 'assn28118'
         AV.scriptDebug = false
         AV.has_linked_logins = 'False'
-        AV.role_seq = '30'
+        AV.role_seq = '100'
         AV.display_name = 'Woodbridge HOA'
         AV.isKendoEditor = _beta.indexOf(" kendoEditor~") != -1 ? true : false
         AV.usesPasswordPolicy = _beta.indexOf("passwordPolicy~") != -1 ? true : false
