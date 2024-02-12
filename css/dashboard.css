@@ -89,3 +89,7 @@
         padding-top: 10px;
         padding-left: 2px
     }
+#hoursListing p {
+    padding-left: 15px;
+    margin-bottom: 5px
+}

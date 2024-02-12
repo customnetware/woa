@@ -127,12 +127,15 @@ function getProfilePage() {
     let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
     let grp1 = $.get(pageLocation("/news/28118~792554/webmaster-only"), function () { })
     let grp2 = $.get(pageLocation("/Member/28118~" + profileID), function () { })
-    $.when(grp1, grp2).done(function (responseText1, responseText2) {
+    let grp3 = $.get(pageLocation("/news/28118~795372/lakeview-clubhouse-and-office-hours"), function () { })
+    $.when(grp1, grp2, grp3).done(function (responseText1, responseText2, responseText3) {
         let userContent = new DOMParser().parseFromString(responseText1, "text/html")
         document.getElementById("userProfile").innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
         let imageFile = new DOMParser().parseFromString(responseText2, "text/html")
         profileImg.src = imageFile.getElementsByTagName("img")[0].src
         document.getElementById("userProfile").insertBefore(profileImg, document.getElementById("userProfile").firstChild)
+        let officeHours = new DOMParser().parseFromString(responseText3, "text/html")
+        document.getElementById("hoursListing").innerHTML = officeHours.getElementById("contentInner").children[2].innerHTML
     })
 }
 function getResourceCenter() {
@@ -180,8 +183,37 @@ function getForSaleOrFree() {
             }
         })
 }
+function getContacts() {
+    let contactArray = ["10544936", "10551971", "10831154", "8108389", "10566484", "10854040"]
+    let contact1 = $.get(pageLocation("/Member/28118~" + contactArray[0]), function () { })
+    let contact2 = $.get(pageLocation("/Member/28118~" + contactArray[1]), function () { })
+    let contact3 = $.get(pageLocation("/Member/28118~" + contactArray[2]), function () { })
+    let contact4 = $.get(pageLocation("/Member/28118~" + contactArray[3]), function () { })
+    let contact5 = $.get(pageLocation("/Member/28118~" + contactArray[4]), function () { })
+    let contact6 = $.get(pageLocation("/Member/28118~" + contactArray[5]), function () { })
+    $.when(contact1, contact2, contact3, contact4, contact5, contact6).done(function (card1, card2, card3, card4, card5, card6) {
+        let contactCard1 = new DOMParser().parseFromString(card1, "text/html")
+        let contactCard2 = new DOMParser().parseFromString(card2, "text/html")
+        let contactCard3 = new DOMParser().parseFromString(card3, "text/html")
+        let contactCard4 = new DOMParser().parseFromString(card4, "text/html")
+        let contactCard5 = new DOMParser().parseFromString(card5, "text/html")
+        let contactCard6 = new DOMParser().parseFromString(card6, "text/html")
+        let contactCards = [contactCard1, contactCard2, contactCard3, contactCard4, contactCard5, contactCard6]
+        for (let c = 0; c < contactCards.length; c++) {
+            let contactName = contactCards[c].getElementsByClassName("clsDMHeader")
+            let contactTitle = contactCards[c].getElementsByClassName("clsHeader")
+            let contactData = contactCards[c].getElementsByClassName("contactData")
+            let contactList = document.getElementById("contactsTable").getElementsByTagName("tr")
+            contactList[c + 1].children[0].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactName[1].children[0].innerText.trim() + "</a>"
+            contactList[c + 1].children[1].innerText = contactTitle[0].innerText.trim()
+            contactList[c + 1].children[2].innerText = contactData[1].innerText.trim()
+            contactList[c + 1].children[3].innerText = contactData[0].children[0].innerText.trim()
+        }
+    })
+}
 $(window).load(function () {
     getProfilePage()
+    getContacts()
     getResourceCenter()
     getNewsAndAnnouncements()
     getResidentHomePage()

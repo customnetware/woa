@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\css",
+    "\\news",
+    "\\news\\28118~795372",
+    "\\news\\list\\28118",
     "\\scripts"
   ],
-  "SelectedNode": "\\scripts\\dashboard.js",
+  "SelectedNode": "\\Reports",
   "PreviewInSolutionExplorer": false
 }
