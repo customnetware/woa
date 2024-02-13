@@ -1,7 +1,10 @@
 let currentDate = new Date()
 document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
-function showPopUp() {
-    alert("here")
+function showPopUp(popUpType) {
+    let localText = "This will open a form to post to the " + popUpType + " discussion group."
+    if (popUpType == "webHelp") { location.href = pageLocation("/form/28118~327323/social-media-help") }
+    if (popUpType == "general") { (window.location.hostname == "localhost") ? alert(localText) : AV.EditorLauncher.discussionTopic('', '8364', '20703', 'new', 'New Topic', 'lnkAddTopic') }
+    if (popUpType == "recommendations") { (window.location.hostname == "localhost") ? alert(localText) : AV.EditorLauncher.discussionTopic('', '8030', '19301', 'new', 'New Topic', 'lnkAddTopic') }
 }
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
@@ -17,7 +20,7 @@ function getResidentHomePage() {
     $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
-            document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-gear"
+            document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-gear fa-fw fa-lg"
             document.getElementById("profileHeader").getElementsByTagName("span")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
             let recentItems = myWoodbridge.getElementsByClassName("message")
             let recentEmails = document.getElementById("recentNotifications").children
@@ -112,16 +115,23 @@ function getDiscussionGroups() {
             }
         }
         let recentPosts = document.getElementById("recentNotifications").children
-        forumArray.sort((a, b) => { return a.postSort - b.postSort })
-        forumArray.reverse()
-        for (let p = 0, a = 6; a < 9; p++, a++) {
-            if (p < forumArray.length) {
-                addRecentNotification(recentPosts[a].id, forumArray[p].subject + " (Comments: " + forumArray[p].numOfPost + ")", "fa fa-comments-o fa-lg",
-                    forumArray[p].postContent + "<br />" + forumArray[p].postAuthor)
+        if (forumArray.length > 0) {
+            forumArray.sort((a, b) => { return a.postSort - b.postSort })
+            forumArray.reverse()
+            for (let p = 0, a = 6; a < 9; p++, a++) {
+                if (p < forumArray.length) {
+                    addRecentNotification(recentPosts[a].id, forumArray[p].subject + " (Comments: " + forumArray[p].numOfPost + ")", "fa fa-comments-o fa-lg", forumArray[p].postContent + "<br /><b>" + forumArray[p].postAuthor + "</b>")
 
-                recentPosts[a].children[1].getElementsByTagName("a")[0].href = forumArray[p].replyLink
-                recentPosts[a].children[1].getElementsByTagName("a")[1].setAttribute("href", "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')")
+                    recentPosts[a].children[1].getElementsByTagName("a")[0].href = forumArray[p].replyLink
+                    recentPosts[a].children[1].getElementsByTagName("a")[1].setAttribute("href", "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')")
+                }
             }
+        } else {
+            addRecentNotification("card07", "Join or Start The Conversations! (Comments: 0)", "fa fa-comments-o fa-lg", "Do you have questions or comments about anything Woodbridge?  Create a new post in the general discussion group using the link below.  Need  a painter, carpenter or want to know the best resturant in town?  Post your questions in the Recommendation discussion group.  We also have a new group dedicated to portal, email or social media help, click here to post a question in the Portal Help Group.<br /><b> WOA Webmaster - " + currentDate.toLocaleDateString() + "</b>")
+            document.getElementById("card07").getElementsByTagName("a")[0].href = "javascript:showPopUp('general');"
+            document.getElementById("card07").getElementsByTagName("a")[0].innerHTML = "+ New Post (General)"
+            document.getElementById("card07").getElementsByTagName("a")[1].href = "javascript:showPopUp('recommendations');"
+            document.getElementById("card07").getElementsByTagName("a")[1].innerHTML = "+ New Post (Recommendations)"
         }
     })
 }
@@ -209,7 +219,7 @@ function getContacts() {
             let contactList = document.getElementById("contactsTable").getElementsByTagName("tr")
             contactList[c + 1].children[0].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactName[1].children[0].innerText.trim() + "</a>"
             contactList[c + 1].children[1].innerText = contactTitle[0].innerText.trim()
-            contactList[c + 1].children[2].innerText = (contactData.length !== 3) ? contactData[1].innerText.trim() : contactData[1].innerText.trim() +" "+ contactData[2].innerText.trim()
+            contactList[c + 1].children[2].innerText = (contactData.length !== 3) ? contactData[1].innerText.trim() : contactData[1].innerText.trim() + " " + contactData[2].innerText.trim()
             contactList[c + 1].children[3].innerHTML = "<a href='mailto:" + contactData[0].children[0].innerText.trim() + "'>" + contactData[0].children[0].innerText.trim() + "</a>"
         }
     })

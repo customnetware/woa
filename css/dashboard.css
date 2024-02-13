@@ -1,10 +1,29 @@
 ﻿#profileHeader a {
-    float: right;
     color: white;
-    font-size: 1.25em;
-    padding-right: 25px;
     text-decoration: none;
 }
+
+#profileHeader .card-header a:first-child {
+    float: left;
+    padding-top: 5px;
+}
+
+#profileHeader .card-header span:nth-child(2) {
+    float: left;
+}
+
+#profileHeader .card-header a:nth-child(3) {
+    float: right;
+}
+
+
+#profileHeader .card-header span:nth-child(4) {
+    float: right;
+    padding-top: 5px;
+}
+
+
+
 
 #recentNotifications .card {
     display: none
@@ -89,6 +108,7 @@
         padding-top: 10px;
         padding-left: 2px
     }
+
 #hoursListing p {
     padding-left: 15px;
     margin-bottom: 5px

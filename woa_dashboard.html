@@ -24,10 +24,10 @@
                     <div class="col-md-12">
                         <div class="card mb-1">
                             <div class="card-header border-success formatHeader">
-                                <a href="javascript:showPopUp()" class="fa fa-refresh fa-spin fa-fw fa-lg" style="float:left; padding-right:5px; padding-top:2px; margin-left:10px;"></a>
-                                <span style="float:left">Checking for new emails and flyers...</span>
-                                <a href="/form/28118~327323/social-media-help" style="font-size:1em; float:right">Portal and email help</a>
-                                <span class="fa fa-question-circle fa-fw fa-lg" style="float:right; padding-top:5px;"></span>
+                                <a href="javascript:showPopUp()" class="fa fa-refresh fa-spin fa-fw fa-lg"></a>
+                                <span>Checking for new emails and flyers...</span>
+                                <a href="javascript:showPopUp('webHelp')">Portal and email help</a>
+                                <span class="fa fa-question-circle fa-fw fa-lg"></span>
                             </div><div id="userProfile" class="card-body"></div>
                         </div>
                     </div>
@@ -36,7 +36,8 @@
                     <div class="col-md-12">
                         <div class="card mb-1">
                             <div class="card-header border-success formatHeader" data-toggle="collapse" data-target="#card-notify" aria-expanded="false">
-                                <span class="fa fa-bell fa-lg formatLink" aria-hidden="true"></span>&nbsp;&nbsp;Recent Notifications
+                                <span class="fa fa-bell fa-lg formatLink" style="float: left; padding-top: 5px; padding-right: 10px"></span><span style="float:left">Recent Notifications</span>
+
                             </div>
                             <div class="card-body collapse show" id="card-notify">
                                 <div class="row" id="notifications">
@@ -189,6 +190,7 @@
             </div>
         </div>
         <script src="https://customnetware.github.io/woa/scripts/dashboard.js"></script>
+        <!--https://customnetware.github.io/woa/-->
     </div>
 </body>
 </html>
