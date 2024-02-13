@@ -1,7 +1,7 @@
 ﻿#profileHeader a {
     color: white;
-    text-decoration: none;
-    font-weight:normal;
+    text-decoration: none !important;
+    font-weight:normal !important;
 }
 
 #profileHeader .card-header a:first-child {
