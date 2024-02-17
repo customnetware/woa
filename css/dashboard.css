@@ -1,7 +1,21 @@
-﻿#profileHeader a {
+﻿#customContainer .card-header {
+    cursor: pointer;
+    padding: 5px;
+}
+
+#outerFrame {
+    -webkit-box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: -50px;
+    margin-bottom: 25px;
+}
+
+#profileHeader a {
     color: white;
     text-decoration: none !important;
-    font-weight:normal !important;
+    font-weight: normal !important;
 }
 
 #profileHeader .card-header a:first-child {
@@ -23,29 +37,79 @@
     padding-top: 5px;
 }
 
-
-
-
-#recentNotifications .card {
+#recentEmails .card-header, #recentforSale .card-header, #recentPosts .card-header, #recentNews .card-header {
     display: none
 }
 
-#recentNotifications .card-header span:first-child {
-    margin-right: 5px;
-    margin-left: 10px
-}
+    #recentEmails .card-header:after {
+        font-family: 'FontAwesome';
+        font-size: 1.25em;
+        content: "\f2b7";
+        float: left;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
 
-#recentNotifications .card-header span:nth-child(2) {
-    margin-left: 5px
-}
-
-#recentNotifications .card-body span {
+#recentEmails .card-body span, #recentforSale .card-body span, #recentPosts .card-body span, #recentNews .card-body span {
     margin-top: 5px;
     margin-bottom: 5px;
     margin-right: 10px;
     margin-left: 15px;
     display: block;
 }
+
+#recentEmails .card-header.collapsed:after {
+    content: "\f003";
+}
+
+#recentforSale .card-header:after {
+    font-family: 'FontAwesome';
+    font-size: 1.25em;
+    content: "\f291";
+    float: left;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+#recentforSale .card-header.collapsed:after {
+    content: "\f07a";
+}
+
+#recentEmails .card-header.collapsed:after {
+    content: "\f003";
+}
+
+#recentPosts .card-header:after {
+    font-family: 'FontAwesome';
+    font-size: 1.25em;
+    content: "\f27b";
+    float: left;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+#recentPosts .card-header.collapsed:after {
+    content: "\f0e6";
+}
+
+#recentPosts .card-body a:nth-child(2) {
+    margin-left: 15px;
+}
+
+#recentNews .card-header:after {
+    font-family: 'FontAwesome';
+    font-size: 1.25em;
+    content: "\f278";
+    float: left;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+#recentNews .card-header.collapsed:after {
+    content: "\f1ea";
+}
+
+
 
 .formatHeader {
     background-color: #999999;
@@ -58,19 +122,9 @@
     text-decoration: none !important;
 }
 
-#outerFrame {
-    -webkit-box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
-    box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-top: -50px;
-}
 
 
-#customContainer .card-header {
-    cursor: pointer;
-    padding: 5px;
-}
+
 
 #userProfile img {
     height: 120px;
@@ -113,4 +167,10 @@
 #hoursListing p {
     padding-left: 15px;
     margin-bottom: 5px
+}
+
+@media screen and (max-width: 565px) and (min-width: 300px) {
+    .emailCol {
+        display: none;
+    }
 }

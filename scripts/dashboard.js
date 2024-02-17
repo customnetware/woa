@@ -9,13 +9,6 @@ function showPopUp(popUpType) {
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
 }
-function addRecentNotification(cardID, title, classname, content) {
-    let currentCard = document.getElementById(cardID)
-    currentCard.getElementsByClassName("card-header")[0].getElementsByTagName("span")[0].className = classname
-    currentCard.getElementsByClassName("card-header")[0].getElementsByTagName("span")[1].innerHTML = title
-    currentCard.getElementsByClassName("card-body")[0].getElementsByTagName("span")[0].innerHTML = content
-    currentCard.style.display = "block"
-}
 function getResidentHomePage() {
     $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         .done(function (responseText) {
@@ -23,17 +16,11 @@ function getResidentHomePage() {
             document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-gear fa-fw fa-lg"
             document.getElementById("profileHeader").getElementsByTagName("span")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
             let recentItems = myWoodbridge.getElementsByClassName("message")
-            let recentEmails = document.getElementById("recentNotifications").children
-            for (let p = 0, a = 3; a < 6; p++, a++) {
-                if (p < recentItems.length) {
-                    let itemContent = recentItems[p].getElementsByTagName("a")[0]
-                    getMessage(itemContent, recentEmails[a].id, "fa fa-envelope-o fa-lg")
-                }
-            }
+            for (let p = 0; p < recentItems.length; p++) { getMessage(recentItems[p].getElementsByTagName("a")[0], p) }
             showPhotos(myWoodbridge)
         })
 }
-function getMessage(rawMessage, cardID, classname) {
+function getMessage(rawMessage, cardID) {
     let title = rawMessage.getAttribute("data-tooltip-title").split("by")[0]
     let content = rawMessage.getAttribute("data-tooltip-text")
     $.get(pageLocation(rawMessage.href), function () { })
@@ -42,23 +29,26 @@ function getMessage(rawMessage, cardID, classname) {
             let emailContent = emailSaved.getElementById("AV").getElementsByTagName("td")
             content = emailContent[0].innerHTML
         })
-        .fail(function () {
-
-        })
         .always(function () {
-            addRecentNotification(cardID, title, classname, content)
+            document.getElementById("recentEmails").getElementsByClassName("card-header")[cardID].style.display = "block"
+            document.getElementById("recentEmails").getElementsByClassName("card-title")[cardID].innerText = title
+            document.getElementById("recentEmails").getElementsByClassName("card-body")[cardID].getElementsByTagName("span")[0].innerHTML = content
             localStorage.setItem(rawMessage.id, title + content)
         })
 }
 function getNewsAndAnnouncements() {
-    $.get("https://ourwoodbridge.net/news/list/28118/news-announcements", function () { })
+
+    $.get(pageLocation("news/list/28118/news-announcements"), function () { })
         .done(function (responseText) {
             let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
             let articleTitle = newsArticles.getElementsByClassName("clsHeader")
             let articleContent = newsArticles.getElementsByClassName("clsBodyText")
-            let announcements = document.getElementById("recentNotifications").children
-            for (let p = 0, a = 0; a < 3; p++, a++) {
-                if (p < articleContent.length) { addRecentNotification(announcements[a].id, articleTitle[p].innerText, "fa fa-newspaper-o fa-lg", articleContent[p].innerHTML) }
+            for (let p = 0; p < 3; p++) {
+                if (p < articleTitle.length) {
+                    document.getElementById("recentNews").getElementsByClassName("card-header")[p].style.display = "block"
+                    document.getElementById("recentNews").getElementsByClassName("card-title")[p].innerText = articleTitle[p].innerText
+                    document.getElementById("recentNews").getElementsByClassName("card-body")[p].getElementsByTagName("span")[0].innerHTML = articleContent[p].innerHTML
+                }
             }
         })
 }
@@ -98,9 +88,10 @@ function getDiscussionGroups() {
             let posts = forum.getElementsByClassName("ThreadContainer")[0]
             for (let x = 0; x < posts.childElementCount; x++) {
                 let post = posts.children[x]
-                let lastDate = post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", "")
+                let lastDate = new Date(post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", ""))
                 let dayDiff = (currentDate - lastDate) / (1000 * 3600 * 24)
-                if (dayDiff < 32) {
+
+                if (dayDiff < 365) {
                     let topic = post.getElementsByClassName("respDiscTopic")
                     let comments = post.getElementsByClassName("respDiscChildPost")
                     let posters = post.getElementsByClassName("respAuthorWrapper")
@@ -114,24 +105,19 @@ function getDiscussionGroups() {
                 }
             }
         }
-        let recentPosts = document.getElementById("recentNotifications").children
+
         if (forumArray.length > 0) {
             forumArray.sort((a, b) => { return a.postSort - b.postSort })
             forumArray.reverse()
-            for (let p = 0, a = 6; a < 9; p++, a++) {
+            for (let p = 0; p <= 2; p++) {
                 if (p < forumArray.length) {
-                    addRecentNotification(recentPosts[a].id, forumArray[p].subject + " (Comments: " + forumArray[p].numOfPost + ")", "fa fa-comments-o fa-lg", forumArray[p].postContent + "<br /><b>" + forumArray[p].postAuthor + "</b>")
-
-                    recentPosts[a].children[1].getElementsByTagName("a")[0].href = forumArray[p].replyLink
-                    recentPosts[a].children[1].getElementsByTagName("a")[1].setAttribute("href", "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')")
+                    document.getElementById("recentPosts").getElementsByClassName("card-header")[p].style.display = "block"
+                    document.getElementById("recentPosts").getElementsByClassName("card-title")[p].innerText = forumArray[p].subject + " (Comments: " + forumArray[p].numOfPost + ")"
+                    document.getElementById("recentPosts").getElementsByClassName("card-body")[p].getElementsByTagName("span")[0].innerHTML = forumArray[p].postContent + "<br /><b>" + forumArray[p].postAuthor + "</b>"
+                    document.getElementById("recentPosts").getElementsByClassName("card-body")[p].getElementsByTagName("a")[0].href = forumArray[p].replyLink
+                    document.getElementById("recentPosts").getElementsByClassName("card-body")[p].getElementsByTagName("a")[1].href = "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
                 }
             }
-        } else {
-            addRecentNotification("card07", "Join or Start The Conversations! (Comments: 0)", "fa fa-comments-o fa-lg", "Do you have questions or comments about anything Woodbridge?  Create a new post in the general discussion group using the link below.  Need  a painter, carpenter or want to know the best resturant in town?  Post your questions in the Recommendation discussion group.  We also have a new group dedicated to portal, email or social media help, click here to post a question in the Portal Help Group.<br /><b> WOA Webmaster - " + currentDate.toLocaleDateString() + "</b>")
-            document.getElementById("card07").getElementsByTagName("a")[0].href = "javascript:showPopUp('general');"
-            document.getElementById("card07").getElementsByTagName("a")[0].innerHTML = "+ New Post (General)"
-            document.getElementById("card07").getElementsByTagName("a")[1].href = "javascript:showPopUp('recommendations');"
-            document.getElementById("card07").getElementsByTagName("a")[1].innerHTML = "+ New Post (Recommendations)"
         }
     })
 }
@@ -143,11 +129,14 @@ function getProfilePage() {
     let grp3 = $.get(pageLocation("/news/28118~795372/lakeview-clubhouse-and-office-hours"), function () { })
     $.when(grp1, grp2, grp3).done(function (responseText1, responseText2, responseText3) {
         let userContent = new DOMParser().parseFromString(responseText1, "text/html")
-        document.getElementById("userProfile").innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
         let imageFile = new DOMParser().parseFromString(responseText2, "text/html")
+        let officeHours = new DOMParser().parseFromString(responseText3, "text/html")
+
+        document.getElementById("userProfile").innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
+
         profileImg.src = imageFile.getElementsByTagName("img")[0].src
         document.getElementById("userProfile").insertBefore(profileImg, document.getElementById("userProfile").firstChild)
-        let officeHours = new DOMParser().parseFromString(responseText3, "text/html")
+
         document.getElementById("hoursListing").innerHTML = officeHours.getElementById("contentInner").children[2].innerHTML
     })
 }
@@ -190,9 +179,12 @@ function getForSaleOrFree() {
             let classifieds = new DOMParser().parseFromString(responseText, "text/html")
             let classifiedTitle = classifieds.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
             let classifiedBody = classifieds.getElementsByClassName("clsBodyText hidden-sm-down")
-            let ads = document.getElementById("recentNotifications").children
-            for (let p = 0, a = 9; a < 12; p++, a++) {
-                if (p < classifiedTitle.length) { addRecentNotification(ads[a].id, classifiedTitle[p].getElementsByTagName("a")[0].innerHTML, "fa fa-shopping-cart fa-lg", classifiedBody[p].childNodes[0].nodeValue) }
+            for (let p = 0; p < 3; p++) {
+                if (p < classifiedTitle.length) {
+                    document.getElementById("recentforSale").getElementsByClassName("card-header")[p].style.display = "block"
+                    document.getElementById("recentforSale").getElementsByClassName("card-title")[p].innerText = classifiedTitle[p].getElementsByTagName("a")[0].innerText.trim()
+                    document.getElementById("recentforSale").getElementsByClassName("card-body")[p].getElementsByTagName("span")[0].innerHTML = classifiedBody[p].childNodes[0].nodeValue
+                }
             }
         })
 }
@@ -225,11 +217,11 @@ function getContacts() {
     })
 }
 $(window).load(function () {
+    getResidentHomePage()
     getProfilePage()
     getContacts()
     getResourceCenter()
     getNewsAndAnnouncements()
-    getResidentHomePage()
     getDiscussionGroups()
     getForSaleOrFree()
 
@@ -242,14 +234,14 @@ $(window).load(function () {
     $("#flyers, #newsletters").on("show.bs.collapse", function () {
         this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-open-o fa-lg"
     })
-    $("#card-body04,#card-body05,#card-body06").on("show.bs.collapse", function () {
-        this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-open-o fa-lg"
-    })
-    $("#card-body04,#card-body05,#card-body06").on("hide.bs.collapse", function () {
-        this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-o fa-lg"
-    })
+    //$("#card-body04,#card-body05,#card-body06").on("show.bs.collapse", function () {
+    //    this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-open-o fa-lg"
+    //})
+    //$("#card-body04,#card-body05,#card-body06").on("hide.bs.collapse", function () {
+    //    this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-o fa-lg"
+    //})
     setTimeout(function () {
-        localStorage.setItem("recentNotifications", document.getElementById("recentNotifications").innerHTML)
+        /*   localStorage.setItem("recentNotifications", document.getElementById("recentNotifications").innerHTML)*/
         localStorage.setItem("timeOfNotifications", new Date().getTime())
         localStorage.setItem("recentFlyers", document.getElementById("flyers").innerHTML)
         localStorage.setItem("timeOfFlyers", new Date().getTime())
