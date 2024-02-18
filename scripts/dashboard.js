@@ -1,10 +1,5 @@
 document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
-if (document.getElementById("resDisplayName") !== null) {
-    document.getElementById("resDisplayName").innerText = "My Woodbridge"
-}
-if (document.getElementsByClassName("association-name") !== null) {
-    document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
-}
+
 function showPopUp(popUpType) {
     let localText = "This will open a form to post to the " + popUpType + " discussion group."
     if (popUpType == "webHelp") { location.href = pageLocation("/form/28118~327323/social-media-help") }
@@ -222,6 +217,12 @@ function getContacts() {
     })
 }
 $(window).load(function () {
+    if (document.getElementById("resDisplayName") !== null) {
+        document.getElementById("resDisplayName").innerText = "My Woodbridge"
+    }
+    if (document.getElementsByClassName("association-name") !== null) {
+        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
+    }
     getResidentHomePage()
     getProfilePage()
     getContacts()
