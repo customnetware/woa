@@ -18,37 +18,43 @@
     font-weight: normal !important;
 }
 
-#profileHeader .card-header a:first-child {
+    #profileHeader a:first-child {
+        float: left;
+        padding-top: 5px;
+    }
+
+#profileHeader span:nth-child(2) {
     float: left;
-    padding-top: 5px;
 }
 
-#profileHeader .card-header span:nth-child(2) {
-    float: left;
-}
-
-#profileHeader .card-header a:nth-child(3) {
+#profileHeader a:nth-child(3) {
     float: right;
 }
 
-
-#profileHeader .card-header span:nth-child(4) {
+#profileHeader span:nth-child(4) {
     float: right;
     padding-top: 5px;
 }
+
+#notificationHeader:hover, #documentsHeader:hover, #contactsHeader:hover, #hoursHeader:hover, #profileHeader:hover {
+    background-color:lightsteelblue;
+    color: white;
+}
+
+#notificationHeader, #documentsHeader, #contactsHeader, #hoursHeader, #profileHeader {
+    background-color: #999999;
+    color: white;
+    padding: 5px;
+}
+
+    #notificationHeader span:first-child, #documentsHeader span:first-child, #contactsHeader span:first-child, #hoursHeader span:first-child {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
 
 #recentEmails .card-header, #recentforSale .card-header, #recentPosts .card-header, #recentNews .card-header {
     display: none
 }
-
-    #recentEmails .card-header:after {
-        font-family: 'FontAwesome';
-        font-size: 1.25em;
-        content: "\f2b7";
-        float: left;
-        padding-right: 10px;
-        padding-left: 10px;
-    }
 
 #recentEmails .card-body span, #recentforSale .card-body span, #recentPosts .card-body span, #recentNews .card-body span {
     margin-top: 5px;
@@ -58,37 +64,39 @@
     display: block;
 }
 
-#recentEmails .card-header.collapsed:after {
+#recentEmails .card-header:before {
+    font-family: 'FontAwesome';
+    font-size: 1.25em;
+    content: "\f2b7";
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+#recentEmails .card-header.collapsed:before {
     content: "\f003";
 }
 
-#recentforSale .card-header:after {
+#recentforSale .card-header:before {
     font-family: 'FontAwesome';
     font-size: 1.25em;
     content: "\f291";
-    float: left;
     padding-right: 10px;
     padding-left: 10px;
 }
 
-#recentforSale .card-header.collapsed:after {
+#recentforSale .card-header.collapsed:before {
     content: "\f07a";
 }
 
-#recentEmails .card-header.collapsed:after {
-    content: "\f003";
-}
-
-#recentPosts .card-header:after {
+#recentPosts .card-header:before {
     font-family: 'FontAwesome';
     font-size: 1.25em;
     content: "\f27b";
-    float: left;
     padding-right: 10px;
     padding-left: 10px;
 }
 
-#recentPosts .card-header.collapsed:after {
+#recentPosts .card-header.collapsed:before {
     content: "\f0e6";
 }
 
@@ -96,35 +104,41 @@
     margin-left: 15px;
 }
 
-#recentNews .card-header:after {
+#recentNews .card-header:before {
     font-family: 'FontAwesome';
     font-size: 1.25em;
     content: "\f278";
-    float: left;
     padding-right: 10px;
     padding-left: 10px;
 }
 
-#recentNews .card-header.collapsed:after {
+#recentNews .card-header.collapsed:before {
     content: "\f1ea";
 }
 
-
-
-.formatHeader {
-    background-color: #999999;
-    color: white;
-    padding: 5px;
+#recentDocuments .card-body span a, #recentNewsLetters .card-body span a {
+    display: block;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
-.formatLink {
+
+#recentDocuments span a:nth-child(even), #recentNewsLetters span a:nth-child(even) {
+    background-color: #eceeef
+}
+
+#recentDocuments .card-header:before, #recentNewsLetters .card-header:before, #recentPhotos .card-header:before {
+    font-family: 'FontAwesome';
+    font-size: 1.25em;
+    content: "\f115";
+    padding-right: 10px;
     padding-left: 10px;
-    text-decoration: none !important;
 }
 
-
-
-
+#recentDocuments .card-header.collapsed:before, #recentNewsLetters .card-header.collapsed:before, #recentPhotos .card-header.collapsed:before {
+    content: "\f114";
+}
 
 #userProfile img {
     height: 120px;
@@ -144,19 +158,19 @@
     display: block;
 }
 
-#recentPhotos {
+#photoList {
     text-align: center;
     vertical-align: middle;
     font-size: .75em;
 }
 
-    #recentPhotos div {
+    #photoList div {
         width: 33%;
         float: left;
         filter: drop-shadow(5px 5px 5px grey);
     }
 
-    #recentPhotos img {
+    #photoList img {
         max-width: 100%;
         max-height: 100%;
         padding-right: 2px;
@@ -164,7 +178,7 @@
         padding-left: 2px
     }
 
-#hoursListing p {
+#card-hours p {
     padding-left: 15px;
     margin-bottom: 5px
 }

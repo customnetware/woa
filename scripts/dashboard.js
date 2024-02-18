@@ -1,5 +1,10 @@
-let currentDate = new Date()
 document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
+if (document.getElementById("resDisplayName") !== null) {
+    document.getElementById("resDisplayName").innerText = "My Woodbridge"
+}
+if (document.getElementsByClassName("association-name") !== null) {
+    document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
+}
 function showPopUp(popUpType) {
     let localText = "This will open a form to post to the " + popUpType + " discussion group."
     if (popUpType == "webHelp") { location.href = pageLocation("/form/28118~327323/social-media-help") }
@@ -77,7 +82,7 @@ function showComments(selectedPostID, groupID) {
         })
 }
 function getDiscussionGroups() {
-    let forumArray = [], forums = ["8030", "8364", "11315"], forumNames = ["Recommendations", "General", "Using the HOA Portal"]
+    let forumArray = [], forums = ["8030", "8364", "11315"], forumNames = ["Recommendations", "General", "Using the HOA Portal"], currentDate = new Date()
     let grp1 = $.get(pageLocation("/Discussion/28118~" + forums[0]), function () { })
     let grp2 = $.get(pageLocation("/Discussion/28118~" + forums[1]), function () { })
     let grp3 = $.get(pageLocation("/Discussion/28118~" + forums[2]), function () { })
@@ -137,11 +142,11 @@ function getProfilePage() {
         profileImg.src = imageFile.getElementsByTagName("img")[0].src
         document.getElementById("userProfile").insertBefore(profileImg, document.getElementById("userProfile").firstChild)
 
-        document.getElementById("hoursListing").innerHTML = officeHours.getElementById("contentInner").children[2].innerHTML
+        document.getElementById("card-hours").innerHTML = officeHours.getElementById("contentInner").children[2].innerHTML
     })
 }
 function getResourceCenter() {
-    let resourceFolder = [{ pageID: "flyers", folderID: "540434" }, { pageID: "newsletters", folderID: "951754" }]
+    let resourceFolder = [{ pageID: "docCard", folderID: "540434" }, { pageID: "newsCard", folderID: "951754" }]
     $.get(pageLocation("/resourcecenter/28118/resource-center"), function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
@@ -150,20 +155,20 @@ function getResourceCenter() {
                     let documentName = documents.getElementById("contents" + resourceFolder[f].folderID).querySelectorAll("[id^=d]")
                     let documentLink = documents.getElementById("contents" + resourceFolder[f].folderID).querySelectorAll('a[title="View On-line"]')
                     for (p = documentName.length - 1; p >= 0; p--) {
-                        let resourceItem = document.createElement("span")
+
                         let selectedDoc = document.createElement("a")
                         selectedDoc.innerHTML = documentName[p].innerHTML
                         selectedDoc.href = documentLink[p].href
-                        resourceItem.appendChild(selectedDoc)
-                        document.getElementById(resourceFolder[f].pageID).appendChild(resourceItem)
-                        if (resourceFolder[f].pageID == "newsletters" && document.getElementById(resourceFolder[f].pageID).children.length > 5) { break }
+
+                        document.getElementById(resourceFolder[f].pageID).getElementsByTagName("span")[0].appendChild(selectedDoc)
+                        if (resourceFolder[f].pageID == "newsCard" && document.getElementById(resourceFolder[f].pageID).getElementsByTagName("span")[0].children.length > 5) { break }
                     }
                 }
             }
         })
 }
 function showPhotos(galleryPage) {
-    let newPicList = document.getElementById("recentPhotos").getElementsByTagName("div")
+    let newPicList = document.getElementById("photoList").getElementsByTagName("div")
     let photoList = galleryPage.querySelectorAll("[id^=gallery_link_]")
     let galleryLink = galleryPage.querySelectorAll("[class^=gallery_txt_sub]")
     let galleryText = galleryPage.getElementsByClassName("left")
@@ -228,22 +233,22 @@ $(window).load(function () {
     $("#appPopUp").on("hide.bs.modal", function () {
         document.getElementById("popUpBody").innerHTML = ""
     })
-    $("#flyers, #newsletters").on("hide.bs.collapse", function () {
-        this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
-    })
-    $("#flyers, #newsletters").on("show.bs.collapse", function () {
-        this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-open-o fa-lg"
-    })
-    //$("#card-body04,#card-body05,#card-body06").on("show.bs.collapse", function () {
-    //    this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-open-o fa-lg"
+    //$("#flyers, #newsletters").on("hide.bs.collapse", function () {
+    //    this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
     //})
-    //$("#card-body04,#card-body05,#card-body06").on("hide.bs.collapse", function () {
-    //    this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-envelope-o fa-lg"
+    //$("#flyers, #newsletters").on("show.bs.collapse", function () {
+    //    this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-open-o fa-lg"
     //})
+    $("#card-notify,#card-docs, #card-contacts,#card-hours").on("show.bs.collapse", function () {
+        this.parentElement.getElementsByTagName("span")[2].className = "fa fa-minus-circle fa-lg"
+    })
+    $("#card-notify,#card-docs,#card-contacts,#card-hours").on("hide.bs.collapse", function () {
+        this.parentElement.getElementsByTagName("span")[2].className = "fa fa-plus-circle fa-lg"
+    })
     setTimeout(function () {
         /*   localStorage.setItem("recentNotifications", document.getElementById("recentNotifications").innerHTML)*/
-        localStorage.setItem("timeOfNotifications", new Date().getTime())
-        localStorage.setItem("recentFlyers", document.getElementById("flyers").innerHTML)
-        localStorage.setItem("timeOfFlyers", new Date().getTime())
+        //localStorage.setItem("timeOfNotifications", new Date().getTime())
+        //localStorage.setItem("recentFlyers", document.getElementById("flyers").innerHTML)
+        //localStorage.setItem("timeOfFlyers", new Date().getTime())
     }, 2000)
 })
