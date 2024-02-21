@@ -214,7 +214,7 @@ function getContacts() {
         let contactCards = [contactCard1, contactCard2, contactCard3, contactCard4, contactCard5, contactCard6]
         let contactList = document.getElementById("contactsTable").getElementsByTagName("tr")
         for (let c = 0; c < contactCards.length; c++) {
-            try {
+  /*          try {} catch { contactList[c + 1].style.display = "none" }*/
                 let contactName = contactCards[c].getElementsByClassName("clsDMHeader")
                 let contactTitle = contactCards[c].getElementsByClassName("clsHeader")
                 let contactData = contactCards[c].getElementsByClassName("contactData")
@@ -223,7 +223,7 @@ function getContacts() {
                 contactList[c + 1].children[1].innerText = contactTitle[0].innerText.trim()
                 contactList[c + 1].children[2].innerText = (contactData.length !== 3) ? contactData[1].innerText.trim() : contactData[1].innerText.trim() + " " + contactData[2].innerText.trim()
                 contactList[c + 1].children[3].innerHTML = "<a href='mailto:" + contactData[0].children[0].innerText.trim() + "'>" + contactData[0].children[0].innerText.trim() + "</a>"
-            } catch { contactList[c + 1].style.display = "none" }
+            
         }
     })
 }
