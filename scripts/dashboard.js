@@ -233,7 +233,7 @@ function getContacts() {
 
 }
 $(window).load(function () {
-    if (document.getElementById("clsHeader") !== null) { document.getElementById("clsHeader").style.visibility = "hidden" }
+    document.getElementById("clsHeader").style.visibility = "hidden"
     if (document.getElementById("resDisplayName") !== null) { document.getElementById("resDisplayName").innerText = "My Woodbridge" }
     if (document.getElementsByClassName("association-name") !== null) { document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge" }
     getResidentHomePage()
