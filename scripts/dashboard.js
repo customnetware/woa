@@ -220,9 +220,8 @@ function getContacts() {
                 let contactTitle = contactCards[c].getElementsByClassName("clsHeader")
                 let contactData = contactCards[c].getElementsByClassName("contactData")
 
-                if (contactTitle.length > 0) { contactList[c + 1].children[1].innerText = contactTitle[0].innerText.trim() }
+                if (contactTitle.length > 0) { contactList[c + 1].children[1].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactTitle[0].innerText.trim() + "</a>" }
                 if (contactName.length > 1) { contactList[c + 1].children[0].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactName[1].children[0].innerText.trim() + "</a>" }
-
 
                 if (contactData.length > 1) {
                     contactList[c + 1].children[2].innerText = (contactData.length !== 3) ? contactData[1].innerText.trim() : contactData[1].innerText.trim() + " " + contactData[2].innerText.trim()
@@ -230,7 +229,6 @@ function getContacts() {
                 }
             }
         })
-
 }
 $(window).load(function () {
     document.getElementsByClassName("clsHeader")[0].style.display = "none"
