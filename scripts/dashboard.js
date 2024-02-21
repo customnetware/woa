@@ -212,12 +212,13 @@ function getContacts() {
         let contactCard5 = new DOMParser().parseFromString(card5, "text/html")
         let contactCard6 = new DOMParser().parseFromString(card6, "text/html")
         let contactCards = [contactCard1, contactCard2, contactCard3, contactCard4, contactCard5, contactCard6]
+        let contactList = document.getElementById("contactsTable").getElementsByTagName("tr")
         for (let c = 0; c < contactCards.length; c++) {
             try {
                 let contactName = contactCards[c].getElementsByClassName("clsDMHeader")
                 let contactTitle = contactCards[c].getElementsByClassName("clsHeader")
                 let contactData = contactCards[c].getElementsByClassName("contactData")
-                let contactList = document.getElementById("contactsTable").getElementsByTagName("tr")
+                
                 contactList[c + 1].children[0].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactName[1].children[0].innerText.trim() + "</a>"
                 contactList[c + 1].children[1].innerText = contactTitle[0].innerText.trim()
                 contactList[c + 1].children[2].innerText = (contactData.length !== 3) ? contactData[1].innerText.trim() : contactData[1].innerText.trim() + " " + contactData[2].innerText.trim()
