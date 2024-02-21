@@ -213,14 +213,16 @@ function getContacts() {
         let contactCard6 = new DOMParser().parseFromString(card6, "text/html")
         let contactCards = [contactCard1, contactCard2, contactCard3, contactCard4, contactCard5, contactCard6]
         for (let c = 0; c < contactCards.length; c++) {
-            let contactName = contactCards[c].getElementsByClassName("clsDMHeader")
-            let contactTitle = contactCards[c].getElementsByClassName("clsHeader")
-            let contactData = contactCards[c].getElementsByClassName("contactData")
-            let contactList = document.getElementById("contactsTable").getElementsByTagName("tr")
-            contactList[c + 1].children[0].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactName[1].children[0].innerText.trim() + "</a>"
-            contactList[c + 1].children[1].innerText = contactTitle[0].innerText.trim()
-            contactList[c + 1].children[2].innerText = (contactData.length !== 3) ? contactData[1].innerText.trim() : contactData[1].innerText.trim() + " " + contactData[2].innerText.trim()
-            contactList[c + 1].children[3].innerHTML = "<a href='mailto:" + contactData[0].children[0].innerText.trim() + "'>" + contactData[0].children[0].innerText.trim() + "</a>"
+            try {
+                let contactName = contactCards[c].getElementsByClassName("clsDMHeader")
+                let contactTitle = contactCards[c].getElementsByClassName("clsHeader")
+                let contactData = contactCards[c].getElementsByClassName("contactData")
+                let contactList = document.getElementById("contactsTable").getElementsByTagName("tr")
+                contactList[c + 1].children[0].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactName[1].children[0].innerText.trim() + "</a>"
+                contactList[c + 1].children[1].innerText = contactTitle[0].innerText.trim()
+                contactList[c + 1].children[2].innerText = (contactData.length !== 3) ? contactData[1].innerText.trim() : contactData[1].innerText.trim() + " " + contactData[2].innerText.trim()
+                contactList[c + 1].children[3].innerHTML = "<a href='mailto:" + contactData[0].children[0].innerText.trim() + "'>" + contactData[0].children[0].innerText.trim() + "</a>"
+            } catch { }
         }
     })
 }
@@ -246,13 +248,13 @@ $(window).load(function () {
     //$("#flyers, #newsletters").on("show.bs.collapse", function () {
     //    this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-open-o fa-lg"
     //})
-   
+
 
     $("#card-notify,#card-docs, #card-contacts,#card-hours").on("show.bs.collapse", function () {
- /*       this.parentElement.getElementsByTagName("span")[2].className = "fa fa-minus-circle fa-lg"*/
+        /*       this.parentElement.getElementsByTagName("span")[2].className = "fa fa-minus-circle fa-lg"*/
     })
     $("#card-notify,#card-docs,#card-contacts,#card-hours").on("hide.bs.collapse", function () {
-    /*    this.parentElement.getElementsByTagName("span")[2].className = "fa fa-plus-circle fa-lg"*/
+        /*    this.parentElement.getElementsByTagName("span")[2].className = "fa fa-plus-circle fa-lg"*/
     })
     setTimeout(function () {
         /*   localStorage.setItem("recentNotifications", document.getElementById("recentNotifications").innerHTML)*/

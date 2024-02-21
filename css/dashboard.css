@@ -74,8 +74,6 @@
         margin-left: 10px;
     }
 
-
-
 #recentEmails .card-header, #recentforSale .card-header, #recentPosts .card-header, #recentNews .card-header {
     display: none
 }
@@ -87,10 +85,6 @@
     margin-left: 15px;
     display: block;
 }
-
-
-
-
 
 #recentEmails .card-header:before {
     font-family: 'FontAwesome';
