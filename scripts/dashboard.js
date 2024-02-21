@@ -204,28 +204,33 @@ function getContacts() {
     let contact4 = $.get(pageLocation("/Member/28118~" + contactArray[3]), function () { })
     let contact5 = $.get(pageLocation("/Member/28118~" + contactArray[4]), function () { })
     let contact6 = $.get(pageLocation("/Member/28118~" + contactArray[5]), function () { })
-    $.when(contact1, contact2, contact3, contact4, contact5, contact6).done(function (card1, card2, card3, card4, card5, card6) {
-        let contactCard1 = new DOMParser().parseFromString(card1, "text/html")
-        let contactCard2 = new DOMParser().parseFromString(card2, "text/html")
-        let contactCard3 = new DOMParser().parseFromString(card3, "text/html")
-        let contactCard4 = new DOMParser().parseFromString(card4, "text/html")
-        let contactCard5 = new DOMParser().parseFromString(card5, "text/html")
-        let contactCard6 = new DOMParser().parseFromString(card6, "text/html")
-        let contactCards = [contactCard1, contactCard2, contactCard3, contactCard4, contactCard5, contactCard6]
-        let contactList = document.getElementById("contactsTable").getElementsByTagName("tr")
-        for (let c = 0; c < contactCards.length; c++) {
-  /*          try {} catch { contactList[c + 1].style.display = "none" }*/
+    $.when(contact1, contact2, contact3, contact4, contact5, contact6)
+        .done(function (card1, card2, card3, card4, card5, card6) {
+            let contactCard1 = new DOMParser().parseFromString(card1, "text/html")
+            let contactCard2 = new DOMParser().parseFromString(card2, "text/html")
+            let contactCard3 = new DOMParser().parseFromString(card3, "text/html")
+            let contactCard4 = new DOMParser().parseFromString(card4, "text/html")
+            let contactCard5 = new DOMParser().parseFromString(card5, "text/html")
+            let contactCard6 = new DOMParser().parseFromString(card6, "text/html")
+            let contactCards = [contactCard1, contactCard2, contactCard3, contactCard4, contactCard5, contactCard6]
+            let contactList = document.getElementById("contactsTable").getElementsByTagName("tr")
+            for (let c = 0; c < contactCards.length; c++) {
+
                 let contactName = contactCards[c].getElementsByClassName("clsDMHeader")
                 let contactTitle = contactCards[c].getElementsByClassName("clsHeader")
                 let contactData = contactCards[c].getElementsByClassName("contactData")
-                
-                contactList[c + 1].children[0].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactName[1].children[0].innerText.trim() + "</a>"
-                contactList[c + 1].children[1].innerText = contactTitle[0].innerText.trim()
-                contactList[c + 1].children[2].innerText = (contactData.length !== 3) ? contactData[1].innerText.trim() : contactData[1].innerText.trim() + " " + contactData[2].innerText.trim()
-                contactList[c + 1].children[3].innerHTML = "<a href='mailto:" + contactData[0].children[0].innerText.trim() + "'>" + contactData[0].children[0].innerText.trim() + "</a>"
-            
-        }
-    })
+
+                if (contactTitle.length > 0) { contactList[c + 1].children[1].innerText = contactTitle[0].innerText.trim() }
+                if (contactName.length > 1) { contactList[c + 1].children[0].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactName[1].children[0].innerText.trim() + "</a>" }
+
+
+                if (contactData.length > 1) {
+                    contactList[c + 1].children[2].innerText = (contactData.length !== 3) ? contactData[1].innerText.trim() : contactData[1].innerText.trim() + " " + contactData[2].innerText.trim()
+                    contactList[c + 1].children[3].innerHTML = "<a href='mailto:" + contactData[0].children[0].innerText.trim() + "'>" + contactData[0].children[0].innerText.trim() + "</a>"
+                }
+            }
+        })
+
 }
 $(window).load(function () {
     if (document.getElementById("clsHeader") !== null) { document.getElementById("clsHeader").style.visibility = "hidden" }
