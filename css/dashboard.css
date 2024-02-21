@@ -21,6 +21,15 @@
     #profileHeader a:first-child {
         float: left;
         padding-top: 5px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    #profileHeader a:nth-child(3) {
+        float: right;
+        padding-top: 5px;
+        padding-right: 10px;
+        padding-left: 10px;
     }
 
 #profileHeader span:nth-child(2) {
@@ -36,8 +45,21 @@
     padding-top: 5px;
 }
 
-#notificationHeader:hover, #documentsHeader:hover, #contactsHeader:hover, #hoursHeader:hover, #profileHeader:hover {
-    background-color:lightsteelblue;
+#notificationHeader:after, #documentsHeader:after, #contactsHeader:after, #hoursHeader:after {
+    font-family: 'FontAwesome';
+    font-size: 1.25em;
+    content: "\f056";
+    padding-right: 10px;
+    padding-left: 10px;
+    float: right;
+}
+
+#notificationHeader.collapsed:after, #documentsHeader.collapsed:after, #contactsHeader.collapsed:after, #hoursHeader.collapsed:after {
+    content: "\f055";
+}
+
+#notificationHeader:hover, #documentsHeader:hover, #contactsHeader:hover, #hoursHeader:hover {
+    background-color: lightsteelblue;
     color: white;
 }
 
@@ -52,6 +74,8 @@
         margin-left: 10px;
     }
 
+
+
 #recentEmails .card-header, #recentforSale .card-header, #recentPosts .card-header, #recentNews .card-header {
     display: none
 }
@@ -63,6 +87,10 @@
     margin-left: 15px;
     display: block;
 }
+
+
+
+
 
 #recentEmails .card-header:before {
     font-family: 'FontAwesome';

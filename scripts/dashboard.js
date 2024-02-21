@@ -1,10 +1,18 @@
-document.getElementsByClassName("clsHeader")[0].style.visibility = "hidden"
+
 
 function showPopUp(popUpType) {
     let localText = "This will open a form to post to the " + popUpType + " discussion group."
-    if (popUpType == "webHelp") { location.href = pageLocation("/form/28118~327323/social-media-help") }
-    if (popUpType == "general") { (window.location.hostname == "localhost") ? alert(localText) : AV.EditorLauncher.discussionTopic('', '8364', '20703', 'new', 'New Topic', 'lnkAddTopic') }
-    if (popUpType == "recommendations") { (window.location.hostname == "localhost") ? alert(localText) : AV.EditorLauncher.discussionTopic('', '8030', '19301', 'new', 'New Topic', 'lnkAddTopic') }
+    if (popUpType == "webHelp") {
+        $.get(pageLocation("/news/28118~796584/my-woodbridge-page-help"), function () { })
+            .done(function (responseText) {
+                let helpText = new DOMParser().parseFromString(responseText, "text/html")
+                document.getElementById("appPopUpLabel").innerHTML = "My Woodbridge Page Help"
+                document.getElementById("popUpBody").innerHTML = helpText.getElementById("contentInner").children[2].innerHTML
+            })
+        if (!$("#appPopUp").is(":visible")) { $("#appPopUp").modal("show") }
+    }
+    //if (popUpType == "general") { (window.location.hostname == "localhost") ? alert(localText) : AV.EditorLauncher.discussionTopic('', '8364', '20703', 'new', 'New Topic', 'lnkAddTopic') }
+    //if (popUpType == "recommendations") { (window.location.hostname == "localhost") ? alert(localText) : AV.EditorLauncher.discussionTopic('', '8030', '19301', 'new', 'New Topic', 'lnkAddTopic') }
 }
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
@@ -13,7 +21,7 @@ function getResidentHomePage() {
     $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
-            document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-gear fa-fw fa-lg"
+            document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
             document.getElementById("profileHeader").getElementsByTagName("span")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
             let recentItems = myWoodbridge.getElementsByClassName("message")
             for (let p = 0; p < recentItems.length; p++) { getMessage(recentItems[p].getElementsByTagName("a")[0], p) }
@@ -217,12 +225,9 @@ function getContacts() {
     })
 }
 $(window).load(function () {
-    if (document.getElementById("resDisplayName") !== null) {
-        document.getElementById("resDisplayName").innerText = "My Woodbridge"
-    }
-    if (document.getElementsByClassName("association-name") !== null) {
-        document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge"
-    }
+    if (document.getElementById("clsHeader") !== null) { document.getElementById("clsHeader").style.visibility = "hidden" }
+    if (document.getElementById("resDisplayName") !== null) { document.getElementById("resDisplayName").innerText = "My Woodbridge" }
+    if (document.getElementsByClassName("association-name") !== null) { document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge" }
     getResidentHomePage()
     getProfilePage()
     getContacts()
@@ -232,6 +237,7 @@ $(window).load(function () {
     getForSaleOrFree()
 
     $("#appPopUp").on("hide.bs.modal", function () {
+        document.getElementById("appPopUpLabel").innerHTML = ""
         document.getElementById("popUpBody").innerHTML = ""
     })
     //$("#flyers, #newsletters").on("hide.bs.collapse", function () {
@@ -240,11 +246,13 @@ $(window).load(function () {
     //$("#flyers, #newsletters").on("show.bs.collapse", function () {
     //    this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-open-o fa-lg"
     //})
+   
+
     $("#card-notify,#card-docs, #card-contacts,#card-hours").on("show.bs.collapse", function () {
-        this.parentElement.getElementsByTagName("span")[2].className = "fa fa-minus-circle fa-lg"
+ /*       this.parentElement.getElementsByTagName("span")[2].className = "fa fa-minus-circle fa-lg"*/
     })
     $("#card-notify,#card-docs,#card-contacts,#card-hours").on("hide.bs.collapse", function () {
-        this.parentElement.getElementsByTagName("span")[2].className = "fa fa-plus-circle fa-lg"
+    /*    this.parentElement.getElementsByTagName("span")[2].className = "fa fa-plus-circle fa-lg"*/
     })
     setTimeout(function () {
         /*   localStorage.setItem("recentNotifications", document.getElementById("recentNotifications").innerHTML)*/

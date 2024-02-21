@@ -23,62 +23,53 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card mb-1">
-                            <div class="card-header border-success" id="profileHeader">
-                                <a href="javascript:showPopUp()" class="fa fa-refresh fa-spin fa-fw fa-lg"></a>
+                            <div class="card-header " id="profileHeader">
+                                <a href="javascript:showPopUp()" class="fa fa-refresh fa-spin fa-lg"></a>
                                 <span>Checking for new emails and event photos...</span>
-                                <a href="javascript:showPopUp('webHelp')">Portal and email help</a>
-                                <span class="fa fa-question-circle fa-fw fa-lg"></span>
+                                <a href="javascript:showPopUp('webHelp')" class="fa fa-question-circle fa-fw fa-lg"></a>
                             </div><div id="userProfile" class="card-body"></div>
                         </div>
                     </div>
                 </div>
-
                 <div title="Click on the title bar to show or hide the content." class="row">
                     <div class="col-md-12">
                         <div class="card mb-1">
-                            <div class="card-header border-success" data-toggle="collapse" data-target="#card-notify" aria-expanded="true" id="notificationHeader">
-                                <span class="fa fa-bell fa-lg"></span><span>Recent Notifications</span><span class="fa fa-minus-circle fa-lg" style="float:right; padding-top:5px"></span>
+                            <div class="card-header" data-toggle="collapse" data-target="#card-notify" aria-expanded="false" id="notificationHeader">
+                                <span class="fa fa-bell fa-lg"></span><span>Recent Notifications</span>
                             </div>
                             <div class="card-body collapse show" data-parent="#outerFrame" id="card-notify">
-                                <div id="recentNews">
-                                    <div class="card mb-0">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard1"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recentNews" id="newsCard1"><span></span></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard2"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recentNews" id="newsCard2"><span></span></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard3"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recentNews" id="newsCard3"><span></span></div>
-                                    </div>
+                                <div class="card mb-0" id="recentNews">
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard1"><span class="card-title"></span></div>
+                                    <div class="card-body collapse" data-parent="#recentNews" id="newsCard1"><span></span></div>
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard2"><span class="card-title"></span></div>
+                                    <div class="card-body collapse" data-parent="#recentNews" id="newsCard2"><span></span></div>
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard3"><span class="card-title"></span></div>
+                                    <div class="card-body collapse" data-parent="#recentNews" id="newsCard3"><span></span></div>
                                 </div>
-                                <div id="recentEmails">
-                                    <div class="card mb-0">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#emailCard1"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recentEmails" id="emailCard1"><span></span></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#emailCard2"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recentEmails" id="emailCard2"><span></span></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#emailCard3"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recentEmails" id="emailCard3"><span></span></div>
-                                    </div>
+                                <div class="card mb-0" id="recentEmails">
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#emailCard1"><span class="card-title"></span></div>
+                                    <div class="card-body collapse" data-parent="#recentEmails" id="emailCard1"><span></span></div>
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#emailCard2"><span class="card-title"></span></div>
+                                    <div class="card-body collapse" data-parent="#recentEmails" id="emailCard2"><span></span></div>
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#emailCard3"><span class="card-title"></span></div>
+                                    <div class="card-body collapse" data-parent="#recentEmails" id="emailCard3"><span></span></div>
                                 </div>
-                                <div id="recentPosts">
-                                    <div class="card mb-0">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#postsCard1"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recentPosts" id="postsCard1"><span></span><a href="#">Reply</a> | <a href="">View Comments</a></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#postsCard2"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recentPosts" id="postsCard2"><span></span><a href="#">Reply</a> | <a href="">View Comments</a></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#postsCard3"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recentPosts" id="postsCard3"><span></span><a href="#">Reply</a> | <a href="">View Comments</a></div>
-                                    </div>
+                                <div class="card mb-0" id="recentPosts">
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#postsCard1"><span class="card-title"></span></div>
+                                    <div class="card-body collapse" data-parent="#recentPosts" id="postsCard1"><span></span><a href="#">Reply</a> | <a href="">View Comments</a></div>
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#postsCard2"><span class="card-title"></span></div>
+                                    <div class="card-body collapse" data-parent="#recentPosts" id="postsCard2"><span></span><a href="#">Reply</a> | <a href="">View Comments</a></div>
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#postsCard3"><span class="card-title"></span></div>
+                                    <div class="card-body collapse" data-parent="#recentPosts" id="postsCard3"><span></span><a href="#">Reply</a> | <a href="">View Comments</a></div>
                                 </div>
-                                <div id="recentforSale">
-                                    <div class="card mb-0">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#forSaleCard1"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recentforSale" id="forSaleCard1"><span></span></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#forSaleCard2"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recentforSale" id="forSaleCard2"><span></span></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#forSaleCard3"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recentforSale" id="forSaleCard3"><span></span></div>
-                                    </div>
+
+                                <div class="card mb-0" id="recentforSale">
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#forSaleCard1"><span class="card-title"></span></div>
+                                    <div class="card-body collapse" data-parent="#recentforSale" id="forSaleCard1"><span></span></div>
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#forSaleCard2"><span class="card-title"></span></div>
+                                    <div class="card-body collapse" data-parent="#recentforSale" id="forSaleCard2"><span></span></div>
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#forSaleCard3"><span class="card-title"></span></div>
+                                    <div class="card-body collapse" data-parent="#recentforSale" id="forSaleCard3"><span></span></div>
                                 </div>
                             </div>
                         </div>
@@ -87,31 +78,25 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card mb-1">
-                            <div class="card-header border-success" data-toggle="collapse" data-target="#card-docs" aria-expanded="false" id="documentsHeader">
-                                <span class="fa fa-file-text-o fa-lg"></span><span>Recent Documents</span><span class="fa fa-plus-circle fa-lg" style="float:right; padding-top:5px"></span>
+                            <div class="card-header collapsed" data-toggle="collapse" data-target="#card-docs" aria-expanded="false" id="documentsHeader">
+                                <span class="fa fa-file-text-o fa-lg"></span><span>Recent Documents</span>
                             </div>
                             <div class="card-body collapse" data-parent="#outerFrame" id="card-docs">
-                                <div id="recentDocuments">
-                                    <div class="card mb-0">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#docCard"><span class="card-title">Activity and Event Flyers</span></div>
-                                        <div class="card-body collapse" data-parent="#recentDocuments" id="docCard"><span></span></div>
-                                    </div>
+                                <div class="card mb-0" id="recentDocuments">
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#docCard"><span class="card-title">Activity and Event Flyers</span></div>
+                                    <div class="card-body collapse" data-parent="#recentDocuments" id="docCard"><span></span></div>
                                 </div>
-                                <div id="recentNewsLetters">
-                                    <div class="card mb-0">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard"><span class="card-title">Woodbridge Life Newsletters</span></div>
-                                        <div class="card-body collapse" data-parent="#recentNewsLetters" id="newsCard"><span></span></div>
-                                    </div>
+                                <div class="card mb-0" id="recentNewsLetters">
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard"><span class="card-title">Woodbridge Life Newsletters</span></div>
+                                    <div class="card-body collapse" data-parent="#recentNewsLetters" id="newsCard"><span></span></div>
                                 </div>
-                                <div id="recentPhotos">
-                                    <div class="card mb-0">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#photoCard"><span class="card-title">Activity and Event Photos</span></div>
-                                        <div class="card-body collapse" data-parent="#recentPhotos" id="photoCard">
-                                            <div id="photoList" class="recentPhoto">
-                                                <div><a><img src="" /><br /><span></span></a></div>
-                                                <div><a><img src="" /><br /><span></span></a></div>
-                                                <div><a><img src="" /><br /><span></span></a></div>
-                                            </div>
+                                <div class="card mb-0" id="recentPhotos">
+                                    <div class="card-header collapsed" data-toggle="collapse" data-target="#photoCard"><span class="card-title">Activity and Event Photos</span></div>
+                                    <div class="card-body collapse" data-parent="#recentPhotos" id="photoCard">
+                                        <div id="photoList" class="recentPhoto">
+                                            <div><a><img src="" /><br /><span></span></a></div>
+                                            <div><a><img src="" /><br /><span></span></a></div>
+                                            <div><a><img src="" /><br /><span></span></a></div>
                                         </div>
                                     </div>
                                 </div>
@@ -122,8 +107,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card mb-1">
-                            <div class="card-header" data-toggle="collapse" data-target="#card-contacts" aria-expanded="false" id="contactsHeader">
-                                <span class="fa fa-address-card-o fa-lg"></span><span>Lakeview Clubhouse Office Contacts</span><span class="fa fa-plus-circle fa-lg" style="float:right; padding-top:5px"></span>
+                            <div class="card-header collapsed" data-toggle="collapse" data-target="#card-contacts" aria-expanded="false" id="contactsHeader">
+                                <span class="fa fa-address-card-o fa-lg"></span><span>Lakeview Clubhouse Office Contacts</span>
                             </div>
                             <div class="card-body collapse" data-parent="#outerFrame" id="card-contacts">
                                 <table class="table table-striped table-hover table-sm k-table" id="contactsTable">
@@ -144,8 +129,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card mb-1">
-                            <div class="card-header" data-toggle="collapse" data-target="#card-hours" aria-expanded="false" id="hoursHeader">
-                                <span class="fa fa fa-clock-o fa-lg"></span><span>Lakeview Clubhouse Office Hours</span><span class="fa fa-plus-circle fa-lg" style="float:right; padding-top:5px"></span>
+                            <div class="card-header collapsed" data-toggle="collapse" data-target="#card-hours" aria-expanded="false" id="hoursHeader">
+                                <span class="fa fa fa-clock-o fa-lg"></span><span>Lakeview Clubhouse Office Hours</span>
                             </div>
                             <div class="card-body collapse" data-parent="#outerFrame" id="card-hours"></div>
                         </div>
