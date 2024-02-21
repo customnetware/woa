@@ -222,7 +222,7 @@ function getContacts() {
                 contactList[c + 1].children[1].innerText = contactTitle[0].innerText.trim()
                 contactList[c + 1].children[2].innerText = (contactData.length !== 3) ? contactData[1].innerText.trim() : contactData[1].innerText.trim() + " " + contactData[2].innerText.trim()
                 contactList[c + 1].children[3].innerHTML = "<a href='mailto:" + contactData[0].children[0].innerText.trim() + "'>" + contactData[0].children[0].innerText.trim() + "</a>"
-            } catch { }
+            } catch { contactList[c + 1].children[0].style.display = "none" }
         }
     })
 }
