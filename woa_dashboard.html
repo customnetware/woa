@@ -26,7 +26,9 @@
                             <div class="card-header " id="profileHeader">
                                 <a href="javascript:showPopUp()" class="fa fa-refresh fa-spin fa-lg"></a>
                                 <span>Checking for new emails and event photos...</span>
-                                <a href="javascript:showPopUp('webHelp')" class="fa fa-question-circle fa-fw fa-lg"></a>
+                                <a href="javascript:showPopUp(0)" class="fa fa-question-circle fa-fw fa-lg"></a>
+                                <a href="javascript:showPopUp(1)" class="fa fa-comment fa-fw fa-lg"></a>
+                                <a href="javascript:showPopUp(2)" class="fa fa-envelope fa-fw fa-lg"></a>
                             </div><div id="userProfile" class="card-body"></div>
                         </div>
                     </div>
@@ -40,11 +42,11 @@
                             <div class="card-body collapse show" data-parent="#outerFrame" id="card-notify">
                                 <div class="card mb-0" id="recentNews">
                                     <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard1"><span class="card-title"></span></div>
-                                    <div class="card-body collapse" data-parent="#recentNews" id="newsCard1"><span></span></div>
+                                    <div class="card-body collapse" data-parent="#notificationHeader" id="newsCard1"><span></span></div>
                                     <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard2"><span class="card-title"></span></div>
-                                    <div class="card-body collapse" data-parent="#recentNews" id="newsCard2"><span></span></div>
+                                    <div class="card-body collapse" data-parent="#notificationHeader" id="newsCard2"><span></span></div>
                                     <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard3"><span class="card-title"></span></div>
-                                    <div class="card-body collapse" data-parent="#recentNews" id="newsCard3"><span></span></div>
+                                    <div class="card-body collapse" data-parent="#notificationHeader" id="newsCard3"><span></span></div>
                                 </div>
                                 <div class="card mb-0" id="recentEmails">
                                     <div class="card-header collapsed" data-toggle="collapse" data-target="#emailCard1"><span class="card-title"></span></div>
@@ -62,7 +64,6 @@
                                     <div class="card-header collapsed" data-toggle="collapse" data-target="#postsCard3"><span class="card-title"></span></div>
                                     <div class="card-body collapse" data-parent="#recentPosts" id="postsCard3"><span></span><a href="#">Reply</a> | <a href="">View Comments</a></div>
                                 </div>
-
                                 <div class="card mb-0" id="recentforSale">
                                     <div class="card-header collapsed" data-toggle="collapse" data-target="#forSaleCard1"><span class="card-title"></span></div>
                                     <div class="card-body collapse" data-parent="#recentforSale" id="forSaleCard1"><span></span></div>
@@ -152,7 +153,7 @@
                 </div>
             </div>
         </div>
-        <script src="scripts/dashboard.js"></script>
+        <script src="https://customnetware.github.io/woa/scripts/dashboard.js"></script>
         <!--https://customnetware.github.io/woa/-->
     </div>
 </body>

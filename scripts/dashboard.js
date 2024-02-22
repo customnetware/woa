@@ -1,18 +1,19 @@
 
 
-function showPopUp(popUpType) {
-    let localText = "This will open a form to post to the " + popUpType + " discussion group."
-    if (popUpType == "webHelp") {
-        $.get(pageLocation("/news/28118~796584/my-woodbridge-page-help"), function () { })
-            .done(function (responseText) {
-                let helpText = new DOMParser().parseFromString(responseText, "text/html")
-                document.getElementById("appPopUpLabel").innerHTML = "My Woodbridge Page Help"
-                document.getElementById("popUpBody").innerHTML = helpText.getElementById("contentInner").children[2].innerHTML
-            })
-        if (!$("#appPopUp").is(":visible")) { $("#appPopUp").modal("show") }
+function showPopUp(pageContent) {
+    const helpFiles = {
+        "My Woodbridge Page Help": "/news/28118~796584/my-woodbridge-page-help",
+        "Woodbridge HOA Discussion Groups": "/news/28118~796608/woodbridge-hoa-discussion-groups",
+        "Woodbridge HOA Online Contact Forms": "/news/28118~796609/woodbride-hoa-online-contact-forms"
     }
-    //if (popUpType == "general") { (window.location.hostname == "localhost") ? alert(localText) : AV.EditorLauncher.discussionTopic('', '8364', '20703', 'new', 'New Topic', 'lnkAddTopic') }
-    //if (popUpType == "recommendations") { (window.location.hostname == "localhost") ? alert(localText) : AV.EditorLauncher.discussionTopic('', '8030', '19301', 'new', 'New Topic', 'lnkAddTopic') }
+    const helpPages = Object.keys(helpFiles)
+    document.getElementById("appPopUpLabel").innerHTML = helpPages[pageContent]
+    $.get(pageLocation(helpFiles[helpPages[pageContent]]), function () { })
+        .done(function (responseText) {
+            let helpText = new DOMParser().parseFromString(responseText, "text/html")
+            document.getElementById("popUpBody").innerHTML = helpText.getElementById("contentInner").children[2].innerHTML
+        })
+    if (!$("#appPopUp").is(":visible")) { $("#appPopUp").modal("show") }
 }
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString

@@ -19,31 +19,26 @@
 }
 
     #profileHeader a:first-child {
-        float: left;
         padding-top: 5px;
-        padding-right: 10px;
+        padding-right: 5px;
         padding-left: 10px;
     }
-
     #profileHeader a:nth-child(3) {
+        float:right;
+        padding-top: 5px;
+        margin-left: 0px;
+    }
+    #profileHeader a:nth-child(4) {
         float: right;
         padding-top: 5px;
-        padding-right: 10px;
-        padding-left: 10px;
+        margin-right: 10px;
+    }
+    #profileHeader a:nth-child(5) {
+        float: right;
+        padding-top: 5px;
+        margin-right: 10px;
     }
 
-#profileHeader span:nth-child(2) {
-    float: left;
-}
-
-#profileHeader a:nth-child(3) {
-    float: right;
-}
-
-#profileHeader span:nth-child(4) {
-    float: right;
-    padding-top: 5px;
-}
 
 #notificationHeader:after, #documentsHeader:after, #contactsHeader:after, #hoursHeader:after {
     font-family: 'FontAwesome';
