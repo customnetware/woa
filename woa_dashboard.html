@@ -24,7 +24,7 @@
                     <div class="col-md-12">
                         <div class="card mb-1">
                             <div class="card-header " id="profileHeader">
-                                <a href="javascript:showPopUp()" class="fa fa-refresh fa-spin fa-lg"></a>
+                                <a class="fa fa-refresh fa-spin fa-lg"></a>
                                 <span>Checking for new emails and event photos...</span>
                                 <a href="javascript:showPopUp(0)" class="fa fa-question-circle fa-fw fa-lg"></a>
                                 <a href="javascript:showPopUp(1)" class="fa fa-comment fa-fw fa-lg"></a>
@@ -148,7 +148,11 @@
                             <span class="fa fa-times fa-lg" aria-hidden="true"></span>
                         </button>
                     </div>
-                    <div class="modal-body" id="popUpBody"></div>
+                    <div class="modal-body" id="popUpBody">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">Please wait...</div>
+                        </div>
+                    </div>
                     <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
                 </div>
             </div>

@@ -1,5 +1,3 @@
-
-
 function showPopUp(pageContent) {
     const helpFiles = {
         "My Woodbridge Page Help": "/news/28118~796584/my-woodbridge-page-help",
@@ -8,6 +6,7 @@ function showPopUp(pageContent) {
     }
     const helpPages = Object.keys(helpFiles)
     document.getElementById("appPopUpLabel").innerHTML = helpPages[pageContent]
+    sessionStorage.setItem("waitText", document.getElementById("popUpBody").innerHTML)
     $.get(pageLocation(helpFiles[helpPages[pageContent]]), function () { })
         .done(function (responseText) {
             let helpText = new DOMParser().parseFromString(responseText, "text/html")
@@ -62,7 +61,11 @@ function getNewsAndAnnouncements() {
         })
 }
 function showComments(selectedPostID, groupID) {
+    let commentArea = document.getElementById("popUpBody")
+    while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
     $.get(pageLocation("/Discussion/28118~" + groupID), function () { })
+
+
         .done(function (responseText) {
             let forum = new DOMParser().parseFromString(responseText, "text/html")
             let comments = forum.getElementById(selectedPostID.replace("lnkTopicReply", "contents"))
@@ -79,9 +82,10 @@ function showComments(selectedPostID, groupID) {
                 authorSpan.className = "commentSpan"
                 replySpan.innerHTML = replyText[p].innerText.trim() + "<br />"
                 authorSpan.innerHTML = replyAuthor[p + 1].innerText.trim() + "<hr />"
-                document.getElementById("popUpBody").appendChild(replySpan)
-                document.getElementById("popUpBody").appendChild(authorSpan)
+                commentArea.appendChild(replySpan)
+                commentArea.appendChild(authorSpan)
             }
+
             if (!$("#appPopUp").is(":visible")) { $("#appPopUp").modal("show") }
         })
 }
@@ -232,7 +236,7 @@ function getContacts() {
         })
 }
 $(window).load(function () {
-    document.getElementsByClassName("clsHeader")[0].style.display = "none"
+    if (document.getElementsByClassName("clsHeader").length > 0) { document.getElementsByClassName("clsHeader")[0].style.display = "none" }
     if (document.getElementById("resDisplayName") !== null) { document.getElementById("resDisplayName").innerText = "My Woodbridge" }
     if (document.getElementsByClassName("association-name") !== null) { document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge" }
     getResidentHomePage()
@@ -243,9 +247,9 @@ $(window).load(function () {
     getDiscussionGroups()
     getForSaleOrFree()
 
-    $("#appPopUp").on("hide.bs.modal", function () {
+    $("#appPopUp").on("hidden.bs.modal", function () {
         document.getElementById("appPopUpLabel").innerHTML = ""
-        document.getElementById("popUpBody").innerHTML = ""
+        document.getElementById("popUpBody").innerHTML = sessionStorage.getItem("waitText")
     })
     //$("#flyers, #newsletters").on("hide.bs.collapse", function () {
     //    this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
@@ -253,14 +257,12 @@ $(window).load(function () {
     //$("#flyers, #newsletters").on("show.bs.collapse", function () {
     //    this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-open-o fa-lg"
     //})
-
-
-    $("#card-notify,#card-docs, #card-contacts,#card-hours").on("show.bs.collapse", function () {
-        /*       this.parentElement.getElementsByTagName("span")[2].className = "fa fa-minus-circle fa-lg"*/
-    })
-    $("#card-notify,#card-docs,#card-contacts,#card-hours").on("hide.bs.collapse", function () {
-        /*    this.parentElement.getElementsByTagName("span")[2].className = "fa fa-plus-circle fa-lg"*/
-    })
+    //$("#card-notify,#card-docs, #card-contacts,#card-hours").on("show.bs.collapse", function () {
+    //    /*       this.parentElement.getElementsByTagName("span")[2].className = "fa fa-minus-circle fa-lg"*/
+    //})
+    //$("#card-notify,#card-docs,#card-contacts,#card-hours").on("hide.bs.collapse", function () {
+    //    /*    this.parentElement.getElementsByTagName("span")[2].className = "fa fa-plus-circle fa-lg"*/
+    //})
     setTimeout(function () {
         /*   localStorage.setItem("recentNotifications", document.getElementById("recentNotifications").innerHTML)*/
         //localStorage.setItem("timeOfNotifications", new Date().getTime())
