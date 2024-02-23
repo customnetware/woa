@@ -1,21 +1,16 @@
+function pageLocation(URLString) {
+    return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
+}
 function showPopUp(pageContent) {
-    const helpFiles = {
-        "My Woodbridge Page Help": "/news/28118~796584/my-woodbridge-page-help",
-        "Woodbridge HOA Discussion Groups": "/news/28118~796608/woodbridge-hoa-discussion-groups",
-        "Woodbridge HOA Online Contact Forms": "/news/28118~796609/woodbride-hoa-online-contact-forms"
-    }
-    const helpPages = Object.keys(helpFiles)
-    document.getElementById("appPopUpLabel").innerHTML = helpPages[pageContent]
+    const contentPage = ["/news/28118~796584", "/news/28118~796608", "/news/28118~796609"]
     sessionStorage.setItem("waitText", document.getElementById("popUpBody").innerHTML)
-    $.get(pageLocation(helpFiles[helpPages[pageContent]]), function () { })
+    $.get(pageLocation(contentPage[pageContent]), function () { })
         .done(function (responseText) {
             let helpText = new DOMParser().parseFromString(responseText, "text/html")
+            document.getElementById("appPopUpLabel").innerHTML = helpText.getElementsByClassName("clsHeader")[0].innerText
             document.getElementById("popUpBody").innerHTML = helpText.getElementById("contentInner").children[2].innerHTML
         })
     if (!$("#appPopUp").is(":visible")) { $("#appPopUp").modal("show") }
-}
-function pageLocation(URLString) {
-    return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
 }
 function getResidentHomePage() {
     $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
@@ -45,8 +40,7 @@ function getMessage(rawMessage, cardID) {
         })
 }
 function getNewsAndAnnouncements() {
-
-    $.get(pageLocation("news/list/28118/news-announcements"), function () { })
+        $.get(pageLocation("news/list/28118"), function () { })
         .done(function (responseText) {
             let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
             let articleTitle = newsArticles.getElementsByClassName("clsHeader")
@@ -54,18 +48,24 @@ function getNewsAndAnnouncements() {
             for (let p = 0; p < 3; p++) {
                 if (p < articleTitle.length) {
                     document.getElementById("recentNews").getElementsByClassName("card-header")[p].style.display = "block"
-                    document.getElementById("recentNews").getElementsByClassName("card-title")[p].innerText = articleTitle[p].innerText
+                    document.getElementById("recentNews").getElementsByClassName("card-title")[p].innerText = articleTitle[p].innerText.trim()
                     document.getElementById("recentNews").getElementsByClassName("card-body")[p].getElementsByTagName("span")[0].innerHTML = articleContent[p].innerHTML
+                    getArticle(articleTitle[p].parentElement.getElementsByTagName("a")[1].href, p)
                 }
             }
+        })
+}
+function getArticle(pageContent, pageNum) {
+    $.get(pageLocation(pageContent), function () { })
+        .done(function (responseText) {
+            let selectedArticle = new DOMParser().parseFromString(responseText, "text/html")
+            document.getElementById("recentNews").getElementsByClassName("card-body")[pageNum].getElementsByTagName("span")[0].innerHTML = selectedArticle.getElementById("contentInner").children[2].innerHTML
         })
 }
 function showComments(selectedPostID, groupID) {
     let commentArea = document.getElementById("popUpBody")
     while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
     $.get(pageLocation("/Discussion/28118~" + groupID), function () { })
-
-
         .done(function (responseText) {
             let forum = new DOMParser().parseFromString(responseText, "text/html")
             let comments = forum.getElementById(selectedPostID.replace("lnkTopicReply", "contents"))
@@ -85,7 +85,6 @@ function showComments(selectedPostID, groupID) {
                 commentArea.appendChild(replySpan)
                 commentArea.appendChild(authorSpan)
             }
-
             if (!$("#appPopUp").is(":visible")) { $("#appPopUp").modal("show") }
         })
 }
@@ -118,7 +117,6 @@ function getDiscussionGroups() {
                 }
             }
         }
-
         if (forumArray.length > 0) {
             forumArray.sort((a, b) => { return a.postSort - b.postSort })
             forumArray.reverse()
@@ -137,9 +135,9 @@ function getDiscussionGroups() {
 function getProfilePage() {
     let profileImg = document.createElement("img")
     let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
-    let grp1 = $.get(pageLocation("/news/28118~792554/webmaster-only"), function () { })
+    let grp1 = $.get(pageLocation("/news/28118~792554"), function () { })
     let grp2 = $.get(pageLocation("/Member/28118~" + profileID), function () { })
-    let grp3 = $.get(pageLocation("/news/28118~795372/lakeview-clubhouse-and-office-hours"), function () { })
+    let grp3 = $.get(pageLocation("/news/28118~795372"), function () { })
     $.when(grp1, grp2, grp3).done(function (responseText1, responseText2, responseText3) {
         let userContent = new DOMParser().parseFromString(responseText1, "text/html")
         let imageFile = new DOMParser().parseFromString(responseText2, "text/html")
@@ -154,24 +152,25 @@ function getProfilePage() {
     })
 }
 function getResourceCenter() {
-    let resourceFolder = [{ pageID: "docCard", folderID: "540434" }, { pageID: "newsCard", folderID: "951754" }]
     $.get(pageLocation("/resourcecenter/28118/resource-center"), function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
-            for (let f = 0; f < resourceFolder.length; f++) {
-                if (documents.getElementById("contents" + resourceFolder[f].folderID) !== null) {
-                    let documentName = documents.getElementById("contents" + resourceFolder[f].folderID).querySelectorAll("[id^=d]")
-                    let documentLink = documents.getElementById("contents" + resourceFolder[f].folderID).querySelectorAll('a[title="View On-line"]')
-                    for (p = documentName.length - 1; p >= 0; p--) {
-
-                        let selectedDoc = document.createElement("a")
-                        selectedDoc.innerHTML = documentName[p].innerHTML
-                        selectedDoc.href = documentLink[p].href
-
-                        document.getElementById(resourceFolder[f].pageID).getElementsByTagName("span")[0].appendChild(selectedDoc)
-                        if (resourceFolder[f].pageID == "newsCard" && document.getElementById(resourceFolder[f].pageID).getElementsByTagName("span")[0].children.length > 5) { break }
-                    }
-                }
+            let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
+            let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
+            for (let p = 0; p < documentName.length; p++) {
+                let selectedDoc = document.createElement("a")
+                selectedDoc.innerHTML = documentName[p].innerHTML
+                selectedDoc.href = documentLink[p].href
+                document.getElementById("docCard").getElementsByTagName("span")[0].appendChild(selectedDoc)
+            }
+            let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
+            let newsLetterLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
+            for (p = newsLetterName.length - 1; p >= 0; p--) {
+                let selectedDoc = document.createElement("a")
+                selectedDoc.innerHTML = newsLetterName[p].innerHTML
+                selectedDoc.href = newsLetterLink[p].href
+                document.getElementById("newsCard").getElementsByTagName("span")[0].appendChild(selectedDoc)
+                if (document.getElementById("newsCard").getElementsByTagName("span")[0].children.length > 5) { break }
             }
         })
 }
