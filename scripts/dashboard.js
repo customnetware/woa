@@ -230,12 +230,17 @@ function getContacts() {
                     let selectedData = contactData[0].getElementsByClassName("contactLabel")
                     if (selectedData.length > 0) {
                         for (let p = 0; p < selectedData.length; p++) {
-                            if (selectedData[p].innerText == "Work") {
-                                currentContact[2].innerText = selectedData[p].nextElementSibling.innerText.trim()
-                            }
                             if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
                                 currentContact[3].innerText = selectedData[p].nextElementSibling.children[0].innerText
                             }
+                            if (selectedData[p].innerText == "Work") {
+                                currentContact[2].innerText = selectedData[p].nextElementSibling.innerText.trim()
+                            }
+                            if (selectedData[p].innerText == "Other") {
+                                currentContact[2].innerText = currentContact[2].innerText+" "+selectedData[p].nextElementSibling.innerText.trim()
+                          
+                            }
+
                         }
                     }
                 }
