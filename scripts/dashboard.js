@@ -40,7 +40,7 @@ function getMessage(rawMessage, cardID) {
         })
 }
 function getNewsAndAnnouncements() {
-        $.get(pageLocation("news/list/28118"), function () { })
+    $.get(pageLocation("news/list/28118"), function () { })
         .done(function (responseText) {
             let newsArticles = new DOMParser().parseFromString(responseText, "text/html")
             let articleTitle = newsArticles.getElementsByClassName("clsHeader")
@@ -222,14 +222,22 @@ function getContacts() {
 
                 let contactName = contactCards[c].getElementsByClassName("clsDMHeader")
                 let contactTitle = contactCards[c].getElementsByClassName("clsHeader")
-                let contactData = contactCards[c].getElementsByClassName("contactData")
-
-                if (contactTitle.length > 0) { contactList[c + 1].children[1].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactTitle[0].innerText.trim() + "</a>" }
-                if (contactName.length > 1) { contactList[c + 1].children[0].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactName[1].children[0].innerText.trim() + "</a>" }
-
-                if (contactData.length > 1) {
-                    contactList[c + 1].children[2].innerText = (contactData.length !== 3) ? contactData[1].innerText.trim() : contactData[1].innerText.trim() + " " + contactData[2].innerText.trim()
-                    contactList[c + 1].children[3].innerHTML = "<a href='mailto:" + contactData[0].children[0].innerText.trim() + "'>" + contactData[0].children[0].innerText.trim() + "</a>"
+                let contactData = contactCards[c].getElementsByClassName("contactComms")
+                let currentContact = contactList[c + 1].children
+                if (contactName.length > 1) { currentContact[0].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactName[1].children[0].innerText.trim() + "</a>" }
+                if (contactTitle.length > 0) { currentContact[1].innerHTML = "<a href='" + pageLocation("/Member/28118~" + contactArray[c]) + "'>" + contactTitle[0].innerText.trim() + "</a>" }
+                if (contactData.length > 0) {
+                    let selectedData = contactData[0].getElementsByClassName("contactLabel")
+                    if (selectedData.length > 0) {
+                        for (let p = 0; p < selectedData.length; p++) {
+                            if (selectedData[p].innerText == "Work") {
+                                currentContact[2].innerText = selectedData[p].nextElementSibling.innerText.trim()
+                            }
+                            if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
+                                currentContact[3].innerText = selectedData[p].nextElementSibling.children[0].innerText
+                            }
+                        }
+                    }
                 }
             }
         })
