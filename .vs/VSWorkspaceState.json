@@ -2,9 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\css",
-    "\\Messenger\\MessageView\\28118~13641364",
-    "\\news"
+    "\\Discussion",
+    "\\Discussion\\list",
+    "\\Discussion\\list\\28118",
+    "\\Member",
+    "\\news",
+    "\\scripts"
   ],
-  "SelectedNode": "\\news\\28118~796584.html",
   "PreviewInSolutionExplorer": false
 }

@@ -2,9 +2,9 @@ function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
 }
 function showPopUp(pageContent) {
-    const contentPage = ["/news/28118~796584", "/news/28118~796608", "/news/28118~796609"]
+    const contentPage = ["796584", "796608", "796609"]
     sessionStorage.setItem("waitText", document.getElementById("popUpBody").innerHTML)
-    $.get(pageLocation(contentPage[pageContent]), function () { })
+    $.get(pageLocation("/news/28118~" + contentPage[pageContent]), function () { })
         .done(function (responseText) {
             let helpText = new DOMParser().parseFromString(responseText, "text/html")
             document.getElementById("appPopUpLabel").innerHTML = helpText.getElementsByClassName("clsHeader")[0].innerText
@@ -142,12 +142,10 @@ function getProfilePage() {
         let userContent = new DOMParser().parseFromString(responseText1, "text/html")
         let imageFile = new DOMParser().parseFromString(responseText2, "text/html")
         let officeHours = new DOMParser().parseFromString(responseText3, "text/html")
-
-        document.getElementById("userProfile").innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
-
+        profileImg.className = "rounded float-left img-fluid"
         profileImg.src = imageFile.getElementsByTagName("img")[0].src
+        document.getElementById("userProfile").innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
         document.getElementById("userProfile").insertBefore(profileImg, document.getElementById("userProfile").firstChild)
-
         document.getElementById("card-hours").innerHTML = officeHours.getElementById("contentInner").children[2].innerHTML
     })
 }
@@ -155,6 +153,7 @@ function getResourceCenter() {
     $.get(pageLocation("/resourcecenter/28118/resource-center"), function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
+
             let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
             let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
             for (let p = 0; p < documentName.length; p++) {
@@ -163,6 +162,7 @@ function getResourceCenter() {
                 selectedDoc.href = documentLink[p].href
                 document.getElementById("docCard").getElementsByTagName("span")[0].appendChild(selectedDoc)
             }
+
             let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
             let newsLetterLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
             for (p = newsLetterName.length - 1; p >= 0; p--) {
@@ -219,7 +219,6 @@ function getContacts() {
             let contactCards = [contactCard1, contactCard2, contactCard3, contactCard4, contactCard5, contactCard6]
             let contactList = document.getElementById("contactsTable").getElementsByTagName("tr")
             for (let c = 0; c < contactCards.length; c++) {
-
                 let contactName = contactCards[c].getElementsByClassName("clsDMHeader")
                 let contactTitle = contactCards[c].getElementsByClassName("clsHeader")
                 let contactData = contactCards[c].getElementsByClassName("contactComms")
@@ -237,10 +236,8 @@ function getContacts() {
                                 currentContact[2].innerText = selectedData[p].nextElementSibling.innerText.trim()
                             }
                             if (selectedData[p].innerText == "Other") {
-                                currentContact[2].innerText = currentContact[2].innerText+" "+selectedData[p].nextElementSibling.innerText.trim()
-                          
+                                currentContact[2].innerText = currentContact[2].innerText + " " + selectedData[p].nextElementSibling.innerText.trim()
                             }
-
                         }
                     }
                 }
@@ -250,7 +247,7 @@ function getContacts() {
 $(window).load(function () {
     if (document.getElementsByClassName("clsHeader").length > 0) { document.getElementsByClassName("clsHeader")[0].style.display = "none" }
     if (document.getElementById("resDisplayName") !== null) { document.getElementById("resDisplayName").innerText = "My Woodbridge" }
-    if (document.getElementsByClassName("association-name") !== null) { document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge" }
+    if (document.getElementsByClassName("association-name").length > 0) { document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge" }
     getResidentHomePage()
     getProfilePage()
     getContacts()
@@ -258,27 +255,12 @@ $(window).load(function () {
     getNewsAndAnnouncements()
     getDiscussionGroups()
     getForSaleOrFree()
-
     $("#appPopUp").on("hidden.bs.modal", function () {
         document.getElementById("appPopUpLabel").innerHTML = ""
         document.getElementById("popUpBody").innerHTML = sessionStorage.getItem("waitText")
     })
-    //$("#flyers, #newsletters").on("hide.bs.collapse", function () {
-    //    this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-o fa-lg"
-    //})
-    //$("#flyers, #newsletters").on("show.bs.collapse", function () {
-    //    this.parentElement.getElementsByTagName("div")[0].getElementsByTagName("span")[0].className = "fa fa-folder-open-o fa-lg"
-    //})
-    //$("#card-notify,#card-docs, #card-contacts,#card-hours").on("show.bs.collapse", function () {
-    //    /*       this.parentElement.getElementsByTagName("span")[2].className = "fa fa-minus-circle fa-lg"*/
-    //})
-    //$("#card-notify,#card-docs,#card-contacts,#card-hours").on("hide.bs.collapse", function () {
-    //    /*    this.parentElement.getElementsByTagName("span")[2].className = "fa fa-plus-circle fa-lg"*/
-    //})
     setTimeout(function () {
-        /*   localStorage.setItem("recentNotifications", document.getElementById("recentNotifications").innerHTML)*/
-        //localStorage.setItem("timeOfNotifications", new Date().getTime())
-        //localStorage.setItem("recentFlyers", document.getElementById("flyers").innerHTML)
-        //localStorage.setItem("timeOfFlyers", new Date().getTime())
+        localStorage.setItem("recentNotifications", document.getElementById("recent-items").innerHTML)
+        localStorage.setItem("timeOfNotifications", new Date().getTime())
     }, 2000)
 })

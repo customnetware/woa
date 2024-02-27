@@ -1,8 +1,17 @@
-﻿#customContainer{}
-#customContainer .card-header {
-    cursor: pointer;
-    padding: 5px;
+﻿.card-title:hover {
+   
+    color: blue;
+    font-weight:600;
 }
+
+
+#customContainer {
+}
+
+    #customContainer .card-header {
+        cursor: pointer;
+        padding: 5px;
+    }
 
 #outerFrame {
     -webkit-box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
@@ -26,6 +35,18 @@
         float: left;
         margin-left: 10px;
     }
+
+#userProfile img {
+  width: 125px;
+  height: auto;
+
+    filter: drop-shadow(5px 5px 5px grey);
+    float: left;
+    margin-right: 15px;
+    padding-left: 15px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
 
 #notificationHeader:after, #documentsHeader:after, #contactsHeader:after, #hoursHeader:after {
     font-family: 'FontAwesome';
@@ -143,17 +164,6 @@
 #recentDocuments .card-header.collapsed:before, #recentNewsLetters .card-header.collapsed:before, #recentPhotos .card-header.collapsed:before {
     content: "\f114";
 }
-
-#userProfile img {
-    height: 120px;
-    filter: drop-shadow(5px 5px 5px grey);
-    float: left;
-    padding-right: 15px;
-    padding-left: 15px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-}
-
 #flyers span, #newsletters span {
     padding-left: 10px;
     padding-bottom: 5px;
