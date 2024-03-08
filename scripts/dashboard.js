@@ -253,9 +253,7 @@ function showCalendar() {
     console.log("loading iframe")
     let eventTable = document.getElementById("eventTable")
     let woaEvents = document.getElementById("WOACalendar")
-    woaEvents.src ="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"
-
-
+    woaEvents.src = "https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"
     woaEvents.addEventListener("load", function () {
         console.log("iframe loaded")
 
@@ -269,7 +267,6 @@ function showCalendar() {
                 let todaysEvents = woaEventsList.getElementsByClassName("event")
 
                 for (let d = 0; d < todaysEvents.length; d++) {
-
                     let newRow = document.createElement("tr")
                     let newCol1 = document.createElement("td")
                     let newCol2 = document.createElement("td")
@@ -277,11 +274,6 @@ function showCalendar() {
 
                     newCol1.innerText = todaysEvents[d].children[1].innerText
                     newCol2.innerText = todaysEvents[d].children[0].innerText
-                    newCol3.innerText = ""
-                    newRow.appendChild(newCol1)
-                    newRow.appendChild(newCol2)
-                    newRow.appendChild(newCol3)
-
                     $.get(todaysEvents[d].getElementsByTagName("a")[0].href, function () { })
                         .done(function (responseText) {
                             let woaEvent = new DOMParser().parseFromString(responseText, "text/html")
@@ -290,7 +282,13 @@ function showCalendar() {
                         .fail(function () {
                             newCol3.innerText = "Event Location Not Avaiable"
                         })
-                    eventTable.appendChild(newRow)
+                        .always(function () {
+                            newRow.appendChild(newCol1)
+                            newRow.appendChild(newCol2)
+                            newRow.appendChild(newCol3)
+                            eventTable.appendChild(newRow)
+                        })
+
                 }
 
             }
