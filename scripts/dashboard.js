@@ -257,13 +257,15 @@ function showCalendar() {
 
 
     woaEvents.addEventListener("load", function () {
-
+        console.log("iframe loaded")
 
         let woaEventsList = woaEvents.contentWindow.document
-        let testInterval = setInterval(function () {
+        console.log("start looping")
+        testInterval = setInterval(function () {
+            console.log("still looping")
             if (woaEventsList.getElementsByClassName("event").length > 0) {
                 clearInterval(testInterval)
-                console.log("still looping")
+                console.log("end looping")
                 let todaysEvents = woaEventsList.getElementsByClassName("event")
 
                 for (let d = 0; d < todaysEvents.length; d++) {
