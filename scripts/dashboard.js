@@ -262,6 +262,7 @@ function showCalendar() {
         let testInterval = setInterval(function () {
             if (woaEventsList.getElementsByClassName("event").length > 0) {
                 clearInterval(testInterval)
+                console.log("still looping")
                 let todaysEvents = woaEventsList.getElementsByClassName("event")
 
                 for (let d = 0; d < todaysEvents.length; d++) {
