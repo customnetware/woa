@@ -288,9 +288,7 @@ function showCalendar() {
                             newRow.appendChild(newCol3)
                             eventTable.appendChild(newRow)
                         })
-
                 }
-
             }
         }, 1000)
     })
