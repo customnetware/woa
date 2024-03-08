@@ -21,6 +21,10 @@ function getResidentHomePage() {
             let recentItems = myWoodbridge.getElementsByClassName("message")
             for (let p = 0; p < recentItems.length; p++) { getMessage(recentItems[p].getElementsByTagName("a")[0], p) }
             showPhotos(myWoodbridge)
+            localStorage.setItem("pageTime", new Date().getTime())
+            localStorage.setItem("pageName", myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML)
+            localStorage.setItem("pageEmails", document.getElementById("recentEmails").innerHTML)
+            localStorage.setItem("pagePhotos", document.getElementById("recentPhotos").innerHTML)
         })
 }
 function getMessage(rawMessage, cardID) {
@@ -244,6 +248,50 @@ function getContacts() {
             }
         })
 }
+
+function showCalendar() {
+    document.getElementById("WOACalendar").src = "Calendar/28118~19555.html"
+    let woaEvents = document.getElementById("WOACalendar")
+    let eventTable = document.getElementById("eventTable")
+
+    woaEvents.addEventListener("load", function () {
+
+
+        let woaEventsList = woaEvents.contentWindow.document
+        let testInterval = setInterval(function () {
+            if (woaEventsList.getElementsByClassName("event").length > 0) {
+                clearInterval(testInterval)
+                let todaysEvents = woaEventsList.getElementsByClassName("event")
+
+                for (let d = 0; d < todaysEvents.length; d++) {
+
+                    let newRow = document.createElement("tr")
+                    let newCol1 = document.createElement("td")
+                    let newCol2 = document.createElement("td")
+                    let newCol3 = document.createElement("td")
+
+                    newCol1.innerText = todaysEvents[d].children[1].innerText
+                    newCol2.innerText = todaysEvents[d].children[0].innerText
+                    newCol3.innerText = ""
+                    newRow.appendChild(newCol1)
+                    newRow.appendChild(newCol2)
+                    newRow.appendChild(newCol3)
+
+                    $.get(todaysEvents[d].getElementsByTagName("a")[0].href, function () { })
+                        .done(function (responseText) {
+                            let woaEvent = new DOMParser().parseFromString(responseText, "text/html")
+                            newCol3.innerText = woaEvent.getElementsByClassName("clsInput clsBodyText")[0].innerText.trim()
+                        })
+                        .fail(function () {
+                            newCol3.innerText = "Event Location Not Avaiable"
+                        })
+                    eventTable.appendChild(newRow)
+                }
+
+            }
+        }, 1000)
+    })
+}
 $(window).load(function () {
     if (document.getElementsByClassName("clsHeader").length > 0) { document.getElementsByClassName("clsHeader")[0].style.display = "none" }
     if (document.getElementById("resDisplayName") !== null) { document.getElementById("resDisplayName").innerText = "My Woodbridge" }
@@ -255,12 +303,12 @@ $(window).load(function () {
     getNewsAndAnnouncements()
     getDiscussionGroups()
     getForSaleOrFree()
+    showCalendar()
     $("#appPopUp").on("hidden.bs.modal", function () {
         document.getElementById("appPopUpLabel").innerHTML = ""
         document.getElementById("popUpBody").innerHTML = sessionStorage.getItem("waitText")
     })
-    setTimeout(function () {
-        localStorage.setItem("recentNotifications", document.getElementById("recent-items").innerHTML)
-        localStorage.setItem("timeOfNotifications", new Date().getTime())
-    }, 2000)
+    window.addEventListener("beforeunload", function (e) {
+
+    })
 })

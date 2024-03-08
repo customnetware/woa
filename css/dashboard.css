@@ -1,7 +1,6 @@
 ﻿.card-title:hover {
-   
     color: blue;
-    font-weight:600;
+    font-weight: 600;
 }
 
 
@@ -37,9 +36,8 @@
     }
 
 #userProfile img {
-  width: 125px;
-  height: auto;
-
+    max-width: 125px;
+    height: auto;
     filter: drop-shadow(5px 5px 5px grey);
     float: left;
     margin-right: 15px;
@@ -48,7 +46,7 @@
     padding-top: 10px;
 }
 
-#notificationHeader:after, #documentsHeader:after, #contactsHeader:after, #hoursHeader:after {
+#notificationHeader:after, #documentsHeader:after, #contactsHeader:after, #hoursHeader:after, #eventsHeader:after {
     font-family: 'FontAwesome';
     font-size: 1.25em;
     content: "\f056";
@@ -57,22 +55,22 @@
     float: right;
 }
 
-#notificationHeader.collapsed:after, #documentsHeader.collapsed:after, #contactsHeader.collapsed:after, #hoursHeader.collapsed:after {
+#notificationHeader.collapsed:after, #documentsHeader.collapsed:after, #contactsHeader.collapsed:after, #hoursHeader.collapsed:after, #eventsHeader.collapsed:after {
     content: "\f055";
 }
 
-#notificationHeader:hover, #documentsHeader:hover, #contactsHeader:hover, #hoursHeader:hover {
+#notificationHeader:hover, #documentsHeader:hover, #contactsHeader:hover, #hoursHeader:hover, #eventsHeader:hover {
     background-color: lightsteelblue;
     color: white;
 }
 
-#notificationHeader, #documentsHeader, #contactsHeader, #hoursHeader, #profileHeader {
+#notificationHeader, #documentsHeader, #contactsHeader, #hoursHeader, #profileHeader, #eventsHeader {
     background-color: #999999;
     color: white;
     padding: 5px;
 }
 
-    #notificationHeader span:first-child, #documentsHeader span:first-child, #contactsHeader span:first-child, #hoursHeader span:first-child {
+    #notificationHeader span:first-child, #documentsHeader span:first-child, #contactsHeader span:first-child, #hoursHeader span:first-child, #eventsHeader span:first-child {
         margin-right: 10px;
         margin-left: 10px;
     }
@@ -164,6 +162,7 @@
 #recentDocuments .card-header.collapsed:before, #recentNewsLetters .card-header.collapsed:before, #recentPhotos .card-header.collapsed:before {
     content: "\f114";
 }
+
 #flyers span, #newsletters span {
     padding-left: 10px;
     padding-bottom: 5px;

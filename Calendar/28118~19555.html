@@ -1,0 +1,609 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body class="   ext-webkit ext-chrome">
+    <div id="outer" style="opacity: 1;">
+        <div id="container" class="container-fluid">
+            <div id="bodyHeaderColPublish" class="col float-right text-right">
+                <div class="header-publish">
+                    <div id="HeaderPublishAuth">
+                        <a class="hidden-md-down" href="#" id="HeaderPublishAuthPublish" title="Publish">
+                            <span>Publish</span>
+                        </a>
+                        <input type="hidden" id="isAamLogin" value="0" data-sso-profile-url="https://aamidp.azurewebsites.net/profile">
+                        <a id="HeaderPublishAuthProfile" title="Click to view or edit your profile" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);">
+                            <span>My Profile</span>
+                        </a>
+
+                        <a class="text-nowrap" href="/account/logout/28118/sign-out" id="HeaderPublishAuthLogout" title="Sign Out">Sign Out</a>
+
+                    </div>
+                </div>
+                <div id="bodyHeaderColSearch" class="col-xs-auto float-right col-header-search">
+                    <div class="header-search float-right">
+                        <div class="header-search-input input-group clsSearch">
+                            <input class="form-control header-search-control" id="header_search_text" name="header_search_text" type="text" onkeypress="event.cancelBubble = true; headerSearch_keyCapture(event);" placeholder="Search...">
+                            <div class="input-group-btn clsSearchButtonContainer">
+                                <button class="btn header-search-btn clsSearchButton" onclick="javascript: doHeaderSearch();"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <header id="bodyHeader" class="row no-gutters">
+                <div id="bodyHeaderCol" class="col">
+
+                    <div id="bodyHeaderRowMenu" class="row no-gutters header-container hidden-md-down">
+
+                        <div id="bodyHeaderColLogo" class="col-12 float-left hidden-md-down col-md-12">
+                            <div class="header-logo"><div class="association-name"><a href="/28118">Woodbridge HOA</a></div></div>
+                        </div>
+
+
+
+
+                    </div>
+                    <nav id="bodyHeaderRowNav" class="row no-gutters">
+                        <div id="bodyHeaderColNav" class="col av-menu-container header-menu">
+
+                            <nav id="resp-menu">
+                                <div id="head-mobile" class="mobile-menu">
+                                    <div class="mobile-menu-left-actions-container">
+                                        <a class="mobile-menu-word-link" id="mobile-menu-profile-link" href="#">Profile</a><div class="mobile-menu-link-divider">
+
+                                        </div><a class="mobile-menu-word-link" href="/Account/Logout/28118/Sign-Out">Sign Out</a>
+                                    </div><div class="mobile-menu-separator">
+
+                                    </div><div class="mobile-menu-right-actions-container">
+                                        <div class="search-container" onclick="onClickSearchContainer(event)">
+                                            <input class="search-input" id="search-input" placeholder="Search" onkeydown="onSearchKeyDown(event)"><div class="search-button fa fa-search" onclick="toggleShowSearchInput()">
+
+                                            </div>
+                                        </div><div class="ham-menu-button fa fa-bars">
+
+                                        </div>
+                                    </div>
+                                </div><ul id="mobile-menu-profile-links" class="hidden-lg-up">
+
+                                    <li class="menu-item"><a class="menu-link" href="#" onclick="AV.MyProfileMenu.changePage('/Member/' + AV.assn_id + '~' + AV.member_id);">Edit My Profile</a></li>
+                                    <li class="menu-item"><a class="menu-link" href="/Security/SignInInfo/28118?login_id=16764170" target="_blank">Edit Sign In Information</a></li>
+                                    <li class="menu-item"><a class="menu-link" href="#" onclick="AV.MyProfileMenu.changePage('/Member/Contact/' + AV.assn_id + '~' + AV.member_id + '~' + AV.contact_id + '#CommPrefs');">Manage Subscriptions</a></li>
+                                    <li class="menu-item"><a class="menu-link" href="#" onclick="AV.MyProfileMenu.changePage('/Member/MyDocs/' + AV.assn_id + '~' + AV.member_id + '~' + AV.contact_id + '#MyDocs');">Access My Documents</a></li>
+                                </ul><ul class="menu-wrapper" id="mobile-menu-publish-links">
+                                    <li class="menu-item has-sub">
+                                        <span class="submenu-button"></span><a href="https://ourwoodbridge.net/form/list/28118/view-all-online-forms" class="menu-link">I Want To ...</a><ul class="menu-sub-group">
+                                            <li class="menu-item"><a target="_blank" href="https://ourwoodbridge.net/Form/28118~116540/Ask-A-Manager" class="menu-link">Contact A Manager</a></li>
+                                            <li class="menu-item"><a target="_blank" href="https://ourwoodbridge.net/Form/28118~188011/Complaint-or-CCRs-Rules-Violation" class="menu-link">File a Complaint</a></li>
+                                            <li class="menu-item"><a target="_blank" href="https://portal.sc-manage.com/Home_v2/Login" class="menu-link">Pay Monthly Assessment</a></li>
+                                            <li class="menu-item"><a href="/Form/28118~169617/Submit-A-News-Announcements-Posting" class="menu-link">Submit A News Article</a></li>
+                                            <li class="menu-item"><a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds" class="menu-link">Submit A Classified Ad</a></li>
+                                            <li class="menu-item"><a href="/form/list/28118/view-all-online-forms" class="menu-link">View All Online Forms</a></li>
+                                            <li class="menu-item"><a target="_blank" href="https://portal.sc-manage.com/Home_v2/Login" class="menu-link">Visit The Silvercreek Website</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item has-sub">
+                                        <span class="submenu-button"></span><a href="https://ourwoodbridge.net/page/28118~1077279/our-community" class="menu-link">Our Community</a><ul class="menu-sub-group">
+                                            <li class="menu-item"><a href="/officer/board/28118/board-members" class="menu-link">Board Members</a></li>
+                                            <li class="menu-item"><a href="/officer/committeelist/28118/committee-members" class="menu-link">Committee Members</a></li>
+                                            <li class="menu-item"><a target="_blank" href="https://ourwoodbridge.net/HOA/assn28118/images/WoodbridgeCommunityMap.pdf" class="menu-link">Community Map</a></li>
+                                            <li class="menu-item"><a href="/discussion/list/28118/discussion-groups" class="menu-link">Discussion Groups</a></li>
+                                            <li class="menu-item"><a href="/member/search/28118/resident-directory" class="menu-link">Resident Directory</a></li>
+                                            <li class="menu-item has-sub">
+                                                <span class="submenu-button"></span><a href="https://ourwoodbridge.net/GroupPage/List/28118/Group-Pages" class="menu-link">Woodbridge Group Pages</a><ul class="menu-sub-group">
+                                                    <li class="menu-item"><a href="https://ourwoodbridge.net/page/28118~1087738/grouptest" class="menu-link">Woodbridge Group Members</a></li>
+                                                    <li class="menu-item"><a href="https://ourwoodbridge.net/page/28118~1082467/new-groups-list" class="menu-link">Woodbridge Group List</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item has-sub">
+                                        <span class="submenu-button"></span><a href="https://ourwoodbridge.net/page/28118~1077280/stay-connected" class="menu-link">Stay Connected</a><ul class="menu-sub-group">
+                                            <li class="menu-item"><a target="_blank" href="https://ourwoodbridge.net/gallery/28118~58961" class="menu-link">Activities and Event Photos</a></li>
+                                            <li class="menu-item"><a href="/Calendar/28118~19555/Community-Calendar" class="menu-link">Calendar</a></li>
+                                            <li class="menu-item"><a href="/classified/search/28118~480182/classifieds" class="menu-link">Classifieds</a></li>
+                                            <li class="menu-item"><a href="/ResourceCenter/28118~540434/Flyers-Events-or-Activities" class="menu-link">Flyers and Activities</a></li>
+                                            <li class="menu-item"><a href="/news/list/28118/news-announcements" class="menu-link">News &amp; Announcements</a></li>
+                                            <li class="menu-item"><a target="_blank" href="https://issuu.com/woodbridgelife" class="menu-link">Woodbridge Life Archive</a></li>
+                                            <li class="menu-item"><a href="https://ourwoodbridge.net/News/28118~776129/Emergency-Preparedness" class="menu-link">Emergency Preparedness</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item"><a href="/resourcecenter/28118/resource-center" class="menu-link">Resource Center</a></li>
+                                    <li class="menu-item has-sub">
+                                        <span class="submenu-button"></span><a href="https://portal.sc-manage.com/Home_v2/Login" class="menu-link">Silvercreek</a><ul class="menu-sub-group">
+                                            <li class="menu-item"><a href="/page/28118~1101019/maintenance-report-summary" class="menu-link">Maintenance Report Summary</a></li>
+                                            <li class="menu-item"><a href="/page/28118~1101018/safety-report-summary" class="menu-link">Safety Report Summary</a></li>
+                                            <li class="menu-item"><a href="/page/28118~1098177/management-forms-summary" class="menu-link">Management Forms Summary</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+
+
+                        </div>
+                    </nav>
+                </div>
+
+            </header>
+
+
+            <div id="resDisplayName" style="overflow-wrap: break-word;">
+                Woodbridge HOA
+            </div>
+
+            <div id="bodyHeaderRowAlerts" class="row no-gutters header-alert">
+                <div id="bodyHeaderColAlerts" class="col">
+                    <div class="clsFader" style="display: none">
+                        <div id="fscroller" style="overflow: hidden;"><div class="av-ticker-container" style="cursor: default" id="ext-gen4"></div></div>
+                    </div>
+                </div>
+            </div><div id="bodyHeaderRowImage" class="row no-gutters hidden-md-down">
+                <div id="bodyHeaderColImage" class="col header-img">
+                </div>
+            </div>
+
+
+
+
+
+            <main id="bodyMainRow" class="row no-gutters">
+                <div id="bodyMainCol" class="col">
+                    <div id="content" role="main">
+                        <div class="content-inner" id="contentInner">
+
+
+
+
+
+                            <div class="clsButton" style="text-align: right; width: 100%">
+                                <a id="btnAddEvent" href="javascript:AV.KendoCal.showAddEventWindow(19555)">
+                                    Add Event
+                                    <img alt="" src="/images/r001nb.gif" width="6" height="11" style="vertical-align: middle; border: 0;">
+                                </a>
+                            </div>
+                            <div class="hidden-md-down">
+
+                                <div class="mb-2 clsHeader">
+
+                                    <a id="titleEditCal19555" href="javascript: AV.EditorLauncher.kendoCal('19555','Edit Calendar','titleEditCal19555','28118')" title="Edit this Calendar">Community Calendar</a>
+                                </div>
+                                <div class="clsBodyText mb-3">
+                                    <p></p>
+                                </div>
+
+
+
+
+                            </div>
+                            <div class="hidden-md-down">
+
+
+
+
+                                <div id="av-kendo-cal-header">
+                                    <div style="float: left; vertical-align: bottom; position:relative; z-index: 1">
+                                        <a href="javascript:AV.KendoCal.printCal();" title="Printable version of this calendar" style="float: left; margin-top: 5px; margin-right: 10px;">
+                                            <img src="/images/icons/icon-printer-small.png" alt="Click here for a printable version of this calendar" class="pngFix" width="16" height="16" style="vertical-align: middle; border: 0;">
+                                            Printable Version
+                                        </a>
+                                        <a href="javascript:AV.KendoCal.genUrl();" title="Generate a direct URL for this view" style="float: left; margin-top: 5px; margin-right: 20px;">
+                                            <img src="/images/icons/icon-link.png" alt="" class="pngFix" width="16" height="16" style="vertical-align: middle; border: 0;">
+                                            Generate URL
+                                        </a>
+                                    </div>
+                                    <div id="eventContainer"><div id="filterContainer" style="float:right;"><label><b>Select an event type  </b></label><span title="" class="k-widget k-dropdown" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="eventFilter_listbox" aria-live="polite" aria-disabled="false" aria-busy="false" aria-activedescendant="d39f682b-fe41-48dc-b024-8b48b8ebcb5b" style=""><span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">All Events</span><span unselectable="on" class="k-select" aria-label="select"><span class="k-icon k-i-arrow-60-down"></span></span></span><input id="eventFilter" data-role="dropdownlist" style="display: none;"></span></div></div>
+
+                                    <br>
+                                </div>
+                                <div id="kendoSpinner"></div>
+
+
+                                <div id="av-cal-wrapper" data-role="scheduler" class="k-widget k-scheduler k-floatwrap" role="grid" aria-multiselectable="true" style="height: 500px;"><div class="k-scheduler-toolbar k-toolbar"><span class="k-scheduler-navigation k-button-group"><button class="k-button k-nav-today" title="Today"><span class="k-button-text">Today</span></button><button class="k-button k-button-icon k-icon-button k-nav-prev" title="Previous" aria-label="Previous"><span class="k-icon k-i-arrow-60-left"></span></button><button class="k-button k-button-icon k-icon-button k-nav-next" title="Next" aria-label="Next"><span class="k-icon k-i-arrow-60-right"></span></button></span><a role="button" href="#" class="k-nav-current hoaKlink"><span class="k-icon k-i-calendar"></span><span class="k-sm-date-format" data-bind="text: formattedShortDate">March, 2024</span><span class="k-lg-date-format" data-bind="text: formattedDate">March, 2024</span></a><span class="k-spacer k-toolbar-spacer"></span><span class="k-scheduler-views-wrapper"><select class="k-dropdown k-views-dropdown"><option value="day">Day</option><option value="week">Week</option><option value="month">Month</option><option value="agenda">List View</option><option value="timeline">Day Timeline</option><option value="timelineWeek">Week Timeline</option></select><span class="k-scheduler-views k-button-group"><button type="button" class="k-button k-view-day" data-name="day">Day</button><button type="button" class="k-button k-view-week" data-name="week">Week</button><button type="button" class="k-button k-view-month k-state-selected" data-name="month">Month</button><button type="button" class="k-button k-view-agenda" data-name="agenda">List View</button><button type="button" class="k-button k-view-timeline" data-name="timeline">Day Timeline</button><button type="button" class="k-button k-view-timelineweek" data-name="timelineWeek">Week Timeline</button></span></span></div><table role="presentation" class="k-scheduler-layout k-scheduler-monthview k-scrollbar-v"><tbody><tr><td><div class="k-scheduler-header k-state-default" style="padding-right: 16px;"><div class="k-scheduler-header-wrap"><table role="presentation" class="k-scheduler-table"><tbody><tr><th colspan="1" class="">Sunday</th><th colspan="1" class="">Monday</th><th colspan="1" class="">Tuesday</th><th colspan="1" class="">Wednesday</th><th colspan="1" class="">Thursday</th><th colspan="1" class="">Friday</th><th colspan="1" class="">Saturday</th></tr></tbody></table></div></div></td></tr><tr><td><div class="k-scheduler-content" style="height: 428px;"><table role="presentation" class="k-scheduler-table k-scheduler-table-auto"><tbody><tr style="height: 73px;" role="row"><td class=" k-other-month" role="gridcell" aria-selected="false"><span class="k-link k-nav-day">25</span></td><td class=" k-other-month" role="gridcell" aria-selected="false"><span class="k-link k-nav-day">26</span></td><td class=" k-other-month" role="gridcell" aria-selected="false"><span class="k-link k-nav-day">27</span></td><td class=" k-other-month" role="gridcell" aria-selected="false"><span class="k-link k-nav-day">28</span></td><td class=" k-other-month" role="gridcell" aria-selected="false"><span class="k-link k-nav-day">29</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">01</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">02</span></td></tr><tr style="height: 73px;" role="row"><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">03</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">04</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">05</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">06</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">07</span></td><td class="k-today" role="gridcell" aria-selected="false"><span class="k-link k-nav-day">08</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">09</span></td></tr><tr style="height: 73px;" role="row"><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">10</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">11</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">12</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">13</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">14</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">15</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">16</span></td></tr><tr style="height: 73px;" role="row"><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">17</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">18</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">19</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">20</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">21</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">22</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">23</span></td></tr><tr style="height: 73px;" role="row"><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">24</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">25</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">26</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">27</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">28</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">29</span></td><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">30</span></td></tr><tr style="height: 73px;" role="row"><td role="gridcell" aria-selected="false"><span class="k-link k-nav-day">31</span></td><td class=" k-other-month" role="gridcell" aria-selected="false"><span class="k-link k-nav-day">01</span></td><td class=" k-other-month" role="gridcell" aria-selected="false"><span class="k-link k-nav-day">02</span></td><td class=" k-other-month" role="gridcell" aria-selected="false"><span class="k-link k-nav-day">03</span></td><td class=" k-other-month" role="gridcell" aria-selected="false"><span class="k-link k-nav-day">04</span></td><td class=" k-other-month" role="gridcell" aria-selected="false"><span class="k-link k-nav-day">05</span></td><td class=" k-other-month" role="gridcell" aria-selected="false"><span class="k-link k-nav-day">06</span></td></tr></tbody></table><div role="gridcell" aria-selected="false" data-uid="e33b6a9c-f2e4-4b18-9ed0-60f438cd1ed6" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 20px; width: 143px; left: 2px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen102"> <span class="k-event-sub-template">Oil Painting </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-1-1-2024" style="top:16px; width:143px">+2 more...</a></div><div role="gridcell" aria-selected="false" data-uid="a3c8cf93-bff5-44bb-b24f-cc62750e7c13" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 39px; width: 143px; left: 2px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen103"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-1-1-2024" style="top:16px; width:143px">+2 more...</a></div><div style="width:143px;left:2px;top:57px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="548bb7cc-78d4-45a5-ac36-dae0f4244445" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 20px; width: 142px; left: 147px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen104"> <span class="k-event-sub-template">TAI CHI MOVED TO FRIDAY THIS WEEK</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-1-2-2024" style="top:16px; width:142px">+16 more...</a></div><div role="gridcell" aria-selected="false" data-uid="8fe3dfca-6100-49b1-8832-f742f1ea1886" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 39px; width: 142px; left: 147px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen105"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-1-2-2024" style="top:16px; width:142px">+16 more...</a></div><div style="width:142px;left:147px;top:57px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="089981d2-28d2-4513-b23d-5415143cf4d7" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 20px; width: 142px; left: 291px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen106"> <span class="k-event-sub-template">Oil Painting </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-1-3-2024" style="top:16px; width:142px">+10 more...</a></div><div role="gridcell" aria-selected="false" data-uid="50713ff1-9dc8-49df-b929-f3a984cea036" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 39px; width: 142px; left: 291px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen107"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-1-3-2024" style="top:16px; width:142px">+10 more...</a></div><div style="width:142px;left:291px;top:57px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="38ac2065-27b1-4e8d-816e-39fbf00acb7f" class="k-event multiEvents" data-order="0" style="top: 20px; width: 142px; left: 436px; height: 16px;"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen108"> <span class="k-event-sub-template">Listening Post - chnaged to 2/21/2024 </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-1-4-2024" style="top:16px; width:142px">+19 more...</a></div><div role="gridcell" aria-selected="false" data-uid="481fb1dc-3e35-4373-8e1c-176c06fd8c3b" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 39px; width: 142px; left: 436px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen109"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-1-4-2024" style="top:16px; width:142px">+19 more...</a></div><div style="width:142px;left:436px;top:57px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="9846f8e1-daba-427b-baa5-2503772755f4" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 20px; width: 142px; left: 580px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen110"> <span class="k-event-sub-template">WoW Glitz &amp; Glam</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-1-5-2024" style="top:16px; width:142px">+10 more...</a></div><div role="gridcell" aria-selected="false" data-uid="7edf70e5-33af-472e-984f-9bd0f2799705" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 39px; width: 142px; left: 580px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen111"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-1-5-2024" style="top:16px; width:142px">+10 more...</a></div><div style="width:142px;left:580px;top:57px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="1d8aa73f-16a4-461e-b8e2-693f75024ca1" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 20px; width: 142px; left: 725px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen112"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-6-2024" style="top:16px; width:142px">+19 more...</a></div><div role="gridcell" aria-selected="false" data-uid="236a854c-4361-407d-89c4-c9b4a716db36" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 39px; width: 142px; left: 725px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen113"> <span class="k-event-sub-template">Arts and Crafts | General Meeting</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-6-2024" style="top:16px; width:142px">+19 more...</a></div><div style="width:142px;left:725px;top:57px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="f9fc16d4-677b-4417-beb7-cbd0fd277c43" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 20px; width: 142px; left: 869px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen114"> <span class="k-event-sub-template">Open Group Pickleball Practice</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-7-2024" style="top:16px; width:142px">+5 more...</a></div><div role="gridcell" aria-selected="false" data-uid="4521f332-cc37-4111-8b3f-ae3a457644f1" style="background-color: rgb(153, 153, 51); border-color: rgb(153, 153, 51); top: 39px; width: 142px; left: 869px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen115"> <span class="k-event-sub-template">Resident Rental</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-7-2024" style="top:16px; width:142px">+5 more...</a></div><div style="width:142px;left:869px;top:57px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="b8c9e891-da59-4bff-b39a-3b46e3cdaab9" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 93px; width: 143px; left: 2px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen116"> <span class="k-event-sub-template">Oil Painting </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-1-2024" style="top:16px; width:143px">+2 more...</a></div><div role="gridcell" aria-selected="false" data-uid="ac334b37-d25c-4891-99fc-97893159f36b" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 112px; width: 143px; left: 2px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen117"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-1-2024" style="top:16px; width:143px">+2 more...</a></div><div style="width:143px;left:2px;top:130px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="610566b9-592e-433a-96ff-32b7447b31bb" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 93px; width: 142px; left: 147px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen118"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-2-2024" style="top:16px; width:142px">+14 more...</a></div><div role="gridcell" aria-selected="false" data-uid="4d3ffaa8-a18e-4409-8334-3ac0de444056" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 112px; width: 142px; left: 147px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen119"> <span class="k-event-sub-template">Begining/Intermediate Pickleball Practice </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-2-2024" style="top:16px; width:142px">+14 more...</a></div><div style="width:142px;left:147px;top:130px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="edb37c89-a580-44a7-adfd-3c939141aaa3" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 93px; width: 142px; left: 291px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen120"> <span class="k-event-sub-template">Oil Painting </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-3-2024" style="top:16px; width:142px">+12 more...</a></div><div role="gridcell" aria-selected="false" data-uid="2ef98ad5-eeb8-45ec-a9fb-8d5e7f8f6239" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 112px; width: 142px; left: 291px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen121"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-3-2024" style="top:16px; width:142px">+12 more...</a></div><div style="width:142px;left:291px;top:130px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="df7aacd7-cd6a-4137-8a94-a5df1bd0394a" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 93px; width: 142px; left: 436px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen122"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-4-2024" style="top:16px; width:142px">+19 more...</a></div><div role="gridcell" aria-selected="false" data-uid="a0dbe07e-4151-49e7-88d6-74ab06b23eaa" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 112px; width: 142px; left: 436px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen123"> <span class="k-event-sub-template">Begining/Intermediate Pickleball Practice </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-4-2024" style="top:16px; width:142px">+19 more...</a></div><div style="width:142px;left:436px;top:130px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="dc565eab-f970-45e6-b284-888f9785600a" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 93px; width: 142px; left: 580px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen124"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-5-2024" style="top:16px; width:142px">+10 more...</a></div><div role="gridcell" aria-selected="false" data-uid="5be7c00b-d5e2-4bfb-bb50-722ae8427e6e" style="background-color: rgb(204, 0, 51); border-color: rgb(204, 0, 51); top: 112px; width: 142px; left: 580px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen125"> <span class="k-event-sub-template">Yoga with Jessica </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-5-2024" style="top:16px; width:142px">+10 more...</a></div><div style="width:142px;left:580px;top:130px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="fd70672b-cdc5-4d24-815b-ea4b67440011" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 93px; width: 142px; left: 725px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen126"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-6-2024" style="top:16px; width:142px">+16 more...</a></div><div role="gridcell" aria-selected="false" data-uid="858c45f1-7deb-486e-91f9-8b69975c83b4" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 112px; width: 142px; left: 725px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen127"> <span class="k-event-sub-template">Begining/Intermediate Pickleball Practice </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-6-2024" style="top:16px; width:142px">+16 more...</a></div><div style="width:142px;left:725px;top:130px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="8a687a0c-b319-4f5b-bf27-cf5c07455ce0" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 93px; width: 142px; left: 869px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen128"> <span class="k-event-sub-template">Open Group Pickleball Practice</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-7-2024" style="top:16px; width:142px">+4 more...</a></div><div role="gridcell" aria-selected="false" data-uid="6f387531-677e-4e9e-b29e-c0aa48bde4a2" style="background-color: rgb(153, 0, 255); border-color: rgb(153, 0, 255); top: 112px; width: 142px; left: 869px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen129"> <span class="k-event-sub-template">Hand &amp; Foot Cards </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-7-2024" style="top:16px; width:142px">+4 more...</a></div><div style="width:142px;left:869px;top:130px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="fd6d9813-18fc-446a-834d-ecea3263130d" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 166px; width: 143px; left: 2px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen130"> <span class="k-event-sub-template">Oil Painting </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-1-2024" style="top:16px; width:143px">+4 more...</a></div><div role="gridcell" aria-selected="false" data-uid="345ffe8a-ca4c-4114-9585-68b09dc9c512" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 185px; width: 143px; left: 2px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen131"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-1-2024" style="top:16px; width:143px">+4 more...</a></div><div style="width:143px;left:2px;top:203px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="9699b523-7149-4dc7-862a-c6fdea8382f5" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 166px; width: 142px; left: 147px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen132"> <span class="k-event-sub-template">TAI CHI CLASSED MOVED TO THURSDAY THIS WEEK </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-2-2024" style="top:16px; width:142px">+17 more...</a></div><div role="gridcell" aria-selected="false" data-uid="af11db2e-6fa7-474a-98ed-3acdec20cf17" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 185px; width: 142px; left: 147px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen133"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-2-2024" style="top:16px; width:142px">+17 more...</a></div><div style="width:142px;left:147px;top:203px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="2bbc39a0-486d-4dd0-b6c2-0bcdb325717c" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 166px; width: 142px; left: 291px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen134"> <span class="k-event-sub-template">Oil Painting </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-3-2024" style="top:16px; width:142px">+11 more...</a></div><div role="gridcell" aria-selected="false" data-uid="d13aea3e-68f7-467b-9381-e262d60247b1" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 185px; width: 142px; left: 291px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen135"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-3-2024" style="top:16px; width:142px">+11 more...</a></div><div style="width:142px;left:291px;top:203px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="d419eb7f-cc0a-4e7f-8cbf-1a242f9ae474" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 166px; width: 142px; left: 436px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen136"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-4-2024" style="top:16px; width:142px">+18 more...</a></div><div role="gridcell" aria-selected="false" data-uid="42f2f4a9-9f38-4b7f-b50a-1213b13d5264" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 185px; width: 142px; left: 436px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen137"> <span class="k-event-sub-template">Begining/Intermediate Pickleball Practice </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-4-2024" style="top:16px; width:142px">+18 more...</a></div><div style="width:142px;left:436px;top:203px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="430ab17e-9a60-485f-891f-9557276814df" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 166px; width: 142px; left: 580px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen138"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-5-2024" style="top:16px; width:142px">+10 more...</a></div><div role="gridcell" aria-selected="false" data-uid="52270671-ffd7-4174-9913-3f4f6dccc57b" style="background-color: rgb(204, 0, 51); border-color: rgb(204, 0, 51); top: 185px; width: 142px; left: 580px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen139"> <span class="k-event-sub-template">Yoga with Jessica </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-5-2024" style="top:16px; width:142px">+10 more...</a></div><div style="width:142px;left:580px;top:203px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="176954ed-8b45-457d-b32d-1acb6f2f7c37" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 166px; width: 142px; left: 725px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen140"> <span class="k-event-sub-template">Chess club ends @4:30pm </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-6-2024" style="top:16px; width:142px">+17 more...</a></div><div role="gridcell" aria-selected="false" data-uid="a4b1e9fb-39a5-4813-aaa9-9c4acf848918" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 185px; width: 142px; left: 725px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen141"> <span class="k-event-sub-template">Poker Moved to westport room -Conflict woth MOW St Patrick d</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-6-2024" style="top:16px; width:142px">+17 more...</a></div><div style="width:142px;left:725px;top:203px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="2b6cc2e1-5a3e-4bac-9ea6-f823952262db" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 166px; width: 142px; left: 869px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen142"> <span class="k-event-sub-template">Community Outreach</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-7-2024" style="top:16px; width:142px">+4 more...</a></div><div role="gridcell" aria-selected="false" data-uid="6e0d0486-bf57-4515-a825-1454042d8403" style="background-color: rgb(153, 0, 255); border-color: rgb(153, 0, 255); top: 185px; width: 142px; left: 869px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen143"> <span class="k-event-sub-template">Evangelism Class</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-7-2024" style="top:16px; width:142px">+4 more...</a></div><div style="width:142px;left:869px;top:203px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="b0af01a2-a418-45d6-8d62-219395eff670" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 239px; width: 143px; left: 2px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen144"> <span class="k-event-sub-template">Oil Painting </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-1-2024" style="top:16px; width:143px">+4 more...</a></div><div role="gridcell" aria-selected="false" data-uid="79bb86c5-b443-41e0-b57a-3857ab697a1b" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 258px; width: 143px; left: 2px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen145"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-1-2024" style="top:16px; width:143px">+4 more...</a></div><div style="width:143px;left:2px;top:276px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="4822933d-cbc7-473d-960c-dc316fe67b6c" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 239px; width: 142px; left: 147px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen146"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-2-2024" style="top:16px; width:142px">+13 more...</a></div><div role="gridcell" aria-selected="false" data-uid="f562feb4-29ab-4edc-9347-d57a9a2c4e5c" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 258px; width: 142px; left: 147px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen147"> <span class="k-event-sub-template">Begining/Intermediate Pickleball Practice </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-2-2024" style="top:16px; width:142px">+13 more...</a></div><div style="width:142px;left:147px;top:276px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="709d16e9-42ca-41f6-968a-8ed2affcfe08" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 239px; width: 142px; left: 291px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen148"> <span class="k-event-sub-template">Oil Painting </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-3-2024" style="top:16px; width:142px">+13 more...</a></div><div role="gridcell" aria-selected="false" data-uid="1b584ee2-8bb9-4ff8-a365-f6acf35e8ebd" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 258px; width: 142px; left: 291px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen149"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-3-2024" style="top:16px; width:142px">+13 more...</a></div><div style="width:142px;left:291px;top:276px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="7d6db0c9-0934-4264-888f-8ec5f3ce28ec" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 239px; width: 142px; left: 436px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen150"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-4-2024" style="top:16px; width:142px">+19 more...</a></div><div role="gridcell" aria-selected="false" data-uid="be25897b-47a6-4a05-9d46-f40edaee427f" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 258px; width: 142px; left: 436px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen151"> <span class="k-event-sub-template">Begining/Intermediate Pickleball Practice </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-4-2024" style="top:16px; width:142px">+19 more...</a></div><div style="width:142px;left:436px;top:276px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="1a25c8bb-294b-4229-bfa7-ee9bc1fe3496" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 239px; width: 142px; left: 580px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen152"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-5-2024" style="top:16px; width:142px">+11 more...</a></div><div role="gridcell" aria-selected="false" data-uid="e6a88914-7500-4fb4-82c4-62e9318e3b51" style="background-color: rgb(204, 0, 51); border-color: rgb(204, 0, 51); top: 258px; width: 142px; left: 580px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen153"> <span class="k-event-sub-template">Yoga with Jessica </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-5-2024" style="top:16px; width:142px">+11 more...</a></div><div style="width:142px;left:580px;top:276px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="d494d379-9caf-4675-856d-b751c740b3ea" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 239px; width: 142px; left: 725px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen154"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-6-2024" style="top:16px; width:142px">+15 more...</a></div><div role="gridcell" aria-selected="false" data-uid="eb6e3190-fcfc-40a8-8009-1cb555406b2e" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 258px; width: 142px; left: 725px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen155"> <span class="k-event-sub-template">Begining/Intermediate Pickleball Practice </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-6-2024" style="top:16px; width:142px">+15 more...</a></div><div style="width:142px;left:725px;top:276px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="53cb0792-f85d-40f3-82eb-5b35e780607f" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 239px; width: 142px; left: 869px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen156"> <span class="k-event-sub-template">Open Group Pickleball Practice</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-7-2024" style="top:16px; width:142px">+3 more...</a></div><div role="gridcell" aria-selected="false" data-uid="970fdece-8bfb-4569-b16e-25326a2c39ea" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 258px; width: 142px; left: 869px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen157"> <span class="k-event-sub-template">Craft Boutique</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-7-2024" style="top:16px; width:142px">+3 more...</a></div><div style="width:142px;left:869px;top:276px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="0aaf4c01-520e-4c77-938f-1e397257f394" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 312px; width: 143px; left: 2px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen158"> <span class="k-event-sub-template">Oil Painting </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-1-2024" style="top:16px; width:143px">+3 more...</a></div><div role="gridcell" aria-selected="false" data-uid="bb6bc8b8-084f-423e-944a-cc13439c1d2f" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 331px; width: 143px; left: 2px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen159"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-1-2024" style="top:16px; width:143px">+3 more...</a></div><div style="width:143px;left:2px;top:349px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="f5b1a8b2-dfbd-45f9-a6a5-fb4f602670b8" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 312px; width: 142px; left: 147px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen160"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-2-2024" style="top:16px; width:142px">+16 more...</a></div><div role="gridcell" aria-selected="false" data-uid="eb9f604a-14e4-42ab-81de-6e2dd9a1638f" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 331px; width: 142px; left: 147px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen161"> <span class="k-event-sub-template">Begining/Intermediate Pickleball Practice </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-2-2024" style="top:16px; width:142px">+16 more...</a></div><div style="width:142px;left:147px;top:349px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="9e6ee279-17d1-46d7-acd2-6fcf098e4817" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 312px; width: 142px; left: 291px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen162"> <span class="k-event-sub-template">Oil Painting </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-3-2024" style="top:16px; width:142px">+10 more...</a></div><div role="gridcell" aria-selected="false" data-uid="72f9abd3-e763-4d5d-b21b-c6453e2bf066" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 331px; width: 142px; left: 291px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen163"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-3-2024" style="top:16px; width:142px">+10 more...</a></div><div style="width:142px;left:291px;top:349px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="aedb9b4b-2c59-4458-baf2-0ead5b585de3" class="k-event multiEvents" data-order="0" style="top: 312px; width: 142px; left: 436px; height: 16px;"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen164"> <span class="k-event-sub-template">Listening Post - chnaged to 2/21/2024 </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-4-2024" style="top:16px; width:142px">+19 more...</a></div><div role="gridcell" aria-selected="false" data-uid="f71e07db-9a50-405e-9f2f-97a3778fc593" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 331px; width: 142px; left: 436px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen165"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-4-2024" style="top:16px; width:142px">+19 more...</a></div><div style="width:142px;left:436px;top:349px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="27b05aa4-0265-4c90-9b07-9207085bd4ad" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 312px; width: 142px; left: 580px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen166"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-5-2024" style="top:16px; width:142px">+9 more...</a></div><div role="gridcell" aria-selected="false" data-uid="e1ae7f4e-0a15-457f-9f3c-474297f430cc" style="background-color: rgb(204, 0, 51); border-color: rgb(204, 0, 51); top: 331px; width: 142px; left: 580px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen167"> <span class="k-event-sub-template">Yoga with Jessica </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-5-2024" style="top:16px; width:142px">+9 more...</a></div><div style="width:142px;left:580px;top:349px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="41541464-a20d-432a-a665-03a04f089189" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 312px; width: 142px; left: 725px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen168"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-6-2024" style="top:16px; width:142px">+15 more...</a></div><div role="gridcell" aria-selected="false" data-uid="934257fc-7e8a-4f61-8768-0f376eb90cc8" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 331px; width: 142px; left: 725px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen169"> <span class="k-event-sub-template">Begining/Intermediate Pickleball Practice </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-6-2024" style="top:16px; width:142px">+15 more...</a></div><div style="width:142px;left:725px;top:349px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="be2fc4b8-a4e5-4654-a474-b347f430dcf0" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 312px; width: 142px; left: 869px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen170"> <span class="k-event-sub-template">Open Group Pickleball Practice</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-7-2024" style="top:16px; width:142px">+2 more...</a></div><div role="gridcell" aria-selected="false" data-uid="b6b0c825-7b15-41a8-983a-3e9e410e7e92" style="background-color: rgb(153, 0, 255); border-color: rgb(153, 0, 255); top: 331px; width: 142px; left: 869px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen171"> <span class="k-event-sub-template">Hand &amp; Foot Cards </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-7-2024" style="top:16px; width:142px">+2 more...</a></div><div style="width:142px;left:869px;top:349px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="efa36d78-8b96-43c5-a5eb-746294d64168" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 385px; width: 143px; left: 2px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen172"> <span class="k-event-sub-template">Oil Painting </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-1-2024" style="top:16px; width:143px">+2 more...</a></div><div role="gridcell" aria-selected="false" data-uid="4044d81e-15f3-484e-b83d-2b0c498bb65b" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 404px; width: 143px; left: 2px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen173"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-2-1-2024" style="top:16px; width:143px">+2 more...</a></div><div style="width:143px;left:2px;top:422px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="0b62fe55-b76c-4955-b86a-b0e35d1f68b7" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 385px; width: 142px; left: 147px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen174"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-3-2-2024" style="top:16px; width:142px">+13 more...</a></div><div role="gridcell" aria-selected="false" data-uid="73a2a36f-5476-4efc-9f52-7f011bef0912" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 404px; width: 142px; left: 147px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen175"> <span class="k-event-sub-template">Begining/Intermediate Pickleball Practice </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-3-2-2024" style="top:16px; width:142px">+13 more...</a></div><div style="width:142px;left:147px;top:422px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="cc15272f-2eb1-4405-a6d1-7388a04a145f" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 385px; width: 142px; left: 291px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen176"> <span class="k-event-sub-template">Oil Painting </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-3-3-2024" style="top:16px; width:142px">+13 more...</a></div><div role="gridcell" aria-selected="false" data-uid="a482786a-a8eb-4283-9dc8-5aafc2bf6724" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 404px; width: 142px; left: 291px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen177"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-3-3-2024" style="top:16px; width:142px">+13 more...</a></div><div style="width:142px;left:291px;top:422px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="dbad24a2-17a7-454f-83c8-6610e3eb3b42" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 385px; width: 142px; left: 436px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen178"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-3-4-2024" style="top:16px; width:142px">+18 more...</a></div><div role="gridcell" aria-selected="false" data-uid="7437d99c-fa05-4299-b7fe-e60327e9b712" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 404px; width: 142px; left: 436px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen179"> <span class="k-event-sub-template">Begining/Intermediate Pickleball Practice </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-3-4-2024" style="top:16px; width:142px">+18 more...</a></div><div style="width:142px;left:436px;top:422px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="bab7cff9-b659-4243-b16a-6534c42e387c" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 385px; width: 142px; left: 580px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen180"> <span class="k-event-sub-template">Tennis Group - Doubles Open Play </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-3-5-2024" style="top:16px; width:142px">+11 more...</a></div><div role="gridcell" aria-selected="false" data-uid="c726c32d-7f13-47b8-a460-cbd7bb651b3d" style="background-color: rgb(204, 0, 51); border-color: rgb(204, 0, 51); top: 404px; width: 142px; left: 580px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen181"> <span class="k-event-sub-template">Yoga with Jessica </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-3-5-2024" style="top:16px; width:142px">+11 more...</a></div><div style="width:142px;left:580px;top:422px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="0d9e20d3-0957-49b2-aebf-ad0f2ba02634" style="background-color: rgb(0, 102, 153); border-color: rgb(0, 102, 153); top: 385px; width: 142px; left: 725px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen182"> <span class="k-event-sub-template">Men Horseshoe Yoga</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-3-6-2024" style="top:16px; width:142px">+16 more...</a></div><div role="gridcell" aria-selected="false" data-uid="6c45a349-64e8-4a8e-a2ac-1459baba0b57" style="background-color: rgb(204, 153, 204); border-color: rgb(204, 153, 204); top: 404px; width: 142px; left: 725px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen183"> <span class="k-event-sub-template">Arts and Crafts | General Meeting</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-3-6-2024" style="top:16px; width:142px">+16 more...</a></div><div style="width:142px;left:725px;top:422px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div><div role="gridcell" aria-selected="false" data-uid="6cfbe229-7961-4a40-ba03-0dbe0c18d47e" style="background-color: rgb(0, 0, 0); border-color: rgb(0, 0, 0); top: 385px; width: 142px; left: 869px; height: 16px;" class="k-event multiEvents" data-order="0"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen184"> <span class="k-event-sub-template">Open Group Pickleball Practice</span></div><span class="k-event-actions"></span><a class="eventCount eventCount-3-7-2024" style="top:16px; width:142px">+2 more...</a></div><div role="gridcell" aria-selected="false" data-uid="8d889ef6-d13a-4fc7-8a2a-6c9889681272" style="background-color: rgb(153, 0, 255); border-color: rgb(153, 0, 255); top: 404px; width: 142px; left: 869px; height: 16px;" class="k-event multiEvents" data-order="1"><span class="k-event-actions"><span class="k-icon k-i-non-recurrence"></span></span><div class="k-event-template" id="ext-gen185"> <span class="k-event-sub-template">Hand &amp; Foot Cards </span></div><span class="k-event-actions"></span><a class="eventCount eventCount-3-7-2024" style="top:16px; width:142px">+2 more...</a></div><div style="width:142px;left:869px;top:422px" class="k-more-events k-button"><span class="k-icon k-i-more-horizontal"></span></div></div></td></tr></tbody></table></div>
+
+                            </div>
+                            <div id="calendar-wrapper" data-role="listview" data-style="inset" data-type="group" class="hidden-lg-up">
+
+                                <div id="fullCalSpinner"></div>
+                                <h2>Community Calendar</h2>
+
+                                <div class="summary mb-3">
+                                    <p></p>
+                                </div>
+
+
+
+
+
+                                <div id="calendar" class="fc fc-ltr"><table class="fc-header" style="width:100%"><tbody><tr><td class="fc-header-left"><span class="fc-header-title"><h2>&nbsp;</h2></span></td><td class="fc-header-center"></td><td class="fc-header-right"><span class="fc-button fc-button-today fc-state-default fc-corner-left fc-corner-right" unselectable="on">today</span><span class="fc-header-space"></span><span class="fc-button fc-button-prev fc-state-default fc-corner-left" unselectable="on"><span class="fc-text-arrow">‹</span></span><span class="fc-button fc-button-next fc-state-default fc-corner-right" unselectable="on"><span class="fc-text-arrow">›</span></span></td></tr></tbody></table><div class="fc-content" style="position: relative; min-height: 1px;"><div class="fc-view fc-view-month fc-grid" style="position:absolute" unselectable="on"></div></div></div>
+                            </div>
+                            <div id="events" class="row events hidden-lg-up" style="display: block;">
+                                <div class="col col-3 clsGridHeader">Date</div>
+                                <div class="col col-9 clsGridHeader">Start Time / Event</div>
+                                <div class="col col-3" id="eventDate"><div class="dateNumber">08</div><div class="dateDay">Fri</div><div class="dateMonthYear">Mar 2024</div></div>
+                                <div class="col col-9" id="eventList"><div class="event"><div class="time">7:00AM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1968561~22">Men Horseshoe Yoga</a></div><div class="event"><div class="time">8:00AM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1968559~25">Begining/Intermediate Pickleball Practice </a></div><div class="event"><div class="time">8:30AM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1956101~2">Genealogy</a></div><div class="event"><div class="time">8:30AM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1973277~27">Open Group Pickleball Practice</a></div><div class="event"><div class="time">8:30AM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1956040~29">Walking Indoor Class</a></div><div class="event"><div class="time">9:30AM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1961252~28">Line Dancing - Intermediate/Advance class</a></div><div class="event"><div class="time">10:00AM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1956054~218">Cansta Card Group </a></div><div class="event"><div class="time">10:00AM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1956024~655">Water Aerobics </a></div><div class="event"><div class="time">12:00PM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1955629~49">Woodbridge Pool Hustlers</a></div><div class="event"><div class="time">12:30PM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1956100~23">Watercolor Painting Class</a></div><div class="event"><div class="time">1:00PM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1956055~218">Mah Jongg</a></div><div class="event"><div class="time">1:00PM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1956047~28">Ping Pong</a></div><div class="event"><div class="time">3:30PM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1795663~99">Ballroom Dance</a></div><div class="event"><div class="time">4:00PM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1961666~9">Ballroom Practice Group</a></div><div class="event"><div class="time">4:00PM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1961659~15">Ballroom Practice Group</a></div><div class="event"><div class="time">5:00PM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1961353~7">POker</a></div><div class="event"><div class="time">6:15PM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1956120~22">Beginning/Intermediate Pickleball Practice</a></div><div class="event"><div class="time">6:30PM</div><a class="titleLink" data-rel="external" title="Click to view event" href="/Calendar/Event/28118~1956060~31">Game Night </a></div></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer id="bodyFooterRow" class="row no-gutters">
+                <div id="bodyFooterCol" class="col">
+                    <div id="bodyFooter">
+                        <div class="footer-content">
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td width="4%" align="left" valign="top"> </td>
+                                        <td width="60%" height="100%" align="left" valign="top"><span class="clsSmallBold">Lakeview Clubhouse | 2401 Morning Brook Drive | Manteca, CA   95336 | 209.824.7581</span></td>
+                                        <td width="36%" align="left" valign="top"><span class="clsSmall"><a href="javascript:void(window.open('/legal/privacy.htm','','height=400,width=600,resizable=yes,menubar=yes,scrollbars=yes,toolbar=yes,status=yes,location=yes'));" class="clsSmall" title="Privacy Policy" onmouseover="self.status='Privacy Policy'; return true;" onmouseout="self.status=''">Privacy Policy</a> | <a href="javascript:void(window.open('/legal/tos.htm','','height=400,width=600,resizable=yes,menubar=yes,scrollbars=yes,toolbar=yes,status=yes,location=yes'));" class="clsSmall" title="Terms of Service" onmouseover="self.status='Terms of Service'; return true;" onmouseout="self.status=''">Terms of Service</a> | <a href="javascript:void(window.open('/legal/rules.htm','','height=400,width=600,resizable=yes,menubar=yes,scrollbars=yes,toolbar=yes,status=yes,location=yes'));" class="clsSmall" title="Rules and Regulations" onmouseover="self.status='Rules and Regulations'; return true;" onmouseout="self.status=''">Rules and Regulations</a> | <a href="/SiteMap/28118" class="clsSmall" title="Outline of this site's pages">Site Map</a></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top" align="left"> </td>
+                                        <td height="100%" valign="top" align="left"><span class="clsSmall">Fax 209.825.4971 </span></td>
+                                        <td valign="top" align="left"><span class="clsSmall">Homeowners association management software by FRONTSTEPS.</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" nowrap=""> </td>
+                                        <td align="left" nowrap=""><span class="clsSmall"></span></td>
+                                        <td align="left" nowrap=""><span class="clsSmall">© 2000-<span id="fs-footer-current-year">2024</span>.  All rights reserved.</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+
+
+
+    <script src="https://kendo.cdn.telerik.com/2020.2.617/js/kendo.all.min.js" type="text/javascript"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.2.617/js/kendo.aspnetmvc.min.js" type="text/javascript"></script>
+
+
+    <script src="https://extjs.cachefly.net/ext-3.4.0/adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="https://extjs.cachefly.net/ext-3.4.0/ext-all.js" type="text/javascript"></script>
+    <script>if (!window.Ext) {document.write('<script src="/bundles/ExtJs?v=i_F4H-pf8SxJ9mtT_-3wDlLOElNaiXdSQRaglD0ktVg1"><\/script><link type="text/css" rel="stylesheet" href="/bundles/ExtCss?v=EJXRELl9VulIiO2B0SrCsva0jFNPlD0mC0DR37UrCck1"><\/link> ');}</script>
+
+
+
+
+
+    <script type="text/javascript">
+
+    Ext.Ajax.extraParams = { 'ext': '1' };
+    Ext.Ajax.defaultHeaders = { 'X-Requested-With': 'XMLHttpRequest' };
+
+        if (window['AV'] === undefined) { window['AV'] = {}; }
+        if (AV.ClientUrls === undefined) { AV.ClientUrls = {}; }
+            AV.ClientUrls.GUIAlert = '/bundles/GUIAlert?v=4VcFtPPLnYz9kvMwzB9Q4QJBffKtXXi0UXcwy_USeBM1';
+            AV.ClientUrls.GUICalendar = '/bundles/GUICalendar?v=pePd50j5v5QIVwXMh4kXMH8N1C2XszcvPvV14Gmhrtk1';
+            AV.ClientUrls.GUIClassified = '/bundles/GUIClassified?v=EVH57YLpZ6JWm92QrVkojRQsOljrW4osvXvR-_5RFbA1';
+            AV.ClientUrls.GUIClassifiedCategories = '/bundles/GUIClassifiedCategories?v=wXQP1J2zsKP0Pqjy0CQ0Km9YjHuueub13JZbjSVQbfc1';
+            AV.ClientUrls.GUIDiscussion = '/bundles/GUIDiscussion?v=0j_BgN6V7FPargI2tZXP3cDQbcZclAh_lh_ArodlaV01';
+            AV.ClientUrls.GUIDiscussionTopic = '/bundles/GUIDiscussionTopic?v=z37UKGVZ_ANztpNikYQ-8oLsmJWrqGiU3JNLzPCcAjs1';
+            AV.ClientUrls.GUIDocument = '/bundles/GUIDocument?v=x-fHtiRbYkbvAytigKzikF2I_I4YtVIFBcayS9d97O01';
+            AV.ClientUrls.GUIDocumentFolder = '/bundles/GUIDocumentFolder?v=Iu0QWRhpy44HVjzKVR4jQBDNmmrLRJ0i9pRBiRE71z01';
+            AV.ClientUrls.GUIEditorWin = '/bundles/GUIEditorWin?v=Mv2BQm1bONscqGQPcIxAPEBS4jlqQz1PJ9V5zojwMHQ1';
+            AV.ClientUrls.GUIEvent = '/bundles/GUIEvent?v=IyCRGoOcT50G58XElzfAaSCtbhEx797V2PhhxiYtteI1';
+            AV.ClientUrls.GUIEventTypes = '/bundles/GUIEventTypes?v=gyJ8gQJrdFr49DqA39SlwSOSkn0pHLBsLmkZ0x-WbV41';
+            AV.ClientUrls.GUIForm = '/bundles/GUIForm?v=G1QSnCnw85hUpDLHoig_GuFf7JDPE53QDfmpwFJOytE1';
+            AV.ClientUrls.GUIFormBuilder = '/bundles/GUIFormBuilder?v=T0om9weWfQCpFyytoqm7dMA9cG-9_rofxltb-u0h-zY1';
+            AV.ClientUrls.GUIGallery = '/bundles/GUIGallery?v=BtBEiKPj13lBpk5jGqu56j_gEdsYGohMBakJVrAerZ01';
+            AV.ClientUrls.GUIGalleryImage = '/bundles/GUIGalleryImage?v=NCvQ84l_VgIG-BpEHK_FIiJavU-mnbjzq8TYw8CuTF81';
+            AV.ClientUrls.GUIMsgText = '/bundles/GUIMsgText?v=OeFVN6G-Jogj6vvGznb9cIiFNNe5MHxrHNVP91uEBsQ1';
+            AV.ClientUrls.GUIMsgVoice = '/bundles/GUIMsgVoice?v=w1RkeDTyL1MGQ__qyGmW-HS5qxuMiKG863vruzYoD501';
+            AV.ClientUrls.GUINews = '/bundles/GUINews?v=3TioU9j_inJA2oyipeU61RbvqfgECDGAJ3uK390N9941';
+            AV.ClientUrls.GUIWebPublisher = '/bundles/GUIWebPublisher?v=3ANgUhifnNCVp-l1KhbWJXVxbG7ubDQNN5wccxsaa7E1';
+            AV.ClientUrls.GUICommon = '/bundles/GUICommon?v=3jucD0YPRJrlrdsyyTr33cMiEAs0DJZ1bvd9yajafuA1';
+            AV.ClientUrls.GUIFormBuilderCss = '/bundles/GUIFormBuilderCss?v=--_ah14jyAl8b5fezdq3-wiMymAoz9yBQLzfzGm6Kn01';
+            AV.ClientUrls.KendoEditor = '/bundles/KendoEditor?v=GRzhVeMdLvVgrq88D8kngnIpGXLdswDSaylu3mSJL2w1';
+            AV.ClientUrls.GUIPasswordPolicy = '/bundles/GUIPasswordPolicy?v=EYjEqcb6ybmsvbPZBH3felatUHuGXUvLUJtFoKahPAo1';
+            AV.ClientUrls.GUIKendoCal = '/bundles/GUIKendoCal?v=N4WPeQWNO7VEA-JO0WXzGtHP68XqrjoZcGJovec8OE41';
+            AV.ClientUrls.GUIKendoEvent = '/bundles/GUIKendoEvent?v=_ks9XlhJMKe5lIDXtqt8FEMorNC5374YWbr5Y4_vAuQ1';
+            AV.ClientUrls.GUIKendoCal = '/bundles/GUIKendoCal?v=N4WPeQWNO7VEA-JO0WXzGtHP68XqrjoZcGJovec8OE41';
+            AV.ClientUrls.GUIKendoEvent = '/bundles/GUIKendoEvent?v=_ks9XlhJMKe5lIDXtqt8FEMorNC5374YWbr5Y4_vAuQ1';
+            AV.ClientUrls.GUIGroupAdmin = '/bundles/GUIGroupAdmin?v=XuePP13d3eOdg1mZ7XiafyVNyJyGZjYkbkCOHGI1VMU1';
+            AV.ClientUrls.GUINewsKendo = '/bundles/GUINewsKendo?v=vlAilRxXfG_GIO4-VdjKJPjltcjJ27cy2IUyFZmog1s1';
+            AV.ClientUrls.GUIGalleryKendo = '/bundles/GUIGalleryKendo?v=Bq8GHTtWJdTWAspkAKtomQ3JUppjkIW3bUuiWp1Pajg1';
+            AV.ClientUrls.GUIGalleryImageKendo = '/bundles/GUIGalleryImageKendo?v=k4l4rtdf1p6m7s1OeimvzLSqW_mucusOTYnH7fnkQOs1';
+            AV.ClientUrls.GUIGroupAdmin = '/bundles/GUIGroupAdmin?v=XuePP13d3eOdg1mZ7XiafyVNyJyGZjYkbkCOHGI1VMU1';
+            AV.ClientUrls.GUIGroupHtmlContent = '/bundles/GUIGroupHtmlContent?v=UEpxGdryJbqzIwJZHxnSKp0QUSHyr9n4_E1ihEc9j-E1';
+            AV.ClientUrls.GUIGroupMemberAdmin = '/bundles/GUIGroupMemberAdmin?v=ygUHilxKU35BqcWJkI47VcRLsyHhjy54ahLQgvL-4eY1';
+            AV.ClientUrls.GUIGroupEmailMembers = '/bundles/GUIGroupEmailMembers?v=HlHpZdnEEhkn4JbXxV5-Z97CnTNUwYiAq5Twf_j1tXo1';
+
+
+
+    var _beta = ' compress~ edExtPop~ ExtMyProfile~ ExtPublish~ kendoCal~ kendoEditor~ myDocs~ passwordPolicy~ SSLSignIn~  edExtPop~ compress~ passwordPolicy~ ';
+    var _user_default_assn_beta = ' edExtPop~ ExtPublish~ compress~ SSLSignIn~ passwordPolicy~ ExtMyProfile~ myDocs~ kendoEditor~ kendoCal~  edExtPop~ compress~ passwordPolicy~ ';
+    AV.isMvc = true;
+    AV.privs = 'AI-2, BE-2, CA-2, CE-2, CR-2, DA-2, DE-2, DO-2, DR-2, DS-2, EE-2, FA-2, FE-2, FR-2, FT-2, FUZ-2, GPA-2, GPE-2, GPR-2, HA-2, HH-2, IR-2, KA-2, KE-2, KR-2, LA-2, LE-2, LP-2, LR-2, MA-2, MC-2, NA-2, NE-2, NR-2, PA-2, PE-2, PLN-2, PR-2, RA-2, RE-2, RR-2, SA-2, TR-2, VA-2, VE-2, VP-2, VR-2, YA-2, YE-2, YR-2';
+    AV.site_type_id = '1';
+    AV.assn_id = '28118';
+    AV.has_subs = '0';
+    AV.login_id_curr = '16764170';
+    AV.member_id = '10518615';
+    AV.contact_id = '16860439';
+    AV.cdnUrl = '';
+    AV.cssFile ='resp_005.css';
+    AV.baseFldr = 'assn28118';
+    AV.scriptDebug = false;
+    AV.has_linked_logins = 'False';
+    AV.role_seq = '100';
+    AV.display_name = 'Woodbridge HOA';
+    AV.isKendoEditor = _beta.indexOf(" kendoEditor~") != -1 ? true : false;
+    AV.usesPasswordPolicy =  _beta.indexOf("passwordPolicy~") != -1 ? true : false;
+    AV.defaultAssnUsesPassPolicy = _user_default_assn_beta.indexOf("passwordPolicy~") != -1 ? true : false;
+    AV.auth_ap_user = '';
+    AV.isResponsive = true;
+    AV.Parent_assn_id='0'
+
+        AV.alertTickerData = [];
+
+    </script>
+
+
+
+    <script src="/bundles/AVGlobal?v=iUit6ZFDYHUJgaX7btQ4e7YMaxDvI-7E1-3oiKl_iBA1"></script>
+
+
+
+    <script src="/bundles/AVMenuBase?v=72tEwan_iNwBbfo5vF8Wq9PMi9FEisDeVdmTrIynhW41"></script>
+
+    <script src="/bundles/GUIBaseForKendo?v=qIO35wDnEJi0BTvmipr4grfC4DkPyLA9zku_c2lIm8o1"></script>
+    <script src="/bundles/KendoEditor?v=GRzhVeMdLvVgrq88D8kngnIpGXLdswDSaylu3mSJL2w1"></script>
+    <script src="/bundles/AVPublishMenu?v=r2fNVGv5Kaeawyfoye9_Bq4ys6oZ0P-FL3kzpMi3m6s1"></script>
+    <script src="/bundles/PasswordExpirationNotification?v=1gXdy51iM-vT3ms-sfB_FahGP8vbBKH6Rr8cg8Pdsf41"></script>
+
+
+
+
+
+
+    <script src="/bundles/AVCalendarKendoResponsive?v=lZ2Y4YWk93bxIsaAGBTTGTBOQkZebiHLnHDSEJr5F7A1"></script>
+    <script type="text/javascript">
+/*Startup Scripts*/
+
+Ext.onReady(function(){
+AV.AlertTicker = new AV.Ticker('fscroller', { 'items': AV.alertTickerData });
+
+});
+
+    </script>
+
+
+
+
+
+    <script src="/Assets/Libs/Tether/tether-1.4.0/dist/js/tether.min.js"></script>
+    <script src="/Assets/Libs/BootStrap/4.0.0-alpha/dist/js/bootstrap.min.js"></script>
+    <script src="/bundles/ResponsiveScripts?v=-DHBsdf_Ii_RDbgDF7Gi6N8R1AeUHKc1bxwsm26zjWg1"></script>
+
+
+    <script src="/js/respDesign05.js"></script>
+
+    <script>
+
+$(function() {
+$("#bodyHeaderColNav nav .menu-wrapper>li").mouseenter(function(){
+		var thisP = $(this).offset().left,
+			windowW = $(window).width(),
+			changeZ = windowW - 280,
+			thisW = $(this).outerWidth(),
+			dropP = thisW - 280;
+		if(thisP > changeZ){
+			$(this).children("ul").css("left",dropP);
+
+			$("#bodyHeaderColNav nav .menu-wrapper>li").mouseleave(function(){
+
+			$(this).children("ul").css("left","-999999em");
+
+			});
+
+		}
+	});
+
+});
+
+    </script>
+
+
+    <script type="text/javascript">
+        var truncateText = function () {
+            $("#resDisplayName").dotdotdot({
+                height: 60,
+                ellipsis: '... '
+            })
+        }
+
+        $(document).ready(function () {
+            truncateText();
+            $('.dropdown-toggle').dropdown();
+        });
+
+        $(window).resize(function () {
+            truncateText();
+        });
+
+    </script>
+
+    <style>
+
+        /*#content {
+            display: block !important;
+        }*/
+
+        .modal_new {
+            font-family: 'Lato', sans-serif;
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .close_new {
+            color: #aaa;
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-header_new {
+            padding: 2px 16px;
+            background-color: #E8E8E8;
+            color: #000;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            position: relative;
+        }
+
+        .m-0 {
+            margin: 0;
+        }
+
+        .modal-body_new {
+            max-height: 350px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border: 1px solid #d0d0d0;
+            margin: 4px;
+        }
+
+        .modal-content_new {
+            position: relative;
+            top: 50%;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 680px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            animation-name: animatetop;
+            animation-duration: 0.4s;
+            border-radius: 5px;
+            transform: translate(0,-50%);
+            background-color: #E8E8E8;
+        }
+
+        .cta_button a, .modal-body-container_new a {
+            font: 14px 700 'Lato', sans-serif;
+            color: #791a15;
+            text-decoration: underline;
+        }
+
+        .bg_gray {
+            background: #666;
+            color: #ffffff;
+        }
+
+        .modal-footer_new {
+            padding: 10px 16px;
+            background-color: #E8E8E8;
+            color: #000;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .icon {
+            background-image: url(../images/gray/window/icon-info.gif)
+        }
+
+        .cta_button1 a1, .modal-body-container1 a1 {
+            font: 14px 700 'Lato', sans-serif;
+            color: #791a15;
+            text-decoration: underline;
+        }
+
+        .bg_gray1 {
+            background: #666;
+            color: #ffffff;
+        }
+
+        .img_class {
+            float: left;
+            margin-right: 10px;
+        }
+    </style>
+
+    <div id="myModal" class="modal_new" style="display:none">
+
+        <!-- Modal content -->
+        <div class="modal-content_new">
+            <div class="modal-header_new custom_model_header">
+                <p>secure sign information</p>
+                <span id="cls_sign_in" class="close_new">×</span>
+
+            </div>
+            <div class="modal-body_new">
+                <div class="modal-body-container_new" id="mdl_sign_in">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="errorModal" class="modal_new" style="display:none">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header_new custom_model_header1">
+                <p id="title"></p>
+                <span id="cls_error" class="close_new">×</span>
+                <span class="icon"></span>
+            </div>
+            <div class="modal-body_new white_bg">
+                <img src="/../Assets/Images/Common/Icons/icon-info.gif" class="img_class">
+                <span id="erro_msg" class="modal-body-container">
+
+                </span>
+            </div>
+            <div class="modal-footer_new">
+                <button type="button" id="okid" class="modal_btn">ok</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="x-layer" id="ext-gen6" style="position: absolute; z-index: 11000; visibility: hidden; left: -10000px; top: -10000px;"><img class="ttArrow arrowUL" alt="" src="/Assets/Script/tooltip/NFTip-Images/point-nw.png" style="position:absolute; top:10px; left:-43px;" id="ext-gen7"><img class="ttArrow arrowUR" alt="" src="/Assets/Script/tooltip/NFTip-Images/point-ne.png" style="visibility:hidden; position:absolute; top:10px; left:227px;" id="ext-gen8"><img class="ttArrow arrowLL" alt="" src="/Assets/Script/tooltip/NFTip-Images/point-sw.png" style="visibility:hidden; position:absolute; top:30px; left:-43px;" id="ext-gen9"><img class="ttArrow arrowLR" alt="" src="/Assets/Script/tooltip/NFTip-Images/point-se.png" style="visibility:hidden; position:absolute; top:30px; left:227px;" id="ext-gen10"><div id="ttContainer" style="display:inline-block;"><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/nw.png) no-repeat scroll 0 0; overflow:hidden; padding-left:28px;"><div class="iconClose" style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/ne-icon-close-small.png) no-repeat scroll right 0; overflow:hidden; padding-right:28px;"><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/n.png) repeat-x scroll 0 0; height:28px; overflow:hidden"></div></div></div><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/w.png) repeat-y scroll 0 0; overflow:hidden; padding-left:28px;"><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/e.png) repeat-y scroll right 0; overflow:hidden; padding-right:28px;"><div class="ttContent" style="background-color:#ffffff; color:#000000; min-height: 50px;" id="ext-gen11"></div></div></div><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/sw.png) no-repeat scroll 0 0; overflow:hidden; padding-left:28px;"><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/se.png) no-repeat scroll right 0; overflow:hidden; padding-right:28px;"><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/s.png) repeat-x scroll 0 0; height:28px; overflow:hidden"></div></div></div></div></div><div class="k-list-container k-popup k-group k-reset" id="eventFilter-list" data-role="popup" aria-hidden="true" style="display: none; position: absolute;"><div class="k-group-header" style="display:none"></div><div class="k-list-scroller" unselectable="on"><ul unselectable="on" class="k-list k-reset" tabindex="-1" aria-hidden="true" id="eventFilter_listbox" aria-live="off" data-role="staticlist" role="listbox"><li tabindex="-1" role="option" unselectable="on" class="k-item k-state-focused k-state-selected" aria-selected="true" data-offset-index="0" id="d39f682b-fe41-48dc-b024-8b48b8ebcb5b"><div class="eventSelection"><div style="background-color:#000000; float:left; width:15px; height:15px; margin-right:5px;"></div>All Events</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="1"><div class="eventSelection"><div style="background-color:#000000; float:left; width:15px; height:15px; margin-right:5px;"></div>Groups / Clubs</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="2"><div class="eventSelection"><div style="background-color:#000000; float:left; width:15px; height:15px; margin-right:5px;"></div>Performing Arts</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="3"><div class="eventSelection"><div style="background-color:#9900FF; float:left; width:15px; height:15px; margin-right:5px;"></div>Oxford</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="4"><div class="eventSelection"><div style="background-color:#000000; float:left; width:15px; height:15px; margin-right:5px;"></div>Entertainment</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="5"><div class="eventSelection"><div style="background-color:#000000; float:left; width:15px; height:15px; margin-right:5px;"></div>Games</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="6"><div class="eventSelection"><div style="background-color:#3366FF; float:left; width:15px; height:15px; margin-right:5px;"></div>Association Business</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="7"><div class="eventSelection"><div style="background-color:#000000; float:left; width:15px; height:15px; margin-right:5px;"></div>Dance</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="8"><div class="eventSelection"><div style="background-color:#CC99CC; float:left; width:15px; height:15px; margin-right:5px;"></div>Westport</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="9"><div class="eventSelection"><div style="background-color:#000000; float:left; width:15px; height:15px; margin-right:5px;"></div>Guest Speaker / Services</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="10"><div class="eventSelection"><div style="background-color:#996600; float:left; width:15px; height:15px; margin-right:5px;"></div>Bristol</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="11"><div class="eventSelection"><div style="background-color:#000000; float:left; width:15px; height:15px; margin-right:5px;"></div>Fitness</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="12"><div class="eventSelection"><div style="background-color:#006699; float:left; width:15px; height:15px; margin-right:5px;"></div>MultiPurpose</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="13"><div class="eventSelection"><div style="background-color:#000000; float:left; width:15px; height:15px; margin-right:5px;"></div>Facility Rental</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="14"><div class="eventSelection"><div style="background-color:#000000; float:left; width:15px; height:15px; margin-right:5px;"></div>Hobby / Craft</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="15"><div class="eventSelection"><div style="background-color:#999933; float:left; width:15px; height:15px; margin-right:5px;"></div>Quincy</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="16"><div class="eventSelection"><div style="background-color:#CC0033; float:left; width:15px; height:15px; margin-right:5px;"></div>Andover</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="17"><div class="eventSelection"><div style="background-color:#000000; float:left; width:15px; height:15px; margin-right:5px;"></div>Sport</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="18"><div class="eventSelection"><div style="background-color:#3333CC; float:left; width:15px; height:15px; margin-right:5px;"></div>Patio</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="19"><div class="eventSelection"><div style="background-color:#000000; float:left; width:15px; height:15px; margin-right:5px;"></div>Woodbridge Community Service</div></li><li tabindex="-1" role="option" unselectable="on" class="k-item" aria-selected="false" data-offset-index="20"><div class="eventSelection"><div style="background-color:#000000; float:left; width:15px; height:15px; margin-right:5px;"></div>Food &amp; more</div></li></ul></div><div class="k-nodata" style="display:none"><div>No data found.</div></div></div><div class="k-widget k-window" data-role="draggable" style="visibility: visible; display: none; padding-top: 37px; min-width: 90px; min-height: 50px; width: 500px; height: 140px; top: 280.797px; left: 95.1406px;">
+        <div class="k-window-titlebar" style="margin-top: -37px;"><span class="k-window-title" id="winUrl_wnd_title">Generated URL</span><div class="k-window-actions"><a role="button" href="#" class="k-button k-flat k-button-icon k-window-action" aria-label="Close"><span class="k-icon k-i-close"></span></a></div></div><div id="winUrl" style="font-size: 0.8em;" data-role="window" class="k-window-content" tabindex="0" role="dialog" aria-labelledby="winUrl_wnd_title">
+            <div style="margin-bottom: 2px;">Hold down the "Ctrl" key on your keyboard and press "C" to copy the Generated URL to your clipboard.</div>
+            <div style="text-align: center; margin-bottom: 2px;">
+                <input type="text" id="genUrlTxtBox" class="k-textbox" style="width: 95%; align-content: center">
+            </div>
+            <a id="winUrlBtn" style="float: right; margin-right: 20px;" data-role="button" class="k-button" role="button" aria-disabled="false" tabindex="0">Close</a>
+        </div><div class="k-resize-handle k-resize-n"></div><div class="k-resize-handle k-resize-e"></div><div class="k-resize-handle k-resize-s"></div><div class="k-resize-handle k-resize-w"></div><div class="k-resize-handle k-resize-se"></div><div class="k-resize-handle k-resize-sw"></div><div class="k-resize-handle k-resize-ne"></div><div class="k-resize-handle k-resize-nw"></div>
+    </div><div class="x-layer" id="ext-gen96" style="position: absolute; z-index: 11000; visibility: hidden; left: -10000px; top: -10000px;"><img class="ttArrow arrowUL" alt="" src="/Assets/Script/tooltip/NFTip-Images/point-nw.png" style="position:absolute; top:10px; left:-43px;" id="ext-gen97"><img class="ttArrow arrowUR" alt="" src="/Assets/Script/tooltip/NFTip-Images/point-ne.png" style="visibility:hidden; position:absolute; top:10px; left:227px;" id="ext-gen98"><img class="ttArrow arrowLL" alt="" src="/Assets/Script/tooltip/NFTip-Images/point-sw.png" style="visibility:hidden; position:absolute; top:30px; left:-43px;" id="ext-gen99"><img class="ttArrow arrowLR" alt="" src="/Assets/Script/tooltip/NFTip-Images/point-se.png" style="visibility:hidden; position:absolute; top:30px; left:227px;" id="ext-gen100"><div id="ttContainer" style="display:inline-block;"><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/nw.png) no-repeat scroll 0 0; overflow:hidden; padding-left:28px;"><div class="iconClose" style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/ne-icon-close-small.png) no-repeat scroll right 0; overflow:hidden; padding-right:28px;"><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/n.png) repeat-x scroll 0 0; height:28px; overflow:hidden"></div></div></div><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/w.png) repeat-y scroll 0 0; overflow:hidden; padding-left:28px;"><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/e.png) repeat-y scroll right 0; overflow:hidden; padding-right:28px;"><div class="ttContent" style="background-color:#ffffff; color:#000000; min-height: 50px;" id="ext-gen101"></div></div></div><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/sw.png) no-repeat scroll 0 0; overflow:hidden; padding-left:28px;"><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/se.png) no-repeat scroll right 0; overflow:hidden; padding-right:28px;"><div style="background: transparent url(/Assets/Script/tooltip/NFTip-Images/s.png) repeat-x scroll 0 0; height:28px; overflow:hidden"></div></div></div></div></div>
+</body>
+</html>
