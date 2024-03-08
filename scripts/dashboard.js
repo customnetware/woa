@@ -250,7 +250,7 @@ function getContacts() {
 }
 
 function showCalendar() {
-    console.log("loaded iframe")
+    console.log("loading iframe")
     let eventTable = document.getElementById("eventTable")
     let woaEvents = document.getElementById("WOACalendar")
 
