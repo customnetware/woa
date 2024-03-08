@@ -310,5 +310,5 @@ $(window).load(function () {
     getNewsAndAnnouncements()
     getDiscussionGroups()
     getClassifiedAds()
-    getResidentHomePage()
+
 })
