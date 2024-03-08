@@ -250,6 +250,7 @@ function getContacts() {
 }
 
 function showCalendar() {
+    alert("here")
     let eventTable = document.getElementById("eventTable")
     let woaEvents = document.getElementById("WOACalendar")
     woaEvents.src = "Calendar/28118~19555"
