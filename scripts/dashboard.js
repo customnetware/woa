@@ -253,7 +253,7 @@ function showCalendar() {
     console.log("loading iframe")
     let eventTable = document.getElementById("eventTable")
     let woaEvents = document.getElementById("WOACalendar")
-
+    woaEvents.src ="https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"
 
 
     woaEvents.addEventListener("load", function () {
