@@ -253,16 +253,17 @@ function showCalendar() {
     console.log("loading iframe")
     let eventTable = document.getElementById("eventTable")
     let woaEvents = document.getElementById("WOACalendar")
-    woaEvents.src = (window.location.hostname == "localhost") ?"Calendar/28118~19555.html": "https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"
+  
+    while (eventTable.firstChild) { eventTable.removeChild(eventTable.firstChild) }
+    woaEvents.src = (window.location.hostname == "localhost") ? "Calendar/28118~19555.html" : "https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"
     woaEvents.addEventListener("load", function () {
         console.log("iframe loaded")
-
         let woaEventsList = woaEvents.contentWindow.document
         console.log("start looping")
-        testInterval = setInterval(function () {
+        calendarWait = setInterval(function () {
             console.log("still looping")
             if (woaEventsList.getElementsByClassName("event").length > 0) {
-                clearInterval(testInterval)
+                clearInterval(calendarWait)
                 console.log("end looping")
                 let todaysEvents = woaEventsList.getElementsByClassName("event")
 
@@ -287,10 +288,16 @@ function showCalendar() {
                             newRow.appendChild(newCol2)
                             newRow.appendChild(newCol3)
                             eventTable.appendChild(newRow)
+                            if (d == todaysEvents.length - 1) { sessionStorage.setItem("pageEvents", eventTable.innerHTML.trim()) }
+
                         })
                 }
+
+
             }
         }, 1000)
+
+
     })
 }
 $(window).load(function () {
@@ -309,7 +316,13 @@ $(window).load(function () {
         document.getElementById("appPopUpLabel").innerHTML = ""
         document.getElementById("popUpBody").innerHTML = sessionStorage.getItem("waitText")
     })
+
+    $("#card-events").on("show.bs.collapse", function () {
+        let eventList = document.getElementById("eventTable"), savedEvents = sessionStorage.getItem("pageEvents")
+        if (eventList.childElementCount == 0 && savedEvents !== null) { eventList.innerHTML = savedEvents }
+    })
     window.addEventListener("beforeunload", function (e) {
 
     })
+
 })
