@@ -304,10 +304,10 @@ $(window).load(function () {
     if (document.getElementsByClassName("clsHeader").length > 0) { document.getElementsByClassName("clsHeader")[0].style.display = "none" }
     if (document.getElementById("resDisplayName") !== null) { document.getElementById("resDisplayName").innerText = "My Woodbridge" }
     if (document.getElementsByClassName("association-name").length > 0) { document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge" }
-    showCalendar()
     getProfilePage()
-    getContacts()
+    showCalendar()
     getResourceCenter()
+    getContacts()
     getNewsAndAnnouncements()
     getDiscussionGroups()
     getForSaleOrFree()
@@ -320,7 +320,9 @@ $(window).load(function () {
 
     $("#card-events").on("show.bs.collapse", function () {
         let eventList = document.getElementById("eventTable"), savedEvents = sessionStorage.getItem("pageEvents")
-        if (eventList.childElementCount == 0 && savedEvents !== null) { eventList.innerHTML = savedEvents }
+        if (document.getElementById("profileHeader").children[0].className = "fa fa-check-circle fa-lg") {
+            if (eventList.childElementCount === 0 && savedEvents !== null) { eventList.innerHTML = savedEvents }
+        }
     })
     window.addEventListener("beforeunload", function (e) {
 
