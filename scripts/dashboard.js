@@ -253,7 +253,7 @@ function showCalendar() {
     console.log("loading iframe")
     let eventTable = document.getElementById("eventTable")
     let woaEvents = document.getElementById("WOACalendar")
-  
+
     while (eventTable.firstChild) { eventTable.removeChild(eventTable.firstChild) }
     woaEvents.src = (window.location.hostname == "localhost") ? "Calendar/28118~19555.html" : "https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"
     woaEvents.addEventListener("load", function () {
@@ -304,14 +304,15 @@ $(window).load(function () {
     if (document.getElementsByClassName("clsHeader").length > 0) { document.getElementsByClassName("clsHeader")[0].style.display = "none" }
     if (document.getElementById("resDisplayName") !== null) { document.getElementById("resDisplayName").innerText = "My Woodbridge" }
     if (document.getElementsByClassName("association-name").length > 0) { document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge" }
-    getResidentHomePage()
+    showCalendar()
     getProfilePage()
     getContacts()
     getResourceCenter()
     getNewsAndAnnouncements()
     getDiscussionGroups()
     getForSaleOrFree()
-    showCalendar()
+    getResidentHomePage()
+
     $("#appPopUp").on("hidden.bs.modal", function () {
         document.getElementById("appPopUpLabel").innerHTML = ""
         document.getElementById("popUpBody").innerHTML = sessionStorage.getItem("waitText")
