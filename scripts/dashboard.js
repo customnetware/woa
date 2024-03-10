@@ -320,7 +320,7 @@ $(window).load(function () {
 
     $("#card-events").on("show.bs.collapse", function () {
         let eventList = document.getElementById("eventTable"), savedEvents = sessionStorage.getItem("pageEvents")
-        if (document.getElementById("profileHeader").children[0].className = "fa fa-check-circle fa-lg") {
+        if (document.getElementById("profileHeader").children[0].className === "fa fa-check-circle fa-lg") {
             if (eventList.childElementCount === 0 && savedEvents !== null) { eventList.innerHTML = savedEvents }
         }
     })
