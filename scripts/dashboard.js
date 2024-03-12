@@ -17,14 +17,12 @@ function getResidentHomePage() {
         .done(function (responseText) {
             let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
             document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
-            document.getElementById("profileHeader").getElementsByTagName("span")[0].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
+            document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
+
             let recentItems = myWoodbridge.getElementsByClassName("message")
             for (let p = 0; p < recentItems.length; p++) { getMessage(recentItems[p].getElementsByTagName("a")[0], p) }
             showPhotos(myWoodbridge)
-            localStorage.setItem("pageTime", new Date().getTime())
-            localStorage.setItem("pageName", myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML)
-            localStorage.setItem("pageEmails", document.getElementById("recentEmails").innerHTML)
-            localStorage.setItem("pagePhotos", document.getElementById("recentPhotos").innerHTML)
+
         })
 }
 function getMessage(rawMessage, cardID) {
@@ -98,9 +96,9 @@ function getDiscussionGroups() {
     let grp2 = $.get(pageLocation("/Discussion/28118~" + forums[1]), function () { })
     let grp3 = $.get(pageLocation("/Discussion/28118~" + forums[2]), function () { })
     $.when(grp1, grp2, grp3).done(function (responseText1, responseText2, responseText3) {
-        let testArray = [responseText1, responseText2, responseText3]
-        for (let f = 0; f < testArray.length; f++) {
-            let forum = new DOMParser().parseFromString(testArray[f], "text/html")
+        let groups = [responseText1, responseText2, responseText3]
+        for (let f = 0; f < groups.length; f++) {
+            let forum = new DOMParser().parseFromString(groups[f], "text/html")
             let posts = forum.getElementsByClassName("ThreadContainer")[0]
             for (let x = 0; x < posts.childElementCount; x++) {
                 let post = posts.children[x]
@@ -137,19 +135,26 @@ function getDiscussionGroups() {
     })
 }
 function getProfilePage() {
+    let profileImgLink = document.createElement("a")
     let profileImg = document.createElement("img")
-    let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")[0]
+    let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
+
+    profileImgLink.href = "https://ourwoodbridge.net/Member/Edit/" + profileID[1] + "~" + profileID[0]
+    document.getElementById("profileHeader").getElementsByTagName("a")[1].href = "https://ourwoodbridge.net/Member/Contact/" + profileID[1] + "~" + profileID[0] + "~" + profileID[2]
+    sessionStorage.setItem("profileID", profileID)
     let grp1 = $.get(pageLocation("/news/28118~792554"), function () { })
-    let grp2 = $.get(pageLocation("/Member/28118~" + profileID), function () { })
+    let grp2 = $.get(pageLocation("/Member/28118~" + profileID[0]), function () { })
     let grp3 = $.get(pageLocation("/news/28118~795372"), function () { })
     $.when(grp1, grp2, grp3).done(function (responseText1, responseText2, responseText3) {
         let userContent = new DOMParser().parseFromString(responseText1, "text/html")
         let imageFile = new DOMParser().parseFromString(responseText2, "text/html")
         let officeHours = new DOMParser().parseFromString(responseText3, "text/html")
+
         profileImg.className = "rounded float-left img-fluid"
         profileImg.src = imageFile.getElementsByTagName("img")[0].src
+        profileImgLink.appendChild(profileImg)
         document.getElementById("userProfile").innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
-        document.getElementById("userProfile").insertBefore(profileImg, document.getElementById("userProfile").firstChild)
+        document.getElementById("userProfile").insertBefore(profileImgLink, document.getElementById("userProfile").firstChild)
         document.getElementById("card-hours").innerHTML = officeHours.getElementById("contentInner").children[2].innerHTML
     })
 }
@@ -157,24 +162,25 @@ function getResourceCenter() {
     $.get(pageLocation("/resourcecenter/28118/resource-center"), function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
-
+            let docsList = document.getElementById("docCard").getElementsByTagName("span")[0]
+            let newsList = document.getElementById("newsCard").getElementsByTagName("span")[0]
             let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
             let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
+            let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
+            let newsLetterLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
+
             for (let p = 0; p < documentName.length; p++) {
                 let selectedDoc = document.createElement("a")
                 selectedDoc.innerHTML = documentName[p].innerHTML
                 selectedDoc.href = documentLink[p].href
-                document.getElementById("docCard").getElementsByTagName("span")[0].appendChild(selectedDoc)
+                docsList.appendChild(selectedDoc)
             }
 
-            let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
-            let newsLetterLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
-            for (p = newsLetterName.length - 1; p >= 0; p--) {
+            for (let p = newsLetterName.length - 1; p >= 0 && newsList.children.length < 6; p--) {
                 let selectedDoc = document.createElement("a")
                 selectedDoc.innerHTML = newsLetterName[p].innerHTML
                 selectedDoc.href = newsLetterLink[p].href
-                document.getElementById("newsCard").getElementsByTagName("span")[0].appendChild(selectedDoc)
-                if (document.getElementById("newsCard").getElementsByTagName("span")[0].children.length > 5) { break }
+                newsList.appendChild(selectedDoc)
             }
         })
 }
@@ -272,10 +278,12 @@ function showCalendar() {
                     let newCol1 = document.createElement("td")
                     let newCol2 = document.createElement("td")
                     let newCol3 = document.createElement("td")
-
-                    newCol1.innerText = todaysEvents[d].children[1].innerText
+                    let eventLink = document.createElement("a")
+                    eventLink.href = todaysEvents[d].getElementsByTagName("a")[0].href
+                    eventLink.innerHTML = todaysEvents[d].children[1].innerText
+                    newCol1.appendChild(eventLink)
                     newCol2.innerText = todaysEvents[d].children[0].innerText
-                    $.get(todaysEvents[d].getElementsByTagName("a")[0].href, function () { })
+                    $.get(eventLink.href, function () { })
                         .done(function (responseText) {
                             let woaEvent = new DOMParser().parseFromString(responseText, "text/html")
                             newCol3.innerText = woaEvent.getElementsByClassName("clsInput clsBodyText")[0].innerText.trim()
@@ -289,15 +297,10 @@ function showCalendar() {
                             newRow.appendChild(newCol3)
                             eventTable.appendChild(newRow)
                             if (d == todaysEvents.length - 1) { sessionStorage.setItem("pageEvents", eventTable.innerHTML.trim()) }
-
                         })
                 }
-
-
             }
         }, 1000)
-
-
     })
 }
 $(window).load(function () {
@@ -312,6 +315,16 @@ $(window).load(function () {
     getDiscussionGroups()
     getForSaleOrFree()
     getResidentHomePage()
+    setTimeout(function () {
+        localStorage.setItem("pageTime", new Date().getTime())
+        localStorage.setItem("pageEmails", document.getElementById("recentEmails").innerHTML.trim())
+        localStorage.setItem("pagePhotos", document.getElementById("recentPhotos").innerHTML.trim())
+
+        sessionStorage.setItem("profileName", document.getElementById("profileHeader").innerText.trim().replace("Welcome,", ""))
+    }, 2000)
+
+
+
 
     $("#appPopUp").on("hidden.bs.modal", function () {
         document.getElementById("appPopUpLabel").innerHTML = ""

@@ -3,8 +3,9 @@
     "",
     "\\Calendar",
     "\\css",
+    "\\Reports",
     "\\scripts"
   ],
-  "SelectedNode": "\\scripts\\dashboard.js",
+  "SelectedNode": "\\css\\dashboard.css",
   "PreviewInSolutionExplorer": false
 }

@@ -30,7 +30,7 @@
     margin-right: 10px;
 }
 
-    #profileHeader a:first-child {
+    #profileHeader a:first-child, #profileHeader a:nth-child(2) {
         float: left;
         margin-left: 10px;
     }
