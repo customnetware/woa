@@ -147,9 +147,8 @@ function getProfilePage() {
         document.getElementById("userProfile").insertBefore(profileImgLink, document.getElementById("userProfile").firstChild)
         document.getElementById("card-hours").innerHTML = officeHours.getElementById("contentInner").children[2].innerHTML
         document.getElementById("profileHeader").getElementsByTagName("a")[1].href = portalProfilePage
-        if (profilePage.getElementById("sec_role_id") !== null) {
-            sessionStorage.setItem("profileSecurity", profilePage.getElementById("sec_role_id").selectedOptions[0].innerHTML)
-        } else { sessionStorage.setItem("profileSecurity", "resident") }
+        sessionStorage.setItem("profileSecurity", (profilePage.getElementById("sec_role_id") !== null) ? profilePage.getElementById("sec_role_id").selectedOptions[0].innerHTML : "resident")
+
     })
     $.when(grp5).done(function (responseText1) {
         let profileContent = new DOMParser().parseFromString(responseText1, "text/html")
@@ -157,7 +156,7 @@ function getProfilePage() {
         for (let p = 0; p < recentItems.length; p++) { getMessage(recentItems[p].getElementsByTagName("a")[0], p) }
         document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = profileContent.getElementsByClassName("clsHeader")[0].innerHTML
 
-        showPhotos(profileContent)
+
         sessionStorage.setItem("profileName", profileContent.getElementsByClassName("clsHeader")[0].innerHTML)
         document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
     })
@@ -188,16 +187,21 @@ function getResourceCenter() {
             }
         })
 }
-function showPhotos(galleryPage) {
-    let newPicList = document.getElementById("photoList").getElementsByTagName("div")
-    let photoList = galleryPage.querySelectorAll("[id^=gallery_link_]")
-    let galleryLink = galleryPage.querySelectorAll("[class^=gallery_txt_sub]")
-    let galleryText = galleryPage.getElementsByClassName("left")
-    for (let k = 0; k < photoList.length; k++) {
-        newPicList[k].getElementsByTagName("img")[0].src = photoList[k].src
-        newPicList[k].getElementsByTagName("span")[0].innerText = galleryText[k].innerText.replace(".jpg", "")
-        newPicList[k].getElementsByTagName("a")[0].href = galleryLink[k].getElementsByTagName("a")[0].href
-    }
+function showPhotos() {
+    $.get(pageLocation("/Gallery/28118~58961"), function () { })
+        .done(function (responseText) {
+            let photos = new DOMParser().parseFromString(responseText, "text/html")
+            let currentPageHost = window.location.protocol + "//" + window.location.host
+            let pagePhotos = document.getElementById("photoList")
+            let portalPhotos = photos.getElementById("contentInner").children[1].children
+
+
+            for (let p = portalPhotos.length - 2, i = 0; p >= 0 && i < 3; p--, i++) {
+                pagePhotos.getElementsByClassName("caption")[i].getElementsByTagName("p")[0].innerText = portalPhotos[p].getElementsByTagName("a")[0].title.replace("Edit: ", "")
+                pagePhotos.getElementsByTagName("a")[i].href = portalPhotos[p].getElementsByTagName("a")[1].href.replace(currentPageHost, "https://ourwoodbridge.net")
+                pagePhotos.getElementsByTagName("img")[i].src = portalPhotos[p].getElementsByTagName("a")[1].href.replace(currentPageHost, "https://ourwoodbridge.net")
+            }
+        })
 }
 function getForSaleOrFree() {
     $.get(pageLocation("/classified/search/28118~480182/classifieds"), function () { })
@@ -312,6 +316,7 @@ $(window).load(function () {
     if (document.getElementById("resDisplayName") !== null) { document.getElementById("resDisplayName").innerText = "My Woodbridge" }
     if (document.getElementsByClassName("association-name").length > 0) { document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge" }
     getProfilePage()
+    showPhotos()
     showCalendar()
     getResourceCenter()
     getContacts()
@@ -322,8 +327,6 @@ $(window).load(function () {
         localStorage.setItem("pageTime", new Date().getTime())
         localStorage.setItem("pageEmails", document.getElementById("recentEmails").innerHTML.trim())
         localStorage.setItem("pagePhotos", document.getElementById("recentPhotos").innerHTML.trim())
-
-
     }, 2000)
 
 

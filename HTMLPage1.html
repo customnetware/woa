@@ -4,14 +4,66 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
+    <div class="container" id="customContainer">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="">
+                        <img src="" alt="">
+                        <div class="caption">
+                            <p></p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="">
+                        <img src="" alt="">
+                        <div class="caption">
+                            <p></p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="">
+                        <img src="" alt="">
+                        <div class="caption">
+                            <p></p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        let timeSplit = "Friday, March 8 7:00 AM - 8:00 AM"
+        function pageLocation(URLString) {
+            return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
+        }
+        $.get(pageLocation("/Gallery/28118~58961"), function () { })
+            .done(function (responseText) {
+                let photos = new DOMParser().parseFromString(responseText, "text/html")
+                let currentPageHost = window.location.protocol + "//" + window.location.host
+                let pagePhotos = document.getElementById("customContainer")
+                let portalPhotos = photos.getElementById("contentInner").children[1].children
+         
 
-        alert(timeSplit.substring(timeSplit.indexOf(":")-1))
-
-
+                for (let p = portalPhotos.length - 2, i = 0; p >= 0 && i < 3; p--, i++) {
+                    pagePhotos.getElementsByClassName("caption")[i].getElementsByTagName("p")[0].innerText = portalPhotos[p].getElementsByTagName("a")[0].title.replace("Edit: ","")
+                    pagePhotos.getElementsByTagName("a")[i].href = portalPhotos[p].getElementsByTagName("a")[1].href.replace(currentPageHost, "https://ourwoodbridge.net")
+                    pagePhotos.getElementsByTagName("img")[i].src = portalPhotos[p].getElementsByTagName("a")[1].href.replace(currentPageHost, "https://ourwoodbridge.net")
+                }
+            })
     </script>
 
 </body>

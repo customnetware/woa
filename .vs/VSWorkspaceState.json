@@ -1,13 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Calendar",
     "\\css",
-    "\\Member",
+    "\\Gallery",
     "\\Member\\Contact",
-    "\\Reports",
     "\\scripts"
   ],
-  "SelectedNode": "\\scripts\\dashboard.js",
+  "SelectedNode": "\\css\\dashboard.css",
   "PreviewInSolutionExplorer": false
 }
