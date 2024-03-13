@@ -193,7 +193,7 @@ function showPhotos() {
             let photos = new DOMParser().parseFromString(responseText, "text/html")
             let currentPageHost = window.location.protocol + "//" + window.location.host
             let pagePhotos = document.getElementById("photoList")
-            let portalPhotos = photos.getElementById("contentInner").children[1].children
+            let portalPhotos = photos.getElementById("contentInner").children[2].children
 
             alert(portalPhotos.length)
             for (let p = portalPhotos.length - 2, i = 0; p >= 0 && i < 3; p--, i++) {
