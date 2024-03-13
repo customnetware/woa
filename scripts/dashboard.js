@@ -192,16 +192,14 @@ function showPhotos() {
         .done(function (responseText) {
             let photos = new DOMParser().parseFromString(responseText, "text/html")
             let currentPageHost = window.location.protocol + "//" + window.location.host
-            let pagePhotos = document.getElementById("photoList")
+            let photoTitles = photos.getElementById("contentInner").getElementsByClassName("clsSmallText")
+            let photoLocation = photos.getElementById("contentInner").getElementsByClassName("colorbox-photo cboxElement")
+            let pagePhotos = document.getElementById("photoList")    
 
-            let portalPhotos = photos.getElementById("contentInner").children[photos.getElementById("contentInner").children.length-1].children
-            alert(portalPhotos.length)
-
-            for (let p = portalPhotos.length - 2, i = 0; p >= 0 && i < 3; p--, i++) {
-            
-                pagePhotos.getElementsByClassName("caption")[i].getElementsByTagName("p")[0].innerText = portalPhotos[p].getElementsByTagName("a")[0].title.replace("Edit: ", "")
-                pagePhotos.getElementsByTagName("a")[i].href = portalPhotos[p].getElementsByTagName("a")[1].href.replace(currentPageHost, "https://ourwoodbridge.net")
-                pagePhotos.getElementsByTagName("img")[i].src = portalPhotos[p].getElementsByTagName("a")[1].href.replace(currentPageHost, "https://ourwoodbridge.net")
+            for (let p = photoTitles.length - 1, i = 0; p >= 0 && i < 3; p--, i++) {
+                pagePhotos.getElementsByClassName("caption")[i].getElementsByTagName("p")[0].innerText = photoTitles[p].children[0].innerText
+                pagePhotos.getElementsByTagName("a")[i].href = photoLocation[p].href.replace(currentPageHost, "https://ourwoodbridge.net")
+                pagePhotos.getElementsByTagName("img")[i].src = photoLocation[p].href.replace(currentPageHost, "https://ourwoodbridge.net")
             }
         })
 }
