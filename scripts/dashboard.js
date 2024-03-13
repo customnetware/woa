@@ -276,7 +276,7 @@ function showCalendar() {
         console.log("start looping")
         calendarWait = setInterval(function () {
             console.log("still looping")
-            if (woaEventsList.getElementsByClassName("event").length > 0) {
+            if (woaEventsList.getElementById("bodyFooter")!==null) {
                 clearInterval(calendarWait)
                 console.log("end looping")
                 let todaysEvents = woaEventsList.getElementsByClassName("event")
