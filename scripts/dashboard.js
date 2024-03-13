@@ -270,13 +270,19 @@ function showCalendar() {
 
     while (eventTable.firstChild) { eventTable.removeChild(eventTable.firstChild) }
     woaEvents.src = (window.location.hostname == "localhost") ? "Calendar/28118~19555.html" : "https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"
+
+
+
+    $('#WOACalendar').on('load', function () {
+        alert("loaded")
+    });
     woaEvents.addEventListener("load", function () {
         console.log("iframe loaded")
         let woaEventsList = woaEvents.contentWindow.document
         console.log("start looping")
         calendarWait = setInterval(function () {
             console.log("still looping")
-            if (woaEventsList.getElementById("bodyFooter")!==null) {
+            if (woaEventsList.getElementById("bodyFooter") !== null) {
                 clearInterval(calendarWait)
                 console.log("end looping")
                 let todaysEvents = woaEventsList.getElementsByClassName("event")
