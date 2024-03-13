@@ -157,6 +157,7 @@ function getProfilePage() {
         document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = profileContent.getElementsByClassName("clsHeader")[0].innerHTML
         for (let p = 0; p < recentItems.length; p++) { getMessage(recentItems[p].getElementsByTagName("a")[0], p) }
         showPhotos(profileContent)
+        sessionStorage.setItem("profileName", profileContent.getElementsByClassName("clsHeader")[0].innerHTML)
         document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
     })
 }
@@ -321,7 +322,7 @@ $(window).load(function () {
         localStorage.setItem("pageEmails", document.getElementById("recentEmails").innerHTML.trim())
         localStorage.setItem("pagePhotos", document.getElementById("recentPhotos").innerHTML.trim())
 
-        sessionStorage.setItem("profileName", document.getElementById("profileHeader").innerText.trim().replace("Welcome,", ""))
+        
     }, 2000)
 
 
