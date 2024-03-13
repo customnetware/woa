@@ -196,9 +196,6 @@ function showPhotos() {
             let photoLocation = photos.getElementById("contentInner").getElementsByClassName("colorbox-photo")
             let pagePhotos = document.getElementById("photoList")
 
-            alert(photoTitles.length)
-            alert(photoLocation.length)
-
             for (let p = photoTitles.length - 1, i = 0; p >= 0 && i < 3; p--, i++) {
                 pagePhotos.getElementsByClassName("caption")[i].getElementsByTagName("p")[0].innerText = photoTitles[p].children[0].innerText
                 pagePhotos.getElementsByTagName("a")[i].href = photoLocation[p].href.replace(currentPageHost, "https://ourwoodbridge.net")
