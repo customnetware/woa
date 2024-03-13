@@ -147,15 +147,16 @@ function getProfilePage() {
         document.getElementById("userProfile").insertBefore(profileImgLink, document.getElementById("userProfile").firstChild)
         document.getElementById("card-hours").innerHTML = officeHours.getElementById("contentInner").children[2].innerHTML
         document.getElementById("profileHeader").getElementsByTagName("a")[1].href = portalProfilePage
-        sessionStorage.setItem("profileSecurity", profilePage.getElementById("sec_role_id").selectedOptions[0].innerHTML)
-
+        if (profilePage.getElementById("sec_role_id") !== null) {
+            sessionStorage.setItem("profileSecurity", profilePage.getElementById("sec_role_id").selectedOptions[0].innerHTML)
+        } else { sessionStorage.setItem("profileSecurity", "resident") }
     })
     $.when(grp5).done(function (responseText1) {
         let profileContent = new DOMParser().parseFromString(responseText1, "text/html")
         let recentItems = profileContent.getElementsByClassName("message")
-
-        document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = profileContent.getElementsByClassName("clsHeader")[0].innerHTML
         for (let p = 0; p < recentItems.length; p++) { getMessage(recentItems[p].getElementsByTagName("a")[0], p) }
+        document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = profileContent.getElementsByClassName("clsHeader")[0].innerHTML
+
         showPhotos(profileContent)
         sessionStorage.setItem("profileName", profileContent.getElementsByClassName("clsHeader")[0].innerHTML)
         document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
@@ -322,7 +323,7 @@ $(window).load(function () {
         localStorage.setItem("pageEmails", document.getElementById("recentEmails").innerHTML.trim())
         localStorage.setItem("pagePhotos", document.getElementById("recentPhotos").innerHTML.trim())
 
-        
+
     }, 2000)
 
 
