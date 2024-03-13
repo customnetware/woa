@@ -12,19 +12,7 @@ function showPopUp(pageContent) {
         })
     if (!$("#appPopUp").is(":visible")) { $("#appPopUp").modal("show") }
 }
-function getResidentHomePage() {
-    $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
-        .done(function (responseText) {
-            let myWoodbridge = new DOMParser().parseFromString(responseText, "text/html")
-            document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
-            document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = myWoodbridge.getElementsByClassName("clsHeader")[0].innerHTML
 
-            let recentItems = myWoodbridge.getElementsByClassName("message")
-            for (let p = 0; p < recentItems.length; p++) { getMessage(recentItems[p].getElementsByTagName("a")[0], p) }
-            showPhotos(myWoodbridge)
-
-        })
-}
 function getMessage(rawMessage, cardID) {
     let title = rawMessage.getAttribute("data-tooltip-title").split("by")[0]
     let content = rawMessage.getAttribute("data-tooltip-text")
@@ -138,24 +126,38 @@ function getProfilePage() {
     let profileImgLink = document.createElement("a")
     let profileImg = document.createElement("img")
     let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
-
-    profileImgLink.href = "https://ourwoodbridge.net/Member/Edit/" + profileID[1] + "~" + profileID[0]
-    document.getElementById("profileHeader").getElementsByTagName("a")[1].href = "https://ourwoodbridge.net/Member/Contact/" + profileID[1] + "~" + profileID[0] + "~" + profileID[2]
+    let portalProfilePage = "/Member/Contact/" + profileID[1] + "~" + profileID[0] + "~" + profileID[2]
     sessionStorage.setItem("profileID", profileID)
     let grp1 = $.get(pageLocation("/news/28118~792554"), function () { })
     let grp2 = $.get(pageLocation("/Member/28118~" + profileID[0]), function () { })
     let grp3 = $.get(pageLocation("/news/28118~795372"), function () { })
-    $.when(grp1, grp2, grp3).done(function (responseText1, responseText2, responseText3) {
+    let grp4 = $.get(pageLocation(portalProfilePage), function () { })
+    let grp5 = $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
+    $.when(grp1, grp2, grp3, grp4).done(function (responseText1, responseText2, responseText3, responseText4) {
         let userContent = new DOMParser().parseFromString(responseText1, "text/html")
         let imageFile = new DOMParser().parseFromString(responseText2, "text/html")
         let officeHours = new DOMParser().parseFromString(responseText3, "text/html")
+        let profilePage = new DOMParser().parseFromString(responseText4, "text/html")
 
+        profileImgLink.href = "https://ourwoodbridge.net/Member/Edit/" + profileID[1] + "~" + profileID[0]
         profileImg.className = "rounded float-left img-fluid"
         profileImg.src = imageFile.getElementsByTagName("img")[0].src
         profileImgLink.appendChild(profileImg)
         document.getElementById("userProfile").innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
         document.getElementById("userProfile").insertBefore(profileImgLink, document.getElementById("userProfile").firstChild)
         document.getElementById("card-hours").innerHTML = officeHours.getElementById("contentInner").children[2].innerHTML
+        document.getElementById("profileHeader").getElementsByTagName("a")[1].href = portalProfilePage
+        sessionStorage.setItem("profileSecurity", profilePage.getElementById("sec_role_id").selectedOptions[0].innerHTML)
+
+    })
+    $.when(grp5).done(function (responseText1) {
+        let profileContent = new DOMParser().parseFromString(responseText1, "text/html")
+        let recentItems = profileContent.getElementsByClassName("message")
+
+        document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = profileContent.getElementsByClassName("clsHeader")[0].innerHTML
+        for (let p = 0; p < recentItems.length; p++) { getMessage(recentItems[p].getElementsByTagName("a")[0], p) }
+        showPhotos(profileContent)
+        document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
     })
 }
 function getResourceCenter() {
@@ -211,7 +213,7 @@ function getForSaleOrFree() {
         })
 }
 function getContacts() {
-    let contactArray = ["10544936", "10551971", "10831154", "8108389", "10566484", "10854040"]
+    let contactArray = ["10544936", "10551971", "10863452", "8108389", "10566484", "10854040"]
     let contact1 = $.get(pageLocation("/Member/28118~" + contactArray[0]), function () { })
     let contact2 = $.get(pageLocation("/Member/28118~" + contactArray[1]), function () { })
     let contact3 = $.get(pageLocation("/Member/28118~" + contactArray[2]), function () { })
@@ -314,7 +316,6 @@ $(window).load(function () {
     getNewsAndAnnouncements()
     getDiscussionGroups()
     getForSaleOrFree()
-    getResidentHomePage()
     setTimeout(function () {
         localStorage.setItem("pageTime", new Date().getTime())
         localStorage.setItem("pageEmails", document.getElementById("recentEmails").innerHTML.trim())
