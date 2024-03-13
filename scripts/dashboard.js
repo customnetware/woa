@@ -193,7 +193,7 @@ function showPhotos() {
             let photos = new DOMParser().parseFromString(responseText, "text/html")
             let currentPageHost = window.location.protocol + "//" + window.location.host
             let photoTitles = photos.getElementById("contentInner").getElementsByClassName("clsSmallText")
-            let photoLocation = photos.getElementById("contentInner").getElementsByClassName("colorbox-photo cboxElement")
+            let photoLocation = photos.getElementById("contentInner").getElementsByClassName("colorbox-photo")
             let pagePhotos = document.getElementById("photoList")
 
             alert(photoTitles.length)

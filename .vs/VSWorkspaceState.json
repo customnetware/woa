@@ -3,9 +3,8 @@
     "",
     "\\css",
     "\\Gallery",
-    "\\Member\\Contact",
     "\\scripts"
   ],
-  "SelectedNode": "\\css\\dashboard.css",
+  "SelectedNode": "\\scripts\\dashboard.js",
   "PreviewInSolutionExplorer": false
 }
