@@ -194,7 +194,7 @@ function showPhotos() {
             let currentPageHost = window.location.protocol + "//" + window.location.host
             let pagePhotos = document.getElementById("photoList")
             let portalPhotos = photos.getElementById("contentInner").children[1].children
-
+            alert(currentPageHost)
 
             for (let p = portalPhotos.length - 2, i = 0; p >= 0 && i < 3; p--, i++) {
                 pagePhotos.getElementsByClassName("caption")[i].getElementsByTagName("p")[0].innerText = portalPhotos[p].getElementsByTagName("a")[0].title.replace("Edit: ", "")
