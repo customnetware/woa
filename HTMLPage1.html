@@ -11,60 +11,45 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-    <div class="container" id="customContainer">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="thumbnail">
-                    <a href="">
-                        <img src="" alt="">
-                        <div class="caption">
-                            <p></p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="thumbnail">
-                    <a href="">
-                        <img src="" alt="">
-                        <div class="caption">
-                            <p></p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="thumbnail">
-                    <a href="">
-                        <img src="" alt="">
-                        <div class="caption">
-                            <p></p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <div class="container" id="customContainer"></div>
     <script>
-        function pageLocation(URLString) {
-            return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
-        }
-        $.get(pageLocation("/Gallery/28118~58961"), function () { })
-            .done(function (responseText) {
-                let photos = new DOMParser().parseFromString(responseText, "text/html")
-                let currentPageHost = window.location.protocol + "//" + window.location.host
-                let pagePhotos = document.getElementById("customContainer")
-                let portalPhotos = photos.getElementById("contentInner").children[1].children
-         
+        //$.get("https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar?view=1#events", function () { })
+        //    .done(function (responseText) {
+        //        let testEvents = new DOMParser().parseFromString(responseText, "text/html")
+        //        document.getElementById("customContainer").innerHTML = testEvents.getElementsByTagName("body")[0].innerHTML
+        //    })
 
-                for (let p = portalPhotos.length - 2, i = 0; p >= 0 && i < 3; p--, i++) {
-                    pagePhotos.getElementsByClassName("caption")[i].getElementsByTagName("p")[0].innerText = portalPhotos[p].getElementsByTagName("a")[0].title.replace("Edit: ","")
-                    pagePhotos.getElementsByTagName("a")[i].href = portalPhotos[p].getElementsByTagName("a")[1].href.replace(currentPageHost, "https://ourwoodbridge.net")
-                    pagePhotos.getElementsByTagName("img")[i].src = portalPhotos[p].getElementsByTagName("a")[1].href.replace(currentPageHost, "https://ourwoodbridge.net")
-                }
-            })
+
+       //async function doAjax(args) {
+       //     const result = await $.ajax({
+       //         url: "https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar?view=1#events",
+       //         type: 'POST',
+       //         data: args
+       //     })
+
+       //     return result
+       // }
+       // doAjax().then((data) => doStuff(alert(data)))
+
+        //function f() {
+        //    return $.get('https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar?view=1#events')
+        //};
+
+        //async function test() {
+        //    var x = await f()
+        //    console.log(x)
+        //}
+
+        //test()
+        async function logMovies() {
+            const response = await fetch("https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar?view=1#events")
+            const movies = await response.text()
+            console.log(movies)
+        }
+        logMovies()
     </script>
+
+
 
 </body>
 </html>

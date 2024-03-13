@@ -268,7 +268,7 @@ function showCalendar() {
     let eventTable = document.getElementById("eventTable")
     let woaEvents = document.getElementById("WOACalendar")
 
-    while (eventTable.firstChild) { eventTable.removeChild(eventTable.firstChild) }
+   
     woaEvents.src = (window.location.hostname == "localhost") ? "Calendar/28118~19555.html" : "https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"
 
 
@@ -279,7 +279,7 @@ function showCalendar() {
         console.log("start looping")
         calendarWait = setInterval(function () {
             console.log("still looping")
-            if (woaEventsList.getElementById("bodyFooter") !== null) {
+            if (woaEventsList.getElementById("events") !== null) {
                 clearInterval(calendarWait)
                 console.log("end looping")
                 let todaysEvents = woaEventsList.getElementsByClassName("event")
@@ -312,7 +312,7 @@ function showCalendar() {
                 }
             }
         }, 1000)
-    });
+    })
 
 }
 $(window).load(function () {
