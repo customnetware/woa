@@ -195,7 +195,7 @@ function showPhotos() {
             let pagePhotos = document.getElementById("photoList")
 
             let portalPhotos = photos.getElementById("contentInner").children[photos.getElementById("contentInner").children.length-1].children
-            alert(photos.getElementById("contentInner").children.length - 1)
+            alert(portalPhotos.length)
 
             for (let p = portalPhotos.length - 2, i = 0; p >= 0 && i < 3; p--, i++) {
             
