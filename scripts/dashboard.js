@@ -194,7 +194,10 @@ function showPhotos() {
             let currentPageHost = window.location.protocol + "//" + window.location.host
             let photoTitles = photos.getElementById("contentInner").getElementsByClassName("clsSmallText")
             let photoLocation = photos.getElementById("contentInner").getElementsByClassName("colorbox-photo cboxElement")
-            let pagePhotos = document.getElementById("photoList")    
+            let pagePhotos = document.getElementById("photoList")
+
+            alert(photoTitles.length)
+            alert(photoLocation.length)
 
             for (let p = photoTitles.length - 1, i = 0; p >= 0 && i < 3; p--, i++) {
                 pagePhotos.getElementsByClassName("caption")[i].getElementsByTagName("p")[0].innerText = photoTitles[p].children[0].innerText
