@@ -194,9 +194,10 @@ function showPhotos() {
             let currentPageHost = window.location.protocol + "//" + window.location.host
             let pagePhotos = document.getElementById("photoList")
             let portalPhotos = photos.getElementById("contentInner").children[1].children
-            alert(currentPageHost)
+           alert(currentPageHost)
 
             for (let p = portalPhotos.length - 2, i = 0; p >= 0 && i < 3; p--, i++) {
+                alert(portalPhotos[p].getElementsByTagName("a")[1].href.replace(currentPageHost, "https://ourwoodbridge.net"))
                 pagePhotos.getElementsByClassName("caption")[i].getElementsByTagName("p")[0].innerText = portalPhotos[p].getElementsByTagName("a")[0].title.replace("Edit: ", "")
                 pagePhotos.getElementsByTagName("a")[i].href = portalPhotos[p].getElementsByTagName("a")[1].href.replace(currentPageHost, "https://ourwoodbridge.net")
                 pagePhotos.getElementsByTagName("img")[i].src = portalPhotos[p].getElementsByTagName("a")[1].href.replace(currentPageHost, "https://ourwoodbridge.net")
