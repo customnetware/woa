@@ -273,10 +273,7 @@ function showCalendar() {
 
 
 
-    $('#WOACalendar').on('load', function () {
-        alert("loaded")
-    });
-    woaEvents.addEventListener("load", function () {
+    $("#WOACalendar").on("load", function () {
         console.log("iframe loaded")
         let woaEventsList = woaEvents.contentWindow.document
         console.log("start looping")
@@ -315,7 +312,8 @@ function showCalendar() {
                 }
             }
         }, 1000)
-    })
+    });
+
 }
 $(window).load(function () {
     if (document.getElementsByClassName("clsHeader").length > 0) { document.getElementsByClassName("clsHeader")[0].style.display = "none" }
