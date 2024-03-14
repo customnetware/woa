@@ -264,7 +264,8 @@ function getContacts() {
 }
 
 function getCalendar() {
-    var woaCalendar = document.createElement("iframe")
+    let woaCalendar = document.createElement("iframe")
+    woaCalendar.style.display="none"
     woaCalendar.onload = function () {
         calendarWait = setInterval(function () {
             let calendarDocument = woaCalendar.contentWindow.document
