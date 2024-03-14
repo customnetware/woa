@@ -274,7 +274,6 @@ function getCalendar() {
                     let todaysEvents = eventList.getElementsByClassName("event")
                     if (todaysEvents.length > 3) {
                         clearInterval(calendarWait)
-                        alert(todaysEvents.length)
                         for (let d = 0; d < todaysEvents.length; d++) {
                             let newRow = document.createElement("tr")
                             let newCol1 = document.createElement("td")
