@@ -306,7 +306,7 @@ function getCalendar() {
         }, 1000)
 
     }
-    woaCalendar.src = "Calendar/28118~19555.html"
+    woaCalendar.src = "/Calendar/28118~19555"
     document.body.appendChild(woaCalendar)
 
 }
