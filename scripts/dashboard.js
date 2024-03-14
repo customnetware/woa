@@ -263,56 +263,50 @@ function getContacts() {
         })
 }
 
-function showCalendar() {
-    console.log("loading iframe")
-    let eventTable = document.getElementById("eventTable")
-    let woaEvents = document.getElementById("WOACalendar")
-
-   
-    woaEvents.src = (window.location.hostname == "localhost") ? "Calendar/28118~19555.html" : "https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar#events"
-
-
-
-    $("#WOACalendar").on("load", function () {
-        console.log("iframe loaded")
-        let woaEventsList = woaEvents.contentWindow.document
-        console.log("start looping")
+function getCalendar() {
+    var woaCalendar = document.createElement("iframe")
+    woaCalendar.onload = function () {
         calendarWait = setInterval(function () {
-            console.log("still looping")
-            if (woaEventsList.getElementById("events") !== null) {
-                clearInterval(calendarWait)
-                console.log("end looping")
-                let todaysEvents = woaEventsList.getElementsByClassName("event")
-
-                for (let d = 0; d < todaysEvents.length; d++) {
-                    let newRow = document.createElement("tr")
-                    let newCol1 = document.createElement("td")
-                    let newCol2 = document.createElement("td")
-                    let newCol3 = document.createElement("td")
-                    let eventLink = document.createElement("a")
-                    eventLink.href = todaysEvents[d].getElementsByTagName("a")[0].href
-                    eventLink.innerHTML = todaysEvents[d].children[1].innerText
-                    newCol1.appendChild(eventLink)
-                    newCol2.innerText = todaysEvents[d].children[0].innerText
-                    $.get(eventLink.href, function () { })
-                        .done(function (responseText) {
-                            let woaEvent = new DOMParser().parseFromString(responseText, "text/html")
-                            newCol3.innerText = woaEvent.getElementsByClassName("clsInput clsBodyText")[0].innerText.trim()
-                        })
-                        .fail(function () {
-                            newCol3.innerText = "Event Location Not Avaiable"
-                        })
-                        .always(function () {
-                            newRow.appendChild(newCol1)
-                            newRow.appendChild(newCol2)
-                            newRow.appendChild(newCol3)
-                            eventTable.appendChild(newRow)
-                            if (d == todaysEvents.length - 1) { sessionStorage.setItem("pageEvents", eventTable.innerHTML.trim()) }
-                        })
+            let calendarDocument = woaCalendar.contentWindow.document
+            if (calendarDocument !== null) {
+                let eventList = calendarDocument.getElementById("events")
+                if (eventList !== null) {
+                    let todaysEvents = eventList.getElementsByClassName("event")
+                    if (todaysEvents.length > 3) {
+                        clearInterval(calendarWait)
+                        for (let d = 0; d < todaysEvents.length; d++) {
+                            let newRow = document.createElement("tr")
+                            let newCol1 = document.createElement("td")
+                            let newCol2 = document.createElement("td")
+                            let newCol3 = document.createElement("td")
+                            let eventLink = document.createElement("a")
+                            eventLink.href = todaysEvents[d].getElementsByTagName("a")[0].href
+                            eventLink.innerHTML = todaysEvents[d].children[1].innerText
+                            newCol1.appendChild(eventLink)
+                            newCol2.innerText = todaysEvents[d].children[0].innerText
+                            $.get(eventLink.href, function () { })
+                                .done(function (responseText) {
+                                    let woaEvent = new DOMParser().parseFromString(responseText, "text/html")
+                                    newCol3.innerText = woaEvent.getElementsByClassName("clsInput clsBodyText")[0].innerText.trim()
+                                })
+                                .fail(function () {
+                                    newCol3.innerText = "Event Location Not Avaiable"
+                                })
+                                .always(function () {
+                                    newRow.appendChild(newCol1)
+                                    newRow.appendChild(newCol2)
+                                    newRow.appendChild(newCol3)
+                                    eventTable.appendChild(newRow)                               
+                                })
+                        }
+                    }
                 }
             }
         }, 1000)
-    })
+
+    }
+    woaCalendar.src = "Calendar/28118~19555.html"
+    document.body.appendChild(woaCalendar)
 
 }
 $(window).load(function () {
@@ -321,7 +315,7 @@ $(window).load(function () {
     if (document.getElementsByClassName("association-name").length > 0) { document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge" }
     getProfilePage()
     showPhotos()
-    showCalendar()
+    getCalendar()
     getResourceCenter()
     getContacts()
     getNewsAndAnnouncements()

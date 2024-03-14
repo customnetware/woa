@@ -13,40 +13,10 @@
 <body>
     <div class="container" id="customContainer"></div>
     <script>
-        //$.get("https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar?view=1#events", function () { })
-        //    .done(function (responseText) {
-        //        let testEvents = new DOMParser().parseFromString(responseText, "text/html")
-        //        document.getElementById("customContainer").innerHTML = testEvents.getElementsByTagName("body")[0].innerHTML
-        //    })
-
-
-       //async function doAjax(args) {
-       //     const result = await $.ajax({
-       //         url: "https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar?view=1#events",
-       //         type: 'POST',
-       //         data: args
-       //     })
-
-       //     return result
-       // }
-       // doAjax().then((data) => doStuff(alert(data)))
-
-        //function f() {
-        //    return $.get('https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar?view=1#events')
-        //};
-
-        //async function test() {
-        //    var x = await f()
-        //    console.log(x)
-        //}
-
-        //test()
-        async function logMovies() {
-            const response = await fetch("https://ourwoodbridge.net/Calendar/28118~19555/Community-Calendar?view=1#events")
-            const movies = await response.text()
-            console.log(movies)
-        }
-        logMovies()
+        var WOACalendar = document.createElement("iframe")
+        WOACalendar.onload = function () { alert("myframe is loaded") } // before setting 'src'
+        WOACalendar.src = "Calendar/28118~19555.html"
+        document.body.appendChild(WOACalendar);
     </script>
 
 
