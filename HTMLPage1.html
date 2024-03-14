@@ -13,10 +13,20 @@
 <body>
     <div class="container" id="customContainer"></div>
     <script>
-        var WOACalendar = document.createElement("iframe")
-        WOACalendar.onload = function () { alert("myframe is loaded") } // before setting 'src'
-        WOACalendar.src = "Calendar/28118~19555.html"
-        document.body.appendChild(WOACalendar);
+        function formatTime(eventTime) {
+            let eventDate = new Date()
+            let amPM = eventTime.slice(-2)
+            eventTime = eventTime.replace(amPM,"")
+            eventHours = Number(eventTime.split(":")[0])
+            eventMinutes = Number(eventTime.split(":")[1])
+            if (amPM == "PM" && eventHours < 12) eventHours = eventHours + 12
+            if (amPM == "AM" && eventHours == 12) eventHours = eventHours - 12;
+            eventDate.setHours(eventHours, eventMinutes, 0)
+            return eventDate
+        }
+        alert(formatTime("12:30AM"))
+
+
     </script>
 
 

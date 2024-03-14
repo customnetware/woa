@@ -12,7 +12,6 @@ function showPopUp(pageContent) {
         })
     if (!$("#appPopUp").is(":visible")) { $("#appPopUp").modal("show") }
 }
-
 function getMessage(rawMessage, cardID) {
     let title = rawMessage.getAttribute("data-tooltip-title").split("by")[0]
     let content = rawMessage.getAttribute("data-tooltip-text")
@@ -155,10 +154,8 @@ function getProfilePage() {
         let recentItems = profileContent.getElementsByClassName("message")
         for (let p = 0; p < recentItems.length; p++) { getMessage(recentItems[p].getElementsByTagName("a")[0], p) }
         document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = profileContent.getElementsByClassName("clsHeader")[0].innerHTML
-
-
-        sessionStorage.setItem("profileName", profileContent.getElementsByClassName("clsHeader")[0].innerHTML)
         document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
+        sessionStorage.setItem("profileName", profileContent.getElementsByClassName("clsHeader")[0].innerHTML)
     })
 }
 function getResourceCenter() {
@@ -262,10 +259,10 @@ function getContacts() {
             }
         })
 }
-
 function getCalendar() {
     let woaCalendar = document.createElement("iframe")
-    woaCalendar.style.display="none"
+    let calendarArray = []
+    woaCalendar.style.display = "none"
     woaCalendar.onload = function () {
         calendarWait = setInterval(function () {
             let calendarDocument = woaCalendar.contentWindow.document
@@ -273,42 +270,67 @@ function getCalendar() {
                 let eventList = calendarDocument.getElementById("events")
                 if (eventList !== null) {
                     let todaysEvents = eventList.getElementsByClassName("event")
-                    if (todaysEvents.length > 3) {
+                    if (todaysEvents.length > 0) {
                         clearInterval(calendarWait)
                         for (let d = 0; d < todaysEvents.length; d++) {
-                            let newRow = document.createElement("tr")
-                            let newCol1 = document.createElement("td")
-                            let newCol2 = document.createElement("td")
-                            let newCol3 = document.createElement("td")
-                            let eventLink = document.createElement("a")
-                            eventLink.href = todaysEvents[d].getElementsByTagName("a")[0].href
-                            eventLink.innerHTML = todaysEvents[d].children[1].innerText
-                            newCol1.appendChild(eventLink)
-                            newCol2.innerText = todaysEvents[d].children[0].innerText
-                            $.get(eventLink.href, function () { })
+                            let eventLocation = ""
+                            $.get(todaysEvents[d].getElementsByTagName("a")[0].href, function () { })
                                 .done(function (responseText) {
                                     let woaEvent = new DOMParser().parseFromString(responseText, "text/html")
-                                    newCol3.innerText = woaEvent.getElementsByClassName("clsInput clsBodyText")[0].innerText.trim()
+                                    eventLocation = woaEvent.getElementsByClassName("clsInput clsBodyText")[0].innerText.trim()
                                 })
                                 .fail(function () {
-                                    newCol3.innerText = "Event Location Not Avaiable"
+                                    eventLocation = "Event Location Not Avaiable"
                                 })
                                 .always(function () {
-                                    newRow.appendChild(newCol1)
-                                    newRow.appendChild(newCol2)
-                                    newRow.appendChild(newCol3)
-                                    eventTable.appendChild(newRow)                               
+                                    calendarArray.push({
+                                        calTime: formatTime(todaysEvents[d].children[0].innerText).getTime(),
+                                        calTitle: todaysEvents[d].children[1].innerText,
+                                        calLink: todaysEvents[d].getElementsByTagName("a")[0].href,
+                                        calLocation: eventLocation
+                                    })
+                                    if (d === todaysEvents.length - 1) {
+                                        calendarArray.sort((a, b) => { return a.calTime - b.calTime })
+                                        /*calendarArray.reverse()*/
+                                        showCalendar(calendarArray)
+                                    }
                                 })
                         }
+
                     }
                 }
             }
         }, 1000)
 
     }
-    woaCalendar.src = "/Calendar/28118~19555"
+    woaCalendar.src = pageLocation("/Calendar/28118~19555")
     document.body.appendChild(woaCalendar)
-
+}
+function showCalendar(calenderEvents) {
+    for (let d = 0; d < calenderEvents.length; d++) {
+        let eventLink = document.createElement("a"), newRow = document.createElement("tr")
+        let newCol1 = document.createElement("td"), newCol2 = document.createElement("td"), newCol3 = document.createElement("td")
+        eventLink.href = calenderEvents[d].calLink
+        eventLink.innerHTML = calenderEvents[d].calTitle
+        newCol1.appendChild(eventLink)
+        newCol2.innerText = new Date(calenderEvents[d].calTime).toLocaleTimeString()
+        newCol3.innerText = calenderEvents[d].calLocation
+        newRow.appendChild(newCol1)
+        newRow.appendChild(newCol2)
+        newRow.appendChild(newCol3)
+        eventTable.appendChild(newRow)
+    }
+}
+function formatTime(eventTime) {
+    let eventDate = new Date()
+    let amPM = eventTime.slice(-2)
+    eventTime = eventTime.replace(amPM, "")
+    eventHours = Number(eventTime.split(":")[0])
+    eventMinutes = Number(eventTime.split(":")[1])
+    if (amPM == "PM" && eventHours < 12) eventHours = eventHours + 12
+    if (amPM == "AM" && eventHours == 12) eventHours = eventHours - 12
+    eventDate.setHours(eventHours, eventMinutes, 0)
+    return eventDate
 }
 $(window).load(function () {
     if (document.getElementsByClassName("clsHeader").length > 0) { document.getElementsByClassName("clsHeader")[0].style.display = "none" }
