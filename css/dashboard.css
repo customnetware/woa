@@ -4,7 +4,8 @@
 }
 
 
-#customContainer {
+#customContainer th {
+    text-align:left;
 }
 
     #customContainer .card-header {
