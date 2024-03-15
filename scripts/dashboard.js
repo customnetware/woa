@@ -267,12 +267,14 @@ function getCalendar() {
     woaCalendar.onload = function () {
         calendarWait = setInterval(function () {
             let calendarDocument = woaCalendar.contentWindow.document
+     
             if (calendarDocument !== null) {
-                let eventList = calendarDocument.getElementById("events")
+                let eventList = calendarDocument.getElementById("eventList")
                 if (eventList !== null) {
                     let todaysEvents = eventList.getElementsByClassName("event")
                     if (todaysEvents.length > 0) {
                         clearInterval(calendarWait)
+                        alert(calendarDocument.readyState)
                         for (let d = 0; d < todaysEvents.length; d++) {
                             let eventLocation = ""
                             $.get(todaysEvents[d].getElementsByTagName("a")[0].href, function () { })
