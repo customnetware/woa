@@ -262,6 +262,7 @@ function getContacts() {
 function getCalendar() {
     let woaCalendar = document.createElement("iframe")
     let calendarArray = []
+    woaCalendar.id = "woaIFrame"
     woaCalendar.style.display = "none"
     woaCalendar.onload = function () {
         calendarWait = setInterval(function () {
@@ -291,12 +292,11 @@ function getCalendar() {
                                     })
                                     if (d === todaysEvents.length - 1) {
                                         calendarArray.sort((a, b) => { return a.calTime - b.calTime })
-                                        /*calendarArray.reverse()*/
+
                                         showCalendar(calendarArray)
                                     }
                                 })
                         }
-
                     }
                 }
             }
@@ -320,6 +320,7 @@ function showCalendar(calenderEvents) {
         newRow.appendChild(newCol3)
         eventTable.appendChild(newRow)
     }
+    document.getElementById("woaIFrame").remove()
 }
 function formatTime(eventTime) {
     let eventDate = new Date()
