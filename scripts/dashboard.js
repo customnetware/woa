@@ -267,7 +267,6 @@ function getCalendar() {
     woaCalendar.onload = function () {
         calendarWait = setInterval(function () {
             let calendarDocument = woaCalendar.contentWindow.document
-
             if (calendarDocument !== null) {
                 if (calendarDocument.readyState == "complete") {
                     let eventList = calendarDocument.getElementById("eventList")
@@ -275,7 +274,6 @@ function getCalendar() {
                         let todaysEvents = eventList.getElementsByClassName("event")
                         if (todaysEvents.length > 0) {
                             clearInterval(calendarWait)
-
                             for (let d = 0; d < todaysEvents.length; d++) {
                                 let eventLocation = ""
                                 $.get(todaysEvents[d].getElementsByTagName("a")[0].href, function () { })
@@ -295,7 +293,6 @@ function getCalendar() {
                                         })
                                         if (d === todaysEvents.length - 1) {
                                             calendarArray.sort((a, b) => { return a.calTime - b.calTime })
-
                                             showCalendar(calendarArray)
                                         }
                                     })
@@ -311,6 +308,7 @@ function getCalendar() {
     document.body.appendChild(woaCalendar)
 }
 function showCalendar(calenderEvents) {
+    let eventBody = document.createElement("tbody")
     for (let d = 0; d < calenderEvents.length; d++) {
         let eventLink = document.createElement("a"), newRow = document.createElement("tr")
         let newCol1 = document.createElement("td"), newCol2 = document.createElement("td"), newCol3 = document.createElement("td")
@@ -322,9 +320,10 @@ function showCalendar(calenderEvents) {
         newRow.appendChild(newCol1)
         newRow.appendChild(newCol2)
         newRow.appendChild(newCol3)
-        eventTable.appendChild(newRow)
+        eventBody.appendChild(newRow)
     }
     document.getElementById("woaIFrame").remove()
+    eventTable.appendChild(eventBody)
 }
 function formatTime(eventTime) {
     let eventDate = new Date()
