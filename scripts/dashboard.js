@@ -267,37 +267,39 @@ function getCalendar() {
     woaCalendar.onload = function () {
         calendarWait = setInterval(function () {
             let calendarDocument = woaCalendar.contentWindow.document
-     
-            if (calendarDocument !== null) {
-                let eventList = calendarDocument.getElementById("eventList")
-                if (eventList !== null) {
-                    let todaysEvents = eventList.getElementsByClassName("event")
-                    if (todaysEvents.length > 0) {
-                        clearInterval(calendarWait)
-                        alert(calendarDocument.readyState)
-                        for (let d = 0; d < todaysEvents.length; d++) {
-                            let eventLocation = ""
-                            $.get(todaysEvents[d].getElementsByTagName("a")[0].href, function () { })
-                                .done(function (responseText) {
-                                    let woaEvent = new DOMParser().parseFromString(responseText, "text/html")
-                                    eventLocation = woaEvent.getElementsByClassName("clsInput clsBodyText")[0].innerText.trim()
-                                })
-                                .fail(function () {
-                                    eventLocation = "Event Location Not Avaiable"
-                                })
-                                .always(function () {
-                                    calendarArray.push({
-                                        calTime: formatTime(todaysEvents[d].children[0].innerText).getTime(),
-                                        calTitle: todaysEvents[d].children[1].innerText,
-                                        calLink: todaysEvents[d].getElementsByTagName("a")[0].href,
-                                        calLocation: eventLocation
-                                    })
-                                    if (d === todaysEvents.length - 1) {
-                                        calendarArray.sort((a, b) => { return a.calTime - b.calTime })
 
-                                        showCalendar(calendarArray)
-                                    }
-                                })
+            if (calendarDocument !== null) {
+                if (calendarDocument.readyState == "complete") {
+                    let eventList = calendarDocument.getElementById("eventList")
+                    if (eventList !== null) {
+                        let todaysEvents = eventList.getElementsByClassName("event")
+                        if (todaysEvents.length > 0) {
+                            clearInterval(calendarWait)
+
+                            for (let d = 0; d < todaysEvents.length; d++) {
+                                let eventLocation = ""
+                                $.get(todaysEvents[d].getElementsByTagName("a")[0].href, function () { })
+                                    .done(function (responseText) {
+                                        let woaEvent = new DOMParser().parseFromString(responseText, "text/html")
+                                        eventLocation = woaEvent.getElementsByClassName("clsInput clsBodyText")[0].innerText.trim()
+                                    })
+                                    .fail(function () {
+                                        eventLocation = "Event Location Not Avaiable"
+                                    })
+                                    .always(function () {
+                                        calendarArray.push({
+                                            calTime: formatTime(todaysEvents[d].children[0].innerText).getTime(),
+                                            calTitle: todaysEvents[d].children[1].innerText,
+                                            calLink: todaysEvents[d].getElementsByTagName("a")[0].href,
+                                            calLocation: eventLocation
+                                        })
+                                        if (d === todaysEvents.length - 1) {
+                                            calendarArray.sort((a, b) => { return a.calTime - b.calTime })
+
+                                            showCalendar(calendarArray)
+                                        }
+                                    })
+                            }
                         }
                     }
                 }
