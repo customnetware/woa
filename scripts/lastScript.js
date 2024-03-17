@@ -1,6 +1,6 @@
 let waitMessage = document.createElement("div")
 let waitSpan = document.createElement("span")
-waitSpan.className = "fa fa-spinner fa-pulse fa-6x fa-fw"
+waitSpan.className = "fa fa-spinner fa-pulse fa-5x fa-fw"
 waitSpan.style.width = "75%"
 waitSpan.style.margin="auto"
 waitMessage.style.verticalAlign = "middle"
