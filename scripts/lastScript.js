@@ -6,27 +6,34 @@ var appWOA = (function () {
         getRecentEmails: function () {
             $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
                 .done(function (responseText) {
-                    let profileContent = new DOMParser().parseFromString(responseText, "text/html")
-                    let emailLinks = profileContent.getElementById("panel_messages_content").getElementsByTagName("a")
-                    let pageLinks = document.createElement("div")
-                    pageLinks.id = "customContainer"
-                    pageLinks.className = "container"
-                    for (let p = -1; p < emailLinks.length; p++) {
+                    let portalContent = new DOMParser().parseFromString(responseText, "text/html")
+                    let portalClasses = ["panel_news_content", "panel_messages_content"]
+                    let portalClassNames = ["Recent Announcements","Recent Emails" ]
+                    for (let x = 0; x < portalClasses.length; x++) {
+                        let portalLinks = portalContent.getElementById(portalClasses[x]).getElementsByTagName("a")
+                        let pageLinks = document.createElement("div")
+                        pageLinks.id = "customContainer"
+                        pageLinks.className = "container"
+                        for (let p = -1; p < portalLinks.length; p++) {
 
-                        let emailLink = document.createElement("a")
-                        let currentEmail = document.createElement("p")
-                        let emailSent = document.createElement("span")
+                            let pageLink = document.createElement("a")
+                            let pageText = document.createElement("p")
+                            let pageStamp = document.createElement("span")
 
-                        emailLink.href = (p >= 0) ? emailLinks[p].href : "/"
-                        emailLink.innerHTML = (p >= 0) ? emailLinks[p].getAttribute("data-tooltip-title").split("by")[0].split(",")[0] : "<b>Recent Emails</b>"
-                        emailSent.innerText = (p >= 0) ? emailLinks[p].getAttribute("data-tooltip-title").split("by")[0].split(",")[1] : ""
+                            pageLink.href = (p >= 0) ? portalLinks[p].href : "/"
+                            pageLink.innerHTML = (p >= 0) ? portalLinks[p].getAttribute("data-tooltip-title").split("by")[0].split(",")[0] : "<b>" + portalClassNames[x] + "</b>"
+                            if (portalClasses[x] == "panel_messages_content") {pageStamp.innerText = (p >= 0) ? portalLinks[p].getAttribute("data-tooltip-title").split("by")[0].split(",")[1] : "" }
+                            
 
-                        currentEmail.appendChild(emailLink)
-                        currentEmail.appendChild(emailSent)
-                        pageLinks.appendChild(currentEmail)
+                            pageText.appendChild(pageLink)
+                            pageText.appendChild(pageStamp)
+                            pageLinks.appendChild(pageText)
 
 
-                        if (p === emailLinks.length - 1) { document.getElementsByClassName("clsBodyText")[0].appendChild(pageLinks) }
+                            if (p === portalLinks.length - 1) { document.getElementsByClassName("clsBodyText")[0].appendChild(pageLinks) }
+
+
+                        }
                     }
                 })
         },
