@@ -1,5 +1,8 @@
 let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
 let profileImage = document.createElement("img")
+let waitMessage = document.createElement("div")
+let waitSpan = document.createElement("span")
+
 profileImage.style.height = "100px"
 profileImage.style.marginBottom="20px"
 $.get("/Member/28118~" + profileID[0], function () { })
@@ -7,9 +10,6 @@ $.get("/Member/28118~" + profileID[0], function () { })
         let imageFile = new DOMParser().parseFromString(responseText, "text/html")
         profileImage.src = imageFile.getElementsByTagName("img")[0].src
     })
-
-let waitMessage = document.createElement("div")
-let waitSpan = document.createElement("span")
 waitSpan.className = "fa fa-spinner fa-pulse fa-5x fa-fw"
 waitSpan.style.display = "block"
 waitSpan.style.margin = "auto"
@@ -17,11 +17,8 @@ waitMessage.style.minHeight = "600px"
 waitMessage.style.verticalAlign = "middle"
 waitMessage.style.textAlign = "center"
 waitMessage.className = "container"
-
 waitMessage.appendChild(waitSpan)
 document.getElementsByClassName("clsBodyText")[0].appendChild(waitMessage)
-
-
 var appWOA = (function () {
     function pageLocation(URLString) {
         return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
