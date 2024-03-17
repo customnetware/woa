@@ -11,3 +11,7 @@
 #customContainer span {
     float: right;
 }
+
+.clsHeader {
+   display:none
+}
