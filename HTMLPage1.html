@@ -13,20 +13,18 @@
 <body>
     <div class="clsBodyText"></div>
     <script>
-            let portalHead = document.head || document.getElementsByTagName("head")[0]
-            let woaStyles = document.createElement("link")
-            woaStyles.href = (window.location.hostname == "localhost") ? "/css/lastStyle.css" : "https://customnetware.github.io/woa/css/lastStyle.css"
-            woaStyles.rel ="stylesheet"
-            portalHead.appendChild(woaStyles)
-            let woaScripts = document.createElement("script")
-            woaScripts.type = "text/javascript"
-            woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/lastScript.js" : "https://customnetware.github.io/woa/scripts/lastScript.js"
-            try {
-                woaScripts.appendChild(document.createTextNode(code))
-                document.body.appendChild(woaScripts)
-            } catch (e) {
-                document.body.appendChild(woaScripts)
-            }   
+        let portalHead = document.head || document.getElementsByTagName("head")[0]
+
+        let woaStyles = document.createElement("link")
+        woaStyles.href = (window.location.hostname == "localhost") ? "/css/lastStyle.css" : "https://customnetware.github.io/woa/css/lastStyle.css"
+        woaStyles.rel = "stylesheet"
+        portalHead.appendChild(woaStyles)
+
+        let woaScripts = document.createElement("script")
+        woaScripts.type = "text/javascript"
+        woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/lastScript.js" : "https://customnetware.github.io/woa/scripts/lastScript.js"
+        document.body.appendChild(woaScripts)
+
     </script>
 </body>
 </html>
