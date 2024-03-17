@@ -1,3 +1,4 @@
+document.write("Please wait")
 var appWOA = (function () {
     function pageLocation(URLString) {
         return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
