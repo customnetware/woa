@@ -1,9 +1,14 @@
 let waitMessage = document.createElement("div")
+let waitSpan = document.createElement("span")
+waitSpan.className = "fa fa-refresh fa-spin fa-lg"
+
+
 waitMessage.style.minHeight="600px"
 waitMessage.className = "container"
 waitMessage.innerText="Plese wait, the application is loading"
 
 document.getElementsByClassName("clsBodyText")[0].appendChild(waitMessage)
+document.getElementsByClassName("clsBodyText")[0].appendChild(waitSpan)
 var appWOA = (function () {
     function pageLocation(URLString) {
         return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
@@ -59,8 +64,6 @@ var appWOA = (function () {
                                 img.src = "https://ourwoodbridge.net/" + portalLinks[p].getAttribute("data-tooltip-text").split("|")[0]
                                 pageLinks.appendChild(img)
                             }
-
-
                             document.getElementsByClassName("clsBodyText")[0].appendChild(pageLinks)
 
                         }
