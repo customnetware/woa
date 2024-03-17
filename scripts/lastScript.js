@@ -2,7 +2,7 @@ let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthPro
 let profileImage = document.createElement("img")
 profileImage.style.height = "100px"
 profileImage.style.marginBottom="20px"
-$.get("/Member/28118~" + profileID[0]+".html", function () { })
+$.get("/Member/28118~" + profileID[0], function () { })
     .done(function (responseText) {
         let imageFile = new DOMParser().parseFromString(responseText, "text/html")
         profileImage.src = imageFile.getElementsByTagName("img")[0].src
