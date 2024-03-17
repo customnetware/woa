@@ -1,10 +1,17 @@
-document.write("Please wait")
+let waitMessage = document.createElement("div")
+waitMessage.className = "container"
+waitMessage.innerText="Plese wait, the application is loading"
+
+document.getElementsByClassName("clsBodyText")[0].appendChild(waitMessage)
 var appWOA = (function () {
     function pageLocation(URLString) {
         return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
     }
     return {
         getProfilePage: function () {
+            let pageLinks = document.createElement("div")
+            pageLinks.id = "customContainer"
+            pageLinks.className = "container"
             $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
                 .done(function (responseText) {
                     let portalContent = new DOMParser().parseFromString(responseText, "text/html")
@@ -12,9 +19,6 @@ var appWOA = (function () {
                     let portalClassNames = ["Recent Announcements", "Recent Emails", "For Sale or Free", "Photo Gallery"]
                     for (let x = 0; x < portalClasses.length; x++) {
                         let portalLinks = portalContent.getElementById(portalClasses[x]).getElementsByTagName("a")
-                        let pageLinks = document.createElement("div")
-                        pageLinks.id = "customContainer"
-                        pageLinks.className = "container"
                         if (portalClasses[x] !== "panel_gallery_content") {
                             for (let p = -1; p < portalLinks.length; p++) {
                                 if (portalLinks.length > 0) {
@@ -31,7 +35,10 @@ var appWOA = (function () {
                                     pageText.appendChild(pageStamp)
                                     pageLinks.appendChild(pageText)
 
-                                    if (p === portalLinks.length - 1) { document.getElementsByClassName("clsBodyText")[0].appendChild(pageLinks) }
+                                    if (p === portalLinks.length - 1) {
+                                        document.getElementsByClassName("clsBodyText")[0].removeChild(document.getElementsByClassName("clsBodyText")[0].firstChild)
+                                        document.getElementsByClassName("clsBodyText")[0].appendChild(pageLinks)
+                                    }
                                 }
                             }
                         } else {
@@ -48,7 +55,7 @@ var appWOA = (function () {
                                 img.style.marginRight = "20px"
                                 img.style.marginTop = "20px"
                                 img.style.marginTop = "20px"
-                                img.src = "https://ourwoodbridge.net/"+portalLinks[p].getAttribute("data-tooltip-text").split("|")[0]
+                                img.src = "https://ourwoodbridge.net/" + portalLinks[p].getAttribute("data-tooltip-text").split("|")[0]
                                 pageLinks.appendChild(img)
                             }
 
