@@ -1,4 +1,5 @@
 let waitMessage = document.createElement("div")
+waitMessage.style.minHeight="600px"
 waitMessage.className = "container"
 waitMessage.innerText="Plese wait, the application is loading"
 
