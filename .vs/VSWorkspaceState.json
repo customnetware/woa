@@ -6,11 +6,11 @@
     "\\Gallery",
     "\\homepage",
     "\\homepage\\28118",
-    "\\Member",
     "\\Member\\Contact",
     "\\Messenger",
-    "\\Messenger\\MessageView"
+    "\\Messenger\\MessageView",
+    "\\scripts"
   ],
-  "SelectedNode": "\\css\\dashboard.css",
+  "SelectedNode": "\\scripts\\lastScript.js",
   "PreviewInSolutionExplorer": false
 }
