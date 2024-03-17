@@ -4,7 +4,12 @@
     "\\Calendar",
     "\\css",
     "\\Gallery",
-    "\\scripts"
+    "\\homepage",
+    "\\homepage\\28118",
+    "\\Member",
+    "\\Member\\Contact",
+    "\\Messenger",
+    "\\Messenger\\MessageView"
   ],
   "SelectedNode": "\\css\\dashboard.css",
   "PreviewInSolutionExplorer": false

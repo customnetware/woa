@@ -11,22 +11,29 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-    <div class="container" id="customContainer"></div>
+    <div class="clsBodyText"></div>
+
+
     <script>
-        function formatTime(eventTime) {
-            let eventDate = new Date()
-            let amPM = eventTime.slice(-2)
-            eventTime = eventTime.replace(amPM,"")
-            eventHours = Number(eventTime.split(":")[0])
-            eventMinutes = Number(eventTime.split(":")[1])
-            if (amPM == "PM" && eventHours < 12) eventHours = eventHours + 12
-            if (amPM == "AM" && eventHours == 12) eventHours = eventHours - 12;
-            eventDate.setHours(eventHours, eventMinutes, 0)
-            return eventDate
-        }
-        alert(formatTime("12:30AM"))
 
+        $(window).load(function () {
+            let portalHead = document.head || document.getElementsByTagName("head")[0]
+            let woaStyles = document.createElement("link")
+            woaStyles.href = "/css/lastStyle.css"
+            woaStyles.rel ="stylesheet"
+            portalHead.appendChild(woaStyles)
+            let woaScripts = document.createElement("script")
+            woaScripts.type = "text/javascript"
+            woaScripts.src ="/scripts/lastScript.js"
+            try {
+                woaScripts.appendChild(document.createTextNode(code))
+                document.body.appendChild(woaScripts)
+            } catch (e) {
+                document.body.appendChild(woaScripts)
+            }
+        })
 
+      
     </script>
 
 

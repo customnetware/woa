@@ -12,22 +12,7 @@ function showPopUp(pageContent) {
         })
     if (!$("#appPopUp").is(":visible")) { $("#appPopUp").modal("show") }
 }
-function getMessage(rawMessage, cardID) {
-    let title = rawMessage.getAttribute("data-tooltip-title").split("by")[0]
-    let content = rawMessage.getAttribute("data-tooltip-text")
-    $.get(pageLocation(rawMessage.href), function () { })
-        .done(function (responseText) {
-            let emailSaved = new DOMParser().parseFromString(responseText, "text/html")
-            let emailContent = emailSaved.getElementById("AV").getElementsByTagName("td")
-            content = emailContent[0].innerHTML
-        })
-        .always(function () {
-            document.getElementById("recentEmails").getElementsByClassName("card-header")[cardID].style.display = "block"
-            document.getElementById("recentEmails").getElementsByClassName("card-title")[cardID].innerText = title
-            document.getElementById("recentEmails").getElementsByClassName("card-body")[cardID].getElementsByTagName("span")[0].innerHTML = content
-            localStorage.setItem(rawMessage.id, title + content)
-        })
-}
+
 function getNewsAndAnnouncements() {
     $.get(pageLocation("news/list/28118"), function () { })
         .done(function (responseText) {
@@ -151,12 +136,32 @@ function getProfilePage() {
     })
     $.when(grp5).done(function (responseText1) {
         let profileContent = new DOMParser().parseFromString(responseText1, "text/html")
+        let emailLinks = profileContent.getElementById("panel_messages_content").getElementsByTagName("a")
+
+
+
         let recentItems = profileContent.getElementsByClassName("message")
         for (let p = 0; p < recentItems.length; p++) { getMessage(recentItems[p].getElementsByTagName("a")[0], p) }
         document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = profileContent.getElementsByClassName("clsHeader")[0].innerHTML
         document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
         sessionStorage.setItem("profileName", profileContent.getElementsByClassName("clsHeader")[0].innerHTML)
     })
+}
+function getMessage(rawMessage, cardID) {
+    let title = rawMessage.getAttribute("data-tooltip-title").split("by")[0]
+    let content = rawMessage.getAttribute("data-tooltip-text")
+    $.get(pageLocation(rawMessage.href), function () { })
+        .done(function (responseText) {
+            let emailSaved = new DOMParser().parseFromString(responseText, "text/html")
+            let emailContent = emailSaved.getElementById("AV").getElementsByTagName("td")
+            content = emailContent[0].innerHTML
+        })
+        .always(function () {
+            document.getElementById("recentEmails").getElementsByClassName("card-header")[cardID].style.display = "block"
+            document.getElementById("recentEmails").getElementsByClassName("card-title")[cardID].innerText = title
+            document.getElementById("recentEmails").getElementsByClassName("card-body")[cardID].getElementsByTagName("span")[0].innerHTML = content
+            localStorage.setItem(rawMessage.id, title + content)
+        })
 }
 function getResourceCenter() {
     $.get(pageLocation("/resourcecenter/28118/resource-center"), function () { })
@@ -323,7 +328,7 @@ function showCalendar(calenderEvents) {
         eventBody.appendChild(newRow)
     }
     document.getElementById("woaIFrame").remove()
-    eventTable.appendChild(eventBody)
+    document.getElementById("eventTable").appendChild(eventBody)
 }
 function formatTime(eventTime) {
     let eventDate = new Date()
@@ -336,6 +341,7 @@ function formatTime(eventTime) {
     eventDate.setHours(eventHours, eventMinutes, 0)
     return eventDate
 }
+
 $(window).load(function () {
     if (document.getElementsByClassName("clsHeader").length > 0) { document.getElementsByClassName("clsHeader")[0].style.display = "none" }
     if (document.getElementById("resDisplayName") !== null) { document.getElementById("resDisplayName").innerText = "My Woodbridge" }
@@ -354,7 +360,35 @@ $(window).load(function () {
         localStorage.setItem("pagePhotos", document.getElementById("recentPhotos").innerHTML.trim())
     }, 2000)
 
+    function testFunction() {
+        let woaEvent
+        $.when(
+            // Get the HTML
+            $.get("/feature/", function (responseText1) {
+                woaEvent = new DOMParser().parseFromString(responseText, "text/html")
+            }),
 
+            // Get the CSS
+            $.get("/assets/feature.css", function (css) {
+                globalStore.css = css
+            }),
+
+            // Get the JS
+            $.getScript("/assets/feature.js")
+
+        ).then(function () {
+
+
+            // All is ready now, so...
+
+            // Add CSS to page
+            $("<style />").html(globalStore.css).appendTo("head")
+
+            // Add HTML to page
+            $("body").append(globalStore.html)
+
+        })
+    }
 
 
     $("#appPopUp").on("hidden.bs.modal", function () {
