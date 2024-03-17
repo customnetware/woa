@@ -2,9 +2,10 @@ let waitMessage = document.createElement("div")
 let waitSpan = document.createElement("span")
 waitSpan.className = "fa fa-spinner fa-pulse fa-5x fa-fw"
 
-waitMessage.style.verticalAlign="middle"
+waitMessage.style.verticalAlign = "middle"
+waitMessage.style.textAlign="center"
 waitMessage.className = "container"
-waitMessage.innerText="Plese wait, the application is loading"
+
 document.getElementsByClassName("clsBodyText")[0].appendChild(waitSpan)
 document.getElementsByClassName("clsBodyText")[0].appendChild(waitMessage)
 
