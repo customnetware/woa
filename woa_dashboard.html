@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
-<html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <title></title>
@@ -10,197 +11,26 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-
     <div style="width: 100%; float: left; padding:20px; margin-top:20px">
         <div id="resDisplayName" style="float: left; display: none;"></div>
         <div class="association-name"><a href="/28118">My Woodbridge</a></div>
         <div class="clsHeader" style="float:left; padding-right:25px"></div>
         <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
     </div>
+    <div class="clsBodyText"></div>
+    <script>
+        let portalHead = document.head || document.getElementsByTagName("head")[0]
 
-    <div class="container" id="customContainer">
-        <div class="row" id="outerFrame">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card mb-1">
-                            <div class="card-header " id="profileHeader">
-                                <a class="fa fa-refresh fa-spin fa-lg"></a>
-                                <a href="#">Loading Profile...</a>
-                                <a href="javascript:showPopUp(0)" class="fa fa-question-circle fa-fw fa-lg"></a>
-                                <a href="javascript:showPopUp(1)" class="fa fa-comment fa-fw fa-lg"></a>
-                                <a href="javascript:showPopUp(2)" class="fa fa-envelope fa-fw fa-lg"></a>
-                            </div><div id="userProfile" class="card-body"></div>
-                        </div>
-                    </div>
-                </div>
-                <div title="Click on the title bar to show or hide the content." class="row">
-                    <div class="col-md-12">
-                        <div class="card mb-1">
-                            <div class="card-header collapsed" data-toggle="collapse" data-target="#card-events" aria-expanded="false" id="eventsHeader">
-                                <span class="fa fa-calendar fa-lg"></span><span>Today's Calendar</span>
-                            </div>
-                            <div class="card-body collapse" data-parent="#outerFrame" id="card-events">
-                                <table class="table table-striped table-hover table-sm k-table" id="eventTable">
-                                    <thead><tr><th>Event</th><th>Time</th><th>Location</th></tr></thead>
+        let woaStyles = document.createElement("link")
+        woaStyles.href = (window.location.hostname == "localhost") ? "/css/dashboard.css" : "https://customnetware.github.io/woa/css/dashboard.css"
+        woaStyles.rel = "stylesheet"
+        portalHead.appendChild(woaStyles)
 
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div title="Click on the title bar to show or hide the content." class="row">
-                    <div class="col-md-12">
-                        <div class="card mb-1">
-                            <div class="card-header" data-toggle="collapse" data-target="#card-notify" aria-expanded="false" id="notificationHeader">
-                                <span class="fa fa-bell fa-lg"></span><span>Recent Notifications</span>
-                            </div>
-                            <div class="card-body collapse show" data-parent="#outerFrame" id="card-notify">
-                                <div id="recent-items">
-                                    <div class="card mb-0" id="recentNews">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard1"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recent-items" id="newsCard1"><span></span></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard2"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recent-items" id="newsCard2"><span></span></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard3"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recent-items" id="newsCard3"><span></span></div>
-                                    </div>
-                                    <div class="card mb-0" id="recentEmails">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#emailCard1"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recent-items" id="emailCard1"><span></span></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#emailCard2"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recent-items" id="emailCard2"><span></span></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#emailCard3"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recent-items" id="emailCard3"><span></span></div>
-                                    </div>
-                                    <div class="card mb-0" id="recentPosts">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#postsCard1"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recent-items" id="postsCard1"><span></span><a href="#">Reply</a> | <a href="">View Comments</a></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#postsCard2"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recent-items" id="postsCard2"><span></span><a href="#">Reply</a> | <a href="">View Comments</a></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#postsCard3"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recent-items" id="postsCard3"><span></span><a href="#">Reply</a> | <a href="">View Comments</a></div>
-                                    </div>
-                                    <div class="card mb-0" id="recentforSale">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#forSaleCard1"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recent-items" id="forSaleCard1"><span></span></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#forSaleCard2"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recent-items" id="forSaleCard2"><span></span></div>
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#forSaleCard3"><span class="card-title"></span></div>
-                                        <div class="card-body collapse" data-parent="#recent-items" id="forSaleCard3"><span></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div title="Click on the title bar to show or hide the content." class="row">
-                    <div class="col-md-12">
-                        <div class="card mb-1">
-                            <div class="card-header collapsed" data-toggle="collapse" data-target="#card-docs" aria-expanded="false" id="documentsHeader">
-                                <span class="fa fa-file-text-o fa-lg"></span><span>Recent Documents</span>
-                            </div>
-                            <div class="card-body collapse" data-parent="#outerFrame" id="card-docs">
-                                <div id="recent-files">
-                                    <div class="card mb-0" id="recentDocuments">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#docCard"><span class="card-title">Activity and Event Flyers</span></div>
-                                        <div class="card-body collapse" data-parent="#recent-files" id="docCard"><span></span></div>
-                                    </div>
-                                    <div class="card mb-0" id="recentNewsLetters">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#newsCard"><span class="card-title">Woodbridge Life Newsletters</span></div>
-                                        <div class="card-body collapse" data-parent="#recent-files" id="newsCard"><span></span></div>
-                                    </div>
-                                    <div class="card mb-0" id="recentPhotos">
-                                        <div class="card-header collapsed" data-toggle="collapse" data-target="#photoCard"><span class="card-title">Activity and Event Photos</span></div>
-                                        <div class="card-body collapse" data-parent="#recent-files" id="photoCard">
-                                            <div id="photoList" class="recentPhoto">
+        let woaScripts = document.createElement("script")
+        woaScripts.type = "text/javascript"
+        woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/dashboard.js" : "https://customnetware.github.io/woa/scripts/dashboard.js"
+        document.body.appendChild(woaScripts)
 
-                                                <div class="row" style="margin-top:10px; text-align:center">
-                                                    <div class="col-md-4">
-                                                        <div class="thumbnail"><a href=""><img src="" alt=""><div class="caption"><p></p></div></a></div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="thumbnail"><a href=""><img src="" alt=""><div class="caption"><p></p></div></a></div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="thumbnail"><a href=""><img src="" alt=""><div class="caption"><p></p></div></a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div title="Click on the title bar to show or hide the content." class="row">
-                    <div class="col-md-12">
-                        <div class="card mb-1">
-                            <div class="card-header collapsed" data-toggle="collapse" data-target="#card-contacts" aria-expanded="false" id="contactsHeader">
-                                <span class="fa fa-address-card-o fa-lg"></span><span>Lakeview Clubhouse Office Contacts</span>
-                            </div>
-                            <div class="card-body collapse" data-parent="#outerFrame" id="card-contacts">
-                                <table class="table table-striped table-hover table-sm k-table" id="contactsTable">
-                                    <thead><tr><th>Name</th><th>Position</th><th>Phone</th><th class="emailCol">Email</th></tr></thead>
-                                    <tbody>
-                                        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class="emailCol">&nbsp;</td></tr>
-                                        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class="emailCol">&nbsp;</td></tr>
-                                        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class="emailCol">&nbsp;</td></tr>
-                                        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class="emailCol">&nbsp;</td></tr>
-                                        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class="emailCol">&nbsp;</td></tr>
-                                        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class="emailCol">&nbsp;</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div title="Click on the title bar to show or hide the content." class="row">
-                    <div class="col-md-12">
-                        <div class="card mb-1">
-                            <div class="card-header collapsed" data-toggle="collapse" data-target="#card-hours" aria-expanded="false" id="hoursHeader">
-                                <span class="fa fa fa-clock-o fa-lg"></span><span>Lakeview Clubhouse Office Hours</span>
-                            </div>
-                            <div class="card-body collapse" data-parent="#outerFrame" id="card-hours"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="appPopUp" tabindex="-1" aria-labelledby="appPopUpLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <strong class="modal-title" id="appPopUpLabel">Application Pop Up</strong>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span class="fa fa-times fa-lg" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="popUpBody">
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">Please wait...</div>
-                        </div>
-                    </div>
-                    <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            let portalHead = document.head || document.getElementsByTagName("head")[0]
-
-            let woaStyles = document.createElement("link")
-            woaStyles.href = (window.location.hostname == "localhost") ? "/css/dashboard.css" : "https://customnetware.github.io/woa/css/dashboard.css"
-            woaStyles.rel = "stylesheet"
-            portalHead.appendChild(woaStyles)
-
-            let woaScripts = document.createElement("script")
-            woaScripts.type = "text/javascript"
-            woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/dashboard.js" : "https://customnetware.github.io/woa/scripts/dashboard.js"
-            document.body.appendChild(woaScripts)
-
-        </script>
-    </div>
+    </script>
 </body>
 </html>

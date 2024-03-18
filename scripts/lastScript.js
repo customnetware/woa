@@ -7,7 +7,6 @@ document.getElementsByClassName("clsBodyText")[0].appendChild(appContainer)
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
 }
-
 function addCard(hdrId, bdyId) {
     let rowDiv = document.createElement("div")
     let colDiv = document.createElement("div")
@@ -24,49 +23,35 @@ function addCard(hdrId, bdyId) {
 }
 
 addCard("profileHeader", "userProfile")
-let waitA = document.createElement("a")
-let nameA = document.createElement("a")
-let helpA = document.createElement("a")
-let postA = document.createElement("a")
-let mailA = document.createElement("a")
 let profileImage = document.createElement("img")
-profileImage.style.height = "100px"
-profileImage.style.marginBottom = "20px"
-waitA.className = "fa fa-check-circle fa-lg"
-nameA.innerHTML = "Welcome Webmaster"
-helpA.className = "fa fa-question-circle fa-fw fa-lg"
-postA.className = "fa fa-comment fa-fw fa-lg"
-mailA.className = "fa fa-envelope fa-fw fa-lg"
-document.getElementById("profileHeader").appendChild(waitA)
-document.getElementById("profileHeader").appendChild(nameA)
-document.getElementById("profileHeader").appendChild(helpA)
-document.getElementById("profileHeader").appendChild(postA)
-document.getElementById("profileHeader").appendChild(mailA)
 document.getElementById("userProfile").appendChild(profileImage)
+let classArray = ["", "fa fa-check-circle fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
+for (let a = 1; a <= 5; a++) {
+    let pLink = document.createElement("a")
+    pLink.className = classArray[a]
+    document.getElementById("profileHeader").appendChild(pLink)
+}
 
-$.get(pageLocation("/Member/28118~" + profileID[0]), function () { })
-    .done(function (responseText) {
-        let imageFile = new DOMParser().parseFromString(responseText, "text/html")
-        profileImage.src = imageFile.getElementsByTagName("img")[0].src
-    })
-$.get(pageLocation("/news/28118~792554"), function () { })
-    .done(function (responseText) {
-        let userContent = new DOMParser().parseFromString(responseText, "text/html")
-        let userText = document.createElement("span")
-        userText.innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
-        document.getElementById("userProfile").appendChild(userText)
-    })
-
+let imageFile = $.get(pageLocation("/Member/28118~" + profileID[0]), function () { })
+let textFile = $.get(pageLocation("/news/28118~792554"), function () { })
+$.when(imageFile, textFile).done(function (responseIMG, responseTXT) {
+    let imageFile = new DOMParser().parseFromString(responseIMG, "text/html")
+    let userContent = new DOMParser().parseFromString(responseTXT, "text/html")
+    let userText = document.createElement("span")
+    profileImage.src = imageFile.getElementsByTagName("img")[0].src
+    userText.innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
+    document.getElementById("userProfile").appendChild(userText)
+})
 
 $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
     .done(function (responseText) {
         let portalContent = new DOMParser().parseFromString(responseText, "text/html")
+        document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = portalContent.getElementsByClassName("clsHeader")[0].innerHTML
         getContentFromProfile(portalContent, "emailHeader", "emailBody", "Recent Emails", "fa fa-envelope fa-lg", "panel_messages_content")
         getContentFromProfile(portalContent, "newsHeader", "newsBody", "News Articles", "fa fa-newspaper-o fa-lg", "panel_news_content")
         getContentFromProfile(portalContent, "forSaleHeader", "forSaleBody", "For Sale or Free", "fa fa-shopping-cart fa-lg", "panel_classifieds_content")
         getContentFromProfile(portalContent, "photoHeader", "photoBody", "Event Photos", "fa fa-picture-o fa-lg", "panel_gallery_content")
     })
-
 function getContentFromProfile(profilePage, profileHeader, profileBody, profileText, profileIcon, eventsID) {
     addCard(profileHeader, profileBody)
     let cardHeader = document.getElementById(profileHeader)
@@ -97,9 +82,6 @@ function getContentFromProfile(profilePage, profileHeader, profileBody, profileT
     } else {
         for (let p = 0; p < portalLinks.length; p += 2) {
             let img = document.createElement("img")
-            img.style.marginRight = "20px"
-            img.style.marginTop = "20px"
-            img.style.marginTop = "20px"
             img.src = "https://ourwoodbridge.net/" + portalLinks[p].getAttribute("data-tooltip-text").split("|")[0]
             cardBody.appendChild(img)
         }
