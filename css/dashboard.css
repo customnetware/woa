@@ -239,12 +239,12 @@
 }
 
 #eventsBody div > div:first-child {
-    width: 40%;
+    width: 38%;
     float: left;
 }
 
 #eventsBody div > div:nth-child(2) {
-    width: 30%;
+    width: 35%;
     float: left;
 }
 
