@@ -1,6 +1,6 @@
 
 let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
-let contactArray = ["10544936", "10551971", "10863452", "8108389", "10566484", "10854040"]
+
 let appContainer = document.createElement("div")
 appContainer.id = "customContainer"
 appContainer.className = "container"
@@ -83,12 +83,12 @@ function getContacts() {
                 if (contactName.length > 1) {
                     let contactLink = document.createElement("a")
                     contactLink.href = pageLocation("/Member/28118~" + contactArray[p])
-                    contactLink.innerHTML = contactName[1].children[p].innerText.trim()
+                    contactLink.innerHTML = contactName[1].children[0].innerText.trim()
                     contactDiv.appendChild(contactLink)
                 }
                 if (contactTitle.length > 0) {
                     let contactLink = document.createElement("a")
-                    contactLink.href = pageLocation("/Member/28118~" + contactArray[0])
+                    contactLink.href = pageLocation("/Member/28118~" + contactArray[p])
                     contactLink.innerHTML = contactTitle[0].innerText.trim()
                     contactDiv.appendChild(contactLink)
                 }
