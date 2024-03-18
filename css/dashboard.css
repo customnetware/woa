@@ -1,4 +1,8 @@
-﻿.card-title:hover {
+﻿.clsHeader {
+    display: none !important;
+}
+
+.card-title:hover {
     color: blue;
     font-weight: 600;
 }
