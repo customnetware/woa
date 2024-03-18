@@ -100,9 +100,9 @@ function getContacts() {
                     let selectedData = contactData[0].getElementsByClassName("contactLabel")
                     if (selectedData.length > 0) {
                         for (let p = 0; p < selectedData.length; p++) {
-                            if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
-                                emailDiv.appendChild(document.createTextNode(selectedData[p].nextElementSibling.children[0].innerText))
-                            }
+                            //if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
+                            //    emailDiv.appendChild(document.createTextNode(selectedData[p].nextElementSibling.children[0].innerText))
+                            //}
                             if (selectedData[p].innerText == "Work") {
                                 phoneDiv.appendChild(document.createTextNode(selectedData[p].nextElementSibling.innerText.trim()))
                             }
