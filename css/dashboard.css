@@ -215,17 +215,19 @@
 }
 
 #contactBody div > div:first-child {
-    width: 25%;
+    white-space: nowrap;
+    width: 28%;
     float: left;
 }
 
 #contactBody div > div:nth-child(2) {
-    width: 30%;
+    white-space: nowrap;
+    width: 28%;
     float: left;
 }
 
 #contactBody div > div:nth-child(3) {
-    width: 15%;
+    width: 18%;
     float: left;
 }
 
