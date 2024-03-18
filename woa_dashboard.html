@@ -19,7 +19,6 @@
     </div>
 
     <div class="container" id="customContainer">
-        <link rel="stylesheet" href="https://customnetware.github.io/woa/css/dashboard.css">
         <div class="row" id="outerFrame">
             <div class="col-md-12">
                 <div class="row">
@@ -187,8 +186,21 @@
                 </div>
             </div>
         </div>
-        <script src="scripts/dashboard.js"></script>
-        <!--https://customnetware.github.io/woa/-->
+
+        <script>
+            let portalHead = document.head || document.getElementsByTagName("head")[0]
+
+            let woaStyles = document.createElement("link")
+            woaStyles.href = (window.location.hostname == "localhost") ? "/css/dashboard.css" : "https://customnetware.github.io/woa/css/dashboard.css"
+            woaStyles.rel = "stylesheet"
+            portalHead.appendChild(woaStyles)
+
+            let woaScripts = document.createElement("script")
+            woaScripts.type = "text/javascript"
+            woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/dashboard.js" : "https://customnetware.github.io/woa/scripts/dashboard.js"
+            document.body.appendChild(woaScripts)
+
+        </script>
     </div>
 </body>
 </html>

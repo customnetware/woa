@@ -342,7 +342,7 @@ function formatTime(eventTime) {
     return eventDate
 }
 
-$(window).load(function () {
+
     if (document.getElementsByClassName("clsHeader").length > 0) { document.getElementsByClassName("clsHeader")[0].style.display = "none" }
     if (document.getElementById("resDisplayName") !== null) { document.getElementById("resDisplayName").innerText = "My Woodbridge" }
     if (document.getElementsByClassName("association-name").length > 0) { document.getElementsByClassName("association-name")[0].getElementsByTagName("a")[0].innerText = "My Woodbridge" }
@@ -406,4 +406,3 @@ $(window).load(function () {
 
     })
 
-})
