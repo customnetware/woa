@@ -49,7 +49,7 @@
         margin-left: 10px;
     }
 
-#userProfile img {
+#profileBody img {
     max-width: 125px;
     height: auto;
     filter: drop-shadow(5px 5px 5px grey);
@@ -69,7 +69,7 @@
     float: right;
 }
 
-#newsHeader.collapsed:after, #forSaleHeader.collapsed:after, #photoHeader.collapsed:after, #contactHeader.collapsed:after, #eventsHeader.collapsed:after, #emailHeader.collapsed:after {
+#newsHeader.collapsed:after, #forSaleHeader.collapsed:after, #contactHeader.collapsed:after, #photoHeader.collapsed:after, #eventsHeader.collapsed:after, #emailHeader.collapsed:after {
     content: "\f055";
 }
 
