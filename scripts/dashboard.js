@@ -131,12 +131,70 @@ function getContentFromPortal(portalDocument) {
         }
     }
 }
+
+function getDiscussionGroups() {
+    let forumArray = [], forums = ["8030", "8364", "11315"], forumNames = ["Recommendations", "General", "Using the HOA Portal"], currentDate = new Date()
+    let grp1 = $.get(pageLocation("/Discussion/28118~" + forums[0]), function () { })
+    let grp2 = $.get(pageLocation("/Discussion/28118~" + forums[1]), function () { })
+    let grp3 = $.get(pageLocation("/Discussion/28118~" + forums[2]), function () { })
+    $.when(grp1, grp2, grp3).done(function (responseText1, responseText2, responseText3) {
+        let groups = [responseText1, responseText2, responseText3]
+        for (let f = 0; f < groups.length; f++) {
+            let forum = new DOMParser().parseFromString(groups[f], "text/html")
+            let posts = forum.getElementsByClassName("ThreadContainer")[0]
+            for (let x = 0; x < posts.childElementCount; x++) {
+                let post = posts.children[x]
+                let lastDate = new Date(post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", ""))
+                let dayDiff = (currentDate - lastDate) / (1000 * 3600 * 24)
+
+                if (dayDiff < 365) {
+                    let topic = post.getElementsByClassName("respDiscTopic")
+                    let comments = post.getElementsByClassName("respDiscChildPost")
+                    let posters = post.getElementsByClassName("respAuthorWrapper")
+                    let contacts = post.getElementsByClassName("respReplyWrapper")
+                    let dateSort = new Date(lastDate).getTime()
+                    forumArray.push({
+                        postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
+                        postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: forumNames[f], groupID: forums[f],
+                        numOfPost: comments.length
+                    })
+                }
+            }
+        }
+        if (forumArray.length > 0) {
+            forumArray.sort((a, b) => { return a.postSort - b.postSort })
+            forumArray.reverse()
+            for (let p = 0; p <= 2; p++) {
+                if (p < forumArray.length) {
+                    let post = document.createElement("div")
+                    post.style.marginBottom = "15px"
+                    post.style.paddingLeft = "15px"
+                    post.innerHTML = "<b>" + forumArray[p].subject + " (Comments: " + forumArray[p].numOfPost + ") </b>"
+                    post.appendChild(document.createElement("br"))
+                    post.appendChild(document.createTextNode(forumArray[p].postContent))
+                    document.getElementById("groupsBody").appendChild(post)
+                    post.appendChild(document.createElement("br"))
+                    let reply = document.createElement("a")
+                    let view = document.createElement("a")
+                    view.href = "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
+                    view.innerHTML = " | View Comments"
+                    reply.href = forumArray[p].replyLink
+                    reply.innerHTML = forumArray[p].postAuthor + "  | Reply"
+                    post.appendChild(reply)
+                    post.appendChild(view)
+
+                }
+            }
+        }
+    })
+}
 addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Welcome", false, getProfile)
 addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
 addCard("newsHeader", "newsBody", "fa fa-newspaper-o fa-lg", "Recent News", true, "")
 addCard("forSaleHeader", "forSaleBody", "fa fa-shopping-cart fa-lg", "For Sale or Free", true, "")
 addCard("photoHeader", "photoBody", "fa fa-picture-o fa-lg", "Event Photos", true, "")
-addCard("contactHeader", "contactBody", "fa fa-address-card-o", "Office Contacts", true, getContacts)
+addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Office Contacts", true, getContacts)
+addCard("groupsHeader", "groupsBody", "fa fa-comments fa-lg", "Discussion Groups", true, getDiscussionGroups)
 
 $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
     .done(function (responseText) {

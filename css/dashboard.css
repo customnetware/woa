@@ -60,7 +60,7 @@
     padding-top: 10px;
 }
 
-#newsHeader:after, #forSaleHeader:after, #photoHeader:after, #contactHeader:after, #eventsHeader:after, #emailHeader:after {
+#newsHeader:after, #forSaleHeader:after, #photoHeader:after, #contactHeader:after, #eventsHeader:after, #emailHeader:after, #groupsHeader:after {
     font-family: 'FontAwesome';
     font-size: 1.25em;
     content: "\f056";
@@ -69,29 +69,27 @@
     float: right;
 }
 
-#newsHeader.collapsed:after, #forSaleHeader.collapsed:after, #contactHeader.collapsed:after, #photoHeader.collapsed:after, #eventsHeader.collapsed:after, #emailHeader.collapsed:after {
+#newsHeader.collapsed:after, #forSaleHeader.collapsed:after, #contactHeader.collapsed:after, #photoHeader.collapsed:after, #eventsHeader.collapsed:after, #emailHeader.collapsed:after, #groupsHeader.collapsed:after {
     content: "\f055";
 }
 
-#newsHeader:hover, #forSaleHeader:hover, #photoHeader:hover, #contactHeader:hover, #eventsHeader:hover, #emailHeader:hover {
+#newsHeader:hover, #forSaleHeader:hover, #photoHeader:hover, #contactHeader:hover, #eventsHeader:hover, #emailHeader:hover, #groupsHeader:hover {
     background-color: lightsteelblue;
     color: white;
 }
 
-#newsHeader, #forSaleHeader, #photoHeader, #contactHeader, #profileHeader, #eventsHeader, #emailHeader {
+#newsHeader, #forSaleHeader, #photoHeader, #contactHeader, #profileHeader, #eventsHeader, #emailHeader, #groupsHeader {
     background-color: #999999;
     color: white;
     padding: 5px;
 }
 
-    #newsHeader span:first-child, #forSaleHeader span:first-child, #photoHeader span:first-child, #contactHeader span:first-child, #eventsHeader span:first-child, #emailHeader span:first-child {
+    #newsHeader span:first-child, #forSaleHeader span:first-child, #photoHeader span:first-child, #contactHeader span:first-child, #eventsHeader span:first-child, #emailHeader span:first-child, #groupsHeader span:first-child {
         margin-right: 10px;
         margin-left: 10px;
     }
 
-#recentEmails .card-header, #recentforSale .card-header, #recentPosts .card-header, #recentNews .card-header {
-    display: none
-}
+
 
 #recentEmails .card-body span, #recentforSale .card-body span, #recentPosts .card-body span, #recentNews .card-body span {
     margin-top: 5px;
