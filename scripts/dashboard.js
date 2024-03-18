@@ -72,34 +72,16 @@ function getContacts() {
         let jobDiv = document.createElement("div")
         let phoneDiv = document.createElement("div")
         let emailDiv = document.createElement("div")
-        contactDiv.style.width = "100%"
-        contactDiv.style.float = "left"
-
-        nameDiv.style.float = "left"
-        jobDiv.style.float = "left"
-        phoneDiv.style.float = "left"
-        emailDiv.style.float = "left"
-
-        nameDiv.style.marginRight = "5px"
-        nameDiv.style.marginLeft = "15px"
-        jobDiv.style.marginRight = "5px"
-        phoneDiv.style.marginRight = "5px"
-        emailDiv.style.marginRight = "5px"
-
-        nameDiv.style.width = "25%"
-        jobDiv.style.width = "25%"
-        phoneDiv.style.width = "15%"
-
         contactDiv.appendChild(nameDiv)
         contactDiv.appendChild(jobDiv)
         contactDiv.appendChild(phoneDiv)
         contactDiv.appendChild(emailDiv)
         $.get(pageLocation("/Member/28118~" + contactArray[p]), function () { })
             .done(function (responseText) {
-                let contactCard1 = new DOMParser().parseFromString(responseText, "text/html")
-                let contactName = contactCard1.getElementsByClassName("clsDMHeader")
-                let contactTitle = contactCard1.getElementsByClassName("clsHeader")
-                let contactData = contactCard1.getElementsByClassName("contactComms")
+                let contactCard = new DOMParser().parseFromString(responseText, "text/html")
+                let contactName = contactCard.getElementsByClassName("clsDMHeader")
+                let contactTitle = contactCard.getElementsByClassName("clsHeader")
+                let contactData = contactCard.getElementsByClassName("contactComms")
 
 
                 if (contactName.length > 1) {
@@ -131,6 +113,7 @@ function getContacts() {
                     }
                 }
                 document.getElementById("contactBody").appendChild(contactDiv)
+               
             })
 
     }
@@ -159,7 +142,6 @@ function getContentFromPortal(portalDocument) {
         }
     }
 }
-
 function getDiscussionGroups() {
     let forumArray = [], forums = ["8030", "8364", "11315"], forumNames = ["Recommendations", "General", "Using the HOA Portal"], currentDate = new Date()
     let grp1 = $.get(pageLocation("/Discussion/28118~" + forums[0]), function () { })
@@ -217,22 +199,6 @@ function getDiscussionGroups() {
         }
     })
 }
-addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Welcome", false, getProfile)
-addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
-addCard("newsHeader", "newsBody", "fa fa-newspaper-o fa-lg", "Recent News", true, "")
-addCard("forSaleHeader", "forSaleBody", "fa fa-shopping-cart fa-lg", "For Sale or Free", true, "")
-addCard("photoHeader", "photoBody", "fa fa-picture-o fa-lg", "Event Photos", true, "")
-addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Office Contacts", true, getContacts)
-addCard("groupsHeader", "groupsBody", "fa fa-comments fa-lg", "Discussion Groups", true, getDiscussionGroups)
-addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, getCalendar)
-
-$.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
-    .done(function (responseText) {
-        let portalContent = new DOMParser().parseFromString(responseText, "text/html")
-        document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = portalContent.getElementsByClassName("clsHeader")[0].innerHTML
-        getContentFromPortal(portalContent)
-
-    })
 function formatTime(eventTime) {
     let eventDate = new Date()
     let amPM = eventTime.slice(-2)
@@ -293,50 +259,42 @@ function getCalendar() {
     document.body.appendChild(woaCalendar)
 }
 function showCalendar(calenderEvents) {
-
-
     for (let d = 0; d < calenderEvents.length; d++) {
         let eventLink = document.createElement("a")
         let eventDiv = document.createElement("div")
         let nameDiv = document.createElement("div")
         let timeDiv = document.createElement("div")
         let placeDiv = document.createElement("div")
-
-        eventDiv.style.width = "100%"
-        eventDiv.style.float = "left"
-
-        nameDiv.style.float = "left"
-        timeDiv.style.float = "left"
-        placeDiv.style.float = "left"
-
-
-        nameDiv.style.marginRight = "5px"
-        nameDiv.style.marginLeft = "15px"
-        timeDiv.style.marginRight = "5px"
-        placeDiv.style.marginRight = "5px"
-
-
-        nameDiv.style.width = "40%"
-        timeDiv.style.width = "20%"
-        placeDiv.style.width = "35%"
-
         eventDiv.appendChild(nameDiv)
         eventDiv.appendChild(timeDiv)
         eventDiv.appendChild(placeDiv)
-
         eventLink.href = calenderEvents[d].calLink
         eventLink.innerHTML = calenderEvents[d].calTitle
-
         nameDiv.appendChild(eventLink)
         timeDiv.innerText = new Date(calenderEvents[d].calTime).toLocaleTimeString()
         placeDiv.innerText = calenderEvents[d].calLocation
-
-
         document.getElementById("eventsBody").appendChild(eventDiv)
     }
     document.getElementById("woaIFrame").remove()
-    document.getElementById("eventTable").appendChild(eventBody)
+ 
 }
+addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Welcome", false, getProfile)
+addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
+addCard("newsHeader", "newsBody", "fa fa-newspaper-o fa-lg", "Recent News", true, "")
+addCard("forSaleHeader", "forSaleBody", "fa fa-shopping-cart fa-lg", "For Sale or Free", true, "")
+addCard("photoHeader", "photoBody", "fa fa-picture-o fa-lg", "Event Photos", true, "")
+addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Office Contacts", true, getContacts)
+addCard("groupsHeader", "groupsBody", "fa fa-comments fa-lg", "Discussion Groups", true, getDiscussionGroups)
+addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, getCalendar)
+
+$.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
+    .done(function (responseText) {
+        let portalContent = new DOMParser().parseFromString(responseText, "text/html")
+        document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = portalContent.getElementsByClassName("clsHeader")[0].innerHTML
+        getContentFromPortal(portalContent)
+
+    })
+
 
 
 
