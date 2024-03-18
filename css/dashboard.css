@@ -60,7 +60,7 @@
     padding-top: 10px;
 }
 
-#newsHeader:after, #forSaleHeader:after, #photoHeader:after, #hoursHeader:after, #eventsHeader:after, #emailHeader:after {
+#newsHeader:after, #forSaleHeader:after, #photoHeader:after, #contactHeader:after, #eventsHeader:after, #emailHeader:after {
     font-family: 'FontAwesome';
     font-size: 1.25em;
     content: "\f056";
@@ -69,22 +69,22 @@
     float: right;
 }
 
-#newsHeader.collapsed:after, #forSaleHeader.collapsed:after, #photoHeader.collapsed:after, #hoursHeader.collapsed:after, #eventsHeader.collapsed:after, #emailHeader.collapsed:after {
+#newsHeader.collapsed:after, #forSaleHeader.collapsed:after, #photoHeader.collapsed:after, #contactHeader.collapsed:after, #eventsHeader.collapsed:after, #emailHeader.collapsed:after {
     content: "\f055";
 }
 
-#newsHeader:hover, #forSaleHeader:hover, #photoHeader:hover, #hoursHeader:hover, #eventsHeader:hover, #emailHeader:hover {
+#newsHeader:hover, #forSaleHeader:hover, #photoHeader:hover, #contactHeader:hover, #eventsHeader:hover, #emailHeader:hover {
     background-color: lightsteelblue;
     color: white;
 }
 
-#newsHeader, #forSaleHeader, #photoHeader, #hoursHeader, #profileHeader, #eventsHeader, #emailHeader {
+#newsHeader, #forSaleHeader, #photoHeader, #contactHeader, #profileHeader, #eventsHeader, #emailHeader {
     background-color: #999999;
     color: white;
     padding: 5px;
 }
 
-    #newsHeader span:first-child, #forSaleHeader span:first-child, #photoHeader span:first-child, #hoursHeader span:first-child, #eventsHeader span:first-child, #emailHeader span:first-child {
+    #newsHeader span:first-child, #forSaleHeader span:first-child, #photoHeader span:first-child, #contactHeader span:first-child, #eventsHeader span:first-child, #emailHeader span:first-child {
         margin-right: 10px;
         margin-left: 10px;
     }
