@@ -65,39 +65,67 @@ function getProfile() {
 }
 function getContacts() {
     let contactArray = ["10544936", "10551971", "10863452", "8108389", "10566484", "10854040"]
+
     for (let p = 0; p < contactArray.length; p++) {
+        let contactDiv = document.createElement("div")
+        let nameDiv = document.createElement("div")
+        let jobDiv = document.createElement("div")
+        let phoneDiv = document.createElement("div")
+        let emailDiv = document.createElement("div")
+        contactDiv.style.width = "100%"
+        contactDiv.style.float = "left"
+
+        nameDiv.style.float = "left"
+        jobDiv.style.float = "left"
+        phoneDiv.style.float = "left"
+        emailDiv.style.float = "left"
+
+        nameDiv.style.marginRight = "5px"
+        nameDiv.style.marginLeft = "15px"
+        jobDiv.style.marginRight = "5px"
+        phoneDiv.style.marginRight = "5px"
+        emailDiv.style.marginRight = "5px"
+
+        nameDiv.style.width = "25%"
+        jobDiv.style.width = "25%"
+        phoneDiv.style.width = "15%"
+
+        contactDiv.appendChild(nameDiv)
+        contactDiv.appendChild(jobDiv)
+        contactDiv.appendChild(phoneDiv)
+        contactDiv.appendChild(emailDiv)
         $.get(pageLocation("/Member/28118~" + contactArray[p]), function () { })
             .done(function (responseText) {
                 let contactCard1 = new DOMParser().parseFromString(responseText, "text/html")
                 let contactName = contactCard1.getElementsByClassName("clsDMHeader")
                 let contactTitle = contactCard1.getElementsByClassName("clsHeader")
                 let contactData = contactCard1.getElementsByClassName("contactComms")
-                let contactDiv = document.createElement("div")
+
 
                 if (contactName.length > 1) {
                     let contactLink = document.createElement("a")
                     contactLink.href = pageLocation("/Member/28118~" + contactArray[p])
                     contactLink.innerHTML = contactName[1].children[0].innerText.trim()
-                    contactDiv.appendChild(contactLink)
+                    nameDiv.appendChild(contactLink)
                 }
                 if (contactTitle.length > 0) {
                     let contactLink = document.createElement("a")
                     contactLink.href = pageLocation("/Member/28118~" + contactArray[p])
                     contactLink.innerHTML = contactTitle[0].innerText.trim()
-                    contactDiv.appendChild(contactLink)
+                    jobDiv.appendChild(contactLink)
                 }
                 if (contactData.length > 0) {
                     let selectedData = contactData[0].getElementsByClassName("contactLabel")
                     if (selectedData.length > 0) {
                         for (let p = 0; p < selectedData.length; p++) {
                             if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
-                                contactDiv.appendChild(document.createTextNode(selectedData[p].nextElementSibling.children[0].innerText))
+                                emailDiv.appendChild(document.createTextNode(selectedData[p].nextElementSibling.children[0].innerText))
                             }
                             if (selectedData[p].innerText == "Work") {
-                                contactDiv.appendChild(document.createTextNode(selectedData[p].nextElementSibling.innerText.trim()))
+                                phoneDiv.appendChild(document.createTextNode(selectedData[p].nextElementSibling.innerText.trim()))
                             }
                             if (selectedData[p].innerText == "Other") {
-                                contactDiv.appendChild(document.createTextNode(selectedData[p].nextElementSibling.innerText.trim()))
+                                phoneDiv.appendChild(document.createTextNode(selectedData[p].nextElementSibling.innerText.trim()))
                             }
                         }
                     }
@@ -176,10 +204,11 @@ function getDiscussionGroups() {
                     post.appendChild(document.createElement("br"))
                     let reply = document.createElement("a")
                     let view = document.createElement("a")
-                    view.href = "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
-                    view.innerHTML = " | View Comments"
                     reply.href = forumArray[p].replyLink
                     reply.innerHTML = forumArray[p].postAuthor + "  | Reply"
+                    view.href = "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
+                    view.innerHTML = " | View Comments"
+
                     post.appendChild(reply)
                     post.appendChild(view)
 
@@ -195,6 +224,7 @@ addCard("forSaleHeader", "forSaleBody", "fa fa-shopping-cart fa-lg", "For Sale o
 addCard("photoHeader", "photoBody", "fa fa-picture-o fa-lg", "Event Photos", true, "")
 addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Office Contacts", true, getContacts)
 addCard("groupsHeader", "groupsBody", "fa fa-comments fa-lg", "Discussion Groups", true, getDiscussionGroups)
+addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, getCalendar)
 
 $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
     .done(function (responseText) {
@@ -203,7 +233,110 @@ $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         getContentFromPortal(portalContent)
 
     })
+function formatTime(eventTime) {
+    let eventDate = new Date()
+    let amPM = eventTime.slice(-2)
+    eventTime = eventTime.replace(amPM, "")
+    eventHours = Number(eventTime.split(":")[0])
+    eventMinutes = Number(eventTime.split(":")[1])
+    if (amPM == "PM" && eventHours < 12) eventHours = eventHours + 12
+    if (amPM == "AM" && eventHours == 12) eventHours = eventHours - 12
+    eventDate.setHours(eventHours, eventMinutes, 0)
+    return eventDate
+}
+function getCalendar() {
+    let woaCalendar = document.createElement("iframe")
+    let calendarArray = []
+    woaCalendar.id = "woaIFrame"
+    woaCalendar.style.display = "none"
+    woaCalendar.onload = function () {
+        calendarWait = setInterval(function () {
+            let calendarDocument = woaCalendar.contentWindow.document
+            if (calendarDocument !== null) {
+                if (calendarDocument.readyState == "complete") {
+                    let eventList = calendarDocument.getElementById("eventList")
+                    if (eventList !== null) {
+                        let todaysEvents = eventList.getElementsByClassName("event")
+                        if (todaysEvents.length > 0) {
+                            clearInterval(calendarWait)
+                            for (let d = 0; d < todaysEvents.length; d++) {
+                                let eventLocation = ""
+                                $.get(todaysEvents[d].getElementsByTagName("a")[0].href, function () { })
+                                    .done(function (responseText) {
+                                        let woaEvent = new DOMParser().parseFromString(responseText, "text/html")
+                                        eventLocation = woaEvent.getElementsByClassName("clsInput clsBodyText")[0].innerText.trim()
+                                    })
+                                    .fail(function () {
+                                        eventLocation = "Event Location Not Avaiable"
+                                    })
+                                    .always(function () {
+                                        calendarArray.push({
+                                            calTime: formatTime(todaysEvents[d].children[0].innerText).getTime(),
+                                            calTitle: todaysEvents[d].children[1].innerText,
+                                            calLink: todaysEvents[d].getElementsByTagName("a")[0].href,
+                                            calLocation: eventLocation
+                                        })
+                                        if (d === todaysEvents.length - 1) {
+                                            calendarArray.sort((a, b) => { return a.calTime - b.calTime })
+                                            showCalendar(calendarArray)
+                                        }
+                                    })
+                            }
+                        }
+                    }
+                }
+            }
+        }, 1000)
 
+    }
+    woaCalendar.src = pageLocation("/Calendar/28118~19555")
+    document.body.appendChild(woaCalendar)
+}
+function showCalendar(calenderEvents) {
+
+
+    for (let d = 0; d < calenderEvents.length; d++) {
+        let eventLink = document.createElement("a")
+        let eventDiv = document.createElement("div")
+        let nameDiv = document.createElement("div")
+        let timeDiv = document.createElement("div")
+        let placeDiv = document.createElement("div")
+
+        eventDiv.style.width = "100%"
+        eventDiv.style.float = "left"
+
+        nameDiv.style.float = "left"
+        timeDiv.style.float = "left"
+        placeDiv.style.float = "left"
+
+
+        nameDiv.style.marginRight = "5px"
+        nameDiv.style.marginLeft = "15px"
+        timeDiv.style.marginRight = "5px"
+        placeDiv.style.marginRight = "5px"
+
+
+        nameDiv.style.width = "40%"
+        timeDiv.style.width = "20%"
+        placeDiv.style.width = "35%"
+
+        eventDiv.appendChild(nameDiv)
+        eventDiv.appendChild(timeDiv)
+        eventDiv.appendChild(placeDiv)
+
+        eventLink.href = calenderEvents[d].calLink
+        eventLink.innerHTML = calenderEvents[d].calTitle
+
+        nameDiv.appendChild(eventLink)
+        timeDiv.innerText = new Date(calenderEvents[d].calTime).toLocaleTimeString()
+        placeDiv.innerText = calenderEvents[d].calLocation
+
+
+        document.getElementById("eventsBody").appendChild(eventDiv)
+    }
+    document.getElementById("woaIFrame").remove()
+    document.getElementById("eventTable").appendChild(eventBody)
+}
 
 
 
