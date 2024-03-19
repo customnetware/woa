@@ -14,7 +14,7 @@ function addCard(hdrId, bdyId, crdIcon, crdText, useCollapse, fnName) {
     let bdyDiv = document.createElement("div")
 
     if (hdrId === "profileHeader") {
-        let classArray = ["", "fa fa-check-circle fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
+        let classArray = ["", "fa fa-refresh fa-spin fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
         for (let a = 1; a <= 5; a++) {
             let headerLinks = document.createElement("a")
             headerLinks.className = classArray[a]
@@ -321,7 +321,17 @@ $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         getContentFromPortal(portalContent)
 
     })
+    checkWait()
+function checkWait(){
+let calendarWait = setInterval(function () {
+    let wt = document.getElementsByClassName("card-body")
+    if (wt[0].childElementCount > 0 && wt[1].childElementCount > 0 && wt[2].childElementCount > 0 && wt[3].childElementCount > 0 && wt[4].childElementCount > 0 && wt[5].childElementCount > 0 && wt[6].childElementCount > 0 && wt[7].childElementCount > 0 && wt[8].childElementCount > 0) {
+        clearInterval(calendarWait)
+        document.getElementById("profileHeader").getElementsByTagName("a")[0].className ="fa fa-check-circle fa-lg"
 
+    }
+}, 250);
+ }
 
 
 
