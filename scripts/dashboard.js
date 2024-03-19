@@ -123,23 +123,25 @@ function getContentFromPortal(portalDocument) {
     let contentIds = ["emailBody", "newsBody", "forSaleBody", "photoBody"]
     for (let i = 0; i < portalIds.length; i++) {
         let portalLinks = portalDocument.getElementById("panel_" + portalIds[i] + "_content").getElementsByTagName("a")
-        if (portalIds[i] !== "gallery") {
-            for (let p = 0; p < portalLinks.length; p++) {
-                let pageLink = document.createElement("a")
-                let pageText = document.createElement("p")
-                let pageStamp = document.createElement("span")
-                pageLink.href = portalLinks[p].href
-                pageLink.innerHTML = portalLinks[p].getAttribute("data-tooltip-title")
-                pageText.appendChild(pageLink)
-                document.getElementById(contentIds[i]).appendChild(pageText)
+        if (portalLinks.length > 0) {
+            if (portalIds[i] !== "gallery") {
+                for (let p = 0; p < portalLinks.length; p++) {
+                    let pageLink = document.createElement("a")
+                    let pageText = document.createElement("p")
+                    let pageStamp = document.createElement("span")
+                    pageLink.href = portalLinks[p].href
+                    pageLink.innerHTML = portalLinks[p].getAttribute("data-tooltip-title")
+                    pageText.appendChild(pageLink)
+                    document.getElementById(contentIds[i]).appendChild(pageText)
+                }
+            } else {
+                for (let p = 0; p < portalLinks.length; p += 2) {
+                    let img = document.createElement("img")
+                    img.src = "https://ourwoodbridge.net/" + portalLinks[p].getAttribute("data-tooltip-text").split("|")[0]
+                    document.getElementById(contentIds[i]).appendChild(img)
+                }
             }
-        } else {
-            for (let p = 0; p < portalLinks.length; p += 2) {
-                let img = document.createElement("img")
-                img.src = "https://ourwoodbridge.net/" + portalLinks[p].getAttribute("data-tooltip-text").split("|")[0]
-                document.getElementById(contentIds[i]).appendChild(img)
-            }
-        }
+        } else { document.getElementById(contentIds[i]).appendChild(document.createTextNode("No documents found")) }
     }
 }
 function getDiscussionGroups() {
@@ -321,17 +323,17 @@ $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         getContentFromPortal(portalContent)
 
     })
-    checkWait()
-function checkWait(){
-let calendarWait = setInterval(function () {
-    let wt = document.getElementsByClassName("card-body")
-    if (wt[0].childElementCount > 0 && wt[1].childElementCount > 0 && wt[2].childElementCount > 0 && wt[3].childElementCount > 0 && wt[4].childElementCount > 0 && wt[5].childElementCount > 0 && wt[6].childElementCount > 0 && wt[7].childElementCount > 0 && wt[8].childElementCount > 0) {
-        clearInterval(calendarWait)
-        document.getElementById("profileHeader").getElementsByTagName("a")[0].className ="fa fa-check-circle fa-lg"
+checkWait()
+function checkWait() {
+    let calendarWait = setInterval(function () {
+        let wt = document.getElementsByClassName("card-body")
+        if (wt[0].childElementCount > 0 && wt[1].childElementCount > 0 && wt[2].childElementCount > 0 && wt[3].childElementCount > 0 && wt[4].childElementCount > 0 && wt[5].childElementCount > 0 && wt[6].childElementCount > 0 && wt[7].childElementCount > 0 && wt[8].childElementCount > 0) {
+            clearInterval(calendarWait)
+            document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
 
-    }
-}, 250);
- }
+        }
+    }, 250)
+}
 
 
 
