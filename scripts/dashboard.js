@@ -16,9 +16,9 @@ function addCard(hdrId, bdyId, crdIcon, crdText, useCollapse, fnName) {
     if (hdrId === "profileHeader") {
         let classArray = ["", "fa fa-check-circle fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
         for (let a = 1; a <= 5; a++) {
-            let pLink = document.createElement("a")
-            pLink.className = classArray[a]
-            hdrDiv.appendChild(pLink)
+            let headerLinks = document.createElement("a")
+            headerLinks.className = classArray[a]
+            hdrDiv.appendChild(headerLinks)
         }
     } else {
         let cardIcon = document.createElement("span")
@@ -113,7 +113,7 @@ function getContacts() {
                     }
                 }
                 document.getElementById("contactBody").appendChild(contactDiv)
-               
+
             })
 
     }
@@ -227,13 +227,13 @@ function getCalendar() {
                             clearInterval(calendarWait)
                             for (let d = 0; d < todaysEvents.length; d++) {
                                 let eventLocation = ""
-                                $.get(todaysEvents[d].getElementsByTagName("a")[0].href, function () { })
+                                $.get((window.location.hostname !== "localhost") ? todaysEvents[d].getElementsByTagName("a")[0].href : "/Calendar/Event/event.html", function () { })
                                     .done(function (responseText) {
                                         let woaEvent = new DOMParser().parseFromString(responseText, "text/html")
                                         eventLocation = woaEvent.getElementsByClassName("clsInput clsBodyText")[0].innerText.trim()
                                     })
                                     .fail(function () {
-                                        eventLocation = "Event Location Not Avaiable"
+                                        eventLocation = "Event Location Not Avaiable (Error)"
                                     })
                                     .always(function () {
                                         calendarArray.push({
@@ -276,7 +276,33 @@ function showCalendar(calenderEvents) {
         document.getElementById("eventsBody").appendChild(eventDiv)
     }
     document.getElementById("woaIFrame").remove()
- 
+
+}
+function getResourceCenter() {
+    $.get(pageLocation("/resourcecenter/28118/resource-center"), function () { })
+        .done(function (responseText) {
+            let documents = new DOMParser().parseFromString(responseText, "text/html")
+            //let docsList = document.getElementById("docCard").getElementsByTagName("span")[0]
+            //let newsList = document.getElementById("newsCard").getElementsByTagName("span")[0]
+            let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
+            let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
+            let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
+            let newsLetterLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
+
+            for (let p = 0; p < documentName.length; p++) {
+                let selectedDoc = document.createElement("a")
+                selectedDoc.innerHTML = documentName[p].innerHTML
+                selectedDoc.href = documentLink[p].href
+                document.getElementById("fileBody").appendChild(selectedDoc)
+            }
+
+            //for (let p = newsLetterName.length - 1; p >= 0 && newsList.children.length < 6; p--) {
+            //    let selectedDoc = document.createElement("a")
+            //    selectedDoc.innerHTML = newsLetterName[p].innerHTML
+            //    selectedDoc.href = newsLetterLink[p].href
+            //    newsList.appendChild(selectedDoc)
+            //}
+        })
 }
 addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Welcome", false, getProfile)
 addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
@@ -286,6 +312,7 @@ addCard("photoHeader", "photoBody", "fa fa-picture-o fa-lg", "Event Photos", tru
 addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Office Contacts", true, getContacts)
 addCard("groupsHeader", "groupsBody", "fa fa-comments fa-lg", "Discussion Groups", true, getDiscussionGroups)
 addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, getCalendar)
+addCard("fileHeader", "fileBody", "fa fa-file fa-lg", "My Documents", true, getResourceCenter)
 
 $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
     .done(function (responseText) {

@@ -2,15 +2,6 @@
     display: none !important;
 }
 
-.card-title:hover {
-    color: blue;
-    font-weight: 600;
-}
-
-
-#customContainer th {
-    text-align: left;
-}
 
 #customContainer .card-header {
     cursor: pointer;
@@ -60,7 +51,7 @@
     padding-top: 10px;
 }
 
-#newsHeader:after, #forSaleHeader:after, #photoHeader:after, #contactHeader:after, #eventsHeader:after, #emailHeader:after, #groupsHeader:after {
+#newsHeader:after, #forSaleHeader:after, #photoHeader:after, #contactHeader:after, #eventsHeader:after, #emailHeader:after, #groupsHeader:after, #fileHeader:after {
     font-family: 'FontAwesome';
     font-size: 1.25em;
     content: "\f056";
@@ -69,22 +60,22 @@
     float: right;
 }
 
-#newsHeader.collapsed:after, #forSaleHeader.collapsed:after, #contactHeader.collapsed:after, #photoHeader.collapsed:after, #eventsHeader.collapsed:after, #emailHeader.collapsed:after, #groupsHeader.collapsed:after {
+#newsHeader.collapsed:after, #forSaleHeader.collapsed:after, #contactHeader.collapsed:after, #photoHeader.collapsed:after, #eventsHeader.collapsed:after, #emailHeader.collapsed:after, #groupsHeader.collapsed:after, #fileHeader.collapsed:after {
     content: "\f055";
 }
 
-#newsHeader:hover, #forSaleHeader:hover, #photoHeader:hover, #contactHeader:hover, #eventsHeader:hover, #emailHeader:hover, #groupsHeader:hover {
+#newsHeader:hover, #forSaleHeader:hover, #photoHeader:hover, #contactHeader:hover, #eventsHeader:hover, #emailHeader:hover, #groupsHeader:hover, #fileHeader:hover {
     background-color: lightsteelblue;
     color: white;
 }
 
-#newsHeader, #forSaleHeader, #photoHeader, #contactHeader, #profileHeader, #eventsHeader, #emailHeader, #groupsHeader {
+#newsHeader, #forSaleHeader, #photoHeader, #contactHeader, #profileHeader, #eventsHeader, #emailHeader, #groupsHeader, #fileHeader {
     background-color: #999999;
     color: white;
     padding: 5px;
 }
 
-    #newsHeader span:first-child, #forSaleHeader span:first-child, #photoHeader span:first-child, #contactHeader span:first-child, #eventsHeader span:first-child, #emailHeader span:first-child, #groupsHeader span:first-child {
+    #newsHeader span:first-child, #forSaleHeader span:first-child, #photoHeader span:first-child, #contactHeader span:first-child, #eventsHeader span:first-child, #emailHeader span:first-child, #groupsHeader span:first-child, #fileHeader span:first-child {
         margin-right: 10px;
         margin-left: 10px;
     }
@@ -151,15 +142,9 @@
     content: "\f1ea";
 }
 
-#recentDocuments .card-body span a, #recentNewsLetters .card-body span a {
-    display: block;
-    padding-left: 15px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-}
 
 
-#recentDocuments span a:nth-child(even), #recentNewsLetters span a:nth-child(even) {
+#fileBody  a:nth-child(even) {
     background-color: #eceeef
 }
 
@@ -175,7 +160,7 @@
     content: "\f114";
 }
 
-#flyers span, #newsletters span {
+#fileBody a {
     padding-left: 10px;
     padding-bottom: 5px;
     padding-top: 5px;
@@ -196,10 +181,7 @@
         filter: drop-shadow(5px 5px 5px grey);
     }
 
-#card-hours p {
-    padding-left: 15px;
-    margin-bottom: 5px
-}
+
 
 @media screen and (max-width: 565px) and (min-width: 300px) {
     .emailCol {
@@ -222,7 +204,7 @@
 
 #contactBody div > div:nth-child(2) {
     white-space: nowrap;
-    width: 28%;
+    width: 35%;
     float: left;
 }
 
