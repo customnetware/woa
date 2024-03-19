@@ -325,12 +325,13 @@ $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
     })
 checkWait()
 function checkWait() {
-    let calendarWait = setInterval(function () {
+    let nn = 0
+    let pageWait = setInterval(function () {
         let wt = document.getElementsByClassName("card-body")
-        if (wt[0].childElementCount > 0 && wt[1].childElementCount > 0 && wt[2].childElementCount > 0 && wt[3].childElementCount > 0 && wt[4].childElementCount > 0 && wt[5].childElementCount > 0 && wt[6].childElementCount > 0 && wt[7].childElementCount > 0 && wt[8].childElementCount > 0) {
-            clearInterval(calendarWait)
+        for (let i = 0; i < wt.length; i++) { if (wt[i].childNodes.length > 0) { nn++ } }
+        if (nn == 8) {
+            clearInterval(pageWait)
             document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
-
         }
     }, 250)
 }
