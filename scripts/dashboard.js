@@ -1,4 +1,4 @@
-
+let completeFNs = 0
 let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
 let appContainer = document.createElement("div")
 appContainer.id = "customContainer", appContainer.className = "container"
@@ -48,6 +48,7 @@ function addCard(hdrId, bdyId, crdIcon, crdText, useCollapse, fnName) {
     }
     appContainer.appendChild(rowDiv)
     if (fnName !== "") { fnName() }
+
 }
 function getProfile() {
     let profileImage = document.createElement("img")
@@ -61,6 +62,7 @@ function getProfile() {
         userText.innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
         document.getElementById("profileBody").appendChild(profileImage)
         document.getElementById("profileBody").appendChild(userText)
+        ldComplete("profile")
     })
 }
 function getContacts() {
@@ -113,10 +115,11 @@ function getContacts() {
                     }
                 }
                 document.getElementById("contactBody").appendChild(contactDiv)
-
+                if (p == contactArray.length - 1) {ldComplete("contacts") }
             })
 
     }
+
 }
 function getContentFromPortal(portalDocument) {
     let portalIds = ["messages", "news", "classifieds", "gallery"]
@@ -142,6 +145,7 @@ function getContentFromPortal(portalDocument) {
                 }
             }
         } else { document.getElementById(contentIds[i]).appendChild(document.createTextNode("No documents found")) }
+        ldComplete(portalIds[i])
     }
 }
 function getDiscussionGroups() {
@@ -174,6 +178,7 @@ function getDiscussionGroups() {
             }
         }
         if (forumArray.length > 0) {
+            ldComplete("discussion")
             forumArray.sort((a, b) => { return a.postSort - b.postSort })
             forumArray.reverse()
             for (let p = 0; p <= 2; p++) {
@@ -277,6 +282,7 @@ function showCalendar(calenderEvents) {
         placeDiv.innerText = calenderEvents[d].calLocation
         document.getElementById("eventsBody").appendChild(eventDiv)
     }
+    ldComplete("calendar")
     document.getElementById("woaIFrame").remove()
 
 }
@@ -296,6 +302,7 @@ function getResourceCenter() {
                 selectedDoc.innerHTML = documentName[p].innerHTML
                 selectedDoc.href = documentLink[p].href
                 document.getElementById("fileBody").appendChild(selectedDoc)
+                if (p == documentName.length - 1) {ldComplete("files") }
             }
 
             //for (let p = newsLetterName.length - 1; p >= 0 && newsList.children.length < 6; p--) {
@@ -305,6 +312,17 @@ function getResourceCenter() {
             //    newsList.appendChild(selectedDoc)
             //}
         })
+}
+function ldComplete(fncName) {
+    let allComplete = false
+    completeFNs = completeFNs + 1
+    let testTxt = document.createElement("p")
+    testTxt.innerText = completeFNs + " - " + fncName
+    if (completeFNs == 9) {
+        allComplete = true
+        document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
+    }   
+    return allComplete
 }
 addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Welcome", false, getProfile)
 addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
@@ -323,18 +341,8 @@ $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         getContentFromPortal(portalContent)
 
     })
-checkWait()
-function checkWait() {
-    let nn = 0
-    let pageWait = setInterval(function () {
-        let wt = document.getElementsByClassName("card-body")
-        for (let i = 0; i < wt.length; i++) { if (wt[i].childNodes.length > 0) { nn++ } }
-        if (nn == 8) {
-            clearInterval(pageWait)
-            document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
-        }
-    }, 250)
-}
+
+
 
 
 
