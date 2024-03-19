@@ -17,6 +17,7 @@ function addCard(hdrId, bdyId, crdIcon, crdText, useCollapse, fnName) {
         let classArray = ["", "fa fa-refresh fa-spin fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
         for (let a = 1; a <= 5; a++) {
             let headerLinks = document.createElement("a")
+            if (a == 2) { headerLinks.innerHTML="Loading..." }
             headerLinks.className = classArray[a]
             hdrDiv.appendChild(headerLinks)
         }
