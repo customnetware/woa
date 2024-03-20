@@ -418,7 +418,7 @@ function showComments(selectedPostID, groupID) {
             if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
         })
 }
-addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Welcome", false, getProfile)
+addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Loading...", false, getProfile)
 addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
 addCard("newsHeader", "newsBody", "fa fa-newspaper-o fa-lg", "Recent News", true, "")
 addCard("forSaleHeader", "forSaleBody", "fa fa-shopping-cart fa-lg", "For Sale or Free", true, "")
