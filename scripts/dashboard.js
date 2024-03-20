@@ -137,7 +137,7 @@ function getContentFromPortal(portalDocument) {
                     let pageLink = document.createElement("a")
                     let pageText = document.createElement("p")
                     let pageStamp = document.createElement("span")
-                    pageStamp.style.float="right"
+                    pageStamp.style.float = "right"
                     pageLink.href = portalLinks[p].href
                     if (portalIds[i] == "messages") {
                         pageLink.innerHTML = portalLinks[p].getAttribute("data-tooltip-title").split("by")[0].split(",")[0]
@@ -147,7 +147,7 @@ function getContentFromPortal(portalDocument) {
                     }
                     pageText.appendChild(pageLink)
                     pageText.appendChild(pageStamp)
-                    
+
                     document.getElementById(contentIds[i]).appendChild(pageText)
                 }
             } else {
@@ -399,11 +399,18 @@ function showComments(selectedPostID, groupID) {
         .done(function (responseText) {
             let forum = new DOMParser().parseFromString(responseText, "text/html")
             let comments = forum.getElementById(selectedPostID.replace("lnkTopicReply", "contents"))
+            let title = forum.getElementById(selectedPostID.replace("lnkTopicReply", "msgHeader") + " ")
+
             let topic = comments.getElementsByClassName("respDiscTopic")
             let replyText = comments.getElementsByClassName("respDiscChildPost")
             let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
+            let commentSpan = document.createElement("span")
+            commentSpan.className = "commentSpan"
 
-            document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText
+            commentSpan.innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText
+            document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = title.innerText
+
+            commentArea.appendChild(commentSpan)
 
             for (let p = 0; p < replyText.length; p++) {
                 let replySpan = document.createElement("span")
