@@ -1,5 +1,6 @@
 let completeFNs = 0
 let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
+let portalProfilePage = "/Member/Contact/" + profileID[1] + "~" + profileID[0] + "~" + profileID[2]
 let appContainer = document.createElement("div")
 appContainer.id = "customContainer", appContainer.className = "container"
 document.getElementsByClassName("clsBodyText")[0].appendChild(appContainer)
@@ -15,9 +16,12 @@ function addCard(hdrId, bdyId, crdIcon, crdText, useCollapse, fnName) {
 
     if (hdrId === "profileHeader") {
         let classArray = ["", "fa fa-refresh fa-spin fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
+        let hrefArray = ["#", "javascript:showTheDialog()", portalProfilePage, "/form/28118~116540/ask-a-manager", "javascript:showTheDialog()", "/form/28118~327323/social-media-help"]
+        let textArray = ["", "", "Loading...", "", "", ""]
         for (let a = 1; a <= 5; a++) {
             let headerLinks = document.createElement("a")
-            if (a == 2) { headerLinks.innerHTML="Loading..." }
+            headerLinks.innerHTML = textArray[a]
+            headerLinks.href = hrefArray[a]
             headerLinks.className = classArray[a]
             hdrDiv.appendChild(headerLinks)
         }
@@ -116,7 +120,7 @@ function getContacts() {
                     }
                 }
                 document.getElementById("contactBody").appendChild(contactDiv)
-                if (p == contactArray.length - 1) {ldComplete("contacts") }
+                if (p == contactArray.length - 1) { ldComplete("contacts") }
             })
 
     }
@@ -133,9 +137,17 @@ function getContentFromPortal(portalDocument) {
                     let pageLink = document.createElement("a")
                     let pageText = document.createElement("p")
                     let pageStamp = document.createElement("span")
+                    pageStamp.style.float="right"
                     pageLink.href = portalLinks[p].href
-                    pageLink.innerHTML = portalLinks[p].getAttribute("data-tooltip-title")
+                    if (portalIds[i] == "messages") {
+                        pageLink.innerHTML = portalLinks[p].getAttribute("data-tooltip-title").split("by")[0].split(",")[0]
+                        pageStamp.innerText = portalLinks[p].getAttribute("data-tooltip-title").split("by")[0].split(",")[1]
+                    } else {
+                        pageLink.innerHTML = portalLinks[p].getAttribute("data-tooltip-title")
+                    }
                     pageText.appendChild(pageLink)
+                    pageText.appendChild(pageStamp)
+                    
                     document.getElementById(contentIds[i]).appendChild(pageText)
                 }
             } else {
@@ -303,7 +315,7 @@ function getResourceCenter() {
                 selectedDoc.innerHTML = documentName[p].innerHTML
                 selectedDoc.href = documentLink[p].href
                 document.getElementById("fileBody").appendChild(selectedDoc)
-                if (p == documentName.length - 1) {ldComplete("files") }
+                if (p == documentName.length - 1) { ldComplete("files") }
             }
 
             //for (let p = newsLetterName.length - 1; p >= 0 && newsList.children.length < 6; p--) {
@@ -322,8 +334,89 @@ function ldComplete(fncName) {
     if (completeFNs == 9) {
         allComplete = true
         document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
-    }   
+    }
     return allComplete
+}
+function addModal() {
+    let modalDiv = document.createElement("div")
+    let modaldialogDiv = document.createElement("div")
+    let modalContentDiv = document.createElement("div")
+    let modalHeaderDiv = document.createElement("div")
+    let modalBodyDiv = document.createElement("div")
+    let modalFooterDiv = document.createElement("div")
+    let modalTitle = document.createElement("strong")
+    let modalClose = document.createElement("button")
+    let btmClose = document.createElement("button")
+    let modalSpan = document.createElement("span")
+
+    modalDiv.className = "modal fade"
+    modalDiv.id = "appDialog"
+    modalFooterDiv.className = "modal-footer"
+    modaldialogDiv.className = "modal-dialog modal-dialog-scrollable modal-lg"
+    modalContentDiv.className = "modal-content"
+    modalHeaderDiv.className = "modal-header"
+    modalBodyDiv.id = "appDialogBody"
+    modalTitle.className = "modal-title"
+    modalTitle.id = "appDialogTitle"
+
+    modalClose.appendChild(modalSpan)
+    modalHeaderDiv.appendChild(modalTitle)
+    modalHeaderDiv.appendChild(modalClose)
+    modalClose.type = "button"
+    modalClose.className = "close"
+    modalClose.setAttribute("data-dismiss", "modal")
+    modalSpan.className = "fa fa-times fa-lg"
+
+    btmClose.type = "button"
+    btmClose.className = "btn btn-secondary"
+    btmClose.innerText = "Close"
+    btmClose.setAttribute("data-dismiss", "modal")
+
+    modalFooterDiv.appendChild(btmClose)
+
+
+    modalContentDiv.appendChild(modalHeaderDiv)
+    modalContentDiv.appendChild(modalBodyDiv)
+    modalContentDiv.appendChild(modalFooterDiv)
+
+    modaldialogDiv.appendChild(modalContentDiv)
+    modalDiv.appendChild(modaldialogDiv)
+    appContainer.appendChild(modalDiv)
+
+}
+function showTheDialog() {
+    document.getElementById("appDialogTitle").innerText = "My Woodbridge"
+
+    document.getElementById("appDialogBody").innerText = "Test Text"
+
+    if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
+
+}
+function showComments(selectedPostID, groupID) {
+    let commentArea = document.getElementById("appDialogBody")
+    while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
+    $.get(pageLocation("/Discussion/28118~" + groupID), function () { })
+        .done(function (responseText) {
+            let forum = new DOMParser().parseFromString(responseText, "text/html")
+            let comments = forum.getElementById(selectedPostID.replace("lnkTopicReply", "contents"))
+            let topic = comments.getElementsByClassName("respDiscTopic")
+            let replyText = comments.getElementsByClassName("respDiscChildPost")
+            let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
+
+            document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText
+
+            for (let p = 0; p < replyText.length; p++) {
+                let replySpan = document.createElement("span")
+                let authorSpan = document.createElement("span")
+                replySpan.className = "commentSpan"
+                authorSpan.className = "commentSpan"
+                replySpan.innerHTML = replyText[p].innerText.trim() + "<br />"
+                authorSpan.innerHTML = replyAuthor[p + 1].innerText.trim() + "<hr />"
+                commentArea.appendChild(replySpan)
+                commentArea.appendChild(authorSpan)
+            }
+            if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
+        })
 }
 addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Welcome", false, getProfile)
 addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
@@ -334,6 +427,7 @@ addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Office Co
 addCard("groupsHeader", "groupsBody", "fa fa-comments fa-lg", "Discussion Groups", true, getDiscussionGroups)
 addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, getCalendar)
 addCard("fileHeader", "fileBody", "fa fa-file fa-lg", "My Documents", true, getResourceCenter)
+addModal()
 
 $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
     .done(function (responseText) {
@@ -342,10 +436,6 @@ $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
         getContentFromPortal(portalContent)
 
     })
-
-
-
-
 
 
 

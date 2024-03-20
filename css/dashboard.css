@@ -144,7 +144,7 @@
 
 
 
-#fileBody  a:nth-child(even) {
+#fileBody a:nth-child(even) {
     background-color: #eceeef
 }
 
@@ -232,4 +232,11 @@
 #eventsBody div > div:nth-child(3) {
     width: 25%;
     float: left;
+}
+
+#appDialogBody {
+    padding: 15px
+}
+#appDialog button {
+    float:right !important;
 }
