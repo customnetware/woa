@@ -16,7 +16,7 @@ function addCard(hdrId, bdyId, crdIcon, crdText, useCollapse, fnName) {
 
     if (hdrId === "profileHeader") {
         let classArray = ["", "fa fa-refresh fa-spin fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
-        let hrefArray = ["#", "javascript:showTheDialog()", portalProfilePage, "/form/28118~116540/ask-a-manager", "javascript:showTheDialog()", "/form/28118~327323/social-media-help"]
+        let hrefArray = ["#", "javascript:showTheDialog()", portalProfilePage, "/form/28118~327323/social-media-help/", "javascript:showTheDialog()", "form/28118~116540/ask-a-manager"]
         let textArray = ["", "", "Loading...", "", "", ""]
         for (let a = 1; a <= 5; a++) {
             let headerLinks = document.createElement("a")
