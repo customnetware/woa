@@ -292,7 +292,7 @@ function showCalendar(calenderEvents) {
         eventLink.href = calenderEvents[d].calLink
         eventLink.innerHTML = calenderEvents[d].calTitle
         nameDiv.appendChild(eventLink)
-        timeDiv.innerText = new Date(calenderEvents[d].calTime).toLocaleTimeString
+        timeDiv.innerText = new Date(calenderEvents[d].calTime).toLocaleTimeString()
         placeDiv.className="hideFromApp"
         placeDiv.innerText = calenderEvents[d].calLocation
         document.getElementById("eventsBody").appendChild(eventDiv)
