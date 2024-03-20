@@ -185,7 +185,7 @@
 
 
 @media screen and (max-width: 565px) and (min-width: 300px) {
-    .emailCol {
+    .hideFromApp {
         display: none;
     }
 }
@@ -198,13 +198,13 @@
 }
 
 #contactBody div > div:first-child {
-    white-space: nowrap;
+
     width: 28%;
     float: left;
 }
 
 #contactBody div > div:nth-child(2) {
-    white-space: nowrap;
+ 
     width: 35%;
     float: left;
 }

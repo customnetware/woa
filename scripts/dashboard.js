@@ -142,6 +142,7 @@ function getContentFromPortal(portalDocument) {
                     if (portalIds[i] == "messages") {
                         pageLink.innerHTML = portalLinks[p].getAttribute("data-tooltip-title").split("by")[0].split(",")[0]
                         pageStamp.innerText = portalLinks[p].getAttribute("data-tooltip-title").split("by")[0].split(",")[1]
+                        pageStamp.className ="hideFromApp"
                     } else {
                         pageLink.innerHTML = portalLinks[p].getAttribute("data-tooltip-title")
                     }
