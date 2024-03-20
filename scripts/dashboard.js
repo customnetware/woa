@@ -406,8 +406,8 @@ function showComments(selectedPostID, groupID) {
             let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
             let commentSpan = document.createElement("span")
             commentSpan.className = "commentSpan"
-
-            commentSpan.innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText
+            commentSpan.style.fontWeight="600"
+            commentSpan.innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText + "<hr />"
             document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = title.innerText
 
             commentArea.appendChild(commentSpan)
