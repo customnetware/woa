@@ -4,6 +4,7 @@ let portalProfilePage = "/Member/Contact/" + profileID[1] + "~" + profileID[0] +
 let appContainer = document.createElement("div")
 appContainer.id = "customContainer", appContainer.className = "container"
 document.getElementsByClassName("clsBodyText")[0].appendChild(appContainer)
+
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
 }
@@ -142,7 +143,8 @@ function getContentFromPortal(portalDocument) {
                     if (portalIds[i] == "messages") {
                         pageLink.innerHTML = portalLinks[p].getAttribute("data-tooltip-title").split("by")[0].split(",")[0]
                         pageStamp.innerText = portalLinks[p].getAttribute("data-tooltip-title").split("by")[0].split(",")[1]
-                        pageStamp.className ="hideFromApp"
+                        pageStamp.className = "hideFromApp"
+                        localStorage.setItem(portalLinks[p].id, portalLinks[p].getAttribute("data-tooltip-title").split("by")[0] + portalLinks[p].getAttribute("data-tooltip-text"))
                     } else {
                         pageLink.innerHTML = portalLinks[p].getAttribute("data-tooltip-title")
                     }
@@ -293,7 +295,7 @@ function showCalendar(calenderEvents) {
         eventLink.innerHTML = calenderEvents[d].calTitle
         nameDiv.appendChild(eventLink)
         timeDiv.innerText = new Date(calenderEvents[d].calTime).toLocaleTimeString()
-        placeDiv.className="hideFromApp"
+        placeDiv.className = "hideFromApp"
         placeDiv.innerText = calenderEvents[d].calLocation
         document.getElementById("eventsBody").appendChild(eventDiv)
     }
@@ -336,6 +338,7 @@ function ldComplete(fncName) {
     if (completeFNs == 9) {
         allComplete = true
         document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
+        localStorage.setItem("testCache", document.getElementsByClassName("clsBodyText")[0].innerHTML)
     }
     return allComplete
 }
@@ -408,7 +411,7 @@ function showComments(selectedPostID, groupID) {
             let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
             let commentSpan = document.createElement("span")
             commentSpan.className = "commentSpan"
-            commentSpan.style.fontWeight="600"
+            commentSpan.style.fontWeight = "600"
             commentSpan.innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText + "<hr />"
             document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = title.innerText
 
@@ -427,24 +430,31 @@ function showComments(selectedPostID, groupID) {
             if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
         })
 }
-addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Loading...", false, getProfile)
-addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
-addCard("newsHeader", "newsBody", "fa fa-newspaper-o fa-lg", "Recent News", true, "")
-addCard("forSaleHeader", "forSaleBody", "fa fa-shopping-cart fa-lg", "For Sale or Free", true, "")
-addCard("photoHeader", "photoBody", "fa fa-picture-o fa-lg", "Event Photos", true, "")
-addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Office Contacts", true, getContacts)
-addCard("groupsHeader", "groupsBody", "fa fa-comments fa-lg", "Discussion Groups", true, getDiscussionGroups)
-addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, getCalendar)
-addCard("fileHeader", "fileBody", "fa fa-file fa-lg", "My Documents", true, getResourceCenter)
-addModal()
 
-$.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
-    .done(function (responseText) {
-        let portalContent = new DOMParser().parseFromString(responseText, "text/html")
-        document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = portalContent.getElementsByClassName("clsHeader")[0].innerHTML
-        getContentFromPortal(portalContent)
 
-    })
+
+if (localStorage.getItem("testCache") === null) {
+    addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Loading...", false, getProfile)
+    addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
+    addCard("newsHeader", "newsBody", "fa fa-newspaper-o fa-lg", "Recent News", true, "")
+    addCard("forSaleHeader", "forSaleBody", "fa fa-shopping-cart fa-lg", "For Sale or Free", true, "")
+    addCard("photoHeader", "photoBody", "fa fa-picture-o fa-lg", "Event Photos", true, "")
+    addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Office Contacts", true, getContacts)
+    addCard("groupsHeader", "groupsBody", "fa fa-comments fa-lg", "Discussion Groups", true, getDiscussionGroups)
+    addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, getCalendar)
+    addCard("fileHeader", "fileBody", "fa fa-file fa-lg", "My Documents", true, getResourceCenter)
+    addModal()
+
+
+
+    $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
+        .done(function (responseText) {
+            let portalContent = new DOMParser().parseFromString(responseText, "text/html")
+            document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = portalContent.getElementsByClassName("clsHeader")[0].innerHTML
+            getContentFromPortal(portalContent)
+
+        })
+} else { document.getElementsByClassName("clsBodyText")[0].innerHTML = localStorage.getItem("testCache") }
 
 
 

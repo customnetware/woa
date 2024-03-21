@@ -1,11 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Calendar",
     "\\Calendar\\Event",
     "\\css",
+    "\\Discussion",
+    "\\Discussion\\list",
     "\\scripts"
   ],
-  "SelectedNode": "\\css\\dashboard.css",
+  "SelectedNode": "\\woa_dashboard.html",
   "PreviewInSolutionExplorer": false
 }
