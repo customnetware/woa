@@ -1,10 +1,17 @@
 
-let pageStatus = window.performance.getEntriesByType("navigation")[0].type
-if (pageStatus == "navigate" || pageStatus == "reload") {
-    showThePage()
-} else {
-    document.getElementsByClassName("clsBodyText")[0].innerHTML = localStorage.getItem("woaCache")
-}
+
+
+
+if (typeof (window.performance.getEntriesByType) != "undefined") {
+    try {
+        let pageStatus = window.performance.getEntriesByType("navigation")[0].type
+        if (pageStatus == "navigate" || pageStatus == "reload" || localStorage.getItem("woaCache") === null) {
+            showThePage()
+        } else {
+            document.getElementsByClassName("clsBodyText")[0].innerHTML = localStorage.getItem("woaCache")
+        }
+    } catch { showThePage() }
+} else { showThePage() }
 
 
 let completeFNs = 0
