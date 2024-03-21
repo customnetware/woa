@@ -401,7 +401,25 @@ function formatTime(eventTime) {
     //    if (document.getElementById("profileHeader").children[0].className === "fa fa-check-circle fa-lg") {
     //        if (eventList.childElementCount === 0 && savedEvents !== null) { eventList.innerHTML = savedEvents }
     //    }
-    //})
+//})
+//const pageAccessedByReload = (
+//    (window.performance.navigation && window.performance.navigation.type === 1) ||
+//    window.performance
+//        .getEntriesByType('navigation')
+//        .map((nav) => nav.type)
+//        .includes('reload')
+//)
+
+//alert(pageAccessedByReload);
+
+//let pageTime = localStorage.getItem("pageTime")
+//let timeDiff = (new Date() - new Date(Number(pageTime)))
+//let pageAge = Math.round((timeDiff / 1000) / 60)
+
+//if (pageTime === null || localStorage.getItem("woaCache") === null || pageAge > 3) {
+//    showThePage()
+//    localStorage.setItem("pageTime", new Date().getTime())
+//} else { document.getElementsByClassName("clsBodyText")[0].innerHTML = localStorage.getItem("woaCache") }
     window.addEventListener("beforeunload", function (e) {
 
     })
