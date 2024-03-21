@@ -1,19 +1,4 @@
 
-
-
-
-if (typeof (window.performance.getEntriesByType) != "undefined") {
-    try {
-        let pageStatus = window.performance.getEntriesByType("navigation")[0].type
-        if (pageStatus == "navigate" || pageStatus == "reload" || localStorage.getItem("woaCache") === null) {
-            showThePage()
-        } else {
-            document.getElementsByClassName("clsBodyText")[0].innerHTML = localStorage.getItem("woaCache")
-        }
-    } catch { showThePage() }
-} else { showThePage() }
-
-
 let completeFNs = 0
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
@@ -450,33 +435,47 @@ function showComments(selectedPostID, groupID) {
         })
 }
 function showThePage() {
-
+    let getPageFromCache = false
     let pageArea = document.getElementsByClassName("clsBodyText")[0]
     while (pageArea.firstChild) { pageArea.removeChild(pageArea.firstChild) }
-    let appContainer = document.createElement("div")
-    appContainer.id = "customContainer", appContainer.className = "container"
-    pageArea.appendChild(appContainer)
-    addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Loading...", false, getProfile)
-    addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
-    addCard("newsHeader", "newsBody", "fa fa-newspaper-o fa-lg", "Recent News", true, "")
-    addCard("forSaleHeader", "forSaleBody", "fa fa-shopping-cart fa-lg", "For Sale or Free", true, "")
-    addCard("photoHeader", "photoBody", "fa fa-picture-o fa-lg", "Event Photos", true, "")
-    addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Office Contacts", true, getContacts)
-    addCard("groupsHeader", "groupsBody", "fa fa-comments fa-lg", "Discussion Groups", true, getDiscussionGroups)
-    addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, getCalendar)
-    addCard("fileHeader", "fileBody", "fa fa-file fa-lg", "My Documents", true, getResourceCenter)
-    addModal()
+    if (typeof (window.performance.getEntriesByType) != "undefined") {
+        try {
+            let pageStatus = window.performance.getEntriesByType("navigation")[0].type
+            if (pageStatus == "navigate" || pageStatus == "reload" || localStorage.getItem("woaCache") === null) {
+                getPageFromCache = false
+            } else {
+                getPageFromCache = true
+            }
+        } catch { getPageFromCache = false }
+    } else { getPageFromCache = false }
+
+    if (getPageFromCache === false) {
+
+        let appContainer = document.createElement("div")
+        appContainer.id = "customContainer", appContainer.className = "container"
+        pageArea.appendChild(appContainer)
+        addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Loading...", false, getProfile)
+        addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
+        addCard("newsHeader", "newsBody", "fa fa-newspaper-o fa-lg", "Recent News", true, "")
+        addCard("forSaleHeader", "forSaleBody", "fa fa-shopping-cart fa-lg", "For Sale or Free", true, "")
+        addCard("photoHeader", "photoBody", "fa fa-picture-o fa-lg", "Event Photos", true, "")
+        addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Office Contacts", true, getContacts)
+        addCard("groupsHeader", "groupsBody", "fa fa-comments fa-lg", "Discussion Groups", true, getDiscussionGroups)
+        addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, getCalendar)
+        addCard("fileHeader", "fileBody", "fa fa-file fa-lg", "My Documents", true, getResourceCenter)
+        addModal()
 
 
+        $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
+            .done(function (responseText) {
+                let portalContent = new DOMParser().parseFromString(responseText, "text/html")
+                document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = portalContent.getElementsByClassName("clsHeader")[0].innerHTML
+                getContentFromPortal(portalContent)
 
-    $.get(pageLocation("/homepage/28118/resident-home-page"), function () { })
-        .done(function (responseText) {
-            let portalContent = new DOMParser().parseFromString(responseText, "text/html")
-            document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = portalContent.getElementsByClassName("clsHeader")[0].innerHTML
-            getContentFromPortal(portalContent)
-
-        })
+            })
+    } else { document.getElementsByClassName("clsBodyText")[0].innerHTML = localStorage.getItem("woaCache") }
 }
+showThePage()
 
 
 
