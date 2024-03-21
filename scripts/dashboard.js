@@ -2,6 +2,8 @@
 let pageStatus = window.performance.getEntriesByType("navigation")[0].type
 if (pageStatus == "navigate" || pageStatus == "reload") {
     showThePage()
+} else {
+    document.getElementsByClassName("clsBodyText")[0].innerHTML = localStorage.getItem("woaCache")
 }
 
 
