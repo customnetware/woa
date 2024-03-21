@@ -1,10 +1,39 @@
-let completeFNs = 0
-let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
-let portalProfilePage = "/Member/Contact/" + profileID[1] + "~" + profileID[0] + "~" + profileID[2]
-let appContainer = document.createElement("div")
-appContainer.id = "customContainer", appContainer.className = "container"
-document.getElementsByClassName("clsBodyText")[0].appendChild(appContainer)
 
+//const pageAccessedByReload = (
+//    (window.performance.navigation && window.performance.navigation.type === 1) ||
+//    window.performance
+//        .getEntriesByType('navigation')
+//        .map((nav) => nav.type)
+//        .includes('reload')
+//)
+
+//alert(pageAccessedByReload);
+
+
+
+
+let pageStatus = window.performance.getEntriesByType("navigation")[0].type
+if (pageStatus == "navigate" || pageStatus == "reload") {
+    showThePage()
+}
+else {
+    document.getElementsByClassName("clsBodyText")[0].innerHTML = localStorage.getItem("woaCache")
+}
+
+
+
+//let pageTime = localStorage.getItem("pageTime")
+//let timeDiff = (new Date() - new Date(Number(pageTime)))
+//let pageAge = Math.round((timeDiff / 1000) / 60)
+
+//if (pageTime === null || localStorage.getItem("woaCache") === null || pageAge > 3) {
+//    showThePage()
+//    localStorage.setItem("pageTime", new Date().getTime())
+//} else { document.getElementsByClassName("clsBodyText")[0].innerHTML = localStorage.getItem("woaCache") }
+
+
+
+let completeFNs = 0
 function pageLocation(URLString) {
     return (window.location.hostname == "localhost") ? URLString + ".html" : URLString
 }
@@ -16,14 +45,8 @@ function addCard(hdrId, bdyId, crdIcon, crdText, useCollapse, fnName) {
     let bdyDiv = document.createElement("div")
 
     if (hdrId === "profileHeader") {
-        let classArray = ["", "fa fa-refresh fa-spin fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
-        let hrefArray = ["#", "javascript:showTheDialog()", portalProfilePage, "/form/28118~327323/social-media-help", "javascript:showTheDialog()", "/form/28118~116540/ask-a-manager"]
-        let textArray = ["", "", "Loading...", "", "", ""]
         for (let a = 1; a <= 5; a++) {
             let headerLinks = document.createElement("a")
-            headerLinks.innerHTML = textArray[a]
-            headerLinks.href = hrefArray[a]
-            headerLinks.className = classArray[a]
             hdrDiv.appendChild(headerLinks)
         }
     } else {
@@ -52,11 +75,26 @@ function addCard(hdrId, bdyId, crdIcon, crdText, useCollapse, fnName) {
         bdyDiv.classList.add("collapse")
         bdyDiv.setAttribute("data-parent", "#customContainer")
     }
-    appContainer.appendChild(rowDiv)
+    document.getElementById("customContainer").appendChild(rowDiv)
+
     if (fnName !== "") { fnName() }
 
 }
 function getProfile() {
+    let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
+    let portalProfilePage = "/Member/Contact/" + profileID[1] + "~" + profileID[0] + "~" + profileID[2]
+    let classArray = ["fa fa-refresh fa-spin fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
+    let hrefArray = ["javascript:showTheDialog()", portalProfilePage, "/form/28118~327323/social-media-help", "javascript:showTheDialog()", "/form/28118~116540/ask-a-manager"]
+    let textArray = ["", "Loading...", "", "", ""]
+
+
+    for (let a = 0; a <= 4; a++) {
+        let headerLinks = document.getElementById("profileHeader").getElementsByTagName("a")
+        headerLinks[a].innerHTML = textArray[a]
+        headerLinks[a].href = hrefArray[a]
+        headerLinks[a].className = classArray[a]
+    }
+
     let profileImage = document.createElement("img")
     let imageFile = $.get(pageLocation("/Member/28118~" + profileID[0]), function () { })
     let textFile = $.get(pageLocation("/news/28118~792554"), function () { })
@@ -338,7 +376,7 @@ function ldComplete(fncName) {
     if (completeFNs == 9) {
         allComplete = true
         document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
-        localStorage.setItem("testCache", document.getElementsByClassName("clsBodyText")[0].innerHTML)
+        localStorage.setItem("woaCache", document.getElementsByClassName("clsBodyText")[0].innerHTML)
     }
     return allComplete
 }
@@ -386,7 +424,7 @@ function addModal() {
 
     modaldialogDiv.appendChild(modalContentDiv)
     modalDiv.appendChild(modaldialogDiv)
-    appContainer.appendChild(modalDiv)
+    document.getElementById("customContainer").appendChild(modalDiv)
 
 }
 function showTheDialog() {
@@ -430,10 +468,13 @@ function showComments(selectedPostID, groupID) {
             if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
         })
 }
+function showThePage() {
 
-
-
-if (localStorage.getItem("testCache") === null) {
+    let pageArea = document.getElementsByClassName("clsBodyText")[0]
+    while (pageArea.firstChild) { pageArea.removeChild(pageArea.firstChild) }
+    let appContainer = document.createElement("div")
+    appContainer.id = "customContainer", appContainer.className = "container"
+    pageArea.appendChild(appContainer)
     addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Loading...", false, getProfile)
     addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
     addCard("newsHeader", "newsBody", "fa fa-newspaper-o fa-lg", "Recent News", true, "")
@@ -454,7 +495,8 @@ if (localStorage.getItem("testCache") === null) {
             getContentFromPortal(portalContent)
 
         })
-} else { document.getElementsByClassName("clsBodyText")[0].innerHTML = localStorage.getItem("testCache") }
+}
+
 
 
 
