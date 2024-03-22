@@ -81,5 +81,12 @@ function screenSort(sortDirection) {
     }
 }
 $(window).load(function () {
-    showDocuments('000000', '000000')
+    const queryString = window.location.search
+    const urlParams = new URLSearchParams(queryString)
+    if (urlParams.get("ff") == "1") {
+        showDocuments('951754', '000000', 'Woodbridge Newsletters')
+    } else { showDocuments('000000', '000000') }
+
+    /* showDocuments('951754', '000000', 'Woodbridge Newsletters')*/
+
 })

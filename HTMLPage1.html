@@ -19,18 +19,14 @@
     </div>
     <div class="clsBodyText"></div>
     <script>
-        let portalHead = document.head || document.getElementsByTagName("head")[0]
-
-        let woaStyles = document.createElement("link")
-        woaStyles.href = (window.location.hostname == "localhost") ? "/css/dashboard.css" : "https://customnetware.github.io/woa/css/dashboard.css"
-        woaStyles.rel = "stylesheet"
-        portalHead.appendChild(woaStyles)
-
-        let woaScripts = document.createElement("script")
-        woaScripts.type = "text/javascript"
-        woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/lastScript.js" : "https://customnetware.github.io/woa/scripts/lastScript.js"
-        document.body.appendChild(woaScripts)
-
+        $.get("/resourcecenter/28118/resource-center.html", function () { })
+            .done(function (responseText) {
+                let documents = new DOMParser().parseFromString(responseText, "text/html")
+                let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
+                let newsLetterLink = documents.getElementById("contents951754").querySelectorAll("a[title='View On-line']")
+                alert(newsLetterName[newsLetterName.length - 1].innerHTML)
+                alert(newsLetterLink[newsLetterName.length - 1].href)
+            })
     </script>
 </body>
-</html>
+</html> 
