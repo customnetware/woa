@@ -1,20 +1,10 @@
 const fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
 function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
-    document.getElementById("document").innerHTML = ""
-    let waitRow = document.createElement("span")
-    let waitFolder = document.createElement("i")
-    let waitIcon = document.createElement("i")
-    waitFolder.className = "fa fa-folder-o formatIcon"
-    waitIcon.className = "fa fa-spinner fa-pulse fa-fw"
-    waitRow.appendChild(waitFolder)
-    waitRow.appendChild(waitIcon)
-    waitRow.appendChild(document.createTextNode("The requested folders and files are loading..."))
-    document.getElementById("document").appendChild(waitRow)
-
     let currentScreen = localStorage.getItem(selectedFolder)
     if (currentScreen !== null) {
         let fileListing = JSON.parse(currentScreen)
-        document.getElementById("document").innerHTML = ""
+    
+        while (document.getElementById("document").firstChild) { document.getElementById("document").removeChild(document.getElementById("document").firstChild) }
         for (let p = 0; p < fileListing.length; p++) {
             let currentFile = document.createElement("span")
             currentFile.innerHTML = fileListing[p]
@@ -23,12 +13,14 @@ function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
     } else {
         $.get(fileLocation, function () { })
             .done(function (responseText) {
+
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
                 let parentElement = (selectedFolder == "000000") ? documents.querySelector(".clsTree") : documents.getElementById("contents" + selectedFolder).querySelectorAll(":scope > div")[1]
                 let documentList = parentElement.querySelectorAll(":scope > div")
-                document.getElementById("document").innerHTML = ""
+
 
                 if (selectedFolder !== "000000") {
+                    while (document.getElementById("document").firstChild) { document.getElementById("document").removeChild(document.getElementById("document").firstChild) }
                     let docRow = document.createElement("span")
                     let docLink = document.createElement("a")
                     let docIcon1 = document.createElement("i")
@@ -52,6 +44,7 @@ function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
                         docIcon.className = "fa fa-folder-o formatIcon"
                         docLink.href = "javascript:showDocuments('" + localDocID + "','" + selectedFolder + "','" + remoteDoc.innerText + "');"
                     } else {
+                        while (document.getElementById("document").firstChild) { document.getElementById("document").removeChild(document.getElementById("document").firstChild) }
                         docIcon.className = "fa fa-file-pdf-o formatIcon"
                         docLink.href = documents.getElementById("contentsDoc" + localDocID).getElementsByTagName("a")[2].href
                     }
