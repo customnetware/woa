@@ -2,6 +2,29 @@ const woaCode = {
     completeFNs: 0,
     profileID: /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(","),
     isLocal: (window.location.hostname == "localhost") ? ".html" : "",
+    ldComplete: (fncName) => {
+        let allComplete = false
+        woaCode.completeFNs = woaCode.completeFNs + 1
+        let testTxt = document.createElement("p")
+        testTxt.innerText = woaCode.completeFNs + " - " + fncName
+        if (woaCode.completeFNs == 9) {
+            allComplete = true
+            document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
+            localStorage.setItem("woaCache", document.getElementsByClassName("clsBodyText")[0].innerHTML)
+        }
+        return allComplete
+    },
+    formatTime: (eventTime) => {
+        let eventDate = new Date()
+        let amPM = eventTime.slice(-2)
+        eventTime = eventTime.replace(amPM, "")
+        eventHours = Number(eventTime.split(":")[0])
+        eventMinutes = Number(eventTime.split(":")[1])
+        if (amPM == "PM" && eventHours < 12) eventHours = eventHours + 12
+        if (amPM == "AM" && eventHours == 12) eventHours = eventHours - 12
+        eventDate.setHours(eventHours, eventMinutes, 0)
+        return eventDate
+    },
     addCard: (hdrId, bdyId, crdIcon, crdText, useCollapse, fnName) => {
         let rowDiv = document.createElement("div")
         let colDiv = document.createElement("div")
@@ -45,11 +68,58 @@ const woaCode = {
         if (fnName !== "") { fnName() }
 
     },
+    addModal: () => {
+        let modalDiv = document.createElement("div")
+        let modaldialogDiv = document.createElement("div")
+        let modalContentDiv = document.createElement("div")
+        let modalHeaderDiv = document.createElement("div")
+        let modalBodyDiv = document.createElement("div")
+        let modalFooterDiv = document.createElement("div")
+        let modalTitle = document.createElement("strong")
+        let modalClose = document.createElement("button")
+        let btmClose = document.createElement("button")
+        let modalSpan = document.createElement("span")
+
+        modalDiv.className = "modal fade"
+        modalDiv.id = "appDialog"
+        modalFooterDiv.className = "modal-footer"
+        modaldialogDiv.className = "modal-dialog modal-dialog-scrollable modal-lg"
+        modalContentDiv.className = "modal-content"
+        modalHeaderDiv.className = "modal-header"
+        modalBodyDiv.id = "appDialogBody"
+        modalTitle.className = "modal-title"
+        modalTitle.id = "appDialogTitle"
+
+        modalClose.appendChild(modalSpan)
+        modalHeaderDiv.appendChild(modalTitle)
+        modalHeaderDiv.appendChild(modalClose)
+        modalClose.type = "button"
+        modalClose.className = "close"
+        modalClose.setAttribute("data-dismiss", "modal")
+        modalSpan.className = "fa fa-times fa-lg"
+
+        btmClose.type = "button"
+        btmClose.className = "btn btn-secondary"
+        btmClose.innerText = "Close"
+        btmClose.setAttribute("data-dismiss", "modal")
+
+        modalFooterDiv.appendChild(btmClose)
+
+
+        modalContentDiv.appendChild(modalHeaderDiv)
+        modalContentDiv.appendChild(modalBodyDiv)
+        modalContentDiv.appendChild(modalFooterDiv)
+
+        modaldialogDiv.appendChild(modalContentDiv)
+        modalDiv.appendChild(modaldialogDiv)
+        document.getElementById("customContainer").appendChild(modalDiv)
+
+    },
     getProfile: () => {
         let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
         let portalProfilePage = "/Member/Contact/" + profileID[1] + "~" + profileID[0] + "~" + profileID[2]
         let classArray = ["fa fa-refresh fa-spin fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
-        let hrefArray = ["javascript:showTheDialog()", portalProfilePage, "/form/28118~327323/social-media-help", "javascript:showTheDialog()", "/form/28118~116540/ask-a-manager"]
+        let hrefArray = ["javascript:woaCode.showTheDialog()", portalProfilePage, "/form/28118~327323/social-media-help", "javascript:woaCode.showTheDialog()", "/form/28118~116540/ask-a-manager"]
         let textArray = ["", "Loading...", "", "", ""]
 
 
@@ -197,7 +267,7 @@ const woaCode = {
                 }
             }
             if (forumArray.length > 0) {
-               woaCode. ldComplete("discussion")
+                woaCode.ldComplete("discussion")
                 forumArray.sort((a, b) => { return a.postSort - b.postSort })
                 forumArray.reverse()
                 for (let p = 0; p <= 2; p++) {
@@ -214,7 +284,7 @@ const woaCode = {
                         let view = document.createElement("a")
                         reply.href = forumArray[p].replyLink
                         reply.innerHTML = forumArray[p].postAuthor + "  | Reply"
-                        view.href = "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
+                        view.href = "javascript:woaCode.showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
                         view.innerHTML = " | View Comments"
 
                         post.appendChild(reply)
@@ -224,17 +294,6 @@ const woaCode = {
                 }
             }
         })
-    },
-    formatTime: (eventTime) => {
-        let eventDate = new Date()
-        let amPM = eventTime.slice(-2)
-        eventTime = eventTime.replace(amPM, "")
-        eventHours = Number(eventTime.split(":")[0])
-        eventMinutes = Number(eventTime.split(":")[1])
-        if (amPM == "PM" && eventHours < 12) eventHours = eventHours + 12
-        if (amPM == "AM" && eventHours == 12) eventHours = eventHours - 12
-        eventDate.setHours(eventHours, eventMinutes, 0)
-        return eventDate
     },
     getCalendar: () => {
         let woaCalendar = document.createElement("iframe")
@@ -284,28 +343,6 @@ const woaCode = {
         woaCalendar.src = "/Calendar/28118~19555" + woaCode.isLocal
         document.body.appendChild(woaCalendar)
     },
-    showCalendar: (calenderEvents) => {
-        for (let d = 0; d < calenderEvents.length; d++) {
-            let eventLink = document.createElement("a")
-            let eventDiv = document.createElement("div")
-            let nameDiv = document.createElement("div")
-            let timeDiv = document.createElement("div")
-            let placeDiv = document.createElement("div")
-            eventDiv.appendChild(nameDiv)
-            eventDiv.appendChild(timeDiv)
-            eventDiv.appendChild(placeDiv)
-            eventLink.href = calenderEvents[d].calLink
-            eventLink.innerHTML = calenderEvents[d].calTitle
-            nameDiv.appendChild(eventLink)
-            timeDiv.innerText = new Date(calenderEvents[d].calTime).toLocaleTimeString()
-            placeDiv.className = "hideFromApp"
-            placeDiv.innerText = calenderEvents[d].calLocation
-            document.getElementById("eventsBody").appendChild(eventDiv)
-        }
-        woaCode.ldComplete("calendar")
-        document.getElementById("woaIFrame").remove()
-
-    },
     getResourceCenter: () => {
         $.get("/resourcecenter/28118/resource-center" + woaCode.isLocal, function () { })
             .done(function (responseText) {
@@ -333,64 +370,27 @@ const woaCode = {
                 //}
             })
     },
-    addModal: () => {
-        let modalDiv = document.createElement("div")
-        let modaldialogDiv = document.createElement("div")
-        let modalContentDiv = document.createElement("div")
-        let modalHeaderDiv = document.createElement("div")
-        let modalBodyDiv = document.createElement("div")
-        let modalFooterDiv = document.createElement("div")
-        let modalTitle = document.createElement("strong")
-        let modalClose = document.createElement("button")
-        let btmClose = document.createElement("button")
-        let modalSpan = document.createElement("span")
-
-        modalDiv.className = "modal fade"
-        modalDiv.id = "appDialog"
-        modalFooterDiv.className = "modal-footer"
-        modaldialogDiv.className = "modal-dialog modal-dialog-scrollable modal-lg"
-        modalContentDiv.className = "modal-content"
-        modalHeaderDiv.className = "modal-header"
-        modalBodyDiv.id = "appDialogBody"
-        modalTitle.className = "modal-title"
-        modalTitle.id = "appDialogTitle"
-
-        modalClose.appendChild(modalSpan)
-        modalHeaderDiv.appendChild(modalTitle)
-        modalHeaderDiv.appendChild(modalClose)
-        modalClose.type = "button"
-        modalClose.className = "close"
-        modalClose.setAttribute("data-dismiss", "modal")
-        modalSpan.className = "fa fa-times fa-lg"
-
-        btmClose.type = "button"
-        btmClose.className = "btn btn-secondary"
-        btmClose.innerText = "Close"
-        btmClose.setAttribute("data-dismiss", "modal")
-
-        modalFooterDiv.appendChild(btmClose)
-
-
-        modalContentDiv.appendChild(modalHeaderDiv)
-        modalContentDiv.appendChild(modalBodyDiv)
-        modalContentDiv.appendChild(modalFooterDiv)
-
-        modaldialogDiv.appendChild(modalContentDiv)
-        modalDiv.appendChild(modaldialogDiv)
-        document.getElementById("customContainer").appendChild(modalDiv)
-
-    },
-    ldComplete: (fncName) => {
-        let allComplete = false
-        woaCode.completeFNs = woaCode.completeFNs + 1
-        let testTxt = document.createElement("p")
-        testTxt.innerText = woaCode.completeFNs + " - " + fncName
-        if (woaCode.completeFNs == 9) {
-            allComplete = true
-            document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
-            localStorage.setItem("woaCache", document.getElementsByClassName("clsBodyText")[0].innerHTML)
+    showCalendar: (calenderEvents) => {
+        for (let d = 0; d < calenderEvents.length; d++) {
+            let eventLink = document.createElement("a")
+            let eventDiv = document.createElement("div")
+            let nameDiv = document.createElement("div")
+            let timeDiv = document.createElement("div")
+            let placeDiv = document.createElement("div")
+            eventDiv.appendChild(nameDiv)
+            eventDiv.appendChild(timeDiv)
+            eventDiv.appendChild(placeDiv)
+            eventLink.href = calenderEvents[d].calLink
+            eventLink.innerHTML = calenderEvents[d].calTitle
+            nameDiv.appendChild(eventLink)
+            timeDiv.innerText = new Date(calenderEvents[d].calTime).toLocaleTimeString()
+            placeDiv.className = "hideFromApp"
+            placeDiv.innerText = calenderEvents[d].calLocation
+            document.getElementById("eventsBody").appendChild(eventDiv)
         }
-        return allComplete
+        woaCode.ldComplete("calendar")
+        document.getElementById("woaIFrame").remove()
+
     },
     showTheDialog: () => {
         document.getElementById("appDialogTitle").innerText = "My Woodbridge"
