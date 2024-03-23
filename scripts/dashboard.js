@@ -349,7 +349,7 @@ const woaCode = {
         for (let p = 0; p < myDocs.length; p++) {
             let selectedDoc = document.createElement("a")
             selectedDoc.innerHTML = myDocs[p]
-            selectedDoc.href = myDocsLinks[p]+isLocal
+            selectedDoc.href = myDocsLinks[p] + woaCode.isLocal
             document.getElementById("fileBody").appendChild(selectedDoc)
 
         }
