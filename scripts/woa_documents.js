@@ -1,9 +1,25 @@
 const isLocal = (window.location.hostname == "localhost") ? ".html" : ""
-let pageArea = document.getElementsByClassName("clsBodyText")[0]
+
 let appContainer = document.createElement("div"); appContainer.id = "customContainer", appContainer.className = "container"
 let pageDocuments = document.createElement("div"); pageDocuments.id = "document"
 appContainer.appendChild(pageDocuments)
-pageArea.appendChild(appContainer)
+document.getElementsByClassName("clsBodyText")[0].appendChild(appContainer)
+
+function getResourceCenter() {
+    $.get("/resourcecenter/28118/resource-center" + isLocal, function () { })
+        .done(function (responseText) {
+            let documents = new DOMParser().parseFromString(responseText, "text/html")
+            let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
+            let fileFolderID = newsLetterName[29].parentElement.parentElement.parentElement.parentElement
+            let subFolder = fileFolderID.id.replace("contents", "")
+            let parentFolder = fileFolderID.parentElement.parentElement.parentElement.id.replace("contents", "")
+            let subFolderName = fileFolderID.parentElement.getElementsByTagName("span")[0].innerText
+            showDocuments(subFolder, parentFolder.replace("contentinner","000000"), subFolderName)
+
+        })
+}
+
+
 
 function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
     let pageFileList = document.getElementById("document")
@@ -153,17 +169,15 @@ function addCard(hdrId, bdyId, crdIcon, crdText, useCollapse, fnName) {
 }
 
 $(window).load(function () {
-    addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Loading...", false, getProfile)
+    addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "My Documents", false, getProfile)
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
-
-
     switch (urlParams.get("ff")) {
         case "1":
             showDocuments('540434', '000000', 'Flyers (Events or Activities)')
             break
         case "2":
-            showDocuments('951754', '000000', 'Woodbridge Newsletters')
+            getResourceCenter()
             break
         case "3":
             showDocuments('328201', '000000', 'Board Room')
@@ -171,7 +185,5 @@ $(window).load(function () {
         default:
             showDocuments('000000', '000000')
     }
-
-
-
+  
 })
