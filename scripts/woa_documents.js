@@ -9,11 +9,11 @@ function getResourceCenter() {
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
             let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
-            let fileFolderID = newsLetterName[newsLetterName.length-1].parentElement.parentElement.parentElement.parentElement
+            let fileFolderID = newsLetterName[newsLetterName.length - 1].parentElement.parentElement.parentElement.parentElement
             let subFolder = fileFolderID.id.replace("contents", "")
             let parentFolder = fileFolderID.parentElement.parentElement.parentElement.id.replace("contents", "")
             let subFolderName = fileFolderID.parentElement.getElementsByTagName("span")[0].innerText
-            showDocuments(subFolder, parentFolder.replace("contentinner","000000"), subFolderName)
+            showDocuments(subFolder, parentFolder.replace("contentinner", "000000"), subFolderName)
 
         })
 }
@@ -92,12 +92,11 @@ function screenSort(sortDirection) {
 }
 function getProfile() {
     let filePage = (window.location.hostname == "localhost") ? "28118~1105440.html" : "/page/28118~1105440"
+    let homePage = (window.location.hostname == "localhost") ? "/woa_dashboard.html" : "/page/28118~1101528/resident-home-beta"
     let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
-    let portalProfilePage = "/Member/Contact/" + profileID[1] + "~" + profileID[0] + "~" + profileID[2]
-    let classArray = ["fa fa-files-o fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
-    let hrefArray = [filePage, portalProfilePage, "/form/28118~327323/social-media-help", "", "/form/28118~116540/ask-a-manager"]
+    let classArray = ["fa fa fa-home fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
+    let hrefArray = [homePage, filePage, "/form/28118~327323/social-media-help", "", "/form/28118~116540/ask-a-manager"]
     let textArray = ["", "My Documents", "", "", ""]
-
 
     for (let a = 0; a <= 4; a++) {
         let headerLinks = document.getElementById("profileHeader").getElementsByTagName("a")
@@ -182,5 +181,5 @@ $(window).load(function () {
         default:
             showDocuments('000000', '000000')
     }
-  
+
 })
