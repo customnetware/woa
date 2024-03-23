@@ -176,7 +176,7 @@ $(window).load(function () {
             getResourceCenter("951754")
             break
         case "3":
-            getResourceCenter("966151")
+            getResourceCenter("328201")
             break
         default:
             showDocuments('000000', '000000')
