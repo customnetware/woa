@@ -4,16 +4,16 @@ let appContainer = document.createElement("div"); appContainer.id = "customConta
 let pageDocuments = document.createElement("div"); pageDocuments.id = "document"
 appContainer.appendChild(pageDocuments)
 document.getElementsByClassName("clsBodyText")[0].appendChild(appContainer)
-function getResourceCenter() {
+function getResourceCenter(folderName) {
     $.get("/resourcecenter/28118/resource-center" + isLocal, function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
-            let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
+            let newsLetterName = documents.getElementById("contents" + folderName).querySelectorAll("[id^=d]")
             let fileFolderID = newsLetterName[newsLetterName.length - 1].parentElement.parentElement.parentElement.parentElement
-            let subFolder = fileFolderID.id.replace("contents", "")
-            let parentFolder = fileFolderID.parentElement.parentElement.parentElement.id.replace("contents", "")
+            let subFolder = fileFolderID.id.replace("contents", "").replace("contentInner", "000000")
+            let parentFolder = fileFolderID.parentElement.parentElement.parentElement.id.replace("contents", "").replace("contentInner", "000000")
             let subFolderName = fileFolderID.parentElement.getElementsByTagName("span")[0].innerText
-            showDocuments(subFolder, parentFolder.replace("contentinner", "000000"), subFolderName)
+            showDocuments(subFolder, parentFolder, subFolderName)
 
         })
 }
@@ -170,13 +170,13 @@ $(window).load(function () {
     const urlParams = new URLSearchParams(queryString)
     switch (urlParams.get("ff")) {
         case "1":
-            showDocuments('540434', '000000', 'Flyers (Events or Activities)')
+            getResourceCenter("540434")
             break
         case "2":
-            getResourceCenter()
+            getResourceCenter("951754")
             break
         case "3":
-            showDocuments('328201', '000000', 'Board Room')
+            getResourceCenter("966151")
             break
         default:
             showDocuments('000000', '000000')
