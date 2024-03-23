@@ -10,7 +10,7 @@ function getResourceCenter() {
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
             let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
-            let fileFolderID = newsLetterName[29].parentElement.parentElement.parentElement.parentElement
+            let fileFolderID = newsLetterName[newsLetterName.length-1].parentElement.parentElement.parentElement.parentElement
             let subFolder = fileFolderID.id.replace("contents", "")
             let parentFolder = fileFolderID.parentElement.parentElement.parentElement.id.replace("contents", "")
             let subFolderName = fileFolderID.parentElement.getElementsByTagName("span")[0].innerText
