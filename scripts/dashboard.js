@@ -345,11 +345,11 @@ const woaCode = {
     },
     getResourceCenter: () => {
         let myDocs = ["Activities and Event Flyers", "Woodbridge Life Newsletter", "Board Documents - Agendas and Minutes"]
-        let myDocsLinks = ["/woa_documents.html?ff=1", "/woa_documents.html?ff=2", "/woa_documents.html?ff=3"]
+        let myDocsLinks = ["/page/28118~1105440?ff=1", "/page/28118~1105440?ff=2", "/page/28118~1105440?ff=3"]
         for (let p = 0; p < myDocs.length; p++) {
             let selectedDoc = document.createElement("a")
             selectedDoc.innerHTML = myDocs[p]
-            selectedDoc.href = myDocsLinks[p]
+            selectedDoc.href = myDocsLinks[p]+isLocal
             document.getElementById("fileBody").appendChild(selectedDoc)
 
         }
