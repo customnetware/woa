@@ -4,7 +4,6 @@ let appContainer = document.createElement("div"); appContainer.id = "customConta
 let pageDocuments = document.createElement("div"); pageDocuments.id = "document"
 appContainer.appendChild(pageDocuments)
 document.getElementsByClassName("clsBodyText")[0].appendChild(appContainer)
-
 function getResourceCenter() {
     $.get("/resourcecenter/28118/resource-center" + isLocal, function () { })
         .done(function (responseText) {
@@ -18,9 +17,6 @@ function getResourceCenter() {
 
         })
 }
-
-
-
 function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
     let pageFileList = document.getElementById("document")
 
@@ -95,10 +91,11 @@ function screenSort(sortDirection) {
     }
 }
 function getProfile() {
+    let filePage = (window.location.hostname == "localhost") ? "28118~1105440.html" : "/page/28118~1105440"
     let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
     let portalProfilePage = "/Member/Contact/" + profileID[1] + "~" + profileID[0] + "~" + profileID[2]
     let classArray = ["fa fa-files-o fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
-    let hrefArray = ["", portalProfilePage, "/form/28118~327323/social-media-help", "", "/form/28118~116540/ask-a-manager"]
+    let hrefArray = [filePage, portalProfilePage, "/form/28118~327323/social-media-help", "", "/form/28118~116540/ask-a-manager"]
     let textArray = ["", "My Documents", "", "", ""]
 
 
