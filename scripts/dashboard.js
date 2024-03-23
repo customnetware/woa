@@ -119,7 +119,7 @@ const woaCode = {
         let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
         let portalProfilePage = "/Member/Contact/" + profileID[1] + "~" + profileID[0] + "~" + profileID[2]
         let classArray = ["fa fa-refresh fa-spin fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
-        let hrefArray = ["javascript:woaCode.showTheDialog()", portalProfilePage, "/form/28118~327323/social-media-help", "javascript:woaCode.showTheDialog()", "/form/28118~116540/ask-a-manager"]
+        let hrefArray = ["/woa_documents.html?ff=1", portalProfilePage, "/form/28118~327323/social-media-help", "javascript:woaCode.showTheDialog()", "/form/28118~116540/ask-a-manager"]
         let textArray = ["", "Loading...", "", "", ""]
 
 
@@ -344,31 +344,16 @@ const woaCode = {
         document.body.appendChild(woaCalendar)
     },
     getResourceCenter: () => {
-        $.get("/resourcecenter/28118/resource-center" + woaCode.isLocal, function () { })
-            .done(function (responseText) {
-                let documents = new DOMParser().parseFromString(responseText, "text/html")
-                //let docsList = document.getElementById("docCard").getElementsByTagName("span")[0]
-                //let newsList = document.getElementById("newsCard").getElementsByTagName("span")[0]
-                let documentName = documents.getElementById("contents540434").querySelectorAll("[id^=d]")
-                let documentLink = documents.getElementById("contents540434").querySelectorAll('a[title="View On-line"]')
-                let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
-                let newsLetterLink = documents.getElementById("contents951754").querySelectorAll('a[title="View On-line"]')
+        let myDocs = ["Activities and Event Flyers", "Woodbridge Life Newsletter", "Board Documents - Agendas and Minutes"]
+        let myDocsLinks = ["/woa_documents.html?ff=1", "/woa_documents.html?ff=2", "/woa_documents.html?ff=3"]
+        for (let p = 0; p < myDocs.length; p++) {
+            let selectedDoc = document.createElement("a")
+            selectedDoc.innerHTML = myDocs[p]
+            selectedDoc.href = myDocsLinks[p]
+            document.getElementById("fileBody").appendChild(selectedDoc)
 
-                for (let p = 0; p < documentName.length; p++) {
-                    let selectedDoc = document.createElement("a")
-                    selectedDoc.innerHTML = documentName[p].innerHTML
-                    selectedDoc.href = documentLink[p].href
-                    document.getElementById("fileBody").appendChild(selectedDoc)
-                    if (p == documentName.length - 1) { woaCode.ldComplete("files") }
-                }
-
-                //for (let p = newsLetterName.length - 1; p >= 0 && newsList.children.length < 6; p--) {
-                //    let selectedDoc = document.createElement("a")
-                //    selectedDoc.innerHTML = newsLetterName[p].innerHTML
-                //    selectedDoc.href = newsLetterLink[p].href
-                //    newsList.appendChild(selectedDoc)
-                //}
-            })
+        }
+        woaCode.ldComplete("files")
     },
     showCalendar: (calenderEvents) => {
         for (let d = 0; d < calenderEvents.length; d++) {
