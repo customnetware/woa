@@ -94,8 +94,8 @@ function getProfile() {
     }
 
     let profileImage = document.createElement("img")
-    let imageFile = $.get("/Member/28118~" + profileID[0] + ".html", function () { })
-    let textFile = $.get("/news/28118~792554.html", function () { })
+    let imageFile = $.get("/Member/28118~" + profileID[0] + isLocal, function () { })
+    let textFile = $.get("/news/28118~792554" + isLocal, function () { })
     $.when(imageFile, textFile).done(function (responseIMG, responseTXT) {
         let imageFile = new DOMParser().parseFromString(responseIMG, "text/html")
         let userContent = new DOMParser().parseFromString(responseTXT, "text/html")
