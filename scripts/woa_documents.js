@@ -5,6 +5,7 @@ let pageDocuments = document.createElement("div"); pageDocuments.id = "document"
 appContainer.appendChild(pageDocuments)
 document.getElementsByClassName("clsBodyText")[0].appendChild(appContainer)
 function getResourceCenter(folderName) {
+    alert(folderName)
     $.get("/resourcecenter/28118/resource-center" + isLocal, function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
@@ -168,18 +169,7 @@ $(window).load(function () {
     addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "My Documents", false, getProfile)
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
-    switch (urlParams.get("ff")) {
-        case "1":
-            getResourceCenter("540434")
-            break
-        case "2":
-            getResourceCenter("951754")
-            break
-        case "3":
-            getResourceCenter("328201")
-            break
-        default:
-            showDocuments('000000', '000000')
-    }
+    if (urlParams.get("ff") !==null) { getResourceCenter(urlParams.get("ff")) } else { showDocuments('000000', '000000') }
+
 
 })
