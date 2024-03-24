@@ -15,16 +15,42 @@
     <div id="container">
         <div id="pageLinks" style="padding:25px"><span class="fa fa-circle-o-notch fa-pulse fa-fw fa-4x" id="loadIcon" style="width:100%; color:lightgray"></span></div>
     </div>
+    <style>
+        #pageLinks {
+            width: 100%;
+            float: left;
+        }
+
+            #pageLinks span {
+                padding-left: 10px;
+                padding-bottom: 5px;
+                padding-top: 5px;
+                font-weight: 600;
+                display: block;
+            }
+
+                #pageLinks span:nth-child(even) {
+                    background-color: #eceeef
+                }
+
+        .formatRight {
+            text-decoration: none !important;
+            vertical-align: top !important;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .formatIcon {
+            padding-right: 20px;
+        }
+    </style>
+    <div id="test"></div>
     <script>
         let portalHead = document.head || document.getElementsByTagName("head")[0]
-
-
-
         let woaScripts = document.createElement("script")
         woaScripts.type = "text/javascript"
         woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/newdoc.js" : "https://customnetware.github.io/woa/scripts/newdoc.js"
         document.body.appendChild(woaScripts)
-
     </script>
 </body>
 </html> 
