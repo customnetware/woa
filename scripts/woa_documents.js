@@ -4,26 +4,25 @@ let appContainer = document.createElement("div"); appContainer.id = "customConta
 let pageDocuments = document.createElement("div"); pageDocuments.id = "document"
 appContainer.appendChild(pageDocuments)
 document.getElementsByClassName("clsBodyText")[0].appendChild(appContainer)
-function getResourceCenter(folderName) {
-    alert(folderName)
-    $.get("/resourcecenter/28118/resource-center" + isLocal, function () { })
-        .done(function (responseText) {
-            let documents = new DOMParser().parseFromString(responseText, "text/html")
-            let newsLetterName = documents.getElementById("contents" + folderName).querySelectorAll("[id^=d]")
-            let fileFolderID = newsLetterName[newsLetterName.length - 1].parentElement.parentElement.parentElement.parentElement
-            let subFolder = fileFolderID.id.replace("contents", "").replace("contentInner", "000000")
-            let parentFolder = fileFolderID.parentElement.parentElement.parentElement.id.replace("contents", "").replace("contentInner", "000000")
-            let subFolderName = fileFolderID.parentElement.getElementsByTagName("span")[0].innerText
-            showDocuments(subFolder, parentFolder, subFolderName)
-
-        })
-}
 function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
     let pageFileList = document.getElementById("document")
     $.get("/resourcecenter/28118/resource-center" + isLocal, function () { })
         .done(function (responseText) {
             while (pageFileList.firstChild) { pageFileList.removeChild(pageFileList.firstChild) }
             let documents = new DOMParser().parseFromString(responseText, "text/html")
+
+            if (previousFolder == "") {
+                let newsLetterName = documents.getElementById("contents" + selectedFolder).querySelectorAll("[id^=d]")
+                let fileFolderID = newsLetterName[newsLetterName.length - 1].parentElement.parentElement.parentElement.parentElement
+                let subFolder = fileFolderID.id.replace("contents", "").replace("contentInner", "000000")
+                let parentFolder = fileFolderID.parentElement.parentElement.parentElement.id.replace("contents", "").replace("contentInner", "000000")
+                let subFolderName = fileFolderID.parentElement.getElementsByTagName("span")[0].innerText
+                selectedFolder=subFolder
+                previousFolder = parentFolder
+                PreviousFolderName = subFolderName
+            }
+
+
             let parentElement = (selectedFolder == "000000") ? documents.querySelector(".clsTree") : documents.getElementById("contents" + selectedFolder).querySelectorAll(":scope > div")[1]
             let documentList = parentElement.querySelectorAll(":scope > div")
             if (selectedFolder !== "000000") {
@@ -156,7 +155,7 @@ $(window).load(function () {
     addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "My Documents", false, getProfile)
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
-    if (urlParams.get("ff") !== null) { getResourceCenter(urlParams.get("ff")) } else { showDocuments('000000', '000000') }
+    if (urlParams.get("ff") !== null) { showDocuments(urlParams.get("ff"),"","") } else { showDocuments('000000', '000000') }
 
 
 })
