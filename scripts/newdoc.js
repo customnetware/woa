@@ -1,7 +1,7 @@
 function getPortalDocuments(docID) {
     let pageDocuments = document.getElementById("pageLinks")
     if (docID === "") { docID = "contentInner" }
-    $.get("/resourcecenter/28118/resource-center.html", function () { })
+    $.get("/resourcecenter/28118/resource-center", function () { })
         .done(function (responseText) {
             let documents = new DOMParser().parseFromString(responseText, "text/html")
             while (pageDocuments.firstChild) { pageDocuments.removeChild(pageDocuments.firstChild) }
