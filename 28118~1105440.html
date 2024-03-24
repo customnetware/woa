@@ -20,7 +20,6 @@
 
     <script>
         let portalHead = document.head || document.getElementsByTagName("head")[0]
-
         let woaStyles = document.createElement("link")
         woaStyles.href = (window.location.hostname == "localhost") ? "/css/dashboard.css" : "https://customnetware.github.io/woa/css/dashboard.css"
         woaStyles.rel = "stylesheet"
@@ -30,7 +29,6 @@
         woaScripts.type = "text/javascript"
         woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/woa_documents.js" : "https://customnetware.github.io/woa/scripts/woa_documents.js"
         document.body.appendChild(woaScripts)
-
     </script>
 
 </body>

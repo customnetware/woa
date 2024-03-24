@@ -11,10 +11,6 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-
-    <div id="container">
-        <div id="pageLinks" style="padding:25px"><span class="fa fa-circle-o-notch fa-pulse fa-fw fa-4x" id="loadIcon" style="width:100%; color:lightgray"></span></div>
-    </div>
     <style>
         #pageLinks {
             width: 100%;
@@ -44,7 +40,9 @@
             padding-right: 20px;
         }
     </style>
-    <div id="test"></div>
+    <div id="container">
+        <div id="pageLinks" style="padding:25px"><span class="fa fa-circle-o-notch fa-pulse fa-fw fa-4x" id="loadIcon" style="width:100%; color:lightgray"></span></div>
+    </div>
     <script>
         let portalHead = document.head || document.getElementsByTagName("head")[0]
         let woaScripts = document.createElement("script")
