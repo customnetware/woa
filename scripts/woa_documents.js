@@ -194,10 +194,10 @@ function getPortalDocuments(docID) {
 }
 $(window).load(function () {
     addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "My Documents", false, getProfile)
-    //const queryString = window.location.search
-    //const urlParams = new URLSearchParams(queryString)
-    //if (urlParams.get("ff") !== null) { showDocuments(urlParams.get("ff"),"","") } else { showDocuments('000000', '000000') }
-    getPortalDocuments("")
+    const queryString = window.location.search
+    const urlParams = new URLSearchParams(queryString)
+    if (urlParams.get("ff") !== null) { getPortalDocuments("contents"+urlParams.get("ff")) } else { getPortalDocuments("") }
+ 
 
 
 })
