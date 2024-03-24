@@ -11,22 +11,20 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-    <div style="width: 100%; float: left; padding:20px; margin-top:20px">
-        <div id="resDisplayName" style="float: left; display: none;"></div>
-        <div class="association-name"><a href="/28118">My Woodbridge</a></div>
-        <div class="clsHeader" style="float:left; padding-right:25px"></div>
-        <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
+
+    <div id="container">
+        <div id="pageLinks" style="padding:25px"><span class="fa fa-circle-o-notch fa-pulse fa-fw fa-4x" id="loadIcon" style="width:100%; color:lightgray"></span></div>
     </div>
-    <div class="clsBodyText"></div>
     <script>
-        $.get("/resourcecenter/28118/resource-center.html", function () { })
-            .done(function (responseText) {
-                let documents = new DOMParser().parseFromString(responseText, "text/html")
-                let newsLetterName = documents.getElementById("contents951754").querySelectorAll("[id^=d]")
-                let newsLetterLink = documents.getElementById("contents951754").querySelectorAll("a[title='View On-line']")
-                alert(newsLetterName[newsLetterName.length - 1].innerHTML)
-                alert(newsLetterLink[newsLetterName.length - 1].href)
-            })
+        let portalHead = document.head || document.getElementsByTagName("head")[0]
+
+
+
+        let woaScripts = document.createElement("script")
+        woaScripts.type = "text/javascript"
+        woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/newdoc.js" : "https://customnetware.github.io/woa/scripts/newdoc.js"
+        document.body.appendChild(woaScripts)
+
     </script>
 </body>
 </html> 
