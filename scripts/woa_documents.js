@@ -1,7 +1,6 @@
 
 const woaDocs = {
     isLocal: (window.location.hostname == "localhost") ? ".html" : "",
-
     urlParams: new URLSearchParams(window.location.search),
     screenSort: (sortDirection) => {
         let screens = document.getElementById("document").getElementsByTagName("span")
@@ -9,7 +8,8 @@ const woaDocs = {
         for (let s = 1; s < screens.length; s++) {
             sortScreens.push(screens[s].innerHTML)
         }
-        sortScreens.sort()
+   
+        sortScreens.sort(function (a, b) { return a - b })
         if (sortDirection == "U") { sortScreens.reverse() }
         for (let s = 0; s < sortScreens.length; s++) {
             screens[s + 1].innerHTML = sortScreens[s]
