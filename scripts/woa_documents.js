@@ -95,8 +95,7 @@ const woaDocs = {
         let waitSpan = document.createElement("span")
         waitSpan.className = "fa fa-circle-o-notch fa-pulse fa-fw fa-4x"
         waitSpan.id = "loadIcon"
-        waitSpan.style.width = "100%"
-        waitSpan.style.color = "lightgray"
+
         while (pageDocuments.firstChild) { pageDocuments.removeChild(pageDocuments.firstChild) }
         pageDocuments.appendChild(waitSpan)
 
