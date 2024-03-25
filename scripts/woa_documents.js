@@ -4,6 +4,7 @@ const woaDocs = {
     urlParams: new URLSearchParams(window.location.search),
 
     screenSort: () => {
+ 
         let startNumber = (document.getElementById("document").getElementsByTagName("i")[0].className == "fa fa-folder-o fa-lg") ? 0 : 1
         let screens = document.getElementById("document").getElementsByTagName("span")
         let sortScreens = []
@@ -11,7 +12,9 @@ const woaDocs = {
             sortScreens.push(screens[s].innerHTML)
         }
         sortScreens.sort(function (a, b) { return a - b })
-        sortScreens.reverse()
+        //
+        if (document.getElementById("document").getElementsByTagName("a")[0].innerText !== "Flyers (Events or Activities)") {sortScreens.reverse() }
+        
         for (let s = 0; s < sortScreens.length; s++) {
             screens[s + startNumber].innerHTML = sortScreens[s]
         }
@@ -65,7 +68,7 @@ const woaDocs = {
         let filePage = (window.location.hostname == "localhost") ? "/woa_documents.html" : "/page/28118~1105440"
         let homePage = (window.location.hostname == "localhost") ? "/woa_dashboard.html" : "/page/28118~1101528"
         let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
-        let classArray = ["fa fa fa-home fa-fw fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "profileSort", "fa fa-sort fa-fw fa-lg  profileSortIcon"]
+        let classArray = ["fa fa fa-home fa-fw fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "profileSort", "fa fa-sort fa-fw fa-lg profileSortIcon"]
         let hrefArray = [homePage, filePage, "/form/28118~327323/social-media-help", "javascript:woaDocs.screenSort()", "javascript:woaDocs.screenSort()"]
         let textArray = ["", "My Documents", "", "Sort", ""]
 
