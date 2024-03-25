@@ -89,12 +89,14 @@ const woaDocs = {
         })
     },
     getPortalDocuments: (docID, getLatest) => {
+
         let docArray = []
         let pageDocuments = document.getElementById("document")
+        while (pageDocuments.firstChild) { pageDocuments.removeChild(pageDocuments.firstChild) }
         if (docID === "") { docID = "contentInner" }
         $.get("/resourcecenter/28118/resource-center" + woaDocs.isLocal, function () { })
             .done(function (responseText) {
-                while (pageDocuments.firstChild) { pageDocuments.removeChild(pageDocuments.firstChild) }
+         
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
 
                 if (getLatest == true) {
@@ -155,8 +157,6 @@ const woaDocs = {
         } else {
             woaDocs.getPortalDocuments("", false)
         }
-    },
-
-
+    }
 }
 woaDocs.showThePage()
