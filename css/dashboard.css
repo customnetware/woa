@@ -25,29 +25,33 @@
     margin-top: -25px;
     margin-bottom: 25px;
 }
-#profileHeader {vertical-align:middle}
 
-#profileHeader a {
-    color: white;
-    text-decoration: none !important;
-    font-weight: normal !important;
-    float: right;
-    margin-top: 5px;
-    margin-right: 10px;
+#profileHeader {
+    vertical-align: middle
 }
 
-    #profileHeader a:first-child {
-        float: left;
-        margin-left: 5px;
+    #profileHeader a {
+        color: white;
         text-decoration: none !important;
+        font-weight: normal !important;
+        float: right;
         margin-top: 5px;
+        margin-right: 10px;
     }
-    #profileHeader a:nth-child(2) {
-        float: left;
-        margin-left: 5px;
-        text-decoration: none !important;
-        margin-top: 0px;
-    }
+
+        #profileHeader a:first-child {
+            float: left;
+            margin-left: 5px;
+            text-decoration: none !important;
+            margin-top: 5px;
+        }
+
+        #profileHeader a:nth-child(2) {
+            float: left;
+            margin-left: 5px;
+            text-decoration: none !important;
+            margin-top: 0px;
+        }
 
 #profileBody img {
     max-width: 125px;
@@ -206,13 +210,11 @@
 }
 
 #contactBody div > div:first-child {
-
     width: 28%;
     float: left;
 }
 
 #contactBody div > div:nth-child(2) {
- 
     width: 35%;
     float: left;
 }
@@ -250,6 +252,7 @@
 #appDialog button {
     float: right !important;
 }
+
 #document {
     width: 100%;
     float: left;
@@ -277,8 +280,8 @@
 .formatIcon {
     padding-right: 20px;
 }
+
 #loadIcon {
-   width:100%;
-   color:lightgray;
-       
+    width: 100%;
+    color: lightgray;
 }
