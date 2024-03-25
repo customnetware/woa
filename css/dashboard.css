@@ -25,6 +25,7 @@
     margin-top: -25px;
     margin-bottom: 25px;
 }
+#profileHeader {vertical-align:middle}
 
 #profileHeader a {
     color: white;
@@ -35,10 +36,17 @@
     margin-right: 10px;
 }
 
-    #profileHeader a:first-child, #profileHeader a:nth-child(2) {
+    #profileHeader a:first-child {
         float: left;
-        margin-left: 10px;
+        margin-left: 5px;
         text-decoration: none !important;
+        margin-top: 5px;
+    }
+    #profileHeader a:nth-child(2) {
+        float: left;
+        margin-left: 5px;
+        text-decoration: none !important;
+        margin-top: 0px;
     }
 
 #profileBody img {

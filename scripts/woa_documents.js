@@ -64,8 +64,8 @@ const woaDocs = {
         let filePage = (window.location.hostname == "localhost") ? "28118~1105440.html" : "/page/28118~1105440"
         let homePage = (window.location.hostname == "localhost") ? "/woa_dashboard.html" : "/page/28118~1101528/resident-home-beta"
         let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
-        let classArray = ["fa fa fa-home fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
-        let hrefArray = [homePage, filePage, "/form/28118~327323/social-media-help", "", "/form/28118~116540/ask-a-manager"]
+        let classArray = ["fa fa fa-home fa-fw fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-arrow-down fa-fw fa-lg", "fa fa-arrow-up fa-fw fa-lg"]
+        let hrefArray = [homePage, filePage, "/form/28118~327323/social-media-help", "javascript:woaDocs.screenSort('D')", "javascript:woaDocs.screenSort('U')"]
         let textArray = ["", "My Documents", "", "", ""]
 
         for (let a = 0; a <= 4; a++) {
