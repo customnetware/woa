@@ -1,27 +1,11 @@
 const isLocal = (window.location.hostname == "localhost") ? ".html" : ""
-
 let appContainer = document.createElement("div"); appContainer.id = "customContainer", appContainer.className = "container"
 let pageDocuments = document.createElement("div"); pageDocuments.id = "document"
 appContainer.appendChild(pageDocuments)
 document.getElementsByClassName("clsBodyText")[0].appendChild(appContainer)
-function getLatestDoc(docID) {
-    let pageFileList = document.getElementById("document")
-    $.get("/resourcecenter/28118/resource-center" + isLocal, function () { })
-        .done(function (responseText) {
-            let docArray = []
-            let documents = new DOMParser().parseFromString(responseText, "text/html")
-            let allDocuments = documents.getElementById(docID).getElementsByTagName("span")
-            for (let d = 0; d < allDocuments.length; d++) {
-                if (allDocuments[d].id.charAt(0) == "d") {
-                    docArray.push(allDocuments[d].id)
-                }
-            }
-            docArray.sort()
-            getPortalDocuments(documents.getElementById(docArray[docArray.length - 1]).parentElement.parentElement.parentElement.parentElement.id)
-        })
-}
+
 function screenSort(sortDirection) {
-    let screens = pageFileList.getElementsByTagName("span")
+    let screens = pageDocuments.getElementsByTagName("span")
     let sortScreens = []
     for (let s = 1; s < screens.length; s++) {
         sortScreens.push(screens[s].innerHTML)
@@ -105,19 +89,31 @@ function addCard(hdrId, bdyId, crdIcon, crdText, useCollapse, fnName) {
     if (fnName !== "") { fnName() }
 
 }
-function getPortalDocuments(docID) {
 
+function getPortalDocuments(docID, getLatest) {
+    let docArray = []
     if (docID === "") { docID = "contentInner" }
     $.get("/resourcecenter/28118/resource-center" + isLocal, function () { })
         .done(function (responseText) {
             while (pageDocuments.firstChild) { pageDocuments.removeChild(pageDocuments.firstChild) }
             let documents = new DOMParser().parseFromString(responseText, "text/html")
+
+            if (getLatest == true) {
+                let selectedDocs = documents.getElementById(docID).getElementsByTagName("span")
+                for (let d = 0; d < selectedDocs.length; d++) {
+                    if (selectedDocs[d].id.charAt(0) == "d") {
+                        docArray.push(selectedDocs[d].id)
+                    }
+                }
+                docArray.sort()
+                docID = documents.getElementById(docArray[docArray.length - 1]).parentElement.parentElement.parentElement.parentElement.id
+            }
             let allDocuments = documents.getElementById(docID).getElementsByClassName("clsTreeNde")
             if (docID !== "contentInner") {
                 let folderIcon = document.createElement("i")
                 let folderLink = document.createElement("a")
                 let lastFolder = document.createElement("span")
-                folderLink.href = "javascript:getPortalDocuments('" + documents.getElementById(docID).parentElement.parentElement.parentElement.id + "')"
+                folderLink.href = "javascript:getPortalDocuments('" + documents.getElementById(docID).parentElement.parentElement.parentElement.id + "',false)"
                 folderLink.innerHTML = documents.getElementById(docID.replace("contents", "f")).innerText
                 folderIcon.className = "fa fa-folder-open-o fa-lg"
                 folderIcon.style.marginRight = "10px"
@@ -135,7 +131,7 @@ function getPortalDocuments(docID) {
                     pageLink.innerHTML = allDocuments[d].innerHTML
                     if (allDocuments[d].id.charAt(0) == "f") {
                         pageIcon.className = "fa fa-folder-o fa-lg"
-                        pageLink.href = "javascript:getPortalDocuments('" + allDocuments[d].id.replace("f", "contents") + "')"
+                        pageLink.href = "javascript:getPortalDocuments('" + allDocuments[d].id.replace("f", "contents") + "',false)"
                     } else {
                         pageIcon.className = "fa fa-file-o fa-lg"
                         pageLink.href = documents.getElementById(allDocuments[d].id.replace("d", "contentsDoc")).getElementsByTagName("a")[2].href
@@ -143,15 +139,17 @@ function getPortalDocuments(docID) {
                     pageDocument.appendChild(pageIcon)
                     pageDocument.appendChild(pageLink)
                     pageDocuments.appendChild(pageDocument)
+                    if (d == allDocuments.length - 1) { screenSort("U") }
                 }
             }
         })
 }
+
 $(window).load(function () {
     addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "My Documents", false, getProfile)
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
-    if (urlParams.get("ff") !== null) { getLatestDoc(urlParams.get("ff")) } else { getPortalDocuments("") }
+    if (urlParams.get("ff") !== null) { getPortalDocuments(urlParams.get("ff"), true) } else { getPortalDocuments("", false) }
 
 
 
