@@ -135,6 +135,7 @@ const woaDocs = {
                         let pageLink = document.createElement("a")
                         let pageDocument = document.createElement("span")
                         pageIcon.style.marginRight = "10px"
+                        pageIcon.id = allDocuments[d].id
                         pageLink.innerHTML = allDocuments[d].innerHTML
                         if (allDocuments[d].id.charAt(0) == "f") {
                             pageIcon.className = "fa fa-folder-o fa-lg"
