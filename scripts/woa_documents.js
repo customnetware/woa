@@ -4,67 +4,22 @@ let appContainer = document.createElement("div"); appContainer.id = "customConta
 let pageDocuments = document.createElement("div"); pageDocuments.id = "document"
 appContainer.appendChild(pageDocuments)
 document.getElementsByClassName("clsBodyText")[0].appendChild(appContainer)
-function showDocuments(selectedFolder, previousFolder, PreviousFolderName) {
+function getLatestDoc(docID) {
     let pageFileList = document.getElementById("document")
     $.get("/resourcecenter/28118/resource-center" + isLocal, function () { })
         .done(function (responseText) {
-            while (pageFileList.firstChild) { pageFileList.removeChild(pageFileList.firstChild) }
+            let docArray = []
             let documents = new DOMParser().parseFromString(responseText, "text/html")
-
-            if (previousFolder == "") {
-                let newsLetterName = documents.getElementById("contents" + selectedFolder).querySelectorAll("[id^=d]")
-                let fileFolderID = newsLetterName[newsLetterName.length - 1].parentElement.parentElement.parentElement.parentElement
-                let subFolder = fileFolderID.id.replace("contents", "").replace("contentInner", "000000")
-                let parentFolder = fileFolderID.parentElement.parentElement.parentElement.id.replace("contents", "").replace("contentInner", "000000")
-                let subFolderName = fileFolderID.parentElement.getElementsByTagName("span")[0].innerText
-                selectedFolder=subFolder
-                previousFolder = parentFolder
-                PreviousFolderName = subFolderName
-            }
-
-
-            let parentElement = (selectedFolder == "000000") ? documents.querySelector(".clsTree") : documents.getElementById("contents" + selectedFolder).querySelectorAll(":scope > div")[1]
-            let documentList = parentElement.querySelectorAll(":scope > div")
-            if (selectedFolder !== "000000") {
-                let docRow = document.createElement("span")
-                let docLink = document.createElement("a")
-                let docIcon1 = document.createElement("i")
-
-                docIcon1.className = "fa fa-folder-open-o formatIcon"
-                docLink.href = "javascript:showDocuments('" + previousFolder + "')"
-
-                docLink.innerHTML = PreviousFolderName
-                docRow.appendChild(docIcon1)
-                docRow.appendChild(docLink)
-                pageFileList.appendChild(docRow)
-            }
-            for (let d = 0; d < documentList.length; d++) {
-                let docRow = document.createElement("span")
-                let docLink = document.createElement("a")
-                let docIcon = document.createElement("i")
-                let remoteDoc = documentList[d].getElementsByTagName("span")[0]
-                let isFolder = remoteDoc.id.startsWith("f")
-                let localDocID = remoteDoc.id.replace("f", "").replace("d", "")
-                if (isFolder == true) {
-                    docIcon.className = "fa fa-folder-o formatIcon"
-                    docLink.href = "javascript:showDocuments('" + localDocID + "','" + selectedFolder + "','" + remoteDoc.innerText + "');"
-                } else {
-                    docIcon.className = "fa fa-file-pdf-o formatIcon"
-                    docLink.href = documents.getElementById("contentsDoc" + localDocID).getElementsByTagName("a")[2].href
+            let allDocuments = documents.getElementById(docID).getElementsByTagName("span")
+            for (let d = 0; d < allDocuments.length; d++) {
+                if (allDocuments[d].id.charAt(0) == "d") {
+                    docArray.push(allDocuments[d].id)
                 }
-                docLink.innerHTML = remoteDoc.innerText
-                docRow.appendChild(docIcon)
-                docRow.appendChild(docLink)
-                pageFileList.appendChild(docRow)
             }
-            let screenToSave = []
-            let currentScreen = pageFileList.getElementsByTagName("span")
-            for (let h = 0; h < currentScreen.length; h++) { screenToSave.push(currentScreen[h].innerHTML) }
-            let saveFileList = JSON.stringify(screenToSave)
-            localStorage.setItem(selectedFolder, saveFileList)
+            docArray.sort()
+            getPortalDocuments(documents.getElementById(docArray[docArray.length - 1]).parentElement.parentElement.parentElement.parentElement.id)
         })
 }
-
 function screenSort(sortDirection) {
     let screens = pageFileList.getElementsByTagName("span")
     let sortScreens = []
@@ -183,7 +138,7 @@ function getPortalDocuments(docID) {
                         pageLink.href = "javascript:getPortalDocuments('" + allDocuments[d].id.replace("f", "contents") + "')"
                     } else {
                         pageIcon.className = "fa fa-file-o fa-lg"
-                        pageLink.href = documents.getElementById(allDocuments[d].id.replace("d","contentsDoc")).getElementsByTagName("a")[2].href
+                        pageLink.href = documents.getElementById(allDocuments[d].id.replace("d", "contentsDoc")).getElementsByTagName("a")[2].href
                     }
                     pageDocument.appendChild(pageIcon)
                     pageDocument.appendChild(pageLink)
@@ -196,8 +151,8 @@ $(window).load(function () {
     addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "My Documents", false, getProfile)
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
-    if (urlParams.get("ff") !== null) { getPortalDocuments("contents"+urlParams.get("ff")) } else { getPortalDocuments("") }
- 
+    if (urlParams.get("ff") !== null) { getLatestDoc(urlParams.get("ff")) } else { getPortalDocuments("") }
+
 
 
 })

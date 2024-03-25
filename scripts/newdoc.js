@@ -1,10 +1,9 @@
 const isLocal = (window.location.hostname == "localhost") ? ".html" : ""
-function getPortalDocuments(docID) {
+function getParentFolder(docID) {
     let pageDocuments = document.getElementById("pageLinks")
-    if (docID === "") { docID = "contentInner" }
     $.get("/resourcecenter/28118/resource-center" + isLocal, function () { })
         .done(function (responseText) {
-            while (pageDocuments.firstChild) { pageDocuments.removeChild(pageDocuments.firstChild) }
+/*            while (pageDocuments.firstChild) { pageDocuments.removeChild(pageDocuments.firstChild) }*/
             let documents = new DOMParser().parseFromString(responseText, "text/html")
             let allDocuments = documents.getElementById(docID).getElementsByClassName("clsTreeNde")
             if (docID !== "contentInner") {
@@ -43,7 +42,7 @@ function getPortalDocuments(docID) {
         })
 }
 $(window).load(function () {
-    getPortalDocuments('')
+    getParentFolder('contents328201')
 
 
 })
