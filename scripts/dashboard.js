@@ -345,7 +345,7 @@ const woaCode = {
     },
     getResourceCenter: () => {
         let myDocs = ["Activities and Event Flyers", "Woodbridge Life Newsletter", "Board Documents - Agendas and Minutes"]
-        let myLocallinks = ["28118~1105440.html?ff=contents540434", "28118~1105440.html?ff=contents951754", "28118~1105440.html?ff=contents328201"]
+        let myLocallinks = ["/woa_documents.html?ff=contents540434", "/woa_documents.html?ff=contents951754", "/woa_documents.html?ff=contents328201"]
         let myDocsLinks = ["/page/28118~1105440?ff=contents540434", "/page/28118~1105440?ff=contents951754", "/page/28118~1105440?ff=contents328201"]
         let pageDocsLinks = (window.location.hostname == "localhost") ? myLocallinks : myDocsLinks
         for (let p = 0; p < pageDocsLinks.length; p++) {

@@ -2,17 +2,18 @@
 const woaDocs = {
     isLocal: (window.location.hostname == "localhost") ? ".html" : "",
     urlParams: new URLSearchParams(window.location.search),
-    screenSort: (sortDirection) => {
+
+    screenSort: () => {
+        let startNumber = (document.getElementById("document").getElementsByTagName("i")[0].className == "fa fa-folder-o fa-lg") ? 0 : 1
         let screens = document.getElementById("document").getElementsByTagName("span")
         let sortScreens = []
-        for (let s = 1; s < screens.length; s++) {
+        for (let s = startNumber; s < screens.length; s++) {
             sortScreens.push(screens[s].innerHTML)
         }
-   
         sortScreens.sort(function (a, b) { return a - b })
-        if (sortDirection == "U") { sortScreens.reverse() }
+        sortScreens.reverse()
         for (let s = 0; s < sortScreens.length; s++) {
-            screens[s + 1].innerHTML = sortScreens[s]
+            screens[s + startNumber].innerHTML = sortScreens[s]
         }
     },
     addCard: (hdrId, bdyId, crdIcon, crdText, useCollapse, fnName) => {
@@ -61,12 +62,12 @@ const woaDocs = {
 
     },
     getProfile: () => {
-        let filePage = (window.location.hostname == "localhost") ? "28118~1105440.html" : "/page/28118~1105440"
-        let homePage = (window.location.hostname == "localhost") ? "/woa_dashboard.html" : "/page/28118~1101528/resident-home-beta"
+        let filePage = (window.location.hostname == "localhost") ? "/woa_documents.html" : "/page/28118~1105440"
+        let homePage = (window.location.hostname == "localhost") ? "/woa_dashboard.html" : "/page/28118~1101528"
         let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
-        let classArray = ["fa fa fa-home fa-fw fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-arrow-down fa-fw fa-lg", "fa fa-arrow-up fa-fw fa-lg"]
-        let hrefArray = [homePage, filePage, "/form/28118~327323/social-media-help", "javascript:woaDocs.screenSort('D')", "javascript:woaDocs.screenSort('U')"]
-        let textArray = ["", "My Documents", "", "", ""]
+        let classArray = ["fa fa fa-home fa-fw fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "profileSort", "fa fa-sort fa-fw fa-lg  profileSortIcon"]
+        let hrefArray = [homePage, filePage, "/form/28118~327323/social-media-help", "javascript:woaDocs.screenSort()", "javascript:woaDocs.screenSort()"]
+        let textArray = ["", "My Documents", "", "Sort", ""]
 
         for (let a = 0; a <= 4; a++) {
             let headerLinks = document.getElementById("profileHeader").getElementsByTagName("a")
