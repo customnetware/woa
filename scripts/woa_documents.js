@@ -92,11 +92,18 @@ const woaDocs = {
 
         let docArray = []
         let pageDocuments = document.getElementById("document")
+        let waitSpan = document.createElement("span")
+        waitSpan.className = "fa fa-circle-o-notch fa-pulse fa-fw fa-4x"
+        waitSpan.id = "loadIcon"
+        waitSpan.style.width = "100%"
+        waitSpan.style.color = "lightgray"
         while (pageDocuments.firstChild) { pageDocuments.removeChild(pageDocuments.firstChild) }
+        pageDocuments.appendChild(waitSpan)
+
         if (docID === "") { docID = "contentInner" }
         $.get("/resourcecenter/28118/resource-center" + woaDocs.isLocal, function () { })
             .done(function (responseText) {
-         
+                waitSpan.remove()
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
 
                 if (getLatest == true) {
@@ -140,7 +147,9 @@ const woaDocs = {
                         pageDocument.appendChild(pageIcon)
                         pageDocument.appendChild(pageLink)
                         pageDocuments.appendChild(pageDocument)
-                        if (d == allDocuments.length - 1) { woaDocs.screenSort("U") }
+                        if (d == allDocuments.length - 1) {
+                            woaDocs.screenSort("U")
+                        }
                     }
                 }
             })
