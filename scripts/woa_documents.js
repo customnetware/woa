@@ -81,7 +81,7 @@ const woaDocs = {
 
         let profileImage = document.createElement("img")
         let imageFile = $.get("/Member/28118~" + profileID[0] + woaDocs.isLocal, function () { })
-        let textFile = $.get("/news/28118~792554" + woaDocs.isLocal, function () { })
+        let textFile = $.get("/news/28118~799897" + woaDocs.isLocal, function () { })
         $.when(imageFile, textFile).done(function (responseIMG, responseTXT) {
             let imageFile = new DOMParser().parseFromString(responseIMG, "text/html")
             let userContent = new DOMParser().parseFromString(responseTXT, "text/html")
