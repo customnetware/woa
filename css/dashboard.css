@@ -55,10 +55,9 @@
 
 .profileSort {
     margin-top: 0px !important;
-  
     margin-left: 2px !important;
-
 }
+
 .profileSortIcon {
     padding: 0px !important;
     margin-right: 0px !important;
@@ -266,21 +265,19 @@
 }
 
 #document {
-    width: 100%;
-    float: left;
 }
 
-    #document span {
-        padding-left: 10px;
-        padding-bottom: 5px;
-        padding-top: 5px;
-        font-weight: 600;
-        display: block;
+    #document  span {
+        padding-left: 10px !important;
+        padding-bottom: 5px !important;
+        padding-top: 5px !important;
+        font-weight: 600 !important;
+        display: block !important;
     }
 
-        #document span:nth-child(even) {
-            background-color: #eceeef
-        }
+    #document span:nth-child(even) {
+        background-color: #eceeef
+    }
 
 .formatRight {
     text-decoration: none !important;

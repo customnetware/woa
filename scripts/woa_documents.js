@@ -4,7 +4,7 @@ const woaDocs = {
     urlParams: new URLSearchParams(window.location.search),
 
     screenSort: () => {
- 
+
         let startNumber = (document.getElementById("document").getElementsByTagName("i")[0].className == "fa fa-folder-o fa-lg") ? 0 : 1
         let screens = document.getElementById("document").getElementsByTagName("span")
         let sortScreens = []
@@ -13,8 +13,8 @@ const woaDocs = {
         }
         sortScreens.sort(function (a, b) { return a - b })
         //
-        if (document.getElementById("document").getElementsByTagName("a")[0].innerText !== "Flyers (Events or Activities)") {sortScreens.reverse() }
-        
+        if (document.getElementById("document").getElementsByTagName("a")[0].innerText !== "Flyers (Events or Activities)") { sortScreens.reverse() }
+
         for (let s = 0; s < sortScreens.length; s++) {
             screens[s + startNumber].innerHTML = sortScreens[s]
         }
@@ -59,7 +59,7 @@ const woaDocs = {
             bdyDiv.setAttribute("data-parent", "#customContainer")
         }
 
-        document.getElementById("customContainer").insertBefore(rowDiv, document.getElementById("document"))
+        document.getElementById("customContainer").insertBefore(rowDiv, document.getElementById("docRow"))
 
         if (fnName !== "") { fnName() }
 
@@ -152,7 +152,7 @@ const woaDocs = {
                         pageDocument.appendChild(pageLink)
                         pageDocuments.appendChild(pageDocument)
                         if (d == allDocuments.length - 1) {
-                            woaDocs.screenSort("U")
+                            woaDocs.screenSort()
                         }
                     }
                 }
@@ -160,8 +160,13 @@ const woaDocs = {
     },
     showThePage: () => {
         let appContainer = document.createElement("div"); appContainer.id = "customContainer", appContainer.className = "container"
-        let pageDocuments = document.createElement("div"); pageDocuments.id = "document"
-        appContainer.appendChild(pageDocuments)
+        let pageRow = document.createElement("div"); pageRow.className = "row", pageRow.id="docRow"
+        let pageDocuments = document.createElement("div"); pageDocuments.id = "document", pageDocuments.className ="col-md-12"
+
+        pageRow.appendChild(pageDocuments)
+
+
+        appContainer.appendChild(pageRow)
         document.getElementsByClassName("clsBodyText")[0].appendChild(appContainer)
         woaDocs.addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "My Documents", false, woaDocs.getProfile)
 

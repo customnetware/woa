@@ -10,16 +10,19 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-
     <div style="width: 100%; float: left; padding:20px; margin-top:20px">
         <div id="resDisplayName" style="float: left; display: none;"></div>
         <div class="association-name"><a href="/woa_dashboard.html">My Woodbridge</a></div>
         <div class="clsHeader" style="float:left; padding-right:25px"></div>
         <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
     </div><div class="clsBodyText"></div>
-
     <script>
+        function checkForScript(element, evnt, funct) {
+            if (element.attachEvent) { return element.attachEvent('on' + evnt, funct) }
+            else { return element.addEventListener(evnt, funct, false) }
+        }
         let portalHead = document.head || document.getElementsByTagName("head")[0]
+
         let woaStyles = document.createElement("link")
         woaStyles.href = (window.location.hostname == "localhost") ? "/css/dashboard.css" : "https://customnetware.github.io/woa/css/dashboard.css"
         woaStyles.rel = "stylesheet"
@@ -29,7 +32,8 @@
         woaScripts.type = "text/javascript"
         woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/woa_documents.js" : "https://customnetware.github.io/woa/scripts/woa_documents.js"
         document.body.appendChild(woaScripts)
-    </script>
 
+        checkForScript(window, "load", function () { if (document.getElementById("customContainer") == null) { location.replace("https://ourwoodbridge.net/resourcecenter/28118/resource-center") } });
+    </script>
 </body>
 </html>

@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
@@ -16,9 +15,12 @@
         <div class="association-name"><a href="/woa_dashboard.html">My Woodbridge</a></div>
         <div class="clsHeader" style="float:left; padding-right:25px"></div>
         <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
-    </div>
-    <div class="clsBodyText"></div>
+    </div><div class="clsBodyText"></div>
     <script>
+        function checkForScript(element, evnt, funct) {
+            if (element.attachEvent) { return element.attachEvent('on' + evnt, funct) }
+            else { return element.addEventListener(evnt, funct, false) }
+        }
         let portalHead = document.head || document.getElementsByTagName("head")[0]
 
         let woaStyles = document.createElement("link")
@@ -30,8 +32,8 @@
         woaScripts.type = "text/javascript"
         woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/dashboard.js" : "https://customnetware.github.io/woa/scripts/dashboard.js"
         document.body.appendChild(woaScripts)
-    
-    </script>
 
+        checkForScript(window, "load", function () { if (document.getElementById("customContainer") == null) { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") } });
+    </script>
 </body>
 </html>
