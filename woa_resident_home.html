@@ -10,265 +10,260 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-
     <div style="width: 100%; float: left; padding:20px; margin-top:20px">
         <div id="resDisplayName" style="float: left; display: none;"></div>
         <div class="association-name"><a href="/28118">My Woodbridge</a></div>
         <div class="clsHeader" style="float:left; padding-right:25px"></div>
         <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
     </div>
-    <div class="container" id="customContainer">
-        <link rel="stylesheet" href="https://customnetware.github.io/woa/css/woaStyles.css">
-        <style>
-            .button-center {
-                position: absolute;
-                left: 50%;
-                transform: translateX(-50%);
+    <div class="container-fluid">
+        <script>
+            function doesFileExist(urlToCheck) {
+                var xhr = new XMLHttpRequest()
+                xhr.open('HEAD', urlToCheck, false)
+                xhr.send()
+                if (xhr.status == "200") { return true } else { return false }
+            } try {
+                var result = doesFileExist("https://customnetware.github.io/woa/scripts/woa_resident_home.js")
+                if (result == false && window.location.hostname !== "localhost") {
+                    location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
+                }
+            } catch {
+                if (window.location.hostname == "localhost") {
+                    document.getElementById("errText").innerHTML = err.message
+                } else {
+                    location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
+                }
+            }</script>
+        <style type="text/css">
+            .postDisplay {
+                padding-left: 22px;
+                margin-bottom: 5px;
             }
+
+            .formatHeader {
+                background-color: #999999;
+                color: white;
+                padding: 5px;
+            }
+
+            #overlay {
+                position: fixed; /* Sit on top of the page content */ /*display: none; Hidden by default */
+                width: 100%; /* Full width (cover the whole page) */
+                height: 100%; /* Full height (cover the whole page) */
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0,0,0,0.1); /* Black background with opacity */
+                z-index: 4; /* Specify a stack order in case you're using a different order for other elements */
+                cursor: pointer; /* Add a pointer on hover */
+            }
+
+            #text {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                font-size: 18px;
+                color: white;
+                transform: translate(-50%,-50%);
+                -ms-transform: translate(-50%,-50%);
+            }
+
+            #contentInner {
+                padding-top: 1% !important;
+                padding-left: 2% !important;
+                padding-right: 2% !important;
+            }
+
+            .z-depth-3 {
+                -webkit-box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+                box-shadow: 0 11px 7px 0 rgba(0,0,0,0.19),0 13px 25px 0 rgba(0,0,0,0.3);
+            }
+
+            .formatLink {
+                padding-left: 10px;
+            }
+
+            #fromWOA .panel_news_content, .panel_messages_content, .panel_discuss_content, .panel_classifieds_content, .panel_resource_content, .panel_cal_content {
+                padding: 10px
+            }
+
+            .topEven {
+                font-weight: bold;
+                display: block;
+                padding: 0px 0px 0px 5px;
+                background-color: #eceeef;
+            }
+
+            .topOdd {
+                font-weight: bold;
+                display: block;
+                padding: 0px 0px 0px 5px;
+            }
+
+            .btmEven {
+                font-weight: normal;
+                display: block;
+                margin-bottom: 10px;
+                padding-left: 5px;
+                background-color: #eceeef
+            }
+
+            .btmOdd {
+                font-weight: normal;
+                display: block;
+                margin-bottom: 10px;
+                padding-left: 5px;
+            }
+
+            .dropShadow {
+                filter: drop-shadow(5px 5px 5px grey);
+                float: left;
+                padding-right: 15px;
+            }
+
+            .classHide {
+                display: none
+            }
+            #recentPhotos {
+                text-align: center;
+                vertical-align: middle;
+                font-size: .75em;
+            }
+
+                #recentPhotos div {
+                    width: 33%;
+                    float: left;
+                }
+
+                #recentPhotos img {
+                    max-width: 100%;
+                    max-height: 100%;
+                    padding-right: 2px;
+                    padding-top: 10px;
+                    padding-left: 2px
+                }
         </style>
-        <iframe id="woaFrame" src="" style="width:100%;height:1px; visibility:hidden"></iframe>
-        <div class="row" id="notificationHeader">
-            <div class="col-md-12">
-                <div class="card mb-3">
-
+        <div id="overlay" onclick="this.style.display='none'">
+            <div id="text" class="text-opacity-50"><span class="fa fa-spinner fa-pulse fa-fw"></span>Updating recent emails, documents... </div>
+        </div>
+        <div class="row">        
+            <div id="fromWOA" class="col-md-8">
+                <div class="card z-depth-3 mb-3">
                     <div class="card-header border-success formatHeader">
-                        <span class="fa fa-refresh fa-spin fa-fw fa-lg" style="margin-right:5px"></span><span>Checking for new emails and flyers...</span>
-                        <a class="fa fa-commenting-o" href="javascript:addComments()" style="float:right; color:white; font-size:1.75em; padding-right:10px"></a>
-
+                        <span class="fa fa-newspaper-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/News/List/28118">Recent News Articles</a>
                     </div>
-                    <div id="userProfile" class="card-body">
-
-                    </div>
+                    <div class="card-body"><div id="news" class="panel_news_content"></div></div>
                 </div>
-            </div>
-        </div>
-        <div class="row" id="recentNotifications">
-            <div class="col-md-12">
-                <div class="card mb-3">
-                    <div class="card-header border-success formatHeader"><span class="fa fa-bell fa-lg formatLink" aria-hidden="true" id="noticeIcon"></span>&nbsp;&nbsp;Recent Notifications</div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">
+                        <span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;Latest Emails
+                    </div>
+                    <div class="card-body"><div id="message" class="panel_messages_content"></div></div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">
+                        <span class="fa fa-comments-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/discussion/list/28118/discussion-groups">Latest Discussions </a>
+                    </div>
                     <div class="card-body">
-                        <div id="notice">
-                        </div>
+                        <div id="post" class="panel_discuss_content"></div>
                     </div>
                 </div>
-                <div class="card mb-3">
-                    <div class="card-header" data-toggle="collapse" data-target="#recentNews" aria-expanded="true" id="newsHeader">
-                        <span class="fa fa-newspaper-o fa-lg" style="margin-right:5px"></span>
-                        <span style="font-weight:700; margin-left:5px">News And Announcements</span>
-                        <span style="font-weight:700; margin-left:5px">(0)</span>
-                        <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">
+                        <span class="fa fa-shopping-cart" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://ourwoodbridge.net/classified/search/28118~480182/classifieds">Classified Items</a>
                     </div>
-                    <div id="recentNews" class="collapse show" data-parent="#recentNotifications">
-                        <div class="card-body" id="recentNewsBody"></div>
-                    </div>
+                    <div class="card-body"><div id="classified" class="panel_classifieds_content"></div></div>
                 </div>
-                <style>
-                    #AV {
-                        width: auto
-                    }
-                </style>
-                <div class="card mb-3">
-                    <div class="card-header collapsed" data-toggle="collapse" data-target="#recentEmails" aria-expanded="false" id="emailHeader">
-                        <span class="fa fa-envelope-o fa-lg"></span>
-                        <span style="font-weight:700; margin-left:5px">Association Emails</span>
-                        <span style="font-weight:700; margin-left:5px">(0)</span>
-                        <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
-                    </div>
-                    <div id="recentEmails" class="collapse" data-parent="#recentNotifications">
-                        <div class="card-body" id="recentEmailsBody" style="overflow-y: auto">
-                            <p><a></a><span></span></p>
-                            <p><a></a><span></span></p>
-                            <p><a></a><span></span></p>
-                        </div>
-                        <div class="card-footer">
-                            <button type="button" id="homeButton" class="btn btn-primary" onclick="javascript:emailNavigation('back')" style="cursor:pointer">&nbsp;<span class="fa fa-fast-backward"></span>&nbsp;</button>
-                            <button type="button" id="viewCurrentButton" class="btn btn-primary" onclick="javascript:emailNavigation('next')" style="float:right; cursor:pointer">&nbsp;<span class="fa fa-forward"></span>&nbsp;</button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card z-depth-3 mb-3">
+                            <div class="card-header border-success formatHeader"><span class="fa fa-file-text-o" aria-hidden="true"></span>&nbsp;&nbsp;Activities &amp; Event Flyers <a href="https://ourwoodbridge.net/resourcecenter/28118/resource-center">(Resource Center)</a></div>
+                            <div class="card-body"><div id="document" class="panel_resource_content"></div></div>
                         </div>
                     </div>
-                </div>
-                <div class="card mb-3">
-                    <div class="card-header collapsed" data-toggle="collapse" data-target="#recentPosts" aria-expanded="false" id="postHeader">
-                        <span class="fa fa-comments-o fa-lg"></span>
-                        <span style="font-weight:700; margin-left:5px">Discussion Group Posts</span>
-                        <span style="font-weight:700; margin-left:5px">(0)</span>
-                        <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
-                    </div>
-                    <div id="recentPosts" class="collapse" data-parent="#recentNotifications">
-                        <div class="card-body" id="recentPostsBody">
-                            <p id="post001"><a href=""></a><span></span><span></span><a href="">Reply</a></p>
-                            <p id="post002"><a href=""></a><span></span><span></span><a href="">Reply</a></p>
-                            <p id="post003"><a href=""></a><span></span><span></span><a href="">Reply</a></p>
-                        </div>
-                        <div class="card-footer">
-                            <button type="button" id="postBackButton" class="btn btn-primary" onclick="javascript:postNavigation('','','back')" style="cursor:pointer">&nbsp;<span class="fa fa-fast-backward"></span>&nbsp;</button>
+                    <div class="col-md-6">
 
-                            <button type="button" id="postNexttButton" class="btn btn-primary" onclick="javascript:postNavigation('','','next')" style="float:right; cursor:pointer">&nbsp;<span class="fa fa-forward"></span>&nbsp;</button>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="card mb-3">
-                    <div class="card-header collapsed" data-toggle="collapse" data-target="#recentAds" aria-expanded="false" id="classifiedHeader">
-                        <span class="fa fa-shopping-cart fa-lg"></span>
-                        <span style="font-weight:700; margin-left:5px">Classified Ads</span>
-                        <span style="font-weight:700; margin-left:5px">(0)</span>
-                        <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
-                    </div>
-                    <div id="recentAds" class="collapse" data-parent="#recentNotifications">
-                        <div class="card-body" id="recentAdsBody"></div>
-                    </div>
-                </div>
-                <div class="card mb-3">
-                    <div class="card-header collapsed" data-toggle="collapse" data-target="#recentFlyers" aria-expanded="false" id="flyersHeader">
-                        <span class="fa fa-folder-o fa-lg"></span>
-                        <span style="font-weight:700; margin-left:5px">Activity And Event Flyers</span>
-                        <span style="font-weight:700; margin-left:5px">(0)</span>
-                        <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
-                    </div>
-                    <div id="recentFlyers" class="collapse" data-parent="#recentNotifications">
-                        <div class="card-body" id="recentFlyersBody"></div>
-                    </div>
-                </div>
-                <div class="card mb-3">
-                    <div class="card-header collapsed" data-toggle="collapse" data-target="#newsLetters" aria-expanded="false" id="newsletterHeader">
-                        <span class="fa fa-folder-o fa-lg"></span>
-                        <span style="font-weight:700; margin-left:5px">Monthly Newsletters</span>
-                        <span style="font-weight:700; margin-left:5px">(0)</span>
-                        <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
-                    </div>
-                    <div id="newsLetters" class="collapse" data-parent="#recentNotifications">
-                        <div class="card-body" id="newsLettersBody"></div>
-                    </div>
-                </div>
-                <div class="card mb-3">
-                    <div class="card-header collapsed" data-toggle="collapse" data-target="#recentPhotos" aria-expanded="false" id="photoHeader">
-                        <span class="fa fa-picture-o fa-lg"></span>
-                        <span style="font-weight:700; margin-left:5px">Activity And Event Photos</span>
-                        <span style="font-weight:700; margin-left:5px">(0)</span>
-                        <span class="accicon"><span class="fa fa-angle-down rotate-icon"></span></span>
-                    </div>
-                    <div id="recentPhotos" class="collapse" data-parent="#recentNotifications">
-                        <div class="card-body" id="recentPhotosBody">
-                            <div><a><img src="" /><br /><span></span></a></div>
-                            <div><a><img src="" /><br /><span></span></a></div>
-                            <div><a><img src="" /><br /><span></span></a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="postSettingsAlert" tabindex="-1" aria-labelledby="postSettingsAlertLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="postSettingsAlertLabel">New Discussion Group Post</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span id="postWait" class="fa fa-times" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                        <div class="modal-body" id="postComments" style="margin-left:20px">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="portalGroups" id="portal_help" value="11315|" checked>
-                                <label class="form-check-label" for="portal_help">
-                                    Portal and Email Help
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="portalGroups" id="portal_general" value="8364|20703">
-                                <label class="form-check-label" for="portal_general">
-                                    General Discussion
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="portalGroups" id="portal_recommend" value="8030|19301">
-                                <label class="form-check-label" for="portal_recommend">
-                                    Recommendations
-                                </label>
-                            </div>
-
-
-                            <div class="modal-footer">
-
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width:50%">Close</button>
-                                <button onclick="javascript:addComments()" type="button" class="btn btn-secondary" style="width:50%">Next</button>
-
+                        <div class="card z-depth-3 mb-3">
+                            <div class="card-header border-success formatHeader"><span class="fa fa-picture-o" aria-hidden="true" id="recentPhotosIcon"></span>&nbsp;&nbsp;Recent Event Photos</div>
+                            <div class="card-body">
+                                <div id="recentPhotos" class="recentPhoto">
+                                    <div><a><img src="" /><br /><span></span></a></div>
+                                    <div><a><img src="" /><br /><span></span></a></div>
+                                    <div><a><img src="" /><br /><span></span></a></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="saveEmailAlert" tabindex="-1" aria-labelledby="saveEmailAlertLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="saveEmailAlertLabel">No saved emails found</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Only the emails you are currently viewing have been saved to your computer.  New emails will added to your saved emails the next time you visit this page.  Clearing your browser's cache will remove saved emails from this computer.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                        </div>
+            <div class="col-md-4">
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">My Personal Information</div>
+                    <div id="userProfile" class="card-body" style="padding:10px;">
+                        <img id="profileImage" width="110" src="" class="dropShadow">To make changes to your sign in name or password, phone number, email address, profile image or other personal information stored on this site, click the <strong>My Profile</strong> button at the top right of this page. (if you are using a mobile device, click or tap the <strong>Profile</strong> link at the top of the page).
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success formatHeader">Lakeview Clubhouse and Office Hours</div><div id="userProfile" class="card-body" style="padding:10px;">
+                        <ul>
+                            <li>Monday - Saturday 7 a.m. to 9 p.m.</li>
+                            <li>Sunday 8 a.m. to 6 p.m.</li>
+                            <li>Clubhouse hours may vary seasonally</li>
+                        </ul>
+                        <em>Clubhouse and Office closed: New Year's Day, Easter Sunday, Thanksgiving Day, Christmas Eve and Christmas Day.</em>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-exclamation-circle" aria-hidden="true"></span>&nbsp;&nbsp;I want to...</div>
+                    <div class="card-body text-muted" style="padding-left:10px;" id="userProfile">
+                        <div><span class="fa fa-external-link" style="padding-right:10px;"></span><a href="https://portal.sc-manage.com/Home_v2/Login">Pay WHOA assessment online and/or see balance</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~188049/Repair-or-Maintenance">File a WHOA maintenance request (Common Area)</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~188011/Complaint-or-CCRs-Rules-Violation">File a Complaint or CC&amp;Rs Rules Violation</a></div>
+                        <div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~116540/Ask-A-Manager">Send a question or comment to management</a></div><div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~317256/Community-Crime-Incident-Report">File A Community Crime Incident Report (non PD)</a></div><div><span class="fa fa-list" style="padding-right:10px;"></span><a href="https://ourwoodbridge.net/Form/28118~243363/Board-Agenda-Topic-Comment-or-Question">Send A Board Agenda Topic Comment or Question</a></div>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-address-card-o" aria-hidden="true"></span>&nbsp;&nbsp;Silvercreek Management Contacts </div><div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
+                        <strong>General Manager - Jessica Ross</strong> <ul style="list-style-type:none;padding:0px;margin:0px;">
+                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209) 824-7581 Ext 101</li>
+                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto: jessica@sc-manage.com"> jessica@sc-manage.com</a></li>
+                        </ul>
+                    </div><div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
+                        <strong>Office Manager - Jacquelynn Allen</strong> <ul style="list-style-type:none;padding:0px;margin:0px;">
+                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209) 824-7581 Ext 105</li>
+                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto:jallen@ourwoodbridge.net">jallen@ourwoodbridge.net</a></li>
+                        </ul>
+                    </div><div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
+                        <strong>Lifestyle Manager</strong> <ul style="list-style-type:none;padding:0px;margin:0px;">
+                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209) 824-7927</li>
+                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href=""></a></li>
+                        </ul>
+                    </div><div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
+                        <strong>Maintenance Lead - James Shirron</strong> <ul style="list-style-type:none;padding:0px;margin:0px;">
+                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (000) 000-0000</li>
+                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto:jshirron@ourwoodbridge.net">jshirron@ourwoodbridge.net</a></li>
+                        </ul>
+                    </div><div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
+                        <strong>Woodbridge Clubhouse - Front Desk</strong> <ul style="list-style-type:none;padding:0px;margin:0px;">
+                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; 209-824-7581</li>
+                            <li><span class="fa fa-envelope-o" aria-hidden="true"></span>&nbsp;&nbsp;<a href="mailto:frontdesk@ourwoodbridge.net">frontdesk@ourwoodbridge.net</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card z-depth-3 mb-3">
+                    <div class="card-header border-success text-nowrap formatHeader"><span class="fa fa-shield" aria-hidden="true"></span>&nbsp;&nbsp;Woodbridge On-Site Security </div><div class="card-body text-muted" style="padding-left:10px;padding-bottom:10px;border-bottom:1px solid black;">
+                        <strong>Alpine Protective Solutions</strong> <ul style="list-style-type:none;padding:0px;margin:0px;">
+                            <li><span class="fa fa-phone" aria-hidden="true"></span>&nbsp; (209)495-5347</li>
+                            <li><span class="fa fa-globe" aria-hidden="true"></span>&nbsp;&nbsp;<a href="https://alpineprotect.com/"> https://alpineprotect.com/ </a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="showEmailAlert" tabindex="-1" aria-labelledby="showEmailAlertLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="showEmailAlertLabel">Viewing Saved Email Messages</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body" id="emailsSaved"></div>
-                        <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-
-            <button class="open-button" onclick="openForm()">Question or Comment?</button>
-
-            <div class="chat-popup" id="WOAComments">
-                <div class="form-container">
-
-                    <label for="msg"><b>Message</b></label>
-                    <textarea placeholder="Type message.." name="msg" required></textarea>
-                    <strong>Select Recipient</strong>
-                    <div class="form-check" style="margin-bottom:0px">
-                        <input type="radio" class="form-check-input" name="q" id="option1" checked>
-                        <label class="form-check-label" for="option1">WOA Webmaster</label>
-                    </div>
-                    <div class="form-check" style="margin-bottom:0px">
-                        <input type="radio" class="form-check-input" name="q" id="option2">
-                        <label class="form-check-label" for="option2">Silvercreek Management</label>
-                    </div>
-                    <div class="form-check" style="margin-bottom:0px">
-                        <input type="radio" name="q" id="option3" class="form-check-input">
-                        <label class="form-check-label" for="option3">Clubhouse Front Desk</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="radio" name="q" id="option4" class="form-check-input">
-                        <label class="form-check-label" for="option4">Discussion Group</label>
-                    </div>
-
-                    <button type="button" class="btn" onclick="closeForm(true)">Send&nbsp;<span id="woaSendButton" class="fa fa-share fa-lg"></span></button>
-                    <button type="button" class="btn cancel" onclick="closeForm(false)">Close&nbsp;<span class="fa fa-window-close-o fa-lg"></span></button>
-                </div>
-            </div>
-
-            <script src="scripts/new_test_new.js"></script>
-
         </div>
+        <div id="errText"></div>
+        <script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>
     </div>
-    <!--<script src="https://customnetware.github.io/woa/scripts/woa_resident_home.js"></script>-->
 </body>
 </html>
