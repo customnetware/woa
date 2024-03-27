@@ -119,7 +119,7 @@ const woaCode = {
         let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
         let portalProfilePage = "/Member/Contact/" + profileID[1] + "~" + profileID[0] + "~" + profileID[2]
         let classArray = ["fa fa-refresh fa-spin fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
-        let hrefArray = ["/woa_documents.html?ff=1", portalProfilePage, "/form/28118~327323/social-media-help", "javascript:woaCode.showTheDialog()", "/form/28118~116540/ask-a-manager"]
+        let hrefArray = ["#", portalProfilePage, "/form/28118~327323/social-media-help", "javascript:woaCode.showTheDialog()", "/form/28118~116540/ask-a-manager"]
         let textArray = ["", "Loading...", "", "", ""]
         for (let a = 0; a <= 4; a++) {
             let headerLinks = document.getElementById("profileHeader").getElementsByTagName("a")
@@ -362,7 +362,7 @@ const woaCode = {
     showThePage: () => {
         let pageArea = document.getElementsByClassName("clsBodyText")[0]
         while (pageArea.firstChild) { pageArea.removeChild(pageArea.firstChild) }
-        let getPageFromCache = (document.referrer.indexOf("https://ourwoodbridge.net/page/") == 0) ? true : false
+        let getPageFromCache = (document.referrer.indexOf("https://ourwoodbridge.net/page/") == 0 && localStorage.getItem("woaCache") !== null) ? true : false
 
         if (getPageFromCache == false) {
             if (typeof (window.performance.getEntriesByType) != "undefined") {
@@ -376,7 +376,6 @@ const woaCode = {
                 } catch { getPageFromCache = false }
             } else { getPageFromCache = false }
         }
-
         if (getPageFromCache == false) {
             let appContainer = document.createElement("div"); appContainer.id = "customContainer", appContainer.className = "container"
             pageArea.appendChild(appContainer)
