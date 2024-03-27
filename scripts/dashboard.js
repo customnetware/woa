@@ -121,15 +121,12 @@ const woaCode = {
         let classArray = ["fa fa-refresh fa-spin fa-lg", "", "fa fa-question-circle fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
         let hrefArray = ["/woa_documents.html?ff=1", portalProfilePage, "/form/28118~327323/social-media-help", "javascript:woaCode.showTheDialog()", "/form/28118~116540/ask-a-manager"]
         let textArray = ["", "Loading...", "", "", ""]
-
-
         for (let a = 0; a <= 4; a++) {
             let headerLinks = document.getElementById("profileHeader").getElementsByTagName("a")
             headerLinks[a].innerHTML = textArray[a]
             headerLinks[a].href = hrefArray[a]
             headerLinks[a].className = classArray[a]
         }
-
         let profileImage = document.createElement("img")
         let imageFile = $.get("/Member/28118~" + profileID[0] + woaCode.isLocal, function () { })
         let textFile = $.get("/news/28118~792554" + woaCode.isLocal, function () { })
@@ -235,7 +232,6 @@ const woaCode = {
                         view.innerHTML = " | View Comments"
                         post.appendChild(reply)
                         post.appendChild(view)
-
                     }
                 }
             }
@@ -364,21 +360,22 @@ const woaCode = {
             })
     },
     showThePage: () => {
-
-        let getPageFromCache = false
         let pageArea = document.getElementsByClassName("clsBodyText")[0]
         while (pageArea.firstChild) { pageArea.removeChild(pageArea.firstChild) }
+        let getPageFromCache = (document.referrer.indexOf("https://ourwoodbridge.net/page/") == 0) ? true : false
 
-        if (typeof (window.performance.getEntriesByType) != "undefined") {
-            try {
-                let pageStatus = window.performance.getEntriesByType("navigation")[0].type
-                if (pageStatus == "navigate" || pageStatus == "reload" || localStorage.getItem("woaCache") === null) {
-                    getPageFromCache = false
-                } else {
-                    getPageFromCache = true
-                }
-            } catch { getPageFromCache = false }
-        } else { getPageFromCache = false }
+        if (getPageFromCache == false) {
+            if (typeof (window.performance.getEntriesByType) != "undefined") {
+                try {
+                    let pageStatus = window.performance.getEntriesByType("navigation")[0].type
+                    if (pageStatus == "navigate" || pageStatus == "reload" || localStorage.getItem("woaCache") === null) {
+                        getPageFromCache = false
+                    } else {
+                        getPageFromCache = true
+                    }
+                } catch { getPageFromCache = false }
+            } else { getPageFromCache = false }
+        }
 
         if (getPageFromCache == false) {
             let appContainer = document.createElement("div"); appContainer.id = "customContainer", appContainer.className = "container"
@@ -393,7 +390,6 @@ const woaCode = {
             woaCode.addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, woaCode.getCalendar)
             woaCode.addCard("fileHeader", "fileBody", "fa fa-file fa-lg", "My Documents", true, woaCode.getResourceCenter)
             woaCode.addModal()
-
             $.get("/homepage/28118/resident-home-page" + woaCode.isLocal, function () { })
                 .done(function (responseText) {
                     let portalContent = new DOMParser().parseFromString(responseText, "text/html")
@@ -402,13 +398,11 @@ const woaCode = {
 
                 })
         } else { pageArea.innerHTML = localStorage.getItem("woaCache") }
-
         $("#contactBody").on("show.bs.collapse", function () {
             (window.location.hostname == "localhost") ? location.replace("woa_contacts.html") : location.replace("/page/28118~1105492")
         })
     },
 }
-
 woaCode.showThePage()
 
 

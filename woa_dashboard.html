@@ -18,8 +18,7 @@
     </div><div class="clsBodyText"></div>
     <script>
         function checkForScript(element, evnt, funct) {
-            if (element.attachEvent) { return element.attachEvent('on' + evnt, funct) }
-            else { return element.addEventListener(evnt, funct, false) }
+            if (element.attachEvent) { return element.attachEvent('on' + evnt, funct) } else { return element.addEventListener(evnt, funct, false) }
         }
         let portalHead = document.head || document.getElementsByTagName("head")[0]
 
@@ -33,7 +32,11 @@
         woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/dashboard.js" : "https://customnetware.github.io/woa/scripts/dashboard.js"
         document.body.appendChild(woaScripts)
 
-        checkForScript(window, "load", function () { if (document.getElementById("customContainer") == null) { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") } });
+        checkForScript(window, "load", function () {
+            if (document.getElementById("customContainer") == null) {
+                location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
+            }
+        });
     </script>
 </body>
 </html>
