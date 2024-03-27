@@ -402,7 +402,7 @@ const woaCode = {
 
             })
         $("#contactBody").on("show.bs.collapse", function () {
-            location.replace("woa_contacts.html")
+            (window.location.hostname == "localhost") ? location.replace("woa_contacts.html") : location.replace("/page/28118~1105492")
         })
     },
 }

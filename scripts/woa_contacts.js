@@ -46,11 +46,9 @@ const woaContact = {
 
     },
     getProfile: () => {
-     
-        let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
-        let portalProfilePage = "/Member/Contact/" + profileID[1] + "~" + profileID[0] + "~" + profileID[2]
-        let classArray = ["fa fa-building-o fa-lg", "", "fa fa-home fa-fw fa-lg", "fa fa-comment fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
-        let hrefArray = ["/woa_documents.html?ff=1", portalProfilePage, "woa_dashboard.html", "javascript:woaContact.showTheDialog()", "/form/28118~116540/ask-a-manager"]
+        let hmPg = (window.location.hostname == "localhost") ? "woa_dashboard.html" :"/page/28118~1101528"
+        let classArray = ["fa fa-building-o fa-lg", "", "fa fa-home fa-fw fa-lg", "fa fa-question-circle fa-fw fa-lg", "fa fa-envelope fa-fw fa-lg"]
+        let hrefArray = ["", "https://portal.sc-manage.com/Home_v2/Login", hmPg, "/form/28118~327323/social-media-help", "/form/28118~116540/ask-a-manager"]
         let textArray = ["", "Silvercreek Association Management", "", "", ""]
 
 
