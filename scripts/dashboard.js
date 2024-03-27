@@ -182,60 +182,7 @@ const woaCode = {
         }
     },
     getContacts: () => {
-        let contactArray = ["10544936", "10551971", "10863452", "8108389", "10566484", "10854040"]
-
-        for (let p = 0; p < contactArray.length; p++) {
-            let contactDiv = document.createElement("div")
-            let nameDiv = document.createElement("div")
-            let jobDiv = document.createElement("div")
-            let phoneDiv = document.createElement("div")
-            let emailDiv = document.createElement("div")
-            contactDiv.appendChild(nameDiv)
-            contactDiv.appendChild(jobDiv)
-            contactDiv.appendChild(phoneDiv)
-            contactDiv.appendChild(emailDiv)
-            $.get("/Member/28118~" + contactArray[p] + woaCode.isLocal, function () { })
-                .done(function (responseText) {
-                    let contactCard = new DOMParser().parseFromString(responseText, "text/html")
-                    let contactName = contactCard.getElementsByClassName("clsDMHeader")
-                    let contactTitle = contactCard.getElementsByClassName("clsHeader")
-                    let contactData = contactCard.getElementsByClassName("contactComms")
-
-
-                    if (contactName.length > 1) {
-                        let contactLink = document.createElement("a")
-                        contactLink.href = "/Member/28118~" + contactArray[p] + woaCode.isLocal
-                        contactLink.innerHTML = contactName[1].children[0].innerText.trim()
-                        nameDiv.appendChild(contactLink)
-                    }
-                    if (contactTitle.length > 0) {
-                        let contactLink = document.createElement("a")
-                        contactLink.href = "/Member/28118~" + contactArray[p] + woaCode.isLocal
-                        contactLink.innerHTML = contactTitle[0].innerText.trim()
-                        jobDiv.appendChild(contactLink)
-                    }
-                    if (contactData.length > 0) {
-                        let selectedData = contactData[0].getElementsByClassName("contactLabel")
-                        if (selectedData.length > 0) {
-                            for (let p = 0; p < selectedData.length; p++) {
-                                //if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
-                                //    emailDiv.appendChild(document.createTextNode(selectedData[p].nextElementSibling.children[0].innerText))
-                                //}
-                                if (selectedData[p].innerText == "Work") {
-                                    phoneDiv.appendChild(document.createTextNode(selectedData[p].nextElementSibling.innerText.trim()))
-                                }
-                                if (selectedData[p].innerText == "Other") {
-                                    phoneDiv.appendChild(document.createTextNode(selectedData[p].nextElementSibling.innerText.trim()))
-                                }
-                            }
-                        }
-                    }
-                    document.getElementById("contactBody").appendChild(contactDiv)
-                    if (p == contactArray.length - 1) { woaCode.ldComplete("contacts") }
-                })
-
-        }
-
+        woaCode.ldComplete("contacts")
     },
     getDiscussionGroups: () => {
         let forumArray = [], forums = ["8030", "8364", "11315"], forumNames = ["Recommendations", "General", "Using the HOA Portal"], currentDate = new Date()
@@ -286,7 +233,6 @@ const woaCode = {
                         reply.innerHTML = forumArray[p].postAuthor + "  | Reply"
                         view.href = "javascript:woaCode.showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
                         view.innerHTML = " | View Comments"
-
                         post.appendChild(reply)
                         post.appendChild(view)
 
@@ -418,6 +364,7 @@ const woaCode = {
             })
     },
     showThePage: () => {
+
         let getPageFromCache = false
         let pageArea = document.getElementsByClassName("clsBodyText")[0]
         while (pageArea.firstChild) { pageArea.removeChild(pageArea.firstChild) }
@@ -446,6 +393,7 @@ const woaCode = {
         woaCode.addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, woaCode.getCalendar)
         woaCode.addCard("fileHeader", "fileBody", "fa fa-file fa-lg", "My Documents", true, woaCode.getResourceCenter)
         woaCode.addModal()
+
         $.get("/homepage/28118/resident-home-page" + woaCode.isLocal, function () { })
             .done(function (responseText) {
                 let portalContent = new DOMParser().parseFromString(responseText, "text/html")
@@ -453,9 +401,12 @@ const woaCode = {
                 woaCode.getContentFromPortal(portalContent)
 
             })
-
+        $("#contactBody").on("show.bs.collapse", function () {
+            location.replace("woa_contacts.html")
+        })
     },
 }
+
 woaCode.showThePage()
 
 

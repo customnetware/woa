@@ -17,6 +17,7 @@
         <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
     </div><div class="clsBodyText"></div>
     <script>
+
         function checkForScript(element, evnt, funct) {
             if (element.attachEvent) { return element.attachEvent('on' + evnt, funct) }
             else { return element.addEventListener(evnt, funct, false) }
@@ -33,7 +34,12 @@
         woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/woa_contacts.js" : "https://customnetware.github.io/woa/scripts/woa_contacts.js"
         document.body.appendChild(woaScripts)
 
-        //checkForScript(window, "load", function () { if (document.getElementById("customContainer") == null) { location.replace("https://ourwoodbridge.net/resourcecenter/28118/resource-center") } });
+        checkForScript(window, "load", function () {
+            $("#contactBody").on("shown.bs.collapse", function () {
+                alert("here")
+            })
+            if (document.getElementById("customContainer") == null) { location.replace("https://ourwoodbridge.net/resourcecenter/28118/resource-center") }
+        });
     </script>
 </body>
 </html>
