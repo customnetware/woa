@@ -380,27 +380,29 @@ const woaCode = {
             } catch { getPageFromCache = false }
         } else { getPageFromCache = false }
 
+        if (getPageFromCache == false) {
+            let appContainer = document.createElement("div"); appContainer.id = "customContainer", appContainer.className = "container"
+            pageArea.appendChild(appContainer)
+            woaCode.addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Loading...", false, woaCode.getProfile)
+            woaCode.addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
+            woaCode.addCard("newsHeader", "newsBody", "fa fa-newspaper-o fa-lg", "Recent News", true, "")
+            woaCode.addCard("forSaleHeader", "forSaleBody", "fa fa-shopping-cart fa-lg", "For Sale or Free", true, "")
+            woaCode.addCard("photoHeader", "photoBody", "fa fa-picture-o fa-lg", "Event Photos", true, "")
+            woaCode.addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Office Contacts", true, woaCode.getContacts)
+            woaCode.addCard("groupsHeader", "groupsBody", "fa fa-comments fa-2x", "Discussion Groups", true, woaCode.getDiscussionGroups)
+            woaCode.addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, woaCode.getCalendar)
+            woaCode.addCard("fileHeader", "fileBody", "fa fa-file fa-lg", "My Documents", true, woaCode.getResourceCenter)
+            woaCode.addModal()
 
-        let appContainer = document.createElement("div"); appContainer.id = "customContainer", appContainer.className = "container"
-        pageArea.appendChild(appContainer)
-        woaCode.addCard("profileHeader", "profileBody", "fa fa-check-circle fa-lg", "Loading...", false, woaCode.getProfile)
-        woaCode.addCard("emailHeader", "emailBody", "fa fa-envelope fa-lg", "Recent Emails", true, "")
-        woaCode.addCard("newsHeader", "newsBody", "fa fa-newspaper-o fa-lg", "Recent News", true, "")
-        woaCode.addCard("forSaleHeader", "forSaleBody", "fa fa-shopping-cart fa-lg", "For Sale or Free", true, "")
-        woaCode.addCard("photoHeader", "photoBody", "fa fa-picture-o fa-lg", "Event Photos", true, "")
-        woaCode.addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Office Contacts", true, woaCode.getContacts)
-        woaCode.addCard("groupsHeader", "groupsBody", "fa fa-comments fa-2x", "Discussion Groups", true, woaCode.getDiscussionGroups)
-        woaCode.addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, woaCode.getCalendar)
-        woaCode.addCard("fileHeader", "fileBody", "fa fa-file fa-lg", "My Documents", true, woaCode.getResourceCenter)
-        woaCode.addModal()
+            $.get("/homepage/28118/resident-home-page" + woaCode.isLocal, function () { })
+                .done(function (responseText) {
+                    let portalContent = new DOMParser().parseFromString(responseText, "text/html")
+                    document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = portalContent.getElementsByClassName("clsHeader")[0].innerHTML
+                    woaCode.getContentFromPortal(portalContent)
 
-        $.get("/homepage/28118/resident-home-page" + woaCode.isLocal, function () { })
-            .done(function (responseText) {
-                let portalContent = new DOMParser().parseFromString(responseText, "text/html")
-                document.getElementById("profileHeader").getElementsByTagName("a")[1].innerHTML = portalContent.getElementsByClassName("clsHeader")[0].innerHTML
-                woaCode.getContentFromPortal(portalContent)
-
-            })
+                })
+        } else { pageArea.innerHTML = localStorage.getItem("woaCache") }
+        alert(document.referrer)
         $("#contactBody").on("show.bs.collapse", function () {
             (window.location.hostname == "localhost") ? location.replace("woa_contacts.html") : location.replace("/page/28118~1105492")
         })
