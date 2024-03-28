@@ -7,7 +7,7 @@ const woaCode = {
         woaCode.completeFNs = woaCode.completeFNs + 1
         let testTxt = document.createElement("p")
         testTxt.innerText = woaCode.completeFNs + " - " + fncName
-        if (woaCode.completeFNs == 9) {
+        if (woaCode.completeFNs == 8) {
             allComplete = true
             document.getElementById("profileHeader").getElementsByTagName("a")[0].className = "fa fa-check-circle fa-lg"
             localStorage.setItem("woaCache", document.getElementsByClassName("clsBodyText")[0].innerHTML)
@@ -300,6 +300,8 @@ const woaCode = {
         woaCode.ldComplete("files")
     },
     showCalendar: (calenderEvents) => {
+        let eventListing = document.getElementById("eventsBody")
+        while (eventListing.firstChild) { eventListing.removeChild(eventListing.firstChild) }
         for (let d = 0; d < calenderEvents.length; d++) {
             let eventLink = document.createElement("a")
             let eventDiv = document.createElement("div")
@@ -315,7 +317,7 @@ const woaCode = {
             timeDiv.innerText = new Date(calenderEvents[d].calTime).toLocaleTimeString()
             placeDiv.className = "hideFromApp"
             placeDiv.innerText = calenderEvents[d].calLocation
-            document.getElementById("eventsBody").appendChild(eventDiv)
+            eventListing.appendChild(eventDiv)
         }
         woaCode.ldComplete("calendar")
         document.getElementById("woaIFrame").remove()
@@ -384,9 +386,9 @@ const woaCode = {
             woaCode.addCard("newsHeader", "newsBody", "fa fa-newspaper-o fa-lg", "Recent News", true, "")
             woaCode.addCard("forSaleHeader", "forSaleBody", "fa fa-shopping-cart fa-lg", "For Sale or Free", true, "")
             woaCode.addCard("photoHeader", "photoBody", "fa fa-picture-o fa-lg", "Event Photos", true, "")
-            woaCode.addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Clubhouse Office Contacts", true, woaCode.getContacts)
+            woaCode.addCard("contactHeader", "contactBody", "fa fa-address-card-o fa-lg", "Office Contacts", true, woaCode.getContacts)
             woaCode.addCard("groupsHeader", "groupsBody", "fa fa-comments fa-lg", "Discussion Groups", true, woaCode.getDiscussionGroups)
-            woaCode.addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, woaCode.getCalendar)
+            woaCode.addCard("eventsHeader", "eventsBody", "fa fa-calendar fa-lg", "Todays Calendar", true, "")
             woaCode.addCard("fileHeader", "fileBody", "fa fa-file fa-lg", "My Documents", true, woaCode.getResourceCenter)
             woaCode.addModal()
             $.get("/homepage/28118/resident-home-page" + woaCode.isLocal, function () { })
@@ -399,6 +401,9 @@ const woaCode = {
         } else { pageArea.innerHTML = localStorage.getItem("woaCache") }
         $("#contactBody").on("show.bs.collapse", function () {
             (window.location.hostname == "localhost") ? location.replace("woa_contacts.html") : location.replace("/page/28118~1105492")
+        })
+        $("#eventsBody").on("show.bs.collapse", function () {
+            woaCode.getCalendar()
         })
     },
 }
