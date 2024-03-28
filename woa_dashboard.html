@@ -23,13 +23,13 @@
         let portalHead = document.head || document.getElementsByTagName("head")[0]
 
         let woaStyles = document.createElement("link")
-        woaStyles.href = (window.location.hostname == "localhost") ? "/css/dashboard.css" : "https://customnetware.github.io/woa/css/woa_dashboard.css"
+        woaStyles.href = (window.location.hostname == "localhost") ? "/css/woa_dashboard.css" : "https://customnetware.github.io/woa/css/woa_dashboard.css"
         woaStyles.rel = "stylesheet"
         portalHead.appendChild(woaStyles)
 
         let woaScripts = document.createElement("script")
         woaScripts.type = "text/javascript"
-        woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/dashboard.js" : "https://customnetware.github.io/woa/scripts/woa_dashboard.js"
+        woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/woa_dashboard.js" : "https://customnetware.github.io/woa/scripts/woa_dashboard.js"
         document.body.appendChild(woaScripts)
 
         checkForScript(window, "load", function () {
