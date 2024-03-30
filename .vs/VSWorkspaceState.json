@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\css",
     "\\news",
     "\\scripts"
   ],
-  "SelectedNode": "\\scripts\\woa_documents.js",
+  "SelectedNode": "\\scripts\\woa_contacts.js",
   "PreviewInSolutionExplorer": false
 }

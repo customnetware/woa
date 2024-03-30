@@ -97,7 +97,7 @@ const woaDocs = {
         let docArray = []
         let pageDocuments = document.getElementById("document")
         let waitSpan = document.createElement("span")
-        waitSpan.className = "fa fa-circle-o-notch fa-pulse fa-fw fa-4x"
+        waitSpan.className = "fa fa-circle-o-notch fa-spin fa-fw fa-4x"
         waitSpan.id = "loadIcon"
 
         while (pageDocuments.firstChild) { pageDocuments.removeChild(pageDocuments.firstChild) }
