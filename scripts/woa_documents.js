@@ -106,7 +106,7 @@ const woaDocs = {
         if (docID === "") { docID = "contentInner" }
         $.get("/resourcecenter/28118/resource-center" + woaDocs.isLocal, function () { })
             .done(function (responseText) {
-       /*         waitSpan.remove()*/
+                waitSpan.remove()
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
 
                 if (getLatest == true) {
