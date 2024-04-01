@@ -96,8 +96,8 @@ const woaDocs = {
 
         let docArray = []
         let pageDocuments = document.getElementById("document")
-        let waitSpan = document.createElement("span")
-        waitSpan.className = "fa fa-circle-o-notch fa-spin fa-fw fa-4x"
+        let waitSpan = document.createElement("i")
+        waitSpan.className = "fa fa-refresh fa-fw fa-spin fa-4x"
         waitSpan.id = "loadIcon"
 
         while (pageDocuments.firstChild) { pageDocuments.removeChild(pageDocuments.firstChild) }
@@ -106,7 +106,7 @@ const woaDocs = {
         if (docID === "") { docID = "contentInner" }
         $.get("/resourcecenter/28118/resource-center" + woaDocs.isLocal, function () { })
             .done(function (responseText) {
-                waitSpan.remove()
+       /*         waitSpan.remove()*/
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
 
                 if (getLatest == true) {

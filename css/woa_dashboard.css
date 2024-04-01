@@ -293,4 +293,6 @@
 #loadIcon {
     width: 100%;
     color: lightgray;
+    display:block;
+  
 }
