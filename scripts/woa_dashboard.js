@@ -242,6 +242,10 @@ const woaCode = {
         let calendarArray = []
         woaCalendar.id = "woaIFrame"
         woaCalendar.style.display = "none"
+        let pageEvents= document.getElementById("eventsBody")
+        let waitIcon = document.createElement("i")
+        waitIcon.className = "fa fa-refresh fa-fw fa-spin fa-4x waitClass"
+        pageEvents.appendChild(waitIcon)
         woaCalendar.onload = function () {
             calendarWait = setInterval(function () {
                 let calendarDocument = woaCalendar.contentWindow.document

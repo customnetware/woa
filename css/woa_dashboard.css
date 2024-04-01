@@ -290,7 +290,7 @@
     padding-right: 20px;
 }
 
-#loadIcon {
+.waitClass {
     width: 100%;
     color: lightgray;
     display:block;
