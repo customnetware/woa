@@ -181,6 +181,20 @@ const woaCode = {
             woaCode.ldComplete(portalIds[i])
         }
     },
+    getResourceCenter: () => {
+        let myDocs = ["Activities and Event Flyers", "Woodbridge Life Newsletter", "Board Documents - Agendas and Minutes"]
+        let myLocallinks = ["/woa_documents.html?ff=contents540434", "/woa_documents.html?ff=contents951754", "/woa_documents.html?ff=contents328201"]
+        let myDocsLinks = ["/page/28118~1105440?ff=contents540434", "/page/28118~1105440?ff=contents951754", "/page/28118~1105440?ff=contents328201"]
+        let pageDocsLinks = (window.location.hostname == "localhost") ? myLocallinks : myDocsLinks
+        for (let p = 0; p < pageDocsLinks.length; p++) {
+            let selectedDoc = document.createElement("a")
+            selectedDoc.innerHTML = myDocs[p]
+            selectedDoc.href = pageDocsLinks[p]
+            document.getElementById("fileBody").appendChild(selectedDoc)
+
+        }
+        woaCode.ldComplete("files")
+    },
     getContacts: () => {
         woaCode.ldComplete("contacts")
     },
@@ -299,20 +313,6 @@ const woaCode = {
         const firstRow = document.getElementById("customContainer").children[1]
         firstRow.parentNode.insertBefore(document.getElementById("eventsRow"), firstRow)
         woaCode.ldComplete("calendar")
-    },
-    getResourceCenter: () => {
-        let myDocs = ["Activities and Event Flyers", "Woodbridge Life Newsletter", "Board Documents - Agendas and Minutes"]
-        let myLocallinks = ["/woa_documents.html?ff=contents540434", "/woa_documents.html?ff=contents951754", "/woa_documents.html?ff=contents328201"]
-        let myDocsLinks = ["/page/28118~1105440?ff=contents540434", "/page/28118~1105440?ff=contents951754", "/page/28118~1105440?ff=contents328201"]
-        let pageDocsLinks = (window.location.hostname == "localhost") ? myLocallinks : myDocsLinks
-        for (let p = 0; p < pageDocsLinks.length; p++) {
-            let selectedDoc = document.createElement("a")
-            selectedDoc.innerHTML = myDocs[p]
-            selectedDoc.href = pageDocsLinks[p]
-            document.getElementById("fileBody").appendChild(selectedDoc)
-
-        }
-        woaCode.ldComplete("files")
     },
     showTheDialog: () => {
         document.getElementById("appDialogTitle").innerText = "My Woodbridge"
