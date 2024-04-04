@@ -240,72 +240,66 @@ const woaCode = {
             }
         })
     },
-    getCalendar: () => {
-        while (document.getElementById("eventsBody").firstChild) { document.getElementById("eventsBody").removeChild(document.getElementById("eventsBody").firstChild) }
-
-        let woaCalendar = document.createElement("iframe")
-        let calendarArray = []
-        woaCalendar.id = "woaIFrame"
-        woaCalendar.style.display = "none"
-        let pageEvents = document.getElementById("eventsBody")
-        let waitIcon = document.createElement("i")
-        waitIcon.className = "fa fa-refresh fa-fw fa-spin fa-4x waitClass"
+    getEvents: () => {
+        let woaCalendar = document.createElement("iframe"), waitIcon = document.createElement("i"), pageEvents = document.getElementById("eventsBody")
+        woaCalendar.style.display = "none", waitIcon.className = "fa fa-refresh fa-fw fa-spin fa-4x waitClass"
+        while (pageEvents.firstChild) { pageEvents.removeChild(pageEvents.firstChild) }
         pageEvents.appendChild(waitIcon)
         woaCalendar.onload = function () {
             calendarWait = setInterval(function () {
-                let calendarDocument = woaCalendar.contentWindow.document, eventList = calendarDocument.getElementById("eventList")
-                let todaysEvents = eventList.getElementsByClassName("event"), eventLocation = ""
-                if (calendarDocument !== null && calendarDocument.readyState == "complete" && eventList !== null && todaysEvents.length > 0) {
+                let calendarDocument = woaCalendar.contentWindow.document, eventList = calendarDocument.getElementById("eventList"), todaysEvents = eventList.getElementsByClassName("event")
+                if (calendarDocument !== null && calendarDocument.readyState == "complete" && eventList !== null, todaysEvents.length > 0) {
                     clearInterval(calendarWait)
-                    for (let d = 0; d < todaysEvents.length; d++) {
-                        $.get((window.location.hostname !== "localhost") ? todaysEvents[d].getElementsByTagName("a")[0].href : "/Calendar/Event/event.html", function () { })
-                            .done(function (responseText) {
-                                let woaEvent = new DOMParser().parseFromString(responseText, "text/html")
-                                eventLocation = woaEvent.getElementsByClassName("clsInput clsBodyText")[0].innerText.trim()
-                            })
-                            .fail(function () {
-                                eventLocation = "Event Location Not Avaiable (Error)"
-                            })
-                            .always(function () {
-                                calendarArray.push({
-                                    calTime: woaCode.formatTime(todaysEvents[d].children[0].innerText).getTime(),
-                                    calTitle: todaysEvents[d].children[1].innerText,
-                                    calLink: todaysEvents[d].getElementsByTagName("a")[0].href,
-                                    calLocation: eventLocation
-                                })
-                                if (d === todaysEvents.length - 1) {
-                                    calendarArray.sort((a, b) => { return a.calTime - b.calTime })
-                                   
-                                    let eventListing = document.getElementById("eventsBody")
-                                    for (let d = 0; d < calendarArray.length; d++) {
-                                        let eventLink = document.createElement("a"), eventDiv = document.createElement("div"), nameDiv = document.createElement("div")
-                                        let timeDiv = document.createElement("div"), placeDiv = document.createElement("div")
-
-                                        eventLink.href = calendarArray[d].calLink, eventLink.innerHTML = calendarArray[d].calTitle
-                                        nameDiv.appendChild(eventLink), timeDiv.innerText = new Date(calendarArray[d].calTime).toLocaleTimeString()
-                                        placeDiv.className = "hideFromApp", placeDiv.innerText = calendarArray[d].calLocation
-
-                                        eventDiv.appendChild(nameDiv)
-                                        eventDiv.appendChild(timeDiv)
-                                        eventDiv.appendChild(placeDiv)
-                                        eventListing.appendChild(eventDiv)
-                                    }
-                                    woaCode.ldComplete("calendar")
-                                    document.getElementById("woaIFrame").remove()
-                                    waitIcon.remove()
-                                    const referenceElement = document.getElementById("customContainer").children[1]
-                                    referenceElement.parentNode.insertBefore(document.getElementById("eventsRow"), referenceElement)
-                                }
-                            })
-                    }
+                    woaCalendar.remove()
+                    woaCode.showEvents(todaysEvents)
+                    waitIcon.remove()
                 }
-            }, 1000)
-
+            }, 250)
         }
         woaCalendar.src = "/Calendar/28118~19555" + woaCode.isLocal
         document.body.appendChild(woaCalendar)
     },
+    showEvents: (selectedEvents) => {
+        let pageEvents = document.getElementById("eventsBody"), calendarArray = [], eventLocation = "Location Not Available"
+        for (let d = 0; d < selectedEvents.length; d++) {
+            calendarArray.push({
+                calTime: woaCode.formatTime(selectedEvents[d].children[0].innerText).getTime(),
+                calTitle: selectedEvents[d].children[1].innerText,
+                calLink: selectedEvents[d].getElementsByTagName("a")[0].href,
+                calLocation: eventLocation
+            })
+        }
+        calendarArray.sort((a, b) => { return a.calTime - b.calTime })
 
+        for (let d = 0; d < calendarArray.length; d++) {
+            let eventLink = document.createElement("a"), eventDiv = document.createElement("div"), nameDiv = document.createElement("div")
+            let timeDiv = document.createElement("div"), placeDiv = document.createElement("div")
+
+            eventLink.href = calendarArray[d].calLink, eventLink.innerHTML = calendarArray[d].calTitle
+            timeDiv.innerText = new Date(calendarArray[d].calTime).toLocaleTimeString()
+            placeDiv.className = "hideFromApp"
+
+            $.get((window.location.hostname !== "localhost") ? calendarArray[d].calLink : "/Calendar/Event/event.html", function () { })
+                .done(function (responseText) {
+                    let woaEvent = new DOMParser().parseFromString(responseText, "text/html")
+                    placeDiv.innerText = woaEvent.getElementsByClassName("clsInput clsBodyText")[0].innerText.trim()
+                })
+                .fail(function () {
+                    placeDiv.innerText = "Event Location Not Avaiable (Error)"
+                })
+                .always(function () {
+                    nameDiv.appendChild(eventLink)
+                    eventDiv.appendChild(nameDiv)
+                    eventDiv.appendChild(timeDiv)
+                    eventDiv.appendChild(placeDiv)
+                    pageEvents.appendChild(eventDiv)
+
+                })
+        }
+        const firstRow = document.getElementById("customContainer").children[1]
+        firstRow.parentNode.insertBefore(document.getElementById("eventsRow"), firstRow)
+        woaCode.ldComplete("calendar")
+    },
     getResourceCenter: () => {
         let myDocs = ["Activities and Event Flyers", "Woodbridge Life Newsletter", "Board Documents - Agendas and Minutes"]
         let myLocallinks = ["/woa_documents.html?ff=contents540434", "/woa_documents.html?ff=contents951754", "/woa_documents.html?ff=contents328201"]
@@ -320,7 +314,6 @@ const woaCode = {
         }
         woaCode.ldComplete("files")
     },
-
     showTheDialog: () => {
         document.getElementById("appDialogTitle").innerText = "My Woodbridge"
         document.getElementById("appDialogBody").innerText = "Test Text"
@@ -401,11 +394,12 @@ const woaCode = {
             (window.location.hostname == "localhost") ? location.replace("woa_contacts.html") : location.replace("/page/28118~1105492")
         })
         $("#eventsBody").on("show.bs.collapse", function () {
-            woaCode.getCalendar()
+            woaCode.getEvents()
         })
     },
 }
 woaCode.showThePage()
+
 
 
 
