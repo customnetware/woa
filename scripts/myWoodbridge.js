@@ -101,14 +101,16 @@ const woaCode = {
                     currentFldr.href = "https://ourwoodbridge.net/ResourceCenter/28118~" + fileFolderID.replace("contents", "")
 
 
-                    rightRow.style.float = "right"
+
                     leftRow.appendChild(currentDoc)
                     rightRow.appendChild(currentFldr)
+
                     document.getElementById("recentFiles").appendChild(rightRow)
-                    document.getElementById("recentFiles").appendChild(leftRow)
+    document.getElementById("recentFiles").appendChild(leftRow)                
 
 
-                } document.getElementById("recentFiles").appendChild(document.createElement("hr"))
+                } 
+                document.getElementById("recentFiles").appendChild(document.createElement("hr"))
             })
     },
     getDiscussionGroups: () => {

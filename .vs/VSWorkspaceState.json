@@ -1,11 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\css",
-    "\\Member",
     "\\Member\\Contact",
     "\\scripts"
   ],
-  "SelectedNode": "\\loadTest.html",
+  "SelectedNode": "\\scripts\\myWoodbridge.js",
   "PreviewInSolutionExplorer": false
 }
