@@ -93,23 +93,13 @@ const woaCode = {
                     let currentDoc = document.createElement("a"), currentFldr = document.createElement("a")
                     let currentDocId = documents.getElementById(docArray[p]).id.replace("d", "")
                     let currentDocName = documents.getElementById(docArray[p]).innerText, currentDocUrl = doclink.replace("0000000", currentDocId)
-
-                    currentDoc.innerHTML = currentDocName
-                    currentDoc.href = currentDocUrl
-
-                    currentFldr.innerHTML = folderName
                     currentFldr.href = "https://ourwoodbridge.net/ResourceCenter/28118~" + fileFolderID.replace("contents", "")
-
-
-
-                    leftRow.appendChild(currentDoc)
+                    currentDoc.innerHTML = currentDocName, currentDoc.href = currentDocUrl, currentFldr.innerHTML = folderName
                     rightRow.appendChild(currentFldr)
-
+                    leftRow.appendChild(currentDoc)
                     document.getElementById("recentFiles").appendChild(rightRow)
-    document.getElementById("recentFiles").appendChild(leftRow)                
-
-
-                } 
+                    document.getElementById("recentFiles").appendChild(leftRow)
+                }
                 document.getElementById("recentFiles").appendChild(document.createElement("hr"))
             })
     },
