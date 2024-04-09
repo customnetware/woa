@@ -121,7 +121,6 @@ const woaContact = {
         return getPageFromCache
     },
 }
-alert(window.location.pathname)
 woaContact.addHTML(3, 3)
 woaContact.getContactHdr()
 woaContact.getContacts()
