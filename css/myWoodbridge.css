@@ -1,0 +1,73 @@
+.clsHeader {
+    display: none !important;
+}
+
+#woaContainer {
+    margin-bottom: 20px !important;
+}
+
+.notifyHeader {
+    font-size: 1.2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #494949;
+    width: 100%;
+    float: left;
+    display: block;
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+}
+
+#woaHeaderRow {
+    width: 100%;
+    float: left;
+    padding-top: 10px;
+    margin-bottom: 15px;
+}
+
+    #woaHeaderRow p {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #woaHeaderRow img {
+        width: 110px;
+        float: left !important;
+        margin-right: 20px;
+        box-shadow: 5px 8px 8px 2px grey;
+    }
+
+#recentEmails, #recentFiles, #recentPosts {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+    #recentEmails span:before {
+        font-family: 'FontAwesome';
+        font-size: 1.25em;
+        content: "\f003";
+        padding-right: 10px;
+    }
+
+    #recentPosts span:before {
+        font-family: 'FontAwesome';
+        font-size: 1.25em;
+        content: "\f0e6";
+        padding-right: 10px;
+    }
+
+    #recentFiles span:first-child:before {
+        font-family: 'FontAwesome';
+        font-size: 1.25em;
+        content: "\f0c5";
+        padding-right: 10px;
+    }
+
+    #recentFiles span {
+        display: block;
+    }
+
+    #recentFiles hr {
+        height: 2px;
+        margin: 3px
+    }
