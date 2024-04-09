@@ -1,8 +1,8 @@
 const woaCode = {
     isLocal: (window.location.hostname == "localhost") ? ".html" : "",
-    addHTML: () => {
-        let divIDs = ["recentFiles", "recentEmails", "recentPosts"]
-        let divTitles = ["Recent Documents", "Recent Association Emails", "Recent Comments"]
+    addHTML: (start,end) => {
+        let divIDs = ["recentFiles", "recentEmails", "recentPosts", "officeContacts"]
+        let divTitles = ["Recent Documents", "Recent Association Emails", "Recent Comments", "Clubhouse Office Contacts"]
         let woaPageContent = document.getElementsByClassName("clsBodyText")[0]
         let woaContainer = document.createElement("div")
         let woaHeaderRow = document.createElement("div")
@@ -22,7 +22,7 @@ const woaCode = {
         woaContainer.appendChild(woaHeaderRow)
 
 
-        for (let p = 0; p < divIDs.length; p++) {
+        for (let p = start; p <= end; p++) {
             let notificationDiv = document.createElement("div")
             let notificationHdr = document.createElement("span")
 
@@ -159,7 +159,7 @@ const woaCode = {
         })
     },
 }
-woaCode.addHTML()
+woaCode.addHTML(0,2)
 woaCode.getProfile()
 woaCode.getDiscussionGroups()
 woaCode.getEmails()
