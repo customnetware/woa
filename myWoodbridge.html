@@ -38,12 +38,7 @@
         woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/myWoodbridge.js" : "https://customnetware.github.io/woa/scripts/myWoodbridge.js"
         document.body.appendChild(woaScripts)
 
-        checkForScript(window, "load", function () {
-            if (document.getElementById("customContainer") == null) {
-                location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
-            }
-        });
-
+        checkForScript(woaScripts, "error", function () { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") })
     </script>
 </body>
 </html>
