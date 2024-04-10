@@ -2,6 +2,7 @@ const woaContainer = document.createElement("div")
 const isLocal = (window.location.hostname == "localhost") ? ".html" : ""
 woaContainer.id = "customContainer", woaContainer.className = "container"
 document.getElementsByClassName("clsBodyText")[0].appendChild(woaContainer)
+alert(window.location.pathname)
 
 const woaContact = {
 
