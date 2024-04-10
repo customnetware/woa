@@ -2,7 +2,9 @@ const woaContainer = document.createElement("div")
 const isLocal = (window.location.hostname == "localhost") ? ".html" : ""
 woaContainer.id = "customContainer", woaContainer.className = "container"
 document.getElementsByClassName("clsBodyText")[0].appendChild(woaContainer)
-alert(window.location.pathname)
+
+let pageSource = (window.location.pathname == "/page/28118~1105492" || window.location.pathname == "/woa_contacts.html") ? "contacts" : ""
+
 
 const woaContact = {
 
@@ -23,7 +25,7 @@ const woaContact = {
         woaHeaderGreeting.paddingBottom = "50px"
 
         woaHeaderRow.appendChild(woaHeaderGreeting)
-        if (end < 3) { woaHeaderRow.appendChild(woaHeaderImg) }
+        if (end !== 3) { woaHeaderRow.appendChild(woaHeaderImg) }
         woaHeaderRow.appendChild(woaHeaderTxt)
         woaContainer.appendChild(woaHeaderRow)
 
@@ -39,7 +41,7 @@ const woaContact = {
             woaContainer.appendChild(notificationDiv)
         }
 
-   
+
 
     },
     getContactHdr: () => {
@@ -122,8 +124,11 @@ const woaContact = {
         return getPageFromCache
     },
 }
-woaContact.addHTML(3, 3)
-woaContact.getContactHdr()
-woaContact.getContacts()
+if (pageSource == "contacts") {
+    woaContact.addHTML(3, 3)
+    woaContact.getContactHdr()
+    woaContact.getContacts()
+}
+
 
 
