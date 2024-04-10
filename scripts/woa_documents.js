@@ -22,7 +22,7 @@ const woaDocs = {
         woaHeaderGreeting.paddingBottom = "50px"
 
         woaHeaderRow.appendChild(woaHeaderGreeting)
-        if (end <3) { woaHeaderRow.appendChild(woaHeaderImg) }
+        if (end < 3) { woaHeaderRow.appendChild(woaHeaderImg) }
         woaHeaderRow.appendChild(woaHeaderTxt)
         woaContainer.appendChild(woaHeaderRow)
 
@@ -52,10 +52,7 @@ const woaDocs = {
     },
     getPortalDocuments: (docID, getLatest) => {
 
-        if (urlParams.get("ff") !== null) {
-            docID = urlParams.get("ff")
-            getLatest=true
-        } 
+
 
         let docArray = []
         let pageDocuments = document.getElementById("documents")
@@ -141,4 +138,6 @@ const woaDocs = {
 
 woaDocs.addHTML(4, 4)
 woaDocs.getDocumentHdr()
-woaDocs.getPortalDocuments("",false)
+if (urlParams.get("ff") !== null) {
+    woaDocs.getPortalDocuments(urlParams.get("ff"), true)
+} else { woaDocs.getPortalDocuments("", false) }
