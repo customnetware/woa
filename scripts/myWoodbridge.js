@@ -105,7 +105,7 @@ const woaCode = {
                     let currentDoc = document.createElement("a"), currentFldr = document.createElement("a")
                     let currentDocId = documents.getElementById(docArray[p]).id.replace("d", "")
                     let currentDocName = documents.getElementById(docArray[p]).innerText, currentDocUrl = doclink.replace("0000000", currentDocId)
-                    currentFldr.href = (isLocal == "") ? "/page/28118~1101528?ff=" + fileFolderID : "/woa_documents.html?ff=" + fileFolderID
+                    currentFldr.href = (isLocal == "") ? "/page/28118~1105440?ff=" + fileFolderID : "/woa_documents.html?ff=" + fileFolderID
                     currentDoc.innerHTML = currentDocName, currentDoc.href = currentDocUrl, currentFldr.innerHTML = folderName
                     rightRow.appendChild(currentFldr)
                     leftRow.appendChild(currentDoc)
