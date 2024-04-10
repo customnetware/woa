@@ -10,8 +10,8 @@ const woaContact = {
 
     addHTML: (start, end) => {
 
-        let divIDs = ["recentFiles", "recentEmails", "recentPosts", "officeContacts"]
-        let divTitles = ["Recent Documents", "Recent Association Emails", "Recent Comments", "Clubhouse Office Contacts"]
+        let divIDs = ["recentFiles", "recentEmails", "recentPosts", "officeContacts", "documents"]
+        let divTitles = ["Recent Documents", "Recent Association Emails", "Recent Comments", "Clubhouse Office Contacts", "My Documents"]
 
 
         let woaHeaderRow = document.createElement("div")
@@ -25,7 +25,7 @@ const woaContact = {
         woaHeaderGreeting.paddingBottom = "50px"
 
         woaHeaderRow.appendChild(woaHeaderGreeting)
-        if (end !== 3) { woaHeaderRow.appendChild(woaHeaderImg) }
+        if (end !== 3 && end !== 4) { woaHeaderRow.appendChild(woaHeaderImg) }
         woaHeaderRow.appendChild(woaHeaderTxt)
         woaContainer.appendChild(woaHeaderRow)
 
