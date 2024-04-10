@@ -18,20 +18,26 @@
     </div><div class="clsBodyText"></div>
     <script>
         function checkForScript(element, evnt, funct) {
-            if (element.attachEvent) { return element.attachEvent('on' + evnt, funct) }
-            else { return element.addEventListener(evnt, funct, false) }
+            if (element.attachEvent) { return element.attachEvent('on' + evnt, funct) } else { return element.addEventListener(evnt, funct, false) }
         }
         let portalHead = document.head || document.getElementsByTagName("head")[0]
 
-        let woaStyles = document.createElement("link"); woaStyles.rel = "stylesheet"
-        woaStyles.href = (window.location.hostname == "localhost") ? "/css/myWoodbridge.css" : "https://customnetware.github.io/woa/css/myWoodbridge.css"        
+        let woaStyles = document.createElement("link")
+        woaStyles.href = (window.location.hostname == "localhost") ? "/css/myWoodbridge.css" : "https://customnetware.github.io/woa/css/myWoodbridge.css"
+        woaStyles.rel = "stylesheet"
         portalHead.appendChild(woaStyles)
 
-        let woaScripts = document.createElement("script"); woaScripts.type = "text/javascript"
-        woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/woa_documents.js" : "https://customnetware.github.io/woa/scripts/woa_documents.js"
+        let woaScripts = document.createElement("script")
+        woaScripts.type = "text/javascript"
+        woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/myWoodbridge.js" : "https://customnetware.github.io/woa/scripts/myWoodbridge.js"
         document.body.appendChild(woaScripts)
 
-        checkForScript(window, "load", function () { if (document.getElementById("customContainer") == null) { location.replace("https://ourwoodbridge.net/resourcecenter/28118/resource-center") } });
+        checkForScript(window, "load", function () {
+            if (document.getElementById("customContainer") == null) {
+                location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page")
+            }
+        });
+
     </script>
 </body>
 </html>
