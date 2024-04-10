@@ -18,6 +18,8 @@ switch (window.location.pathname) {
     default:
         pageSource = "home"
         break
+
+        (isLocal == "") ? "/page/28118~1101528?ff=" + fileFolderID : "/woa_documents.html?ff=" + fileFolderID
 }
 const woaCode = {
     addHTML: (start, end) => {
@@ -103,12 +105,13 @@ const woaCode = {
                     let currentDoc = document.createElement("a"), currentFldr = document.createElement("a")
                     let currentDocId = documents.getElementById(docArray[p]).id.replace("d", "")
                     let currentDocName = documents.getElementById(docArray[p]).innerText, currentDocUrl = doclink.replace("0000000", currentDocId)
-                    currentFldr.href = "https://ourwoodbridge.net/ResourceCenter/28118~" + fileFolderID.replace("contents", "")
+                    currentFldr.href = (isLocal == "") ? "/page/28118~1101528?ff=" + fileFolderID : "/woa_documents.html?ff=" + fileFolderID
                     currentDoc.innerHTML = currentDocName, currentDoc.href = currentDocUrl, currentFldr.innerHTML = folderName
                     rightRow.appendChild(currentFldr)
                     leftRow.appendChild(currentDoc)
                     document.getElementById("recentFiles").appendChild(rightRow)
                     document.getElementById("recentFiles").appendChild(leftRow)
+
                 }
                 document.getElementById("recentFiles").appendChild(document.createElement("hr"))
             })
@@ -257,24 +260,17 @@ const woaCode = {
 
     },
     getPortalDocuments: (docID, getLatest) => {
-
-
-
         let docArray = []
         let pageDocuments = document.getElementById("documents")
         let waitSpan = document.createElement("i")
         waitSpan.className = "fa fa-refresh fa-fw fa-spin fa-4x waitClass"
-
-
         while (pageDocuments.firstChild) { pageDocuments.removeChild(pageDocuments.firstChild) }
         pageDocuments.appendChild(waitSpan)
-
         if (docID === "") { docID = "contentInner" }
         $.get("/resourcecenter/28118/resource-center" + isLocal, function () { })
             .done(function (responseText) {
                 waitSpan.remove()
                 let documents = new DOMParser().parseFromString(responseText, "text/html")
-
                 if (getLatest == true) {
                     let selectedDocs = documents.getElementById(docID).getElementsByTagName("span")
                     for (let d = 0; d < selectedDocs.length; d++) {
