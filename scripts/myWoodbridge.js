@@ -42,33 +42,19 @@ const woaCode = {
             let userContent = new DOMParser().parseFromString(responseTXT, "text/html")
             let userName = new DOMParser().parseFromString(responseNM, "text/html")
 
-
             document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].innerText = greeting + ", " + userName.getElementsByName("fname")[0].value + " " + userName.getElementsByName("lname")[0].value
             document.getElementById("woaHeaderRow").getElementsByTagName("img")[0].src = imageFile.getElementsByTagName("img")[0].src
             document.getElementById("woaHeaderRow").getElementsByTagName("span")[0].innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
 
-            let helpIcon = document.createElement("a")
-            helpIcon.style.float = "right"
-            helpIcon.style.paddingTop = "5px"
-            helpIcon.className = "fa fa-question-circle-o fa-fw fa-lg"
-
-            let mailIcon = document.createElement("a")
-            mailIcon.style.float = "right"
-            mailIcon.style.paddingTop = "5px"
-            mailIcon.className = "fa fa-envelope-o fa-fw fa-lg"
-
-            let postIcon = document.createElement("a")
-            postIcon.style.float = "right"
-            postIcon.style.paddingTop = "5px"
-            postIcon.className = "fa fa-comments fa-fw fa-lg"
-
+            let helpIcon = document.createElement("a"), mailIcon = document.createElement("a"), postIcon = document.createElement("a")
+            helpIcon.className = "fa fa-question-circle-o fa-fw fa-lg", mailIcon.className = "fa fa-envelope-o fa-fw fa-lg", postIcon.className = "fa fa-comments-o fa-fw fa-lg"
+            helpIcon.href = "https://ourwoodbridge.net/Form/28118~327323/Social-Media-Help"
+            postIcon.href = "javascript:AV.EditorLauncher.discussionTopic('','8364', '20703','new','New Topic','lnkAddTopic');"
+            mailIcon.href ="https://ourwoodbridge.net/Form/28118~116540/Ask-A-Manager"
             document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(helpIcon)
-
             document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(mailIcon)
             document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(postIcon)
-
         })
-
     },
     getEmails: () => {
         $.get("/homepage/28118/resident-home-page" + isLocal, function () { })
@@ -260,14 +246,15 @@ const woaCode = {
             document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].innerText = "My Documents"
             document.getElementById("woaHeaderRow").getElementsByTagName("span")[0].innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
             let sortIcon = document.createElement("a")
-            let sortText = document.createElement("span")
-            sortText.appendChild(document.createTextNode("Sort"))
-            sortText.style.float = "right"
-            sortIcon.style.float = "right"
-            sortIcon.style.paddingTop = "5px"
-            sortIcon.className = "fa fa-sort fa-fw"
+            let sortText = document.createElement("a")
+            sortText.innerHTML="Sort"
+
+            sortText.href = "javascript:woaCode.screenSort()"
+            sortIcon.href = "javascript:woaCode.screenSort()"
+            sortIcon.className = "fa fa-sort fa-fw fa-lg"
+document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(sortIcon)
             document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(sortText)
-            document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(sortIcon)
+            
         })
 
     },
