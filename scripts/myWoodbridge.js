@@ -3,24 +3,6 @@ const isLocal = (window.location.hostname == "localhost") ? ".html" : ""
 const urlParams = new URLSearchParams(window.location.search)
 woaContainer.id = "customContainer", woaContainer.className = "container"
 document.getElementsByClassName("clsBodyText")[0].appendChild(woaContainer)
-let pageSource
-switch (window.location.pathname) {
-    case "/page/28118~1105492":
-    case "/woa_contacts.html":
-        pageSource = "contacts"
-        break
-    case "/page/28118~1105440":
-    case "/woa_documents.html":
-        pageSource = "documents"
-        break
-    case "/page/28118~1101528":
-    case "/myWoodbridge.html":
-    default:
-        pageSource = "home"
-        break
-
-        (isLocal == "") ? "/page/28118~1101528?ff=" + fileFolderID : "/woa_documents.html?ff=" + fileFolderID
-}
 const woaCode = {
     addHTML: (start, end) => {
         let divIDs = ["recentFiles", "recentEmails", "recentPosts", "officeContacts", "documents"]
@@ -60,9 +42,30 @@ const woaCode = {
             let userContent = new DOMParser().parseFromString(responseTXT, "text/html")
             let userName = new DOMParser().parseFromString(responseNM, "text/html")
 
+
             document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].innerText = greeting + ", " + userName.getElementsByName("fname")[0].value + " " + userName.getElementsByName("lname")[0].value
             document.getElementById("woaHeaderRow").getElementsByTagName("img")[0].src = imageFile.getElementsByTagName("img")[0].src
             document.getElementById("woaHeaderRow").getElementsByTagName("span")[0].innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
+
+            let helpIcon = document.createElement("a")
+            helpIcon.style.float = "right"
+            helpIcon.style.paddingTop = "5px"
+            helpIcon.className = "fa fa-question-circle-o fa-fw fa-lg"
+
+            let mailIcon = document.createElement("a")
+            mailIcon.style.float = "right"
+            mailIcon.style.paddingTop = "5px"
+            mailIcon.className = "fa fa-envelope-o fa-fw fa-lg"
+
+            let postIcon = document.createElement("a")
+            postIcon.style.float = "right"
+            postIcon.style.paddingTop = "5px"
+            postIcon.className = "fa fa-comments fa-fw fa-lg"
+
+            document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(helpIcon)
+
+            document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(mailIcon)
+            document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(postIcon)
 
         })
 
@@ -256,6 +259,15 @@ const woaCode = {
             let userContent = new DOMParser().parseFromString(responseTXT, "text/html")
             document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].innerText = "My Documents"
             document.getElementById("woaHeaderRow").getElementsByTagName("span")[0].innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
+            let sortIcon = document.createElement("a")
+            let sortText = document.createElement("span")
+            sortText.appendChild(document.createTextNode("Sort"))
+            sortText.style.float = "right"
+            sortIcon.style.float = "right"
+            sortIcon.style.paddingTop = "5px"
+            sortIcon.className = "fa fa-sort fa-fw"
+            document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(sortText)
+            document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(sortIcon)
         })
 
     },
@@ -337,24 +349,28 @@ const woaCode = {
         }
     },
 }
-if (pageSource == "home") {
-    woaCode.addHTML(0, 2)
-    woaCode.getProfile()
-    woaCode.getDiscussionGroups()
-    woaCode.getEmails()
-    woaCode.getFiles("540434")
-    woaCode.getFiles("328201")
-    woaCode.getFiles("951754")
+
+function showThePage(pageSource) {
+    if (pageSource == "home") {
+        woaCode.addHTML(0, 2)
+        woaCode.getProfile()
+        woaCode.getDiscussionGroups()
+        woaCode.getEmails()
+        woaCode.getFiles("540434")
+        woaCode.getFiles("328201")
+        woaCode.getFiles("951754")
+    }
+    if (pageSource == "contacts") {
+        woaCode.addHTML(3, 3)
+        woaCode.getContactHdr()
+        woaCode.getContacts()
+    }
+    if (pageSource == "documents") {
+        woaCode.addHTML(4, 4)
+        woaCode.getDocumentHdr()
+        if (urlParams.get("ff") !== null) {
+            woaCode.getPortalDocuments(urlParams.get("ff"), true)
+        } else { woaCode.getPortalDocuments("", false) }
+    }
 }
-if (pageSource == "contacts") {
-    woaCode.addHTML(3, 3)
-    woaCode.getContactHdr()
-    woaCode.getContacts()
-}
-if (pageSource == "documents") {
-    woaCode.addHTML(4, 4)
-    woaCode.getDocumentHdr()
-    if (urlParams.get("ff") !== null) {
-        woaCode.getPortalDocuments(urlParams.get("ff"), true)
-    } else { woaCode.getPortalDocuments("", false) }
-}
+

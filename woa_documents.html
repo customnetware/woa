@@ -12,7 +12,7 @@
 <body>
     <div style="width: 100%; float: left; padding:20px; margin-top:20px">
         <div id="resDisplayName" style="float: left; display: none;"></div>
-        <div class="association-name"><a href="/woa_dashboard.html">My Woodbridge</a></div>
+        <div class="association-name"><a href="/myWoodbridge.html">My Woodbridge</a></div>
         <div class="clsHeader" style="float:left; padding-right:25px"></div>
         <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
     </div><div class="clsBodyText"></div>
@@ -32,6 +32,7 @@
         woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/myWoodbridge.js" : "https://customnetware.github.io/woa/scripts/myWoodbridge.js"
         document.body.appendChild(woaScripts)
 
+        checkForScript(woaScripts, "load", function () { showThePage("documents") })
         checkForScript(woaScripts, "error", function () { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") })
     </script>
 </body>
