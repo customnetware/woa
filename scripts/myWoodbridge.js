@@ -47,7 +47,7 @@ const woaCode = {
             document.getElementById("woaHeaderRow").getElementsByTagName("span")[0].innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
 
             let helpIcon = document.createElement("a"), mailIcon = document.createElement("a"), postIcon = document.createElement("a")
-            helpIcon.className = "fa fa-question-circle-o fa-fw fa-lg", mailIcon.className = "fa fa-envelope-o fa-fw fa-lg", postIcon.className = "fa fa-comments-o fa-fw fa-lg"
+            helpIcon.className = "fa fa-question-circle-o fa-fw fa-lg headerLinks", mailIcon.className = "fa fa-envelope-o fa-fw fa-lg headerLinks", postIcon.className = "fa fa-comments-o fa-fw fa-lg headerLinks"
             helpIcon.href = "https://ourwoodbridge.net/Form/28118~327323/Social-Media-Help"
             postIcon.href = "javascript:AV.EditorLauncher.discussionTopic('','8364', '20703','new','New Topic','lnkAddTopic');"
             mailIcon.href ="https://ourwoodbridge.net/Form/28118~116540/Ask-A-Manager"
@@ -251,7 +251,8 @@ const woaCode = {
 
             sortText.href = "javascript:woaCode.screenSort()"
             sortIcon.href = "javascript:woaCode.screenSort()"
-            sortIcon.className = "fa fa-sort fa-fw fa-lg"
+            sortText.className ="headerLinks"
+            sortIcon.className = "fa fa-sort fa-fw fa-lg headerLinks"
 document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(sortIcon)
             document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(sortText)
             

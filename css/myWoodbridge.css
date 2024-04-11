@@ -24,7 +24,7 @@
     margin-bottom: 15px;
 }
 
-    #woaHeaderRow a {
+    .headerLinks {
         float: right;
         vertical-align:middle !important;
         text-decoration:none !important;
