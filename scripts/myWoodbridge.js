@@ -50,7 +50,7 @@ const woaCode = {
             helpIcon.className = "fa fa-question-circle-o fa-fw fa-lg headerLinks", mailIcon.className = "fa fa-envelope-o fa-fw fa-lg headerLinks", postIcon.className = "fa fa-comments-o fa-fw fa-lg headerLinks"
             helpIcon.href = "https://ourwoodbridge.net/Form/28118~327323/Social-Media-Help"
             postIcon.href = "javascript:AV.EditorLauncher.discussionTopic('','8364', '20703','new','New Topic','lnkAddTopic');"
-            mailIcon.href ="https://ourwoodbridge.net/Form/28118~116540/Ask-A-Manager"
+            mailIcon.href = "https://ourwoodbridge.net/Form/28118~116540/Ask-A-Manager"
             document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(helpIcon)
             document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(mailIcon)
             document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(postIcon)
@@ -240,23 +240,22 @@ const woaCode = {
 
     },
     getDocumentHdr: () => {
-        let textFile = $.get("/news/28118~799897" + isLocal, function () { })
-        $.when(textFile).done(function (responseTXT) {
-            let userContent = new DOMParser().parseFromString(responseTXT, "text/html")
-            document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].innerText = "My Documents"
-            document.getElementById("woaHeaderRow").getElementsByTagName("span")[0].innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
-            let sortIcon = document.createElement("a")
-            let sortText = document.createElement("a")
-            sortText.innerHTML="Sort"
+        document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].innerText = "My Documents"
+        let sortIcon = document.createElement("a")
+        let sortText = document.createElement("a")
+        sortText.innerHTML = "Sort"
+        sortText.href = "javascript:woaCode.screenSort()"
+        sortIcon.href = "javascript:woaCode.screenSort()"
+        sortText.className = "headerLinks"
+        sortIcon.className = "fa fa-sort fa-fw fa-lg headerLinks"
+        document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(sortIcon)
+        document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(sortText)
 
-            sortText.href = "javascript:woaCode.screenSort()"
-            sortIcon.href = "javascript:woaCode.screenSort()"
-            sortText.className ="headerLinks"
-            sortIcon.className = "fa fa-sort fa-fw fa-lg headerLinks"
-document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(sortIcon)
-            document.getElementById("woaHeaderRow").getElementsByTagName("div")[0].appendChild(sortText)
-            
-        })
+        //let textFile = $.get("/news/28118~799897" + isLocal, function () { })
+        //$.when(textFile).done(function (responseTXT) {
+        //    let userContent = new DOMParser().parseFromString(responseTXT, "text/html")
+        //    document.getElementById("woaHeaderRow").getElementsByTagName("span")[0].innerHTML = userContent.getElementById("contentInner").children[2].innerHTML
+        //})
 
     },
     getPortalDocuments: (docID, getLatest) => {
