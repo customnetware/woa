@@ -81,8 +81,7 @@ const woaCode = {
     getPosts: (portalContent) => {
         let groupPageLink = portalContent.getElementById("titleEditForum")
         let forumID = /\(([^)]+)\)/.exec(groupPageLink.href)[1].split(",")
-        let posts = portalContent.getElementsByClassName("ThreadContainer")[0], forumArray = []
-    
+        let posts = portalContent.getElementsByClassName("ThreadContainer")[0], forumArray = []    
         for (let x = 0; x < posts.childElementCount; x++) {
             let post = posts.children[x]
             let lastDate = new Date(post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", ""))
@@ -97,7 +96,6 @@ const woaCode = {
                 numOfPost: comments.length
             })
         }
-
         if (forumArray.length > 0) {
             if (document.getElementById("postsWait") !== null) { document.getElementById("postsWait").remove() }
             forumArray.sort((a, b) => { return a.postSort - b.postSort })
@@ -107,23 +105,8 @@ const woaCode = {
                     let post = document.createElement("li")
                     let postLink = document.createElement("a")
                     postLink.innerHTML = forumArray[p].subject + " (Comments: " + forumArray[p].numOfPost + ") - " + forumArray[p].postAuthor
-
                     postLink.href  = "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
                     post.appendChild(postLink)
-                    //let reply = document.createElement("a")
-                    //let view = document.createElement("a")
-                    //post.style.marginBottom = "15px"
-                    //post.style.paddingLeft = "0px"
-                    //post.innerHTML = "<b>" + forumArray[p].subject + " (Comments: " + forumArray[p].numOfPost + ") </b>"
-                    //reply.href = forumArray[p].replyLink
-                    //reply.innerHTML = forumArray[p].postAuthor + "  | Reply"
-                    //view.href = "javascript:woaCode.showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
-                    //view.innerHTML = " | View Comments"
-                    //post.appendChild(document.createElement("br"))
-                    //post.appendChild(document.createTextNode(forumArray[p].postContent))
-                    //post.appendChild(document.createElement("br"))
-                    //post.appendChild(reply)
-                    //post.appendChild(view)
                     document.getElementById("recentPosts").getElementsByTagName("ul")[0].appendChild(post)
                 }
             }
@@ -141,12 +124,11 @@ function showComments(selectedPostID, groupID) {
     while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
     $.get(woaCode.pageLocation("/Discussion/28118~" + groupID), function () { })
         .done(function (responseText) {
+           
             let forum = new DOMParser().parseFromString(responseText, "text/html")
             let comments = forum.getElementById(selectedPostID.replace("lnkTopicReply", "contents"))
             let title = forum.getElementById(selectedPostID.replace("lnkTopicReply", "msgHeader") + " ")
-
-            let forumInfo = forum.getElementById("titleEditForum").innerHTML 
-
+    
 
             let topic = comments.getElementsByClassName("respDiscTopic")
             let replyText = comments.getElementsByClassName("respDiscChildPost")
@@ -156,9 +138,8 @@ function showComments(selectedPostID, groupID) {
             commentSpan.style.fontWeight = "600"
             commentSpan.innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText + "<hr />"
             document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = title.innerText
-
+            document.getElementById("appDialog").getElementsByTagName("button")[0].onclick = forum.getElementById(selectedPostID).href
             commentArea.appendChild(commentSpan)
-
             for (let p = 0; p < replyText.length; p++) {
                 let replySpan = document.createElement("span")
                 let authorSpan = document.createElement("span")
