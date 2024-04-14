@@ -10,30 +10,115 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-    <div style="width: 100%; float: left; padding:20px; margin-top:20px">
+    <div class="container-fluid">
+
         <div id="resDisplayName" style="float: left; display: none;"></div>
-        <div class="association-name"><a href="/myWoodbridge.html">My Woodbridge</a></div>
-        <div class="clsHeader" style="float:left; padding-right:25px"></div>
-        <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
-    </div><div class="clsBodyText"></div>
-    <script>
-        function checkForScript(element, evnt, funct) {
-            if (element.attachEvent) { return element.attachEvent('on' + evnt, funct) } else { return element.addEventListener(evnt, funct, false) }
+        <div class="association-name" style="width:100%">
+            <a href="/myWoodbridge.html">My Woodbridge</a>
+            <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
+        </div>
+        <div class="clsHeader" style="float: left; padding-right: 25px; width: 100%">My Documents</div>
+
+
+        <div class="clsBodyText"></div>
+    </div>
+    <style>
+        #customContainer {
+            width: 100% !important;
+            float: left;
+            border-top: 1px solid black;
+            padding-top: 5px;
         }
-        let portalHead = document.head || document.getElementsByTagName("head")[0]
 
-        let woaStyles = document.createElement("link")
-        woaStyles.href = (window.location.hostname == "localhost") ? "/css/myWoodbridge.css" : "https://customnetware.github.io/woa/css/myWoodbridge.css"
-        woaStyles.rel = "stylesheet"
-        portalHead.appendChild(woaStyles)
+            #customContainer span {
+                padding-left: 10px;
+                padding-bottom: 5px;
+                padding-top: 5px;
+                font-weight: 600;
+                display: block;
+            }
 
-        let woaScripts = document.createElement("script")
-        woaScripts.type = "text/javascript"
-        woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/myWoodbridge.js" : "https://customnetware.github.io/woa/scripts/myWoodbridge.js"
-        document.body.appendChild(woaScripts)
+                #customContainer span:nth-child(odd) {
+                    background-color: #eceeef
+                }
 
-        checkForScript(woaScripts, "load", function () { showThePage("documents") })
-        checkForScript(woaScripts, "error", function () { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") })
+            #customContainer a:nth-child(2n) {
+                float: right;
+            }
+
+        .waitClass {
+            width: 100%;
+            color: lightgray;
+            display: block;
+            margin-top: 50px;
+        }
+    </style>
+    <script>
+        const woaContainer = document.createElement("div")
+        woaContainer.id = "customContainer"
+        document.getElementsByClassName("clsBodyText")[0].appendChild(woaContainer)
+        let waitSpan = document.createElement("i")
+        waitSpan.className = "fa fa-refresh fa-fw fa-spin fa-2x waitClass"
+        woaContainer.appendChild(waitSpan)
+
+        let testSpan = document.createElement("span")
+        testSpan.style.float = "right"
+        testSpan.innerText = "In Folder"
+        document.getElementsByClassName("clsHeader")[0].appendChild(testSpan)
+
+        let boardroom = "contents328201", flyers = "contents540434", newsletters = "contents951754"
+        let boardroomArray = [], flyersArray = [], newsletterArray = [], allArrays = [boardroomArray, flyersArray, newsletterArray]
+        let fileLink = "https://ourwoodbridge.net/ResourceCenter/Download/28118?doc_id=0000000&print=1&view=1"
+        let folderLink = "https://ourwoodbridge.net/ResourceCenter/28118~"
+        let isLocal = (window.location.hostname == "localhost") ? ".html" : ""
+        function isDescendant(parent, child) {
+            let isParent = child.parentElement
+            while (isParent != null) {
+                if (isParent == parent) { return true }
+                isParent = isParent.parentElement
+            }
+            return false
+        }
+
+        $.get("/resourcecenter/28118/resource-center" + isLocal)
+            .done(function (responseTXT) {
+                let allDocs = new DOMParser().parseFromString(responseTXT, "text/html")
+                let docs = allDocs.querySelectorAll('[id^="d"]')
+                for (let i = 0; i < docs.length; i++) {
+                    let currentDoc = docs[i].innerHTML.toLowerCase()
+                    let reportFld01 = isDescendant(allDocs.getElementById(boardroom), docs[i])
+                    let reportFld02 = isDescendant(allDocs.getElementById(newsletters), docs[i])
+                    let reportFld03 = isDescendant(allDocs.getElementById(flyers), docs[i])
+                    let parentId = docs[i].parentElement.parentElement.parentElement.parentElement.id
+                    let inFolder = allDocs.getElementById(parentId.replace("contents", "f")).innerHTML
+                    let folderURL = folderLink + parentId.replace("contents", "")
+                    let fileURL = fileLink.replace("0000000", docs[i].id.replace("d", ""))
+                    if (reportFld01 == true && docs[i].innerHTML.includes("2024") && (currentDoc.includes("agenda") || currentDoc.includes("minutes") || currentDoc.includes("packet"))) {
+                        boardroomArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL)
+                    }
+                    if (reportFld02 == true) { newsletterArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL) }
+                    if (reportFld03 == true) { flyersArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL) }
+                }
+                boardroomArray.sort()
+                boardroomArray.reverse()
+                newsletterArray.reverse()
+                for (let a = 0; a < allArrays.length; a++) {
+                    for (let d = 0, s = 1; d < allArrays[a].length && s <= 5; d++, s++) {
+                        let linkSpan = document.createElement("span")
+                        let docLink = document.createElement("a")
+                        docLink.innerHTML = allArrays[a][d].split("|")[0].trim()
+                        docLink.href = allArrays[a][d].split("|")[1].trim()
+                        let inLink = document.createElement("a")
+                        inLink.innerHTML = allArrays[a][d].split("|")[2].trim()
+                        inLink.href = allArrays[a][d].split("|")[3].trim()
+                        linkSpan.appendChild(docLink)
+                        linkSpan.appendChild(inLink)
+                        woaContainer.appendChild(linkSpan)
+                    }
+                }
+                waitSpan.remove()
+            })
+
     </script>
 </body>
 </html>

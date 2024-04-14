@@ -11,30 +11,67 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-    <div style="width: 100%; float: left; margin-bottom:20px; margin-top:20px">
-        <div id="resDisplayName" style="float: left; display: none;"></div>
-        <div class="association-name"><a href="/myWoodbridge.html">My Woodbridge</a></div>
-        <div class="clsHeader" style="float:left; padding-right:25px"></div>
-        <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
+    <div id="testDiv" style="margin-left: 100px; margin-right: 100px">
+        <div style="width: 100%; float: left; margin-bottom:20px; margin-top:20px">
+            <div id="resDisplayName" style="float: left; display: none;"></div>
+            <div class="association-name"><a href="/myWoodbridge.html">My Woodbridge</a></div>
+            <div class="clsHeader" style="float:left; padding-right:25px"></div>
+            <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
+        </div>
+
+        <div id="woaContainer">
+            <div style="width:100%; float:left; margin-bottom:20px;" id="headerRow">
+                <img id="profileImage" src="" style="width:100px; float:left; margin-right:10px; height:auto" />To make changes to your sign in name or password, phone number, email address, profile image or other personal information stored on this site, click the My Profile button at the top right of this page. (if you are using a mobile device, click or tap the Profile link at the top of the page).  If you have any difficulties using this website <a href="/Form/28118~327323">please click here for help with any issues you may have</a>.  To contact the Silvercreek office, please click here. (If you have an issue that you wish to <a href="/Form/28118~116540">communicatate to the Silvercreek office anonymously, click here.</a>)
+            </div>
+            <div style="width:100%; float:left;" id="recentEmails">
+                <strong>Recent Emails</strong><br>The Woodbridge Homeowners’ Association's portal saves the last three emails sent by our email system (messenger@ourwoodbridge.net). We have extended this capability by saving any emails you viewed when logged into the portal and visit this page. <strong><em><a href="/Form/28118~327323">If you are having issues receiving emails from the Association, click here for help.</a></em></strong> The last three emails sent by the association are listed below. Please note that emails are viewable based on your permission level, if you don't see an email that you think you should, please click here.
+                <div id="emailWait"><span class="fa fa-refresh fa-fw fa-spin"></span>Recent emails are loading...</div>
+                <ul></ul>
+            </div>
+            <div style="width:100%; float:left;" id="recentFiles">
+                <strong>Recent Document Search</strong><br>Our portal's document storage system (Resource Center) can be confusing at times. Resident can use the new Recent Document Search to view the most recent documents uploaded to the Board Room, Flyers (Events or Activities) and Woodbridge Newsletters document folders. The Recent Document Search tool is currently displaying the most recent documents uploaded to the Flyers (Events or Activities) document folder. To view the most recent documents uploaded to the Board Room folder, click here or click here to view the most recent Woodbridge Life Newsletters.
+                <div id="filesWait"><span class="fa fa-refresh fa-fw fa-spin"></span>Recent documents are loading...</div>
+                <ul></ul>
+            </div>
+            <div style="width:100%; float:left" id="recentPosts">
+                <strong>Recent Discussion Group Posts<br></strong>Social media can be a useful tool for those who can avoid the scammers and click bait. But unfortunately, most social media sites are open to everyone including scammers. Your Associations' portal provides discussion groups for resident to share information. These groups are safe because everyone posting or reading the posts are your neighbors. The most recent posts from the portal’s General, Recommendations and Social Media Help discussion groups are listed below.
+                <div id="postsWait"><span class="fa fa-refresh fa-fw fa-spin"></span>Recent comments are loading...</div>
+                <ul></ul>
+            </div>
+            <div class="modal fade" id="appPopUp" tabindex="-1" aria-labelledby="appPopUpLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <strong class="modal-title" id="appPopUpLabel">Application Pop Up</strong>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span class="fa fa-times fa-lg" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="popUpBody"></div>
+                        <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function checkForScript(element, evnt, funct) {
+                if (element.attachEvent) { return element.attachEvent('on' + evnt, funct) } else { return element.addEventListener(evnt, funct, false) }
+            }
+            let portalHead = document.head || document.getElementsByTagName("head")[0]
+
+            let woaStyles = document.createElement("link")
+            woaStyles.href = (window.location.hostname == "localhost") ? "/css/myWoodbridge.css" : "https://customnetware.github.io/woa/css/myWoodbridge.css"
+            woaStyles.rel = "stylesheet"
+            portalHead.appendChild(woaStyles)
+
+            let woaScripts = document.createElement("script")
+            woaScripts.type = "text/javascript"
+            woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/myWoodbridge.js" : "https://customnetware.github.io/woa/scripts/myWoodbridge.js"
+            document.body.appendChild(woaScripts)
+
+            checkForScript(woaScripts, "error", function () { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") })
+        </script>
+    
     </div>
-    <div class="clsBodyText"></div>
-    <script>
-        function checkForScript(element, evnt, funct) {
-            if (element.attachEvent) { return element.attachEvent('on' + evnt, funct) } else { return element.addEventListener(evnt, funct, false) }
-        }
-        let portalHead = document.head || document.getElementsByTagName("head")[0]
-
-        let woaStyles = document.createElement("link")
-        woaStyles.href = (window.location.hostname == "localhost") ? "/css/myWoodbridge.css" : "https://customnetware.github.io/woa/css/myWoodbridge.css"
-        woaStyles.rel = "stylesheet"
-        portalHead.appendChild(woaStyles)
-
-        let woaScripts = document.createElement("script")
-        woaScripts.type = "text/javascript"
-        woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/myWoodbridge.js" : "https://customnetware.github.io/woa/scripts/myWoodbridge.js"
-        document.body.appendChild(woaScripts)
-        checkForScript(woaScripts, "load", function () { showThePage("home") })
-        checkForScript(woaScripts, "error", function () { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") })
-    </script>
 </body>
 </html>
