@@ -79,12 +79,13 @@ const woaCode = {
         }
     },
     getPosts: (portalContent) => {
-
+        let groupPageLink = portalContent.getElementById("titleEditForum")
+        let forumID = /\(([^)]+)\)/.exec(groupPageLink.href)[1].split(",")
         let posts = portalContent.getElementsByClassName("ThreadContainer")[0], forumArray = []
+    
         for (let x = 0; x < posts.childElementCount; x++) {
             let post = posts.children[x]
             let lastDate = new Date(post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", ""))
-
             let topic = post.getElementsByClassName("respDiscTopic")
             let comments = post.getElementsByClassName("respDiscChildPost")
             let posters = post.getElementsByClassName("respAuthorWrapper")
@@ -92,7 +93,7 @@ const woaCode = {
             let dateSort = new Date(lastDate).getTime()
             forumArray.push({
                 postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
-                postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: "General", groupID: "8030",
+                postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: groupPageLink.innerText, groupID: forumID[0].replaceAll("'",""),
                 numOfPost: comments.length
             })
         }
@@ -143,6 +144,9 @@ function showComments(selectedPostID, groupID) {
             let forum = new DOMParser().parseFromString(responseText, "text/html")
             let comments = forum.getElementById(selectedPostID.replace("lnkTopicReply", "contents"))
             let title = forum.getElementById(selectedPostID.replace("lnkTopicReply", "msgHeader") + " ")
+
+            let forumInfo = forum.getElementById("titleEditForum").innerHTML 
+
 
             let topic = comments.getElementsByClassName("respDiscTopic")
             let replyText = comments.getElementsByClassName("respDiscChildPost")
