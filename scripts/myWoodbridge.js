@@ -1,19 +1,22 @@
 const woaCode = {
-    showTheModal: () => {
 
-        //let emailPopUp = document.getElementById("emailsSaved")
-        //while (emailPopUp.firstChild) { emailPopUp.removeChild(emailPopUp.firstChild) }
-
-        //if (savedMessageURL.includes("/Messenger/MessageView/")) {
-        //    $("#emailsSaved").load(pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
-        //        if (statusTxt == "error") { emailPopUp.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
-        //    })
-        //}
-        if (!$("#appPopUp").is(":visible")) { $("#appPopUp").modal("show") }
-    },
     pageLocation: (pageName) => {
         return (window.location.hostname == "localhost") ? pageName + ".html" : pageName
     },
+    showEmail: (savedMessageURL) => {
+        let commentArea = document.getElementById("appDialogBody")
+        while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
+        document.getElementById("appDialogLabel").innerText = ""
+        document.getElementById("replyButton").style.display="none"
+
+        if (savedMessageURL.includes("/Messenger/MessageView/")) {
+            $("#appDialogBody").load(woaCode.pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "error") { commentArea.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
+            })
+        }
+        if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
+    },
+
     isDescendant: (parent, child) => {
         let isParent = child.parentElement
         while (isParent != null) {
@@ -43,7 +46,8 @@ const woaCode = {
             let currentEmail = document.createElement("li")
             let emailHeader = document.createElement("a")
             let emailTitle = recentEmails[p].getAttribute("data-tooltip-title").split("by")[0].split(",")
-            emailHeader.href = recentEmails[p].href
+            emailHeader.href = "javascript:woaCode.showEmail('" + recentEmails[p].href + "')"
+
             emailHeader.innerHTML = emailTitle[0] + " (" + emailTitle[1].trim() + ")"
             currentEmail.appendChild(emailHeader)
             emailListing.appendChild(currentEmail)
@@ -140,7 +144,7 @@ function showComments(selectedPostID, groupID) {
             document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = title.innerText
 
             document.getElementById("replyButton").setAttribute("onclick", forum.getElementById(selectedPostID).href)
-           
+
             commentArea.appendChild(commentSpan)
             for (let p = 0; p < replyText.length; p++) {
                 let replySpan = document.createElement("span")
@@ -152,6 +156,7 @@ function showComments(selectedPostID, groupID) {
                 commentArea.appendChild(replySpan)
                 commentArea.appendChild(authorSpan)
             }
+            document.getElementById("replyButton").style.display = ""
             if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
         })
 }
