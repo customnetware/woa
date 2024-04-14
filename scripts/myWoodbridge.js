@@ -81,7 +81,7 @@ const woaCode = {
     getPosts: (portalContent) => {
         let groupPageLink = portalContent.getElementById("titleEditForum")
         let forumID = /\(([^)]+)\)/.exec(groupPageLink.href)[1].split(",")
-        let posts = portalContent.getElementsByClassName("ThreadContainer")[0], forumArray = []    
+        let posts = portalContent.getElementsByClassName("ThreadContainer")[0], forumArray = []
         for (let x = 0; x < posts.childElementCount; x++) {
             let post = posts.children[x]
             let lastDate = new Date(post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", ""))
@@ -92,7 +92,7 @@ const woaCode = {
             let dateSort = new Date(lastDate).getTime()
             forumArray.push({
                 postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
-                postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: groupPageLink.innerText, groupID: forumID[0].replaceAll("'",""),
+                postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: groupPageLink.innerText, groupID: forumID[0].replaceAll("'", ""),
                 numOfPost: comments.length
             })
         }
@@ -105,7 +105,7 @@ const woaCode = {
                     let post = document.createElement("li")
                     let postLink = document.createElement("a")
                     postLink.innerHTML = forumArray[p].subject + " (Comments: " + forumArray[p].numOfPost + ") - " + forumArray[p].postAuthor
-                    postLink.href  = "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
+                    postLink.href = "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
                     post.appendChild(postLink)
                     document.getElementById("recentPosts").getElementsByTagName("ul")[0].appendChild(post)
                 }
@@ -124,11 +124,11 @@ function showComments(selectedPostID, groupID) {
     while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
     $.get(woaCode.pageLocation("/Discussion/28118~" + groupID), function () { })
         .done(function (responseText) {
-           
+
             let forum = new DOMParser().parseFromString(responseText, "text/html")
             let comments = forum.getElementById(selectedPostID.replace("lnkTopicReply", "contents"))
             let title = forum.getElementById(selectedPostID.replace("lnkTopicReply", "msgHeader") + " ")
-    
+
 
             let topic = comments.getElementsByClassName("respDiscTopic")
             let replyText = comments.getElementsByClassName("respDiscChildPost")
@@ -138,7 +138,9 @@ function showComments(selectedPostID, groupID) {
             commentSpan.style.fontWeight = "600"
             commentSpan.innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText + "<hr />"
             document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = title.innerText
-            document.getElementById("appDialog").getElementsByTagName("button")[0].onclick = forum.getElementById(selectedPostID).href
+
+            document.getElementById("replyButton").setAttribute("onclick", forum.getElementById(selectedPostID).href)
+           
             commentArea.appendChild(commentSpan)
             for (let p = 0; p < replyText.length; p++) {
                 let replySpan = document.createElement("span")
