@@ -91,7 +91,7 @@ const woaCode = {
         }
     },
     getPosts: (portalContent) => {
-        let groupPageLink = portalContent.getElementById("titleEditForum")
+        let groupPageLink = portalContent.getElementById("lnkAddTopic")
         let forumID = /\(([^)]+)\)/.exec(groupPageLink.href)[1].split(",")
         let posts = portalContent.getElementsByClassName("ThreadContainer")[0], forumArray = []
         for (let x = 0; x < posts.childElementCount; x++) {
