@@ -29,6 +29,7 @@ const woaCode = {
         return profileID[0]
     },
     getPortalData: (dataSource, dataFunction) => {
+        if (dataSource.includes("resourcecenter") && document.getElementById("filesWait").style.display == "none") { document.getElementById("filesWait").style.display="" }
         $.get(dataSource)
             .done(function (responseText) {
                 let portalContent = new DOMParser().parseFromString(responseText, "text/html")
@@ -53,6 +54,9 @@ const woaCode = {
             emailListing.appendChild(currentEmail)
         }
     },
+    getFileRefresh: () => {
+        woaCode.getPortalData(woaCode.pageLocation('/resourcecenter/28118/resource-center'), woaCode.getFiles)
+    },
     getFiles: (portalContent) => {
         let fileArray = []
         let fileLink = "https://ourwoodbridge.net/ResourceCenter/Download/28118?doc_id=0000000&print=1&view=1"
@@ -72,7 +76,7 @@ const woaCode = {
                 fileArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL)
             }
         }
-        if (document.getElementById("filesWait") !== null) { document.getElementById("filesWait").remove() }
+        document.getElementById("filesWait").style.display = "none"
         if (folderSelected == "contents951754") { fileArray.reverse() }
         if (folderSelected == "contents328201") { fileArray.sort((a, b) => { return a - b }); fileArray.reverse() }
         for (let d = 0, s = 1; d < fileArray.length && s <= 5; d++, s++) {
@@ -117,13 +121,49 @@ const woaCode = {
                     let post = document.createElement("li")
                     let postLink = document.createElement("a")
                     postLink.innerHTML = forumArray[p].subject + " (Comments: " + forumArray[p].numOfPost + ") - " + forumArray[p].postAuthor
-                    postLink.href = "javascript:showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
+                    postLink.href = "javascript:woaCode.showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
                     post.appendChild(postLink)
                     document.getElementById("recentPosts").getElementsByTagName("ul")[0].appendChild(post)
                 }
             }
         }
-    },
+    }, showComments: (selectedPostID, groupID) => {
+        let commentArea = document.getElementById("appDialogBody")
+        while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
+        $.get(woaCode.pageLocation("/Discussion/28118~" + groupID), function () { })
+            .done(function (responseText) {
+
+                let forum = new DOMParser().parseFromString(responseText, "text/html")
+                let comments = forum.getElementById(selectedPostID.replace("lnkTopicReply", "contents"))
+                let title = forum.getElementById(selectedPostID.replace("lnkTopicReply", "msgHeader") + " ")
+
+
+                let topic = comments.getElementsByClassName("respDiscTopic")
+                let replyText = comments.getElementsByClassName("respDiscChildPost")
+                let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
+                let commentSpan = document.createElement("span")
+                commentSpan.className = "commentSpan"
+                commentSpan.style.fontWeight = "600"
+                commentSpan.innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText + "<hr />"
+                document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = title.innerText
+
+                document.getElementById("replyButton").setAttribute("onclick", forum.getElementById(selectedPostID).href)
+
+                commentArea.appendChild(commentSpan)
+                for (let p = 0; p < replyText.length; p++) {
+                    let replySpan = document.createElement("span")
+                    let authorSpan = document.createElement("span")
+                    replySpan.className = "commentSpan"
+                    authorSpan.className = "commentSpan"
+                    replySpan.innerHTML = replyText[p].innerText.trim() + "<br />"
+                    authorSpan.innerHTML = replyAuthor[p + 1].innerText.trim() + "<hr />"
+                    commentArea.appendChild(replySpan)
+                    commentArea.appendChild(authorSpan)
+                }
+                document.getElementById("replyButton").style.display = ""
+                if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
+            })
+    }
 }
 woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()), woaCode.getProfile)
 woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
@@ -131,41 +171,5 @@ woaCode.getPortalData(woaCode.pageLocation("/resourcecenter/28118/resource-cente
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~11315"), woaCode.getPosts)
-function showComments(selectedPostID, groupID) {
-    let commentArea = document.getElementById("appDialogBody")
-    while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
-    $.get(woaCode.pageLocation("/Discussion/28118~" + groupID), function () { })
-        .done(function (responseText) {
 
-            let forum = new DOMParser().parseFromString(responseText, "text/html")
-            let comments = forum.getElementById(selectedPostID.replace("lnkTopicReply", "contents"))
-            let title = forum.getElementById(selectedPostID.replace("lnkTopicReply", "msgHeader") + " ")
-
-
-            let topic = comments.getElementsByClassName("respDiscTopic")
-            let replyText = comments.getElementsByClassName("respDiscChildPost")
-            let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
-            let commentSpan = document.createElement("span")
-            commentSpan.className = "commentSpan"
-            commentSpan.style.fontWeight = "600"
-            commentSpan.innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText + "<hr />"
-            document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = title.innerText
-
-            document.getElementById("replyButton").setAttribute("onclick", forum.getElementById(selectedPostID).href)
-
-            commentArea.appendChild(commentSpan)
-            for (let p = 0; p < replyText.length; p++) {
-                let replySpan = document.createElement("span")
-                let authorSpan = document.createElement("span")
-                replySpan.className = "commentSpan"
-                authorSpan.className = "commentSpan"
-                replySpan.innerHTML = replyText[p].innerText.trim() + "<br />"
-                authorSpan.innerHTML = replyAuthor[p + 1].innerText.trim() + "<hr />"
-                commentArea.appendChild(replySpan)
-                commentArea.appendChild(authorSpan)
-            }
-            document.getElementById("replyButton").style.display = ""
-            if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
-        })
-}
 
