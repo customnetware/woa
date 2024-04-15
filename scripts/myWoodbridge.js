@@ -36,8 +36,11 @@ const woaCode = {
         }
         $.get(dataSource)
             .done(function (responseText) {
-                let portalContent = new DOMParser().parseFromString(responseText, "text/html")
-                dataFunction(portalContent)
+                try {
+                    let portalContent = new DOMParser().parseFromString(responseText, "text/html")
+                    dataFunction(portalContent)
+                } catch { }
+
             })
     },
     getProfile: (portalContent) => {
@@ -97,23 +100,27 @@ const woaCode = {
     getPosts: (portalContent) => {
         let groupPageLink = portalContent.getElementById("lnkAddTopic")
         let forumID = /\(([^)]+)\)/.exec(groupPageLink.href)[1].split(",")
-        let posts = portalContent.getElementsByClassName("ThreadContainer")[0], forumArray = []
+        let posts = portalContent.getElementsByClassName("ThreadContainer")[0], forumArray = [], currentDate = new Date()
         for (let x = 0; x < posts.childElementCount; x++) {
             let post = posts.children[x]
             let lastDate = new Date(post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", ""))
+            let dayDiff = (currentDate - lastDate) / (1000 * 3600 * 24)
             let topic = post.getElementsByClassName("respDiscTopic")
             let comments = post.getElementsByClassName("respDiscChildPost")
             let posters = post.getElementsByClassName("respAuthorWrapper")
             let contacts = post.getElementsByClassName("respReplyWrapper")
             let dateSort = new Date(lastDate).getTime()
-            forumArray.push({
-                postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
-                postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: groupPageLink.innerText, groupID: forumID[1].replaceAll("'", ""),
-                numOfPost: comments.length
-            })
+            if (dayDiff < 32) {
+                forumArray.push({
+                    postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
+                    postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: groupPageLink.innerText, groupID: forumID[1].replaceAll("'", ""),
+                    numOfPost: comments.length
+                })
+            }
         }
+   if (document.getElementById("postsWait") !== null) { document.getElementById("postsWait").remove() }
         if (forumArray.length > 0) {
-            if (document.getElementById("postsWait") !== null) { document.getElementById("postsWait").remove() }
+         
             forumArray.sort((a, b) => { return a.postSort - b.postSort })
             forumArray.reverse()
             for (let p = 0; p <= 0; p++) {
@@ -193,7 +200,7 @@ const woaCode = {
                         if (selectedData.length > 0) {
                             for (let p = 0; p < selectedData.length; p++) {
                                 if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
-                                    contactString.appendChild(document.createTextNode(selectedData[p].nextElementSibling.children[0].innerText+" "))
+                                    contactString.appendChild(document.createTextNode(selectedData[p].nextElementSibling.children[0].innerText + " "))
                                 }
                                 if (selectedData[p].innerText == "Work") {
                                     contactString.appendChild(document.createTextNode(selectedData[p].nextElementSibling.innerText.trim()))
@@ -212,12 +219,15 @@ const woaCode = {
 
     },
 }
-woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()), woaCode.getProfile)
-woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
-woaCode.getPortalData(woaCode.pageLocation("/resourcecenter/28118/resource-center"), woaCode.getFiles)
-woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
-woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.getPosts)
-woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~11315"), woaCode.getPosts)
-woaCode.getContacts()
+try {
+    woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()), woaCode.getProfile)
+    woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
+    woaCode.getPortalData(woaCode.pageLocation("/resourcecenter/28118/resource-center"), woaCode.getFiles)
+    woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
+    woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.getPosts)
+    woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~11315"), woaCode.getPosts)
+    woaCode.getContacts()
+} catch { }
+
 
 
