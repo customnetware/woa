@@ -68,11 +68,13 @@ const woaCode = {
             let inFolder = portalContent.getElementById(parentId.replace("contents", "f")).innerHTML
             let folderURL = folderLink + parentId.replace("contents", "")
             let fileURL = fileLink.replace("0000000", docs[i].id.replace("d", ""))
-            fileArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL)
+            if (folderSelected == "contents540434" || folderSelected == "contents951754" || (folderSelected == "contents328201" && (docs[i].innerHTML.includes("2023") && (docs[i].innerHTML.includes("Minutes") || docs[i].innerHTML.includes("Agenda") || docs[i].innerHTML.includes("Packets"))))) {
+                fileArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL)
+            }
         }
         if (document.getElementById("filesWait") !== null) { document.getElementById("filesWait").remove() }
-
-
+        if (folderSelected == "contents951754") { fileArray.reverse() }
+        if (folderSelected == "contents328201") { fileArray.sort((a, b) => { return a - b }); fileArray.reverse() }
         for (let d = 0, s = 1; d < fileArray.length && s <= 5; d++, s++) {
             let linkSpan = document.createElement("li")
             let docLink = document.createElement("a")
