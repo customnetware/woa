@@ -60,17 +60,8 @@ const woaCode = {
         let fileArea = document.getElementById("recentFiles").getElementsByTagName("ul")[0]
         while (fileArea.firstChild) { fileArea.removeChild(fileArea.firstChild) }
         let selectedFolders = document.getElementById("recentFiles").getElementsByTagName("input")
-        let folderSelected
-        for (let f = 0; f < selectedFolders.length; f++) {
-            if (selectedFolders[f].checked == true) { folderSelected = selectedFolders[f].value }
-        }
-
-
-
+        let folderSelected = (selectedFolders[0].checked == true) ? selectedFolders[0].value : (selectedFolders[1].checked == true) ? selectedFolders[1].value : selectedFolders[2].value
         let docs = portalContent.getElementById(folderSelected).querySelectorAll('[id^="d"]')
-
-
-
 
         for (let i = 0; i < docs.length; i++) {
             let parentId = docs[i].parentElement.parentElement.parentElement.parentElement.id
@@ -80,6 +71,8 @@ const woaCode = {
             fileArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL)
         }
         if (document.getElementById("filesWait") !== null) { document.getElementById("filesWait").remove() }
+
+
         for (let d = 0, s = 1; d < fileArray.length && s <= 5; d++, s++) {
             let linkSpan = document.createElement("li")
             let docLink = document.createElement("a")
