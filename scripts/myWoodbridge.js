@@ -29,7 +29,11 @@ const woaCode = {
         return profileID[0]
     },
     getPortalData: (dataSource, dataFunction) => {
-        if (dataSource.includes("resourcecenter") && document.getElementById("filesWait").style.display == "none") { document.getElementById("filesWait").style.display="" }
+        if (dataSource.includes("resourcecenter") && document.getElementById("filesWait").style.display == "none") {
+            let fileArea = document.getElementById("recentFiles").getElementsByTagName("ul")[0]
+            while (fileArea.firstChild) { fileArea.removeChild(fileArea.firstChild) }
+            document.getElementById("filesWait").style.display = ""
+        }
         $.get(dataSource)
             .done(function (responseText) {
                 let portalContent = new DOMParser().parseFromString(responseText, "text/html")
@@ -54,15 +58,11 @@ const woaCode = {
             emailListing.appendChild(currentEmail)
         }
     },
-    getFileRefresh: () => {
-        woaCode.getPortalData(woaCode.pageLocation('/resourcecenter/28118/resource-center'), woaCode.getFiles)
-    },
+
     getFiles: (portalContent) => {
         let fileArray = []
         let fileLink = "https://ourwoodbridge.net/ResourceCenter/Download/28118?doc_id=0000000&print=1&view=1"
         let folderLink = "https://ourwoodbridge.net/ResourceCenter/28118~"
-        let fileArea = document.getElementById("recentFiles").getElementsByTagName("ul")[0]
-        while (fileArea.firstChild) { fileArea.removeChild(fileArea.firstChild) }
         let selectedFolders = document.getElementById("recentFiles").getElementsByTagName("input")
         let folderSelected = (selectedFolders[0].checked == true) ? selectedFolders[0].value : (selectedFolders[1].checked == true) ? selectedFolders[1].value : selectedFolders[2].value
         let docs = portalContent.getElementById(folderSelected).querySelectorAll('[id^="d"]')
