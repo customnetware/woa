@@ -1,3 +1,14 @@
+
+#profileImage {
+    width: 110px;
+    float: left !important;
+    margin-right: 20px;
+    box-shadow: 5px 8px 8px 2px grey;
+    height: auto
+}
+
+
+
 /*.clsHeader {
     display: none !important;
 }
