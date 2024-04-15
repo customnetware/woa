@@ -163,7 +163,54 @@ const woaCode = {
                 document.getElementById("replyButton").style.display = ""
                 if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
             })
-    }
+    }, getContacts: () => {
+        let contactArray = ["10544936", "10551971", "10863452", "8108389", "10566484", "10854040"]
+
+        for (let p = 0; p < contactArray.length; p++) {
+            let contactString = document.createElement("li")
+            $.get(woaCode.pageLocation("/Member/28118~" + contactArray[p]), function () { })
+                .done(function (responseText) {
+                    let contactCard = new DOMParser().parseFromString(responseText, "text/html")
+                    let contactName = contactCard.getElementsByClassName("clsDMHeader")
+                    let contactTitle = contactCard.getElementsByClassName("clsHeader")
+                    let contactData = contactCard.getElementsByClassName("contactComms")
+
+
+                    if (contactName.length > 1) {
+                        let contactLink = document.createElement("a")
+                        contactLink.href = woaCode.pageLocation("/Member/28118~" + contactArray[p])
+                        contactLink.innerHTML = contactName[1].children[0].innerText.trim() + " - "
+                        contactString.appendChild(contactLink)
+                    }
+                    if (contactTitle.length > 0) {
+                        let contactLink = document.createElement("a")
+                        contactLink.href = woaCode.pageLocation("/Member/28118~" + contactArray[p])
+                        contactLink.innerHTML = contactTitle[0].innerText.trim() + " - "
+                        contactString.appendChild(contactLink)
+                    }
+                    if (contactData.length > 0) {
+                        let selectedData = contactData[0].getElementsByClassName("contactLabel")
+                        if (selectedData.length > 0) {
+                            for (let p = 0; p < selectedData.length; p++) {
+                                if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
+                                    contactString.appendChild(document.createTextNode(selectedData[p].nextElementSibling.children[0].innerText+" "))
+                                }
+                                if (selectedData[p].innerText == "Work") {
+                                    contactString.appendChild(document.createTextNode(selectedData[p].nextElementSibling.innerText.trim()))
+                                }
+                                if (selectedData[p].innerText == "Other") {
+                                    contactString.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.innerText.trim()))
+                                }
+                            }
+                        }
+                    }
+                    document.getElementById("officeContacts").getElementsByTagName("ul")[0].appendChild(contactString)
+
+                })
+
+        }
+
+    },
 }
 woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()), woaCode.getProfile)
 woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
@@ -171,5 +218,6 @@ woaCode.getPortalData(woaCode.pageLocation("/resourcecenter/28118/resource-cente
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~11315"), woaCode.getPosts)
+woaCode.getContacts()
 
 
