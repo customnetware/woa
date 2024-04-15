@@ -104,7 +104,7 @@ const woaCode = {
             let dateSort = new Date(lastDate).getTime()
             forumArray.push({
                 postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
-                postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: groupPageLink.innerText, groupID: forumID[0].replaceAll("'", ""),
+                postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: groupPageLink.innerText, groupID: forumID[1].replaceAll("'", ""),
                 numOfPost: comments.length
             })
         }
