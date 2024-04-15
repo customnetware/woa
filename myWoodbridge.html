@@ -29,7 +29,22 @@
                 <ul></ul>
             </div>
             <div style="width:100%; float:left;" id="recentFiles">
-                <strong>Recent Document Search</strong><br>Our portal's document storage system (Resource Center) can be confusing at times. Resident can use the new Recent Document Search to view the most recent documents uploaded to the Board Room, Flyers (Events or Activities) and Woodbridge Newsletters document folders. The Recent Document Search tool is currently displaying the most recent documents uploaded to the Flyers (Events or Activities) document folder. To view the most recent documents uploaded to the Board Room folder, click here or click here to view the most recent Woodbridge Life Newsletters.
+                <strong>Recent Document Search</strong><br>Our portal's document storage system (Resource Center) can be confusing at times. Resident can use the new Recent Document Search to view the most recent documents uploaded to the Board Room, Flyers (Events or Activities) and Woodbridge Newsletters document folders. The Recent Document Search tool is currently displaying the most recent documents uploaded to the folder(s) selected below:
+                <form>
+                    <label class="radio-inline" style="font-weight:700">
+                        <input name="optradio" type="radio" value="contents540434" style="margin-right: 5px; margin-left: 10px" checked>Flyers (Events or Activities)
+                    </label>
+                    <label class="radio-inline" style="font-weight:700">
+                        <input name="optradio" type="radio" value="contents328201" style="margin-right: 5px; margin-left: 10px">Board Room
+                    </label>
+                    <label class="radio-inline" style="font-weight:700">
+                        <input name="optradio" type="radio" value="contents951754" style="margin-right: 5px; margin-left: 10px">Woodbridge Newsletters
+                    </label>
+                    <label class="radio-inline" style="font-weight:700">
+                        <span class="fa fa-refresh" style="margin-right: 5px; margin-left: 10px"></span><a href="javascript:woaCode.getPortalData(woaCode.pageLocation('/resourcecenter/28118/resource-center'), woaCode.getFiles)">Refresh</a>
+                    </label>
+                </form>
+
                 <div id="filesWait"><span class="fa fa-refresh fa-fw fa-spin"></span>Recent documents are loading...</div>
                 <ul></ul>
             </div>
@@ -74,7 +89,7 @@
 
             checkForScript(woaScripts, "error", function () { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") })
         </script>
-    
+
     </div>
 </body>
 </html>

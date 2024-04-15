@@ -7,7 +7,7 @@ const woaCode = {
         let commentArea = document.getElementById("appDialogBody")
         while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
         document.getElementById("appDialogLabel").innerText = ""
-        document.getElementById("replyButton").style.display="none"
+        document.getElementById("replyButton").style.display = "none"
 
         if (savedMessageURL.includes("/Messenger/MessageView/")) {
             $("#appDialogBody").load(woaCode.pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
@@ -39,7 +39,7 @@ const woaCode = {
         document.getElementById("headerRow").getElementsByTagName("img")[0].src = portalContent.getElementsByTagName("img")[0].src
     },
     getEmails: (portalContent) => {
-        document.getElementById("emailWait").remove()
+        if (document.getElementById("emailWait") !== null) { document.getElementById("emailWait").remove() }
         let recentEmails = portalContent.getElementById("panel_messages_content").getElementsByTagName("a")
         let emailListing = document.getElementById("recentEmails").getElementsByTagName("ul")[0]
         for (let p = 0; p < recentEmails.length; p++) {
@@ -57,7 +57,20 @@ const woaCode = {
         let fileArray = []
         let fileLink = "https://ourwoodbridge.net/ResourceCenter/Download/28118?doc_id=0000000&print=1&view=1"
         let folderLink = "https://ourwoodbridge.net/ResourceCenter/28118~"
-        let docs = portalContent.getElementById("contents540434").querySelectorAll('[id^="d"]')
+        let fileArea = document.getElementById("recentFiles").getElementsByTagName("ul")[0]
+        while (fileArea.firstChild) { fileArea.removeChild(fileArea.firstChild) }
+        let selectedFolders = document.getElementById("recentFiles").getElementsByTagName("input")
+        let folderSelected
+        for (let f = 0; f < selectedFolders.length; f++) {
+            if (selectedFolders[f].checked == true) { folderSelected = selectedFolders[f].value }
+        }
+
+
+
+        let docs = portalContent.getElementById(folderSelected).querySelectorAll('[id^="d"]')
+
+
+
 
         for (let i = 0; i < docs.length; i++) {
             let parentId = docs[i].parentElement.parentElement.parentElement.parentElement.id
@@ -66,7 +79,7 @@ const woaCode = {
             let fileURL = fileLink.replace("0000000", docs[i].id.replace("d", ""))
             fileArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL)
         }
-        document.getElementById("filesWait").remove()
+        if (document.getElementById("filesWait") !== null) { document.getElementById("filesWait").remove() }
         for (let d = 0, s = 1; d < fileArray.length && s <= 5; d++, s++) {
             let linkSpan = document.createElement("li")
             let docLink = document.createElement("a")
