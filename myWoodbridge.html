@@ -72,6 +72,14 @@
             </div>
         </div>
         <script>
+            function openMenu() {
+                let menuList = document.getElementsByClassName("menu-sub-group")[1]
+                document.getElementsByClassName("menu-sub-group")[1].style = "left: 0px;"
+                //let menuItems = menuList.children
+                //alert(menuItems.length)
+               
+                /* for (let p = 0; p < menuItems.length; p++) { menuItems[p].style.display = "block" }*/
+            }
             function checkForScript(element, evnt, funct) {
                 if (element.attachEvent) { return element.attachEvent('on' + evnt, funct) } else { return element.addEventListener(evnt, funct, false) }
             }
