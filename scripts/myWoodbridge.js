@@ -238,7 +238,7 @@ try {
 function openMenu() {
     let menuList = document.getElementsByClassName("menu-sub-group")[1]
     let menuItems = menuList.children
-    /*  document.getElementsByClassName("menu-sub-group")[1].style = "left: 0px;"*/
+      document.getElementsByClassName("menu-sub-group")[1].style = "left: 0px;"
     for (let p = 0; p < menuItems.length; p++) { menuItems[p].style.display = "block" }
 }
 
