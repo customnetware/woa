@@ -236,9 +236,8 @@ try {
     woaCode.getContacts()
 } catch { }
 function openMenu() {
-    document.getElementsByClassName("menu-sub-group")[0].style = "left:0px"
+    document.getElementsByClassName("menu-sub-group")[1].style = "left:0px"
 }
 
-openMenu()
 
 
