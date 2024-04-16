@@ -12,6 +12,16 @@
 </head>
 <body>
     <div id="testDiv" style="margin-left: 100px; margin-right: 100px">
+        <ul class="menu-sub-group" style="left: -999999em !important;">
+            <li class="menu-item"><a href="/ResourceCenter/28118~988116/Agendas" class="menu-link">2024 Board Meeting Agendas</a></li>
+            <li class="menu-item"><a href="/ResourceCenter/28118~988117/Minutes" class="menu-link">2024 Board Meeting Minutes</a></li>
+            <li class="menu-item"><a href="/ResourceCenter/28118~988118/Board-Packets" class="menu-link">2024 Board Meeting Packets</a></li>
+            <li class="menu-item"><a href="/ResourceCenter/28118~986865/2024-Newsletters" class="menu-link">2024 Woodbridge Newsletters</a></li>
+            <li class="menu-item"><a href="/ResourceCenter/28118~540434/Flyers-Events-or-Activities" class="menu-link">Activity and Event Flyers</a></li>
+            <li class="menu-item"><a href="javascript:AV.Util.loadViewer(3081122)" class="menu-link">ARC Design Guidelines</a></li>
+            <li class="menu-item"><a target="_blank" href="/ResourceCenter/28118~328200/Governing-Documents" class="menu-link">Governing Documents</a></li>
+            <li class="menu-item"><a target="_blank" href="https://issuu.com/woodbridgelife" class="menu-link">Woodbridge Life Archive</a></li>
+        </ul>
         <div style="width: 100%; float: left; margin-bottom:10px; margin-top:20px">
             <div id="resDisplayName" style="float: left; display: none;"></div>
             <div class="association-name"><a href="/myWoodbridge.html">Woodbridge HOA</a><a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a></div>
@@ -21,7 +31,7 @@
 
         <div id="woaContainer">
             <div style="width:100%; float:left; margin-bottom:20px;" id="headerRow">
-                <img id="profileImage" src="" />To make changes to your sign in name or password, phone number, email address, profile image or other personal information stored on this site, click the My Profile button at the top right of this page. (if you are using a mobile device, click or tap the Profile link at the top of the page). You may also edit the settings for any discussion group you may have sign up for.  This would be useful if you are receiving too many emails from the portal discussion groups. If you have any difficulties using this website <a href="/Form/28118~327323">please click here for help with any issues you may have</a>.  If you have any comments or suggestions that would help improve our portal, please contact the Woodbridge Homeowners' Association Communications Committee <a href="/Form/28118~327323">using this form.</a> <i>(If you are expericing issues using this page or just would like the view the system generated user home page, <a href="/HomePage/28118/Resident-Home-Page">click here</a>.)</i>
+                <img id="profileImage" src="" />To make changes to your sign in name or password, phone number, email address, profile image or other personal information stored on this site, click the My Profile button at the top right of this page. (if you are using a mobile device, click or tap the Profile link at the top of the page). You may also edit the settings for any discussion group you may have sign up for.  This would be useful if you are receiving too many emails from the portal discussion groups. If you have any difficulties using this website <a href="/Form/28118~327323">please click here for help with any issues you may have</a>.  If you have any comments or suggestions that would help improve our portal, please contact the Woodbridge Homeowners' Association Communications Committee <a href="/Form/28118~327323">using this form.</a> <i>(If you are experiencing issues using this page or just would like the view the system generated user home page, <a href="/HomePage/28118/Resident-Home-Page">click here</a>.)</i>
 
             </div>
             <div style="width:100%; float:left;" id="recentEmails">
@@ -29,25 +39,8 @@
                 <div id="emailWait"><span class="fa fa-refresh fa-fw fa-spin"></span>Recent emails are loading...</div>
                 <ul></ul>
             </div>
-            <div style="width:100%; float:left;" id="recentFiles">
-                <strong>Recent Document Search</strong><br>Our portal's document storage system (Resource Center) can be confusing at times. Resident can use the new Recent Document Search to view the most recent documents uploaded to the <a href="/ResourceCenter/28118~328201/">Board Room</a>, <a href="/ResourceCenter/28118~540434/">Flyers (Events or Activities)</a> and <a href="/ResourceCenter/28118~951754/">Woodbridge Newsletters</a> document folders. The Recent Document Search tool is currently displaying the most recent documents uploaded to the folder(s) selected below (Click or tap the Refresh link after making changes and give the screen a second or two to update):
-                <form>
-                    <label class="radio-inline" style="font-weight:700">
-                        <input name="optradio" type="radio" value="contents540434" style="margin-right: 5px; margin-left: 10px" checked>Flyers (Events or Activities)
-                    </label>
-                    <label class="radio-inline" style="font-weight:700">
-                        <input name="optradio" type="radio" value="contents328201" style="margin-right: 5px; margin-left: 10px">Board Room
-                    </label>
-                    <label class="radio-inline" style="font-weight:700">
-                        <input name="optradio" type="radio" value="contents951754" style="margin-right: 5px; margin-left: 10px">Woodbridge Newsletters
-                    </label>
-                    <label class="radio-inline" style="font-weight:700">
-                        <span class="fa fa-refresh" style="margin-right: 5px; margin-left: 10px"></span><a href="javascript:woaCode.getPortalData(woaCode.pageLocation('/resourcecenter/28118/resource-center'), woaCode.getFiles);">Refresh</a>
-                    </label>
-                </form>
-
-                <div id="filesWait"><span class="fa fa-refresh fa-fw fa-spin"></span>Recent documents are loading...</div>
-                <ul></ul>
+            <div style="width:100%; float:left; margin-bottom:20px" id="recentFiles">
+                <strong>Recent Updates</strong><br>Our portal's document storage system (Resource Center) can be confusing at times.  We have updated the link text to display "Documents" but the link will still take you to the Resource Center.  To make it easier for our residents to find documents in our document storage area, we have added links to the most current version of the documents most requested by resident.  Hold your cursor over the <a href="javascript:openMenu();">Documents link</a> in the site menu to see the documents available.
             </div>
             <div style="width:100%; float:left" id="recentPosts">
                 <strong>Recent Discussion Group Posts<br></strong>Social media can be a useful tool for those who can avoid the scammers and click bait. But unfortunately, most social media sites are open to everyone including scammers. Your Associations' portal provides <a href="/discussion/list/28118/discussion-groups">discussion groups</a> for resident to share information. These groups are safe because everyone posting or reading the posts are your neighbors. The most recent posts from the last 30 days from the portal’s <a href="/Discussion/28118~8364">General</a>, <a href="/Discussion/28118~8030">Recommendations</a> and <a href="/Discussion/28118~11315">Social Media Help</a> discussion groups are listed below.
@@ -56,7 +49,7 @@
             </div>
             <div style="width:100%; float:left" id="officeContacts">
                 <strong>Lakeview Clubhouse Contacts<br></strong>
-                (If you have an issue that you wish to <a href="/Form/28118~116540">communicatate to the Silvercreek office anonymously, click here.</a>)
+                (If you have an issue that you wish to <a href="/Form/28118~116540">communicate to the Silvercreek office anonymously, click here.</a>)
                 <!--<div id="postsWait"><span class="fa fa-refresh fa-fw fa-spin"></span>Recent comments are loading...</div>-->
                 <ul></ul>
             </div>

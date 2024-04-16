@@ -118,9 +118,9 @@ const woaCode = {
                 })
             }
         }
-   if (document.getElementById("postsWait") !== null) { document.getElementById("postsWait").remove() }
+        if (document.getElementById("postsWait") !== null) { document.getElementById("postsWait").remove() }
         if (forumArray.length > 0) {
-         
+
             forumArray.sort((a, b) => { return a.postSort - b.postSort })
             forumArray.reverse()
             for (let p = 0; p <= 0; p++) {
@@ -170,28 +170,36 @@ const woaCode = {
                 document.getElementById("replyButton").style.display = ""
                 if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
             })
-    }, getContacts: () => {
-        let contactArray = ["10544936", "10551971", "10863452", "8108389", "10566484", "10854040"]
+    },
+    getContacts: () => {
+        let contact1 = $.get(woaCode.pageLocation("/Member/28118~10544936"))
+        let contact2 = $.get(woaCode.pageLocation("/Member/28118~10551971"))
+        let contact3 = $.get(woaCode.pageLocation("/Member/28118~10551971"))
+        let contact4 = $.get(woaCode.pageLocation("/Member/28118~8108389"))
+        let contact5 = $.get(woaCode.pageLocation("/Member/28118~10566484"))
+        let contact6 = $.get(woaCode.pageLocation("/Member/28118~10854040"))
 
-        for (let p = 0; p < contactArray.length; p++) {
-            let contactString = document.createElement("li")
-            $.get(woaCode.pageLocation("/Member/28118~" + contactArray[p]), function () { })
-                .done(function (responseText) {
-                    let contactCard = new DOMParser().parseFromString(responseText, "text/html")
+        $.when(contact1, contact2, contact3, contact4, contact5, contact6)
+            .done(function (resp01, resp02, resp03, resp04, resp05, resp06) {
+                let contacts = [resp01, resp02, resp03, resp04, resp05, resp06]
+                for (let c = 0; c < contacts.length; c++) {
+
+                    let contactString = document.createElement("li")
+                    let contactCard = new DOMParser().parseFromString(contacts[c], "text/html")
                     let contactName = contactCard.getElementsByClassName("clsDMHeader")
                     let contactTitle = contactCard.getElementsByClassName("clsHeader")
                     let contactData = contactCard.getElementsByClassName("contactComms")
-
-
+                    let contactForm = contactCard.getElementsByName("form1")
+                    let contactURL = woaCode.pageLocation("/Member/" + contactForm[0].action.split("/")[5])
                     if (contactName.length > 1) {
                         let contactLink = document.createElement("a")
-                        contactLink.href = woaCode.pageLocation("/Member/28118~" + contactArray[p])
+                        contactLink.href = contactURL
                         contactLink.innerHTML = contactName[1].children[0].innerText.trim() + " - "
                         contactString.appendChild(contactLink)
                     }
                     if (contactTitle.length > 0) {
                         let contactLink = document.createElement("a")
-                        contactLink.href = woaCode.pageLocation("/Member/28118~" + contactArray[p])
+                        contactLink.href = contactURL
                         contactLink.innerHTML = contactTitle[0].innerText.trim() + " - "
                         contactString.appendChild(contactLink)
                     }
@@ -211,23 +219,26 @@ const woaCode = {
                             }
                         }
                     }
+
                     document.getElementById("officeContacts").getElementsByTagName("ul")[0].appendChild(contactString)
 
-                })
-
-        }
+                }
+            })
 
     },
 }
 try {
     woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()), woaCode.getProfile)
     woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
-    woaCode.getPortalData(woaCode.pageLocation("/resourcecenter/28118/resource-center"), woaCode.getFiles)
     woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
     woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.getPosts)
     woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~11315"), woaCode.getPosts)
     woaCode.getContacts()
 } catch { }
+function openMenu() {
+    document.getElementsByClassName("menu-sub-group")[0].style = "left:0px"
+}
 
+openMenu()
 
 
