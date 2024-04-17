@@ -226,6 +226,15 @@ const woaCode = {
             })
 
     },
+    openMenu: () => {
+        let menuList = document.getElementsByClassName("menu-sub-group")[1]
+        menuList.style = "left: 0px; background-color: blue"
+
+        let menuItems = menuList.children
+        for (let p = 0; p < menuItems.length; p++) {
+            menuItems[p].style.height = "40px"
+        }
+    }
 }
 try {
     woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()), woaCode.getProfile)
