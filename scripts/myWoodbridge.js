@@ -173,7 +173,7 @@ const woaCode = {
     },
     getContacts: () => {
         let contact1 = $.get(woaCode.pageLocation("/Member/28118~10544936"))
-        let contact2 = $.get(woaCode.pageLocation("/Member/28118~10551971"))
+        let contact2 = $.get(woaCode.pageLocation("/Member/28118~10863452"))
         let contact3 = $.get(woaCode.pageLocation("/Member/28118~10551971"))
         let contact4 = $.get(woaCode.pageLocation("/Member/28118~8108389"))
         let contact5 = $.get(woaCode.pageLocation("/Member/28118~10566484"))
