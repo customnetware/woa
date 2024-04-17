@@ -228,7 +228,7 @@ const woaCode = {
     },
     openMenu: () => {
         let menuList = document.getElementsByClassName("menu-sub-group")[1]
-        menuList.style = "left: 0px; background-color: blue"
+        menuList.style = "left: 0px; background-color: #336699"
 
         let menuItems = menuList.children
         for (let p = 0; p < menuItems.length; p++) {
