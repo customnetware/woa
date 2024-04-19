@@ -237,6 +237,12 @@ const woaCode = {
     }
 }
 try {
+    let fileMenu = document.getElementsByClassName("menu-sub-group")[1].getElementsByTagName("li")
+    document.getElementById("agLink").href = fileMenu[0].getElementsByTagName("a")[0].href
+    document.getElementById("miLink").href = fileMenu[1].getElementsByTagName("a")[0].href
+    document.getElementById("mpLink").href = fileMenu[2].getElementsByTagName("a")[0].href
+    document.getElementById("wlLink").href = fileMenu[3].getElementsByTagName("a")[0].href
+    document.getElementById("aeLink").href = fileMenu[4].getElementsByTagName("a")[0].href
     woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()), woaCode.getProfile)
     woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
     woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
