@@ -221,6 +221,7 @@ let fileMenu = document.getElementsByClassName("menu-sub-group")[1].getElementsB
 let contactMenu = document.getElementsByClassName("menu-sub-group")[4].getElementsByTagName("li")
 let contactList = document.getElementById("officeContacts").getElementsByTagName("ul")[0]
 let filesMenuLink = document.getElementsByClassName("recentFileLink")
+woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
 
 for (let f = 0; f < filesMenuLink.length; f++) {
     filesMenuLink[f].href = fileMenu[f].getElementsByTagName("a")[0].href
@@ -238,7 +239,7 @@ for (let p = 0; p < contactMenu.length; p++) {
 }
 
 woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()), woaCode.getProfile)
-woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
+
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~11315"), woaCode.getPosts)
