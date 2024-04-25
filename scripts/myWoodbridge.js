@@ -44,10 +44,11 @@ const woaCode = {
             })
     },
     getProfile: (portalContent) => {
-        if (portalContent.getElementsByClassName("mt-1").length > 0) {
-            document.getElementById("headerRow").getElementsByTagName("img")[0].src = portalContent.getElementsByClassName("mt-1")[0].src
+    
+        if (portalContent.getElementsByClassName("mt-1")[0].src.includes("my")) {
+           document.getElementById("headerRow").getElementsByTagName("img")[0].remove()
         }
-        else { document.getElementById("headerRow").getElementsByTagName("img")[0].remove() }
+        else {  document.getElementById("headerRow").getElementsByTagName("img")[0].src = portalContent.getElementsByClassName("mt-1")[0].src }
     },
     getEmails: (portalContent) => {
         if (document.getElementById("emailWait") !== null) { document.getElementById("emailWait").remove() }
@@ -236,7 +237,7 @@ for (let p = 0; p < contactMenu.length; p++) {
     if (currentContact.includes("/Member/28118~")) {
         let currentInfo = document.createElement("li")
         currentInfo.innerHTML = contactMenu[p].innerHTML
-        currentInfo.getElementsByTagName("a")[0].className=""
+        currentInfo.getElementsByTagName("a")[0].className = ""
         contactList.appendChild(currentInfo)
         woaCode.getPortalData(woaCode.pageLocation(contactList.getElementsByTagName("a")[p].href), woaCode.getContacts)
     }
