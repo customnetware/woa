@@ -44,7 +44,10 @@ const woaCode = {
             })
     },
     getProfile: (portalContent) => {
-        document.getElementById("headerRow").getElementsByTagName("img")[0].src = portalContent.getElementsByTagName("img")[0].src
+        if (portalContent.getElementsByClassName("mt-1").length > 0) {
+            document.getElementById("headerRow").getElementsByTagName("img")[0].src = portalContent.getElementsByClassName("mt-1")[0].src
+        }
+        else { document.getElementById("headerRow").getElementsByTagName("img")[0].remove() }
     },
     getEmails: (portalContent) => {
         if (document.getElementById("emailWait") !== null) { document.getElementById("emailWait").remove() }
@@ -221,12 +224,13 @@ let fileMenu = document.getElementsByClassName("menu-sub-group")[1].getElementsB
 let contactMenu = document.getElementsByClassName("menu-sub-group")[4].getElementsByTagName("li")
 let contactList = document.getElementById("officeContacts").getElementsByTagName("ul")[0]
 let filesMenuLink = document.getElementsByClassName("recentFileLink")
+
 woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
+woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()), woaCode.getProfile)
 
 for (let f = 0; f < filesMenuLink.length; f++) {
     filesMenuLink[f].href = fileMenu[f].getElementsByTagName("a")[0].href
 }
-
 for (let p = 0; p < contactMenu.length; p++) {
     let currentContact = woaCode.pageLocation(contactMenu[p].getElementsByTagName("a")[0].href)
     if (currentContact.includes("/Member/28118~")) {
@@ -237,9 +241,6 @@ for (let p = 0; p < contactMenu.length; p++) {
         woaCode.getPortalData(woaCode.pageLocation(contactList.getElementsByTagName("a")[p].href), woaCode.getContacts)
     }
 }
-
-woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()), woaCode.getProfile)
-
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~11315"), woaCode.getPosts)
