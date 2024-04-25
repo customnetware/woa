@@ -231,6 +231,7 @@ for (let p = 0; p < contactMenu.length; p++) {
     if (currentContact.includes("/Member/28118~")) {
         let currentInfo = document.createElement("li")
         currentInfo.innerHTML = contactMenu[p].innerHTML
+        currentInfo.getElementsByTagName("a")[0].className=""
         contactList.appendChild(currentInfo)
         woaCode.getPortalData(woaCode.pageLocation(contactList.getElementsByTagName("a")[p].href), woaCode.getContacts)
     }
