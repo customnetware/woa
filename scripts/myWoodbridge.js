@@ -1,5 +1,4 @@
 const woaCode = {
-
     pageLocation: (pageName) => {
         return (window.location.hostname == "localhost") ? pageName.replace("https://ourwoodbridge.net", "") + ".html" : pageName
     },
@@ -63,7 +62,6 @@ const woaCode = {
             localStorage.setItem(recentEmails[p].id, emailTitle + recentEmails[p].getAttribute("data-tooltip-text"))
         }
     },
-
     getFiles: (portalContent) => {
         let fileArray = []
         let fileLink = "https://ourwoodbridge.net/ResourceCenter/Download/28118?doc_id=0000000&print=1&view=1"
@@ -141,12 +139,9 @@ const woaCode = {
         while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
         $.get(woaCode.pageLocation("/Discussion/28118~" + groupID), function () { })
             .done(function (responseText) {
-
                 let forum = new DOMParser().parseFromString(responseText, "text/html")
                 let comments = forum.getElementById(selectedPostID.replace("lnkTopicReply", "contents"))
                 let title = forum.getElementById(selectedPostID.replace("lnkTopicReply", "msgHeader") + " ")
-
-
                 let topic = comments.getElementsByClassName("respDiscTopic")
                 let replyText = comments.getElementsByClassName("respDiscChildPost")
                 let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
@@ -155,9 +150,7 @@ const woaCode = {
                 commentSpan.style.fontWeight = "600"
                 commentSpan.innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText + "<hr />"
                 document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = title.innerText
-
                 document.getElementById("replyButton").setAttribute("onclick", forum.getElementById(selectedPostID).href)
-
                 commentArea.appendChild(commentSpan)
                 for (let p = 0; p < replyText.length; p++) {
                     let replySpan = document.createElement("span")
@@ -174,42 +167,30 @@ const woaCode = {
             })
     },
     getContacts: (portalContent) => {
-
-        let contactString = document.createElement("li")
+        let contactList = document.getElementById("officeContacts").getElementsByTagName("ul")[0]
         let contactName = portalContent.getElementsByClassName("clsDMHeader")
         let contactTitle = portalContent.getElementsByClassName("clsHeader")
         let contactData = portalContent.getElementsByClassName("contactComms")
         let contactForm = portalContent.getElementsByName("form1")
-        let contactURL = woaCode.pageLocation("/Member/" + contactForm[0].action.split("/")[5])
-        if (contactName.length > 1) {
-            let contactLink = document.createElement("a")
-            contactLink.href = contactURL
-            contactLink.innerHTML = contactName[1].children[0].innerText.trim() + " - "
-            contactString.appendChild(contactLink)
-        }
-        if (contactTitle.length > 0) {
-            let contactLink = document.createElement("a")
-            contactLink.href = contactURL
-            contactLink.innerHTML = contactTitle[0].innerText.trim() + " - "
-            contactString.appendChild(contactLink)
-        }
+        let selectedLI = contactList.querySelectorAll("[href='" + "https://ourwoodbridge.net/Member/" + contactForm[0].action.split("/")[5] + "']")
+        if (contactTitle.length > 0) { selectedLI[0].innerHTML = contactTitle[0].innerText.trim() + " - " }
+        if (contactName.length > 1) { selectedLI[0].appendChild(document.createTextNode(contactName[1].children[0].innerText.trim())) }
         if (contactData.length > 0) {
             let selectedData = contactData[0].getElementsByClassName("contactLabel")
             if (selectedData.length > 0) {
                 for (let p = 0; p < selectedData.length; p++) {
                     if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
-                        contactString.appendChild(document.createTextNode(selectedData[p].nextElementSibling.children[0].innerText + " "))
+                        selectedLI[0].parentElement.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.children[0].innerText))
                     }
                     if (selectedData[p].innerText == "Work") {
-                        contactString.appendChild(document.createTextNode(selectedData[p].nextElementSibling.innerText.trim()))
+                        selectedLI[0].parentElement.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.innerText.trim()))
                     }
                     if (selectedData[p].innerText == "Other") {
-                        contactString.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.innerText.trim()))
+                        selectedLI[0].parentElement.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.innerText.trim()))
                     }
                 }
             }
         }
-        document.getElementById("officeContacts").getElementsByTagName("ul")[0].appendChild(contactString)
     },
     getForSaleOrFree: (portalContent) => {
         let classifiedTitle = portalContent.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
@@ -217,7 +198,7 @@ const woaCode = {
         for (let p = 0; p < 3; p++) {
             if (p < classifiedTitle.length) {
                 let ad = document.createElement("li")
-                let adTitle= document.createElement("b")
+                let adTitle = document.createElement("b")
 
                 adTitle.appendChild(document.createTextNode(classifiedTitle[p].getElementsByTagName("a")[0].innerText.trim()))
                 ad.appendChild(adTitle)
@@ -227,18 +208,34 @@ const woaCode = {
             }
         }
     },
+    refreshCheck: () => {
+        let checkStatus = (window.performance) ? window.performance.getEntriesByType("navigation")[0].type : "back_foward"
+        let currentDate = new Date()
+        let pageDate = new Date(Number(localStorage.getItem("pageTime")))
+        let diff = (currentDate - pageDate) / 60000
+        return checkStatus
+    }
 }
 
 let fileMenu = document.getElementsByClassName("menu-sub-group")[1].getElementsByTagName("li")
 let contactMenu = document.getElementsByClassName("menu-sub-group")[4].getElementsByTagName("li")
+let contactList = document.getElementById("officeContacts").getElementsByTagName("ul")[0]
 let filesMenuLink = document.getElementsByClassName("recentFileLink")
+
 for (let f = 0; f < filesMenuLink.length; f++) {
     filesMenuLink[f].href = fileMenu[f].getElementsByTagName("a")[0].href
 }
+
 for (let p = 0; p < contactMenu.length; p++) {
     let currentContact = woaCode.pageLocation(contactMenu[p].getElementsByTagName("a")[0].href)
-    if (currentContact.includes("/Member/28118~")) { woaCode.getPortalData(currentContact, woaCode.getContacts) }
+    if (currentContact.includes("/Member/28118~")) {
+        let currentInfo = document.createElement("li")
+        currentInfo.innerHTML = contactMenu[p].innerHTML
+        contactList.appendChild(currentInfo)
+        woaCode.getPortalData(woaCode.pageLocation(contactList.getElementsByTagName("a")[p].href), woaCode.getContacts)
+    }
 }
+
 woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()), woaCode.getProfile)
 woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
@@ -246,9 +243,17 @@ woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.ge
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~11315"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/classified/search/28118~480182/classifieds"), woaCode.getForSaleOrFree)
 
+setTimeout(function () {
+    localStorage.setItem("pageTime", new Date().getTime())
+    localStorage.setItem("pageEmails", document.getElementById("recentEmails").getElementsByTagName("ul")[0].innerHTML.trim())
+    localStorage.setItem("pageContacts", document.getElementById("officeContacts").getElementsByTagName("ul")[0].innerHTML.trim())
+    localStorage.setItem("pagePosts", document.getElementById("recentPosts").getElementsByTagName("ul")[0].innerHTML.trim())
+    localStorage.setItem("pageSales", document.getElementById("recentSales").getElementsByTagName("ul")[0].innerHTML.trim())
+}, 2000)
 
-/*try {} catch { } /Member/28118~ */
 
 
 
 
+
+/*try {} catch { } */

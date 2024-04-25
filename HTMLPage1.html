@@ -19,54 +19,11 @@
             <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
         </div>
 
-        <div id="woaContainer">
-            <div style="width:100%; float:left; margin-bottom:20px;" id="headerRow">
-                <img id="profileImage" src="" style="width:100px; float:left; margin-right:10px; height:auto" />To make changes to your sign in name or password, phone number, email address, profile image or other personal information stored on this site, click the My Profile button at the top right of this page. (if you are using a mobile device, click or tap the Profile link at the top of the page).  If you have any difficulties using this website <a href="/Form/28118~327323">please click here for help with any issues you may have</a>.  To contact the Silvercreek office, please click here. (If you have an issue that you wish to <a href="/Form/28118~116540">communicatate to the Silvercreek office anonymously, click here.</a>)
-            </div>
-            <div style="width:100%; float:left;" id="recentEmails">
-                <strong>Recent Emails</strong><br>The Woodbridge Homeowners’ Association's portal saves the last three emails sent by our email system (messenger@ourwoodbridge.net). We have extended this capability by saving any emails you viewed when logged into the portal and visit this page. <strong><em><a href="/Form/28118~327323">If you are having issues receiving emails from the Association, click here for help.</a></em></strong> The last three emails sent by the association are listed below. Please note that emails are viewable based on your permission level, if you don't see an email that you think you should, please click here.
-                <div id="emailWait"><span class="fa fa-refresh fa-fw fa-spin"></span>Recent emails are loading...</div>
-                <ul></ul>
-            </div>
-            <div style="width:100%; float:left;" id="recentFiles">
-                <strong>Recent Document Search</strong><br>Our portal's document storage system (Resource Center) can be confusing at times. Resident can use the new Recent Document Search to view the most recent documents uploaded to the Board Room, Flyers (Events or Activities) and Woodbridge Newsletters document folders. The Recent Document Search tool is currently displaying the most recent documents uploaded to the Flyers (Events or Activities) document folder. To view the most recent documents uploaded to the Board Room folder, click here or click here to view the most recent Woodbridge Life Newsletters.
-                <div id="filesWait"><span class="fa fa-refresh fa-fw fa-spin"></span>Recent documents are loading...</div>
-                <ul></ul>
-            </div>
-            <div style="width:100%; float:left" id="recentPosts">
-                <strong>Recent Discussion Group Posts<br></strong>Social media can be a useful tool for those who can avoid the scammers and click bait. But unfortunately, most social media sites are open to everyone including scammers. Your Associations' portal provides discussion groups for resident to share information. These groups are safe because everyone posting or reading the posts are your neighbors. The most recent posts from the portal’s General, Recommendations and Social Media Help discussion groups are listed below.
-                <div id="postsWait"><span class="fa fa-refresh fa-fw fa-spin"></span>Recent comments are loading...</div>
-                <ul></ul>
-            </div>
-            <div class="modal fade" id="appPopUp" tabindex="-1" aria-labelledby="appPopUpLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <strong class="modal-title" id="appPopUpLabel">Application Pop Up</strong>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span class="fa fa-times fa-lg" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                        <div class="modal-body" id="popUpBody"></div>
-                        <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
-                    </div>
-                </div>
-            </div>
+        <div id="woaContainer"> </div>
+
             <script>
 
                 const woaCode = {
-                     showTheModal: ()=> {
-
-                        //let emailPopUp = document.getElementById("emailsSaved")
-                        //while (emailPopUp.firstChild) { emailPopUp.removeChild(emailPopUp.firstChild) }
-
-                        //if (savedMessageURL.includes("/Messenger/MessageView/")) {
-                        //    $("#emailsSaved").load(pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
-                        //        if (statusTxt == "error") { emailPopUp.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
-                        //    })
-                        //}
-                        if (!$("#appPopUp").is(":visible")) { $("#appPopUp").modal("show") }
-                    },
                     pageLocation: (pageName) => {
                         return (window.location.hostname == "localhost") ? pageName + ".html" : pageName
                     },
@@ -77,10 +34,6 @@
                             isParent = isParent.parentElement
                         } return false
                     },
-                    getProfileID: () => {
-                        let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
-                        return profileID[0]
-                    },
                     getPortalData: (dataSource, dataFunction) => {
                         $.get(dataSource)
                             .done(function (responseText) {
@@ -88,28 +41,13 @@
                                 dataFunction(portalContent)
                             })
                     },
-                    getProfile: (portalContent) => {
-                        document.getElementById("headerRow").getElementsByTagName("img")[0].src = portalContent.getElementsByTagName("img")[0].src
-                    },
-                    getEmails: (portalContent) => {
-                        document.getElementById("emailWait").remove()
-                        let recentEmails = portalContent.getElementById("panel_messages_content").getElementsByTagName("a")
-                        let emailListing = document.getElementById("recentEmails").getElementsByTagName("ul")[0]
-                        for (let p = 0; p < recentEmails.length; p++) {
-                            let currentEmail = document.createElement("li")
-                            let emailHeader = document.createElement("a")
-                            let emailTitle = recentEmails[p].getAttribute("data-tooltip-title").split("by")[0].split(",")
-                            emailHeader.href = recentEmails[p].href
-                            emailHeader.innerHTML = emailTitle[0] + " (" + emailTitle[1].trim() + ")"
-                            currentEmail.appendChild(emailHeader)
-                            emailListing.appendChild(currentEmail)
-                        }
-                    },
                     getFiles: (portalContent) => {
                         let fileArray = []
                         let fileLink = "https://ourwoodbridge.net/ResourceCenter/Download/28118?doc_id=0000000&print=1&view=1"
                         let folderLink = "https://ourwoodbridge.net/ResourceCenter/28118~"
-                        let docs = portalContent.getElementById("contents540434").querySelectorAll('[id^="d"]')
+                        /*let docs = portalContent.getElementById("contents540434").querySelectorAll('[id^="d"]')*/
+                        let docs = portalContent.querySelectorAll('[id^="d"]')
+                   
 
                         for (let i = 0; i < docs.length; i++) {
                             let parentId = docs[i].parentElement.parentElement.parentElement.parentElement.id
@@ -118,82 +56,31 @@
                             let fileURL = fileLink.replace("0000000", docs[i].id.replace("d", ""))
                             fileArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL)
                         }
-                        document.getElementById("filesWait").remove()
+                   
                         for (let d = 0, s = 1; d < fileArray.length && s <= 5; d++, s++) {
-                            let linkSpan = document.createElement("li")
-                            let docLink = document.createElement("a")
-                            docLink.innerHTML = fileArray[d].split("|")[0].trim() + " - "
-                            docLink.href = fileArray[d].split("|")[1].trim()
 
-                            let inLink = document.createElement("a")
-                            inLink.innerHTML = fileArray[d].split("|")[2].trim()
-                            inLink.href = fileArray[d].split("|")[3].trim()
+                            //let linkSpan = document.createElement("li")
+                            //let docLink = document.createElement("a")
+                            //docLink.innerHTML = fileArray[d].split("|")[0].trim() + " - "
+                            //docLink.href = fileArray[d].split("|")[1].trim()
 
-                            linkSpan.appendChild(docLink)
-                            linkSpan.appendChild(inLink)
-                            document.getElementById("recentFiles").getElementsByTagName("ul")[0].appendChild(linkSpan)
+                            //let inLink = document.createElement("a")
+                            //inLink.innerHTML = fileArray[d].split("|")[2].trim()
+                            //inLink.href = fileArray[d].split("|")[3].trim()
+
+                            //linkSpan.appendChild(docLink)
+                            //linkSpan.appendChild(inLink)
+          
                         }
                     },
-                    getPosts: (portalContent) => {
 
-                        let posts = portalContent.getElementsByClassName("ThreadContainer")[0], forumArray = []
-                        for (let x = 0; x < posts.childElementCount; x++) {
-                            let post = posts.children[x]
-                            let lastDate = new Date(post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", ""))
-
-                            let topic = post.getElementsByClassName("respDiscTopic")
-                            let comments = post.getElementsByClassName("respDiscChildPost")
-                            let posters = post.getElementsByClassName("respAuthorWrapper")
-                            let contacts = post.getElementsByClassName("respReplyWrapper")
-                            let dateSort = new Date(lastDate).getTime()
-                            forumArray.push({
-                                postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
-                                postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: "General", groupID: "8030",
-                                numOfPost: comments.length
-                            })
-                        }
-
-                        if (forumArray.length > 0) {
-                            if (document.getElementById("postsWait") !== null) { document.getElementById("postsWait").remove() }
-                            forumArray.sort((a, b) => { return a.postSort - b.postSort })
-                            forumArray.reverse()
-                            for (let p = 0; p <= 0; p++) {
-                                if (p < forumArray.length) {
-                                    let post = document.createElement("li")
-                                    let postLink = document.createElement("a")
-                                    postLink.innerHTML = forumArray[p].subject + " (Comments: " + forumArray[p].numOfPost + ") - " + forumArray[p].postAuthor
-                                    
-                                    postLink.href="javascript:woaCode.showTheModal();"
-                                    post.appendChild(postLink)
-                                    //let reply = document.createElement("a")
-                                    //let view = document.createElement("a")
-                                    //post.style.marginBottom = "15px"
-                                    //post.style.paddingLeft = "0px"
-                                    //post.innerHTML = "<b>" + forumArray[p].subject + " (Comments: " + forumArray[p].numOfPost + ") </b>"
-                                    //reply.href = forumArray[p].replyLink
-                                    //reply.innerHTML = forumArray[p].postAuthor + "  | Reply"
-                                    //view.href = "javascript:woaCode.showComments('" + forumArray[p].postID + "','" + forumArray[p].groupID + "')"
-                                    //view.innerHTML = " | View Comments"
-                                    //post.appendChild(document.createElement("br"))
-                                    //post.appendChild(document.createTextNode(forumArray[p].postContent))
-                                    //post.appendChild(document.createElement("br"))
-                                    //post.appendChild(reply)
-                                    //post.appendChild(view)
-                                    document.getElementById("recentPosts").getElementsByTagName("ul")[0].appendChild(post)
-                                }
-                            }
-                        }
-                    },
                 }
-                woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()), woaCode.getProfile)
-                woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
+
                 woaCode.getPortalData(woaCode.pageLocation("/resourcecenter/28118/resource-center"), woaCode.getFiles)
-                woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
-                woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.getPosts)
-                woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~11315"), woaCode.getPosts)
+
 
             </script>
-        </div>
+       
     </div>
 </body>
 </html>
