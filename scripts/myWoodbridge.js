@@ -180,7 +180,7 @@ const woaCode = {
             if (selectedData.length > 0) {
                 for (let p = 0; p < selectedData.length; p++) {
                     if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
-                        selectedLI[0].parentElement.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.children[0].innerText))
+                        selectedLI[0].parentElement.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.children[0].innerText.trim()))
                     }
                     if (selectedData[p].innerText == "Work") {
                         selectedLI[0].parentElement.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.innerText.trim()))
