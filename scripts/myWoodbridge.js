@@ -221,6 +221,7 @@ const woaCode = {
                 }
             }
         }
+        localStorage.setItem("pageContacts", contactList.innerHTML.trim())
     },
     getForSaleOrFree: (portalContent) => {
         let classifiedTitle = portalContent.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
@@ -274,8 +275,10 @@ if (cachedContacts !== null && cachedContacts.includes("<li>") && woaCode.refres
             currentInfo.getElementsByTagName("a")[0].className = ""
             contactList.appendChild(currentInfo)
             woaCode.getPortalData(woaCode.pageLocation(contactList.getElementsByTagName("a")[p].href), woaCode.getContacts)
+
         }
-    } localStorage.setItem("pageContacts", document.getElementById("officeContacts").getElementsByTagName("ul")[0].innerHTML.trim())
+    }
+    
 }
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.getPosts)
