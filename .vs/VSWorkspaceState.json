@@ -1,9 +1,17 @@
 {
   "ExpandedNodes": [
     "",
-    "\\css",
-    "\\Member",
-    "\\scripts"
+    "\\Assets\\Modules",
+    "\\Assets\\Modules\\ResourceCenter",
+    "\\Assets\\Modules\\ResourceCenter\\Images",
+    "\\Calendar\\Event",
+    "\\classified\\search",
+    "\\classified\\search\\28118~480182",
+    "\\page",
+    "\\Reports",
+    "\\resourcecenter",
+    "\\resourcecenter\\28118"
   ],
+  "SelectedNode": "\\myWoodbridge.html",
   "PreviewInSolutionExplorer": false
 }
