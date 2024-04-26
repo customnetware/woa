@@ -29,23 +29,18 @@ const woaCode = {
     },
     getPortalData: (dataSource, dataFunction) => {
         if (dataSource.includes("resident-home-page") && woaCode.refreshCheck() < 10) {
-            let pageEmails = document.getElementById("recentEmails").getElementsByTagName("ul")[0]
             let cachedEmails = localStorage.getItem("pageEmails")
             if (cachedEmails !== null && cachedEmails.includes("<li>")) {
-                if (document.getElementById("emailWait") !== null) { document.getElementById("emailWait").remove() }
-                pageEmails.innerHTML = localStorage.getItem("pageEmails")
+                dataFunction(cachedEmails)
                 return
             }
         }
-        if (dataSource.includes("resourcecenter") && document.getElementById("filesWait").style.display == "none") {
-            let fileArea = document.getElementById("recentFiles").getElementsByTagName("ul")[0]
-            while (fileArea.firstChild) { fileArea.removeChild(fileArea.firstChild) }
-            document.getElementById("filesWait").style.display = ""
-        }
+
         $.get(dataSource)
             .done(function (responseText) {
                 try {
                     let portalContent = new DOMParser().parseFromString(responseText, "text/html")
+
                     dataFunction(portalContent)
                 } catch { }
 
@@ -76,21 +71,25 @@ const woaCode = {
         }
     },
     getEmails: (portalContent) => {
-        if (document.getElementById("emailWait") !== null) { document.getElementById("emailWait").remove() }
-        let recentEmails = portalContent.getElementById("panel_messages_content").getElementsByTagName("a")
-        let emailListing = document.getElementById("recentEmails").getElementsByTagName("ul")[0]
-        for (let p = 0; p < recentEmails.length; p++) {
-            let currentEmail = document.createElement("li")
-            let emailHeader = document.createElement("a")
-            let emailTitle = recentEmails[p].getAttribute("data-tooltip-title").split("by")[0].split(",")
-            emailHeader.href = "javascript:woaCode.showEmail('" + recentEmails[p].href + "')"
+        let contentType = typeof portalContent
 
-            emailHeader.innerHTML = emailTitle[0] + " (" + emailTitle[1].trim() + ")"
-            currentEmail.appendChild(emailHeader)
-            emailListing.appendChild(currentEmail)
-            localStorage.setItem(recentEmails[p].id, emailTitle + recentEmails[p].getAttribute("data-tooltip-text"))
-        }
-        localStorage.setItem("pageEmails", emailListing.innerHTML.trim())
+        if (document.getElementById("emailWait") !== null) { document.getElementById("emailWait").remove() }
+        let emailListing = document.getElementById("recentEmails").getElementsByTagName("ul")[0]
+        if (contentType == "object") {
+            let recentEmails = portalContent.getElementById("panel_messages_content").getElementsByTagName("a")
+            for (let p = 0; p < recentEmails.length; p++) {
+                let currentEmail = document.createElement("li")
+                let emailHeader = document.createElement("a")
+                let emailTitle = recentEmails[p].getAttribute("data-tooltip-title").split("by")[0].split(",")
+                emailHeader.href = "javascript:woaCode.showEmail('" + recentEmails[p].href + "')"
+
+                emailHeader.innerHTML = emailTitle[0] + " (" + emailTitle[1].trim() + ")"
+                currentEmail.appendChild(emailHeader)
+                emailListing.appendChild(currentEmail)
+                localStorage.setItem(recentEmails[p].id, emailTitle + recentEmails[p].getAttribute("data-tooltip-text"))
+            }
+            localStorage.setItem("pageEmails", emailListing.innerHTML.trim())
+        } else { emailListing.innerHTML = portalContent }
     },
     getFiles: (portalContent) => {
         let fileArray = []
@@ -163,6 +162,7 @@ const woaCode = {
                     document.getElementById("recentPosts").getElementsByTagName("ul")[0].appendChild(post)
                 }
             }
+            localStorage.setItem("pagePosts", document.getElementById("recentPosts").getElementsByTagName("ul")[0].innerHTML.trim())
         }
     }, showComments: (selectedPostID, groupID) => {
         let commentArea = document.getElementById("appDialogBody")
@@ -236,7 +236,7 @@ const woaCode = {
                 ad.appendChild(document.createTextNode(classifiedBody[p].childNodes[0].nodeValue))
                 document.getElementById("recentSales").getElementsByTagName("ul")[0].appendChild(ad)
             }
-        }
+        } localStorage.setItem("pageSales", document.getElementById("recentSales").getElementsByTagName("ul")[0].innerHTML.trim())
     },
     refreshCheck: () => {
         let checkStatus = (window.performance) ? window.performance.getEntriesByType("navigation")[0].type : "no_data"
@@ -264,9 +264,8 @@ woaCode.getPortalData(woaCode.pageLocation("/Member/Contact/28118~" + woaCode.ge
 for (let f = 0; f < filesMenuLink.length; f++) {
     filesMenuLink[f].href = fileMenu[f].getElementsByTagName("a")[0].href
 }
-
 let cachedContacts = localStorage.getItem("pageContacts")
-if (cachedContacts !== null && woaCode.refreshCheck() < 30) { contactList.innerHTML = cachedContacts } else {
+if (cachedContacts !== null && cachedContacts.includes("<li>") && woaCode.refreshCheck() < 30) { contactList.innerHTML = cachedContacts } else {
     for (let p = 0; p < contactMenu.length; p++) {
         let currentContact = woaCode.pageLocation(contactMenu[p].getElementsByTagName("a")[0].href)
         if (currentContact.includes("/Member/28118~")) {
@@ -276,23 +275,21 @@ if (cachedContacts !== null && woaCode.refreshCheck() < 30) { contactList.innerH
             contactList.appendChild(currentInfo)
             woaCode.getPortalData(woaCode.pageLocation(contactList.getElementsByTagName("a")[p].href), woaCode.getContacts)
         }
-    }
+    } localStorage.setItem("pageContacts", document.getElementById("officeContacts").getElementsByTagName("ul")[0].innerHTML.trim())
 }
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~11315"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/classified/search/28118~480182/classifieds"), woaCode.getForSaleOrFree)
+localStorage.setItem("pageTime", new Date().getTime())
 
 
-setTimeout(function () {
-    localStorage.setItem("pageTime", new Date().getTime())
 
-    localStorage.setItem("pageContacts", document.getElementById("officeContacts").getElementsByTagName("ul")[0].innerHTML.trim())
-    localStorage.setItem("pagePosts", document.getElementById("recentPosts").getElementsByTagName("ul")[0].innerHTML.trim())
-    localStorage.setItem("pageSales", document.getElementById("recentSales").getElementsByTagName("ul")[0].innerHTML.trim())
-}, 2000)
-
-
+//if (dataSource.includes("resourcecenter") && document.getElementById("filesWait").style.display == "none") {
+//    let fileArea = document.getElementById("recentFiles").getElementsByTagName("ul")[0]
+//    while (fileArea.firstChild) { fileArea.removeChild(fileArea.firstChild) }
+//    document.getElementById("filesWait").style.display = ""
+//}
 
 
 
