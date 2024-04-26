@@ -90,6 +90,7 @@ const woaCode = {
             emailListing.appendChild(currentEmail)
             localStorage.setItem(recentEmails[p].id, emailTitle + recentEmails[p].getAttribute("data-tooltip-text"))
         }
+        localStorage.setItem("pageEmails", emailListing.innerHTML.trim())
     },
     getFiles: (portalContent) => {
         let fileArray = []
@@ -285,7 +286,7 @@ woaCode.getPortalData(woaCode.pageLocation("/classified/search/28118~480182/clas
 
 setTimeout(function () {
     localStorage.setItem("pageTime", new Date().getTime())
-    localStorage.setItem("pageEmails", document.getElementById("recentEmails").getElementsByTagName("ul")[0].innerHTML.trim())
+
     localStorage.setItem("pageContacts", document.getElementById("officeContacts").getElementsByTagName("ul")[0].innerHTML.trim())
     localStorage.setItem("pagePosts", document.getElementById("recentPosts").getElementsByTagName("ul")[0].innerHTML.trim())
     localStorage.setItem("pageSales", document.getElementById("recentSales").getElementsByTagName("ul")[0].innerHTML.trim())
