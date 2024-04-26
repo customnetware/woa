@@ -28,7 +28,15 @@ const woaCode = {
         return profileID
     },
     getPortalData: (dataSource, dataFunction) => {
-
+        if (dataSource.includes("resident-home-page")  && woaCode.refreshCheck() <10) {
+            let pageEmails = document.getElementById("recentEmails").getElementsByTagName("ul")[0]
+            let cachedEmails = localStorage.getItem("pageEmails")
+            if (cachedEmails !== null) {
+                if (document.getElementById("emailWait") !== null) { document.getElementById("emailWait").remove() }
+                pageEmails.innerHTML = localStorage.getItem("pageEmails")
+                return
+            }
+        }
         if (dataSource.includes("resourcecenter") && document.getElementById("filesWait").style.display == "none") {
             let fileArea = document.getElementById("recentFiles").getElementsByTagName("ul")[0]
             while (fileArea.firstChild) { fileArea.removeChild(fileArea.firstChild) }
@@ -54,9 +62,7 @@ const woaCode = {
             noImage.style.paddingRight = "5px"
             if (portalContent.getElementsByClassName("mt-1")[0].src.includes("my")) {
                 document.getElementById("headerRow").getElementsByTagName("img")[0].remove()
-
                 document.getElementById("headerRow").insertBefore(noImage, document.getElementById("headerRow").firstChild)
-
             }
             else { document.getElementById("headerRow").getElementsByTagName("img")[0].src = portalContent.getElementsByClassName("mt-1")[0].src }
         } else {
@@ -64,7 +70,7 @@ const woaCode = {
             let lastName = portalContent.getElementsByName("lname")
             if (firstName.length > 0) {
                 greeting = greeting.concat(firstName[0].value + " " + lastName[0].value)
-                document.getElementById("headerRow").insertBefore(document.createTextNode(greeting+".  "), document.getElementById("headerRow").firstChild)
+                document.getElementById("headerRow").insertBefore(document.createTextNode(greeting + ".  "), document.getElementById("headerRow").firstChild)
             }
 
         }
@@ -232,11 +238,16 @@ const woaCode = {
         }
     },
     refreshCheck: () => {
-        let checkStatus = (window.performance) ? window.performance.getEntriesByType("navigation")[0].type : "back_foward"
+        let checkStatus = (window.performance) ? window.performance.getEntriesByType("navigation")[0].type : "no_data"
+        let lastVisit = localStorage.getItem("pageTime")
         let currentDate = new Date()
-        let pageDate = new Date(Number(localStorage.getItem("pageTime")))
-        let diff = (currentDate - pageDate) / 60000
-        return checkStatus
+        let pageDate = (lastVisit !== null) ? new Date(Number(lastVisit)) : currentDate
+        let cacheAge = Math.round((currentDate - pageDate) / 60000)
+
+        if (checkStatus == "reload") { cacheAge = 60 }
+        if (checkStatus == "navigate" && cacheAge < 2) { cacheAge = 2 }
+
+        return cacheAge
     }
 }
 
@@ -252,14 +263,18 @@ woaCode.getPortalData(woaCode.pageLocation("/Member/Contact/28118~" + woaCode.ge
 for (let f = 0; f < filesMenuLink.length; f++) {
     filesMenuLink[f].href = fileMenu[f].getElementsByTagName("a")[0].href
 }
-for (let p = 0; p < contactMenu.length; p++) {
-    let currentContact = woaCode.pageLocation(contactMenu[p].getElementsByTagName("a")[0].href)
-    if (currentContact.includes("/Member/28118~")) {
-        let currentInfo = document.createElement("li")
-        currentInfo.innerHTML = contactMenu[p].innerHTML
-        currentInfo.getElementsByTagName("a")[0].className = ""
-        contactList.appendChild(currentInfo)
-        woaCode.getPortalData(woaCode.pageLocation(contactList.getElementsByTagName("a")[p].href), woaCode.getContacts)
+
+let cachedContacts = localStorage.getItem("pageContacts")
+if (cachedContacts !== null && woaCode.refreshCheck() < 30) { contactList.innerHTML = cachedContacts } else {
+    for (let p = 0; p < contactMenu.length; p++) {
+        let currentContact = woaCode.pageLocation(contactMenu[p].getElementsByTagName("a")[0].href)
+        if (currentContact.includes("/Member/28118~")) {
+            let currentInfo = document.createElement("li")
+            currentInfo.innerHTML = contactMenu[p].innerHTML
+            currentInfo.getElementsByTagName("a")[0].className = ""
+            contactList.appendChild(currentInfo)
+            woaCode.getPortalData(woaCode.pageLocation(contactList.getElementsByTagName("a")[p].href), woaCode.getContacts)
+        }
     }
 }
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
