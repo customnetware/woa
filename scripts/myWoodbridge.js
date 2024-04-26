@@ -28,10 +28,10 @@ const woaCode = {
         return profileID
     },
     getPortalData: (dataSource, dataFunction) => {
-        if (dataSource.includes("resident-home-page")  && woaCode.refreshCheck() <10) {
+        if (dataSource.includes("resident-home-page") && woaCode.refreshCheck() < 10) {
             let pageEmails = document.getElementById("recentEmails").getElementsByTagName("ul")[0]
             let cachedEmails = localStorage.getItem("pageEmails")
-            if (cachedEmails !== null) {
+            if (cachedEmails !== null && cachedEmails.includes("<li>")) {
                 if (document.getElementById("emailWait") !== null) { document.getElementById("emailWait").remove() }
                 pageEmails.innerHTML = localStorage.getItem("pageEmails")
                 return
