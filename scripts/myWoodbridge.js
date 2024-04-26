@@ -247,7 +247,7 @@ let filesMenuLink = document.getElementsByClassName("recentFileLink")
 
 woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
 woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()[0]), woaCode.getProfile)
-woaCode.getPortalData(woaCode.pageLocation("Member/Contact/28118~" + woaCode.getProfileID()[0] + "~" + woaCode.getProfileID()[2]), woaCode.getProfile)
+woaCode.getPortalData(woaCode.pageLocation("/Member/Contact/28118~" + woaCode.getProfileID()[0] + "~" + woaCode.getProfileID()[2]), woaCode.getProfile)
 
 for (let f = 0; f < filesMenuLink.length; f++) {
     filesMenuLink[f].href = fileMenu[f].getElementsByTagName("a")[0].href
