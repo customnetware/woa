@@ -49,17 +49,12 @@ const woaCode = {
     getProfile: (portalContent) => {
         let currentHour = new Date().getHours()
         let greeting = (currentHour < 12) ? "Good Morning, " : (currentHour >= 12 && currentHour <= 18) ? "Good Afternoon, " : "Good Evening, "
-
-        if (portalContent.getElementsByClassName("mt-1").length > 0) {
-            let noImage = document.createElement("span")
-            noImage.className = "fa fa-user fa-4x"
-            noImage.style.float = "left"
-            noImage.style.paddingRight = "5px"
-            if (portalContent.getElementsByClassName("mt-1")[0].src.includes("my")) {
-                document.getElementById("headerRow").getElementsByTagName("img")[0].remove()
-                document.getElementById("headerRow").insertBefore(noImage, document.getElementById("headerRow").firstChild)
+        let portalImage = portalContent.getElementsByClassName("mt-1")
+        if (portalImage.length > 0) {
+            if (portalImage[0].src.endsWit(".png") || portalImage[0].src.endsWit(".gif") || portalImage[0].src.endsWit(".jpg") || portalImage[0].src.endsWit(".jpeg")) {
+                document.getElementById("headerRow").getElementsByTagName("img")[0].src = portalImage[0].src
             }
-            else { document.getElementById("headerRow").getElementsByTagName("img")[0].src = portalContent.getElementsByClassName("mt-1")[0].src }
+       
         } else {
             let firstName = portalContent.getElementsByName("fname")
             let lastName = portalContent.getElementsByName("lname")
