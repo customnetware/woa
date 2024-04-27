@@ -35,15 +35,12 @@ const woaCode = {
                 return
             }
         }
-
         $.get(dataSource)
             .done(function (responseText) {
                 try {
                     let portalContent = new DOMParser().parseFromString(responseText, "text/html")
-
                     dataFunction(portalContent)
                 } catch { }
-
             })
     },
     getProfile: (portalContent) => {
@@ -62,12 +59,10 @@ const woaCode = {
                 greeting = greeting.concat(firstName[0].value + " " + lastName[0].value)
                 document.getElementById("headerRow").insertBefore(document.createTextNode(greeting + ".  "), document.getElementById("headerRow").firstChild)
             }
-
         }
     },
     getEmails: (portalContent) => {
         let contentType = typeof portalContent
-
         if (document.getElementById("emailWait") !== null) { document.getElementById("emailWait").remove() }
         let emailListing = document.getElementById("recentEmails").getElementsByTagName("ul")[0]
         if (contentType == "object") {
@@ -248,8 +243,10 @@ const woaCode = {
     }
 }
 
-let fileMenu = document.getElementsByClassName("menu-sub-group")[1].getElementsByTagName("li")
-let contactMenu = document.getElementsByClassName("menu-sub-group")[4].getElementsByTagName("li")
+
+let fileMenu = document.getElementById("mobile-menu-publish-links").children[1].getElementsByTagName("ul")[0].children
+let contactMenu = document.getElementById("mobile-menu-publish-links").children[3].getElementsByTagName("ul")[0].children
+
 let contactList = document.getElementById("officeContacts").getElementsByTagName("ul")[0]
 let filesMenuLink = document.getElementsByClassName("recentFileLink")
 
@@ -270,10 +267,8 @@ if (cachedContacts !== null && cachedContacts.includes("<li>") && woaCode.refres
             currentInfo.getElementsByTagName("a")[0].className = ""
             contactList.appendChild(currentInfo)
             woaCode.getPortalData(woaCode.pageLocation(contactList.getElementsByTagName("a")[p].href), woaCode.getContacts)
-
         }
-    }
-    
+    }   
 }
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.getPosts)
