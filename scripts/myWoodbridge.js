@@ -51,7 +51,7 @@ const woaCode = {
         let greeting = (currentHour < 12) ? "Good Morning, " : (currentHour >= 12 && currentHour <= 18) ? "Good Afternoon, " : "Good Evening, "
         let portalImage = portalContent.getElementsByClassName("mt-1")
         if (portalImage.length > 0) {
-            if (portalImage[0].src.endsWit(".png") || portalImage[0].src.endsWit(".gif") || portalImage[0].src.endsWit(".jpg") || portalImage[0].src.endsWit(".jpeg")) {
+            if (portalImage[0].src.endsWith(".png") || portalImage[0].src.endsWith(".gif") || portalImage[0].src.endsWith(".jpg") || portalImage[0].src.endsWith(".jpeg")) {
                 document.getElementById("headerRow").getElementsByTagName("img")[0].src = portalImage[0].src
             }
        
