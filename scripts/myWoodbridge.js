@@ -35,6 +35,13 @@ const woaCode = {
                 return
             }
         }
+        if (dataSource.includes("classifieds") && woaCode.refreshCheck() < 30) {
+            let cachedAds = localStorage.getItem("pageSales")
+            if (cachedAds !== null && cachedAds.includes("<li>")) {
+                dataFunction(cachedAds)
+                return
+            }
+        }
         $.get(dataSource)
             .done(function (responseText) {
                 try {
@@ -214,20 +221,22 @@ const woaCode = {
         localStorage.setItem("pageContacts", contactList.innerHTML.trim())
     },
     getForSaleOrFree: (portalContent) => {
-        let classifiedTitle = portalContent.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
-        let classifiedBody = portalContent.getElementsByClassName("clsBodyText hidden-sm-down")
-        for (let p = 0; p < 3; p++) {
-            if (p < classifiedTitle.length) {
-                let ad = document.createElement("li")
-                let adTitle = document.createElement("b")
-
-                adTitle.appendChild(document.createTextNode(classifiedTitle[p].getElementsByTagName("a")[0].innerText.trim()))
-                ad.appendChild(adTitle)
-                ad.appendChild(document.createElement("br"))
-                ad.appendChild(document.createTextNode(classifiedBody[p].childNodes[0].nodeValue))
-                document.getElementById("recentSales").getElementsByTagName("ul")[0].appendChild(ad)
-            }
-        } localStorage.setItem("pageSales", document.getElementById("recentSales").getElementsByTagName("ul")[0].innerHTML.trim())
+        let contentType = typeof portalContent
+        if (contentType == "object") {
+            let classifiedTitle = portalContent.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
+            let classifiedBody = portalContent.getElementsByClassName("clsBodyText hidden-sm-down")
+            for (let p = 0; p < 3; p++) {
+                if (p < classifiedTitle.length) {
+                    let ad = document.createElement("li")
+                    let adTitle = document.createElement("b")
+                    adTitle.appendChild(document.createTextNode(classifiedTitle[p].getElementsByTagName("a")[0].innerText.trim()))
+                    ad.appendChild(adTitle)
+                    ad.appendChild(document.createElement("br"))
+                    ad.appendChild(document.createTextNode(classifiedBody[p].childNodes[0].nodeValue))
+                    document.getElementById("recentSales").getElementsByTagName("ul")[0].appendChild(ad)
+                }
+            } localStorage.setItem("pageSales", document.getElementById("recentSales").getElementsByTagName("ul")[0].innerHTML.trim())
+        } else { document.getElementById("recentSales").getElementsByTagName("ul")[0].innerHTML=portalContent}
     },
     refreshCheck: () => {
         let checkStatus = (window.performance) ? window.performance.getEntriesByType("navigation")[0].type : "no_data"
