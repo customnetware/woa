@@ -2,19 +2,6 @@ const woaCode = {
     pageLocation: (pageName) => {
         return (window.location.hostname == "localhost") ? pageName.replace("https://ourwoodbridge.net", "") + ".html" : pageName
     },
-    showEmail: (savedMessageURL) => {
-        let commentArea = document.getElementById("appDialogBody")
-        while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
-        document.getElementById("appDialogLabel").innerText = ""
-        document.getElementById("replyButton").style.display = "none"
-
-        if (savedMessageURL.includes("/Messenger/MessageView/")) {
-            $("#appDialogBody").load(woaCode.pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
-                if (statusTxt == "error") { commentArea.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
-            })
-        }
-        if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
-    },
     isDescendant: (parent, child) => {
         let isParent = child.parentElement
         while (isParent != null) {
@@ -90,6 +77,19 @@ const woaCode = {
             }
             localStorage.setItem("pageEmails", emailListing.innerHTML.trim())
         } else { emailListing.innerHTML = portalContent }
+    },
+    showEmail: (savedMessageURL) => {
+        let commentArea = document.getElementById("appDialogBody")
+        while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
+        document.getElementById("appDialogLabel").innerText = ""
+        document.getElementById("replyButton").style.display = "none"
+
+        if (savedMessageURL.includes("/Messenger/MessageView/")) {
+            $("#appDialogBody").load(woaCode.pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "error") { commentArea.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
+            })
+        }
+        if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
     },
     getFiles: (portalContent) => {
         let fileMenu = document.getElementById("mobile-menu-publish-links").children[1].getElementsByTagName("ul")[0].children
@@ -169,7 +169,8 @@ const woaCode = {
             }
             localStorage.setItem("pagePosts", document.getElementById("recentPosts").getElementsByTagName("ul")[0].innerHTML.trim())
         }
-    }, showComments: (selectedPostID, groupID) => {
+    },
+    showComments: (selectedPostID, groupID) => {
         let commentArea = document.getElementById("appDialogBody")
         while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
         $.get(woaCode.pageLocation("/Discussion/28118~" + groupID), function () { })
@@ -201,34 +202,51 @@ const woaCode = {
                 if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
             })
     },
-    getContacts: (portalContent) => {
-        let contactList = document.getElementById("officeContacts").getElementsByTagName("ul")[0]
-        let contactCard = document.createElement("li")
-        let contactLink = document.createElement("a")
-        let contactName = portalContent.getElementsByClassName("clsDMHeader")
-        let contactTitle = portalContent.getElementsByClassName("clsHeader")
-        let contactData = portalContent.getElementsByClassName("contactComms")
-        contactCard.appendChild(contactLink)
-        if (contactTitle.length > 0) { contactLink.innerHTML = contactTitle[0].innerText.trim() + " - " }
-        if (contactName.length > 1) { contactCard.appendChild(document.createTextNode(contactName[1].children[0].innerText.trim())) }
-        if (contactData.length > 0) {
-            let selectedData = contactData[0].getElementsByClassName("contactLabel")
-            if (selectedData.length > 0) {
-                for (let p = 0; p < selectedData.length; p++) {
-                    if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
-                        contactCard.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.children[0].innerText.trim()))
-                    }
-                    if (selectedData[p].innerText == "Work") {
-                        contactCard.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.innerText.trim()))
-                    }
-                    if (selectedData[p].innerText == "Other") {
-                        contactCard.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.innerText.trim()))
-                    }
-                }
+    getContacts: () => {
+        var contacts = []
+        let contactMenu = document.getElementById("mobile-menu-publish-links").children[3].getElementsByTagName("ul")[0].children
+        for (let c = 0; c < contactMenu.length; c++) { contacts.push(woaCode.pageLocation(contactMenu[c].getElementsByTagName("a")[0].href)) }
+        function showContacts(contacts) {
+            if (contacts.length > 0) {
+                $.get(contacts.shift())
+                    .done(function (contactsFromPortal) {
+                        let portalContent = new DOMParser().parseFromString(contactsFromPortal, "text/html")
+                        let contactList = document.getElementById("officeContacts").getElementsByTagName("ul")[0]
+                        let contactCard = document.createElement("li")
+                        let contactLink = document.createElement("a")
+                        let contactName = portalContent.getElementsByClassName("clsDMHeader")
+                        let contactTitle = portalContent.getElementsByClassName("clsHeader")
+                        let contactData = portalContent.getElementsByClassName("contactComms")
+                        contactCard.appendChild(contactLink)
+
+                        if (contactTitle.length > 0) { contactLink.innerHTML = contactTitle[0].innerText.trim() + " - " }
+                        if (contactName.length > 1) { contactLink.appendChild(document.createTextNode(contactName[1].children[0].innerText.trim())) }
+                        if (contactData.length > 0) {
+                            let selectedData = contactData[0].getElementsByClassName("contactLabel")
+                            if (selectedData.length > 0) {
+                                for (let p = 0; p < selectedData.length; p++) {
+                                    if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
+                                        contactCard.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.children[0].innerText.trim()))
+                                    }
+                                    if (selectedData[p].innerText == "Work") {
+                                        contactCard.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.innerText.trim()))
+                                    }
+                                    if (selectedData[p].innerText == "Other") {
+                                        contactCard.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.innerText.trim()))
+                                    }
+                                }
+                            }
+                        }
+                        contactList.appendChild(contactCard)
+                        localStorage.setItem("pageContacts", contactList.innerHTML.trim())
+                        showContacts(contacts)
+                    })
+                    .fail(function () {
+                        showContacts(contacts)
+                    })
             }
         }
-        contactList.appendChild(contactCard)
-        localStorage.setItem("pageContacts", contactList.innerHTML.trim())
+        showContacts(contacts)
     },
     getForSaleOrFree: (portalContent) => {
         let contentType = typeof portalContent
@@ -262,13 +280,8 @@ const woaCode = {
     }
 }
 localStorage.setItem("pageTime", new Date().getTime())
-let contactMenu = document.getElementById("mobile-menu-publish-links").children[3].getElementsByTagName("ul")[0].children
-for (let p = 0; p < contactMenu.length; p++) {
-    let currentContact = contactMenu[p].getElementsByTagName("a")[0].href
-    if (currentContact.includes("/Member/28118~")) {
-        try { woaCode.getPortalData(woaCode.pageLocation(currentContact), woaCode.getContacts) } catch { }
-    }
-}
+
+woaCode.getContacts()
 woaCode.getPortalData(woaCode.pageLocation("/resourcecenter/28118/resource-center"), woaCode.getFiles)
 woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()[0]), woaCode.getProfile)
 woaCode.getPortalData(woaCode.pageLocation("/Member/Contact/28118~" + woaCode.getProfileID()[0] + "~" + woaCode.getProfileID()[2]), woaCode.getProfile)
@@ -279,33 +292,9 @@ woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~11315"), woaCode.g
 woaCode.getPortalData(woaCode.pageLocation("/classified/search/28118~480182/classifieds"), woaCode.getForSaleOrFree)
 
 
-
-
 //if (dataSource.includes("resourcecenter") && document.getElementById("filesWait").style.display == "none") {
 //    let fileArea = document.getElementById("recentFiles").getElementsByTagName("ul")[0]
 //    while (fileArea.firstChild) { fileArea.removeChild(fileArea.firstChild) }
 //    document.getElementById("filesWait").style.display = ""
 //}
 
-
-
-
-/*try {} catch { }
-
-let contactList = document.getElementById("officeContacts").getElementsByTagName("ul")[0]
-let cachedContacts = localStorage.getItem("pageContacts")
-if (cachedContacts !== null && cachedContacts.includes("<li>") && woaCode.refreshCheck() < 30) { contactList.innerHTML = cachedContacts } else {
-    for (let p = 0; p < contactMenu.length; p++) {
-        let currentContact = woaCode.pageLocation(contactMenu[p].getElementsByTagName("a")[0].href)
-        if (currentContact.includes("/Member/28118~")) {
-            let currentInfo = document.createElement("li")
-            currentInfo.innerHTML = contactMenu[p].innerHTML
-            currentInfo.getElementsByTagName("a")[0].className = ""
-            contactList.appendChild(currentInfo)
-           
-        }
-    }
-}
-
-
-*/
