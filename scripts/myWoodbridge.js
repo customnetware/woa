@@ -203,12 +203,13 @@ const woaCode = {
             })
     },
     getContacts: () => {
-        var contacts = []
+        let contacts = []
         let contactMenu = document.getElementById("mobile-menu-publish-links").children[3].getElementsByTagName("ul")[0].children
         for (let c = 0; c < contactMenu.length; c++) { contacts.push(woaCode.pageLocation(contactMenu[c].getElementsByTagName("a")[0].href)) }
         function showContacts(contacts) {
             if (contacts.length > 0) {
-                $.get(contacts.shift())
+                let contactUrl = contacts.shift()
+                $.get(contactUrl)
                     .done(function (contactsFromPortal) {
                         let portalContent = new DOMParser().parseFromString(contactsFromPortal, "text/html")
                         let contactList = document.getElementById("officeContacts").getElementsByTagName("ul")[0]
@@ -218,7 +219,8 @@ const woaCode = {
                         let contactTitle = portalContent.getElementsByClassName("clsHeader")
                         let contactData = portalContent.getElementsByClassName("contactComms")
                         contactCard.appendChild(contactLink)
-
+                        contactList.appendChild(contactCard)
+                        contactLink.href=contactUrl
                         if (contactTitle.length > 0) { contactLink.innerHTML = contactTitle[0].innerText.trim() + " - " }
                         if (contactName.length > 1) { contactLink.appendChild(document.createTextNode(contactName[1].children[0].innerText.trim())) }
                         if (contactData.length > 0) {
@@ -237,7 +239,6 @@ const woaCode = {
                                 }
                             }
                         }
-                        contactList.appendChild(contactCard)
                         localStorage.setItem("pageContacts", contactList.innerHTML.trim())
                         showContacts(contacts)
                     })
