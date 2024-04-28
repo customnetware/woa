@@ -49,6 +49,7 @@ const woaCode = {
                     dataFunction(portalContent)
                 } catch { }
             })
+            .fail(function () { })
     },
     getProfile: (portalContent) => {
         let currentHour = new Date().getHours()
@@ -262,12 +263,12 @@ const woaCode = {
 }
 localStorage.setItem("pageTime", new Date().getTime())
 let contactMenu = document.getElementById("mobile-menu-publish-links").children[3].getElementsByTagName("ul")[0].children
-
-woaCode.getPortalData(woaCode.pageLocation(contactMenu[0].getElementsByTagName("a")[0].href), woaCode.getContacts)
-woaCode.getPortalData(woaCode.pageLocation(contactMenu[1].getElementsByTagName("a")[0].href), woaCode.getContacts)
-woaCode.getPortalData(woaCode.pageLocation(contactMenu[2].getElementsByTagName("a")[0].href), woaCode.getContacts)
-woaCode.getPortalData(woaCode.pageLocation(contactMenu[3].getElementsByTagName("a")[0].href), woaCode.getContacts)
-woaCode.getPortalData(woaCode.pageLocation(contactMenu[4].getElementsByTagName("a")[0].href), woaCode.getContacts)
+for (let p = 0; p < contactMenu.length; p++) {
+    let currentContact = contactMenu[p].getElementsByTagName("a")[0].href
+    if (currentContact.includes("/Member/28118~")) {
+        try { woaCode.getPortalData(woaCode.pageLocation(currentContact), woaCode.getContacts) } catch { }
+    }
+}
 woaCode.getPortalData(woaCode.pageLocation("/resourcecenter/28118/resource-center"), woaCode.getFiles)
 woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()[0]), woaCode.getProfile)
 woaCode.getPortalData(woaCode.pageLocation("/Member/Contact/28118~" + woaCode.getProfileID()[0] + "~" + woaCode.getProfileID()[2]), woaCode.getProfile)
