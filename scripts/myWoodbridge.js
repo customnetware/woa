@@ -205,46 +205,50 @@ const woaCode = {
     getContacts: () => {
         let contacts = []
         let contactMenu = document.getElementById("mobile-menu-publish-links").children[3].getElementsByTagName("ul")[0].children
-        for (let c = 0; c < contactMenu.length; c++) { contacts.push(woaCode.pageLocation(contactMenu[c].getElementsByTagName("a")[0].href)) }
+        for (let c = 0; c < contactMenu.length; c++) {
+            contacts.push(woaCode.pageLocation(contactMenu[c].getElementsByTagName("a")[0].href))
+        }
         function showContacts(contacts) {
             if (contacts.length > 0) {
                 let contactUrl = contacts.shift()
-                $.get(contactUrl)
-                    .done(function (contactsFromPortal) {
-                        let portalContent = new DOMParser().parseFromString(contactsFromPortal, "text/html")
-                        let contactList = document.getElementById("officeContacts").getElementsByTagName("ul")[0]
-                        let contactCard = document.createElement("li")
-                        let contactLink = document.createElement("a")
-                        let contactName = portalContent.getElementsByClassName("clsDMHeader")
-                        let contactTitle = portalContent.getElementsByClassName("clsHeader")
-                        let contactData = portalContent.getElementsByClassName("contactComms")
-                        contactCard.appendChild(contactLink)
-                        contactList.appendChild(contactCard)
-                        contactLink.href=contactUrl
-                        if (contactTitle.length > 0) { contactLink.innerHTML = contactTitle[0].innerText.trim() + " - " }
-                        if (contactName.length > 1) { contactLink.appendChild(document.createTextNode(contactName[1].children[0].innerText.trim())) }
-                        if (contactData.length > 0) {
-                            let selectedData = contactData[0].getElementsByClassName("contactLabel")
-                            if (selectedData.length > 0) {
-                                for (let p = 0; p < selectedData.length; p++) {
-                                    if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
-                                        contactCard.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.children[0].innerText.trim()))
-                                    }
-                                    if (selectedData[p].innerText == "Work") {
-                                        contactCard.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.innerText.trim()))
-                                    }
-                                    if (selectedData[p].innerText == "Other") {
-                                        contactCard.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.innerText.trim()))
+                if (contactUrl.includes("/Member/28118~")) {
+                    $.get(contactUrl)
+                        .done(function (contactsFromPortal) {
+                            let portalContent = new DOMParser().parseFromString(contactsFromPortal, "text/html")
+                            let contactList = document.getElementById("officeContacts").getElementsByTagName("ul")[0]
+                            let contactCard = document.createElement("li")
+                            let contactLink = document.createElement("a")
+                            let contactName = portalContent.getElementsByClassName("clsDMHeader")
+                            let contactTitle = portalContent.getElementsByClassName("clsHeader")
+                            let contactData = portalContent.getElementsByClassName("contactComms")
+                            contactCard.appendChild(contactLink)
+                            contactList.appendChild(contactCard)
+                            contactLink.href = contactUrl
+                            if (contactTitle.length > 0) { contactLink.innerHTML = contactTitle[0].innerText.trim() + " - " }
+                            if (contactName.length > 1) { contactLink.appendChild(document.createTextNode(contactName[1].children[0].innerText.trim())) }
+                            if (contactData.length > 0) {
+                                let selectedData = contactData[0].getElementsByClassName("contactLabel")
+                                if (selectedData.length > 0) {
+                                    for (let p = 0; p < selectedData.length; p++) {
+                                        if (selectedData[p].innerText == "Email" && selectedData[p].nextElementSibling.childElementCount == 2) {
+                                            contactCard.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.children[0].innerText.trim()))
+                                        }
+                                        if (selectedData[p].innerText == "Work") {
+                                            contactCard.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.innerText.trim()))
+                                        }
+                                        if (selectedData[p].innerText == "Other") {
+                                            contactCard.appendChild(document.createTextNode(" " + selectedData[p].nextElementSibling.innerText.trim()))
+                                        }
                                     }
                                 }
                             }
-                        }
-                        localStorage.setItem("pageContacts", contactList.innerHTML.trim())
-                        showContacts(contacts)
-                    })
-                    .fail(function () {
-                        showContacts(contacts)
-                    })
+                            localStorage.setItem("pageContacts", contactList.innerHTML.trim())
+                            showContacts(contacts)
+                        })
+                        .fail(function () {
+                            showContacts(contacts)
+                        })
+                }
             }
         }
         showContacts(contacts)
