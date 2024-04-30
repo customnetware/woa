@@ -17,24 +17,22 @@
         <a id="HeaderPublishAuthProfile" title="" class="text-nowrap" href="javascript:AV.MyProfileMenu.launch(10518615,28118,16860439,16764170);" style="float:right; padding-right:10px">My Profile</a>
     </div><div class="clsBodyText"></div>
     <script>
-        function checkForScript(element, evnt, funct) {
-            if (element.attachEvent) { return element.attachEvent('on' + evnt, funct) } else { return element.addEventListener(evnt, funct, false) }
-        }
-        let portalHead = document.head || document.getElementsByTagName("head")[0]
+        $.get("/Member/28118~10544936.html")
+            .done(function (contactsFromPortal) {
+                let portalContent = new DOMParser().parseFromString(contactsFromPortal, "text/html")
+                let newContact = portalContent.getElementsByClassName("pull-left overflowEllipsis clsDMHeader")
 
-        let woaStyles = document.createElement("link")
-        woaStyles.href = (window.location.hostname == "localhost") ? "/css/myWoodbridge.css" : "https://customnetware.github.io/woa/css/myWoodbridge.css"
-        woaStyles.rel = "stylesheet"
-        portalHead.appendChild(woaStyles)
-    
-        let woaScripts = document.createElement("script")
-        woaScripts
-        woaScripts.type = "text/javascript"
-        woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/myWoodbridge.js" : "https://customnetware.github.io/woa/scripts/myWoodbridge.js"
-        document.body.appendChild(woaScripts)
+                string = newContact[0].getElementsByTagName("span")[0].innerText.replace(/\s\s+/g, ' ');
 
-        checkForScript(woaScripts, "load", function () { showThePage("contacts") })
-        checkForScript(woaScripts, "error", function () { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") })
+                let nameSpan = document.createElement("span")
+                nameSpan.appendChild(document.createTextNode(string.trim()))
+                //sentence = newContact.getElementsByTagName("span")[0].innerText.replace(/(?:\r|\r|)/g, "");
+                document.getElementsByClassName("clsBodyText")[0].appendChild(nameSpan)
+                localStorage.setItem("testContact", document.getElementsByClassName("clsBodyText")[0].innerHTML)
+
+            })
+
+        
     </script>
 </body>
 </html>

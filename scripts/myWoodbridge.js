@@ -1,3 +1,4 @@
+
 const woaCode = {
     pageLocation: (pageName) => {
         return (window.location.hostname == "localhost") ? pageName.replace("https://ourwoodbridge.net", "") + ".html" : pageName
@@ -36,7 +37,10 @@ const woaCode = {
                     dataFunction(portalContent)
                 } catch { }
             })
-            .fail(function () { })
+            .fail(function () {
+                let errorContent = new DOMParser().parseFromString("<div id='failMessage'>The requested file was not found on this server!</div>", "text/html")
+                dataFunction(errorContent)
+            })
     },
     getProfile: (portalContent) => {
         let currentHour = new Date().getHours()
@@ -132,6 +136,9 @@ const woaCode = {
         }
     },
     getPosts: (portalContent) => {
+        let customDiff = localStorage.getItem("customDiff")
+        customDiff = (customDiff !== null) ? Number(customDiff) : 33
+
         let groupPageLink = portalContent.getElementById("lnkAddTopic")
         let forumID = /\(([^)]+)\)/.exec(groupPageLink.href)[1].split(",")
         let posts = portalContent.getElementsByClassName("ThreadContainer")[0], forumArray = [], currentDate = new Date()
@@ -144,7 +151,7 @@ const woaCode = {
             let posters = post.getElementsByClassName("respAuthorWrapper")
             let contacts = post.getElementsByClassName("respReplyWrapper")
             let dateSort = new Date(lastDate).getTime()
-            if (dayDiff < 32) {
+            if (dayDiff < customDiff) {
                 forumArray.push({
                     postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
                     postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: groupPageLink.innerText, groupID: forumID[1].replaceAll("'", ""),
@@ -167,8 +174,15 @@ const woaCode = {
                     document.getElementById("recentPosts").getElementsByTagName("ul")[0].appendChild(post)
                 }
             }
+
             localStorage.setItem("pagePosts", document.getElementById("recentPosts").getElementsByTagName("ul")[0].innerHTML.trim())
         }
+        let morePosts = document.createElement("li")
+        let morePostsFunc = document.createElement("a")
+        morePostsFunc.innerHTML = "View more posts"
+        morePostsFunc.href = "javascript:lsManage()"
+        morePosts.appendChild(morePostsFunc)
+        document.getElementById("recentPosts").getElementsByTagName("ul")[0].appendChild(morePosts)
     },
     showComments: (selectedPostID, groupID) => {
         let commentArea = document.getElementById("appDialogBody")
@@ -218,14 +232,18 @@ const woaCode = {
                             let contactList = document.getElementById("officeContacts").getElementsByTagName("ul")[0]
                             let contactCard = document.createElement("li")
                             let contactLink = document.createElement("a")
-                            let contactName = portalContent.getElementsByClassName("clsDMHeader")
-                            let contactTitle = portalContent.getElementsByClassName("clsHeader")
+                            let contactNames = portalContent.getElementsByClassName("clsDMHeader")
+                            let contactTitles = portalContent.getElementsByClassName("clsHeader")
                             let contactData = portalContent.getElementsByClassName("contactComms")
+                            let contactName = (contactNames.length > 1) ? contactNames[1].children[0].innerText.trim().replace(/\s\s+/g, ' ') : ""
+                            let contactTitle = (contactTitles.length > 0) ? contactTitles[0].innerText.trim().replace(/\s\s+/g, ' ') : ""
+
                             contactCard.appendChild(contactLink)
                             contactList.appendChild(contactCard)
                             contactLink.href = contactUrl
-                            if (contactTitle.length > 0) { contactLink.innerHTML = contactTitle[0].innerText.trim() + " - " }
-                            if (contactName.length > 1) { contactLink.appendChild(document.createTextNode(contactName[1].children[0].innerText.trim())) }
+                            contactLink.innerHTML = contactName + " - " + contactTitle
+
+
                             if (contactData.length > 0) {
                                 let selectedData = contactData[0].getElementsByClassName("contactLabel")
                                 if (selectedData.length > 0) {
@@ -242,16 +260,20 @@ const woaCode = {
                                     }
                                 }
                             }
-                            localStorage.setItem("pageContacts", contactList.innerHTML.trim())
+                            localStorage.setItem("pageContacts", document.getElementById("officeContacts").getElementsByTagName("ul")[0].innerHTML.trim())
                             showContacts(contacts)
                         })
                         .fail(function () {
+
                             showContacts(contacts)
                         })
+                        .always(function () { })
                 }
             }
         }
+
         showContacts(contacts)
+
     },
     getForSaleOrFree: (portalContent) => {
         let contentType = typeof portalContent
@@ -285,7 +307,6 @@ const woaCode = {
     }
 }
 localStorage.setItem("pageTime", new Date().getTime())
-
 woaCode.getContacts()
 woaCode.getPortalData(woaCode.pageLocation("/resourcecenter/28118/resource-center"), woaCode.getFiles)
 woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()[0]), woaCode.getProfile)
@@ -296,10 +317,14 @@ woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.ge
 woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~11315"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/classified/search/28118~480182/classifieds"), woaCode.getForSaleOrFree)
 
+function lsManage(typeofHistory) {
+    let postHistory = localStorage.getItem("customDiff")
+    if (postHistory !== null) { alert(postHistory) }
+}
 
 //if (dataSource.includes("resourcecenter") && document.getElementById("filesWait").style.display == "none") {
 //    let fileArea = document.getElementById("recentFiles").getElementsByTagName("ul")[0]
 //    while (fileArea.firstChild) { fileArea.removeChild(fileArea.firstChild) }
 //    document.getElementById("filesWait").style.display = ""
-//}
+//}<a href="javascript:lsManage()"><i> View more posts </i><span class="fa fa-history" aria-hidden="true"></span> </a>
 
