@@ -177,12 +177,12 @@ const woaCode = {
 
             localStorage.setItem("pagePosts", document.getElementById("recentPosts").getElementsByTagName("ul")[0].innerHTML.trim())
         }
-        let morePosts = document.createElement("li")
-        let morePostsFunc = document.createElement("a")
-        morePostsFunc.innerHTML = "View more posts"
-        morePostsFunc.href = "javascript:lsManage()"
-        morePosts.appendChild(morePostsFunc)
-        document.getElementById("recentPosts").getElementsByTagName("ul")[0].appendChild(morePosts)
+        //let morePosts = document.createElement("li")
+        //let morePostsFunc = document.createElement("a")
+        //morePostsFunc.innerHTML = "View more posts"
+        //morePostsFunc.href = "javascript:lsManage()"
+        //morePosts.appendChild(morePostsFunc)
+        //document.getElementById("recentPosts").getElementsByTagName("ul")[0].appendChild(morePosts)
     },
     showComments: (selectedPostID, groupID) => {
         let commentArea = document.getElementById("appDialogBody")
