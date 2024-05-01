@@ -135,37 +135,57 @@ const woaCode = {
             document.getElementById("recentFiles").getElementsByTagName("ul")[0].appendChild(linkSpan)
         }
     },
-    getPosts: (portalContent) => {
-        let customDiff = localStorage.getItem("customDiff")
-        customDiff = (customDiff !== null) ? Number(customDiff) : 33
+    getPosts: () => {
+        let groups = ["8364", "8030", "11315", "000000"], forumArray = []
+        function getPortalPosts() {
+            let numOfDays = localStorage.getItem("customDiff"), currentDate = new Date()
+            numOfDays = (numOfDays == null) ? 32 : numOfDays, historySlider.value = numOfDays
+            sliderDays.innerHTML = historySlider.value
 
-        let groupPageLink = portalContent.getElementById("lnkAddTopic")
-        let forumID = /\(([^)]+)\)/.exec(groupPageLink.href)[1].split(",")
-        let posts = portalContent.getElementsByClassName("ThreadContainer")[0], forumArray = [], currentDate = new Date()
-        for (let x = 0; x < posts.childElementCount; x++) {
-            let post = posts.children[x]
-            let lastDate = new Date(post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", ""))
-            let dayDiff = (currentDate - lastDate) / (1000 * 3600 * 24)
-            let topic = post.getElementsByClassName("respDiscTopic")
-            let comments = post.getElementsByClassName("respDiscChildPost")
-            let posters = post.getElementsByClassName("respAuthorWrapper")
-            let contacts = post.getElementsByClassName("respReplyWrapper")
-            let dateSort = new Date(lastDate).getTime()
-            if (dayDiff < customDiff) {
-                forumArray.push({
-                    postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
-                    postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: groupPageLink.innerText, groupID: forumID[1].replaceAll("'", ""),
-                    numOfPost: comments.length
-                })
+            if (groups.length > 0) {
+                let groupID = groups.shift()
+                if (groupID == "000000") { showPosts(); return }
+                let groupURL = woaCode.pageLocation("/Discussion/28118~" + groupID)
+                $.get(groupURL)
+                    .done(function (groupsFromPortal) {
+                        let portalContent = new DOMParser().parseFromString(groupsFromPortal, "text/html")
+                        let groupPageLink = portalContent.getElementById("lnkAddTopic")
+                        let forumID = /\(([^)]+)\)/.exec(groupPageLink.href)[1].split(",")
+                        let posts = portalContent.getElementsByClassName("ThreadContainer")[0]
+
+                        getPortalPosts()
+                        for (let x = 0; x < posts.childElementCount; x++) {
+                            let post = posts.children[x]
+                            let lastDate = new Date(post.getElementsByClassName("respLastReplyDate")[0].innerText.trim().replace("Last Reply: ", ""))
+
+                            let dayDiff = (currentDate - lastDate) / (1000 * 3600 * 24)
+
+                            let topic = post.getElementsByClassName("respDiscTopic")
+                            let comments = post.getElementsByClassName("respDiscChildPost")
+                            let posters = post.getElementsByClassName("respAuthorWrapper")
+                            let contacts = post.getElementsByClassName("respReplyWrapper")
+                            let dateSort = new Date(lastDate).getTime()
+
+                            if (dayDiff < numOfDays) {
+
+                                forumArray.push({
+                                    postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
+                                    postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: groupPageLink.innerText,
+                                    groupID: forumID[1].replaceAll("'", ""), numOfPost: comments.length
+                                })
+                            }
+                        }
+                    })
             }
         }
-        if (document.getElementById("postsWait") !== null) { document.getElementById("postsWait").remove() }
-        if (forumArray.length > 0) {
 
-            forumArray.sort((a, b) => { return a.postSort - b.postSort })
-            forumArray.reverse()
-            for (let p = 0; p <= 0; p++) {
-                if (p < forumArray.length) {
+        function showPosts() {
+            document.getElementById("recentPosts").getElementsByTagName("ul")[0].innerHTML = ""
+            if (document.getElementById("postsWait") !== null) { document.getElementById("postsWait").remove() }
+            if (forumArray.length > 0) {
+                forumArray.sort((a, b) => { return a.postSort - b.postSort })
+                forumArray.reverse()
+                for (let p = 0; p < forumArray.length; p++) {
                     let post = document.createElement("li")
                     let postLink = document.createElement("a")
                     postLink.innerHTML = forumArray[p].subject + " (Comments: " + forumArray[p].numOfPost + ") - " + forumArray[p].postAuthor
@@ -173,16 +193,12 @@ const woaCode = {
                     post.appendChild(postLink)
                     document.getElementById("recentPosts").getElementsByTagName("ul")[0].appendChild(post)
                 }
+                localStorage.setItem("pagePosts", document.getElementById("recentPosts").getElementsByTagName("ul")[0].innerHTML.trim())
             }
-
-            localStorage.setItem("pagePosts", document.getElementById("recentPosts").getElementsByTagName("ul")[0].innerHTML.trim())
         }
-        //let morePosts = document.createElement("li")
-        //let morePostsFunc = document.createElement("a")
-        //morePostsFunc.innerHTML = "View more posts"
-        //morePostsFunc.href = "javascript:lsManage()"
-        //morePosts.appendChild(morePostsFunc)
-        //document.getElementById("recentPosts").getElementsByTagName("ul")[0].appendChild(morePosts)
+
+        getPortalPosts()
+
     },
     showComments: (selectedPostID, groupID) => {
         let commentArea = document.getElementById("appDialogBody")
@@ -304,27 +320,27 @@ const woaCode = {
         if (checkStatus == "navigate" && cacheAge < 2) { cacheAge = 2 }
 
         return cacheAge
-    }
+    },
 }
 localStorage.setItem("pageTime", new Date().getTime())
+let historySlider = document.getElementById("postRange"), sliderDays = document.getElementById("historyDays")
+historySlider.oninput = function () { sliderDays.innerHTML = this.value }
+historySlider.onmouseup = function () {
+    localStorage.setItem("customDiff", this.value)
+    woaCode.getPosts()
+}
 woaCode.getContacts()
+woaCode.getPosts()
 woaCode.getPortalData(woaCode.pageLocation("/resourcecenter/28118/resource-center"), woaCode.getFiles)
 woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()[0]), woaCode.getProfile)
 woaCode.getPortalData(woaCode.pageLocation("/Member/Contact/28118~" + woaCode.getProfileID()[0] + "~" + woaCode.getProfileID()[2]), woaCode.getProfile)
 woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
-woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8364"), woaCode.getPosts)
-woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~8030"), woaCode.getPosts)
-woaCode.getPortalData(woaCode.pageLocation("/Discussion/28118~11315"), woaCode.getPosts)
 woaCode.getPortalData(woaCode.pageLocation("/classified/search/28118~480182/classifieds"), woaCode.getForSaleOrFree)
 
-function lsManage(typeofHistory) {
-    let postHistory = localStorage.getItem("customDiff")
-    if (postHistory !== null) { alert(postHistory) }
-}
 
 //if (dataSource.includes("resourcecenter") && document.getElementById("filesWait").style.display == "none") {
 //    let fileArea = document.getElementById("recentFiles").getElementsByTagName("ul")[0]
 //    while (fileArea.firstChild) { fileArea.removeChild(fileArea.firstChild) }
 //    document.getElementById("filesWait").style.display = ""
-//}<a href="javascript:lsManage()"><i> View more posts </i><span class="fa fa-history" aria-hidden="true"></span> </a>
+
 

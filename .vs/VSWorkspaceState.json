@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\css",
     "\\Member",
+    "\\Messenger",
+    "\\Messenger\\MessageView",
     "\\resourcecenter",
     "\\resourcecenter\\28118",
     "\\scripts"
