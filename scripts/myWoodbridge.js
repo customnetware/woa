@@ -136,6 +136,7 @@ const woaCode = {
         }
     },
     getPosts: () => {
+        document.getElementById("postsWait").style.display = ""
         let groups = ["8364", "8030", "11315", "000000"], forumArray = []
         function getPortalPosts() {
             let numOfDays = localStorage.getItem("customDiff"), currentDate = new Date()
@@ -181,7 +182,7 @@ const woaCode = {
 
         function showPosts() {
             document.getElementById("recentPosts").getElementsByTagName("ul")[0].innerHTML = ""
-            if (document.getElementById("postsWait") !== null) { document.getElementById("postsWait").remove() }
+            document.getElementById("postsWait").style.display="none"
             if (forumArray.length > 0) {
                 forumArray.sort((a, b) => { return a.postSort - b.postSort })
                 forumArray.reverse()
