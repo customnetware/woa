@@ -10,7 +10,7 @@ const woaCode = {
             isParent = isParent.parentElement
         } return false
     },
-    getProfileID: () => {
+    getDataFromParen: () => {
         let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
         return profileID
     },
@@ -100,50 +100,50 @@ const woaCode = {
         let filesMenuLink = document.getElementsByClassName("recentFileLink")
         for (let f = 0; f < filesMenuLink.length; f++) {
             filesMenuLink[f].href = fileMenu[f].getElementsByTagName("a")[0].href
+
         } return
-        let fileArray = []
-        let fileLink = "https://ourwoodbridge.net/ResourceCenter/Download/28118?doc_id=0000000&print=1&view=1"
-        let folderLink = "https://ourwoodbridge.net/ResourceCenter/28118~"
-        let selectedFolders = document.getElementById("recentFiles").getElementsByTagName("input")
-        let folderSelected = (selectedFolders[0].checked == true) ? selectedFolders[0].value : (selectedFolders[1].checked == true) ? selectedFolders[1].value : selectedFolders[2].value
-        let docs = portalContent.getElementById(folderSelected).querySelectorAll('[id^="d"]')
+        //let fileArray = []
+        //let fileLink = "https://ourwoodbridge.net/ResourceCenter/Download/28118?doc_id=0000000&print=1&view=1"
+        //let folderLink = "https://ourwoodbridge.net/ResourceCenter/28118~"
+        //let selectedFolders = document.getElementById("recentFiles").getElementsByTagName("input")
+        //let folderSelected = (selectedFolders[0].checked == true) ? selectedFolders[0].value : (selectedFolders[1].checked == true) ? selectedFolders[1].value : selectedFolders[2].value
+        //let docs = portalContent.getElementById(folderSelected).querySelectorAll('[id^="d"]')
 
-        for (let i = 0; i < docs.length; i++) {
-            let parentId = docs[i].parentElement.parentElement.parentElement.parentElement.id
-            let inFolder = portalContent.getElementById(parentId.replace("contents", "f")).innerHTML
-            let folderURL = folderLink + parentId.replace("contents", "")
-            let fileURL = fileLink.replace("0000000", docs[i].id.replace("d", ""))
-            if (folderSelected == "contents540434" || folderSelected == "contents951754" || (folderSelected == "contents328201" && (docs[i].innerHTML.includes("2024") && (docs[i].innerHTML.includes("Minutes") || docs[i].innerHTML.includes("Agenda") || docs[i].innerHTML.includes("Packets"))))) {
-                fileArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL)
-            }
-        }
-        document.getElementById("filesWait").style.display = "none"
-        if (folderSelected == "contents951754") { fileArray.reverse() }
-        if (folderSelected == "contents328201") { fileArray.sort((a, b) => { return a - b }); fileArray.reverse() }
-        for (let d = 0, s = 1; d < fileArray.length && s <= 5; d++, s++) {
-            let linkSpan = document.createElement("li")
-            let docLink = document.createElement("a")
-            docLink.innerHTML = fileArray[d].split("|")[0].trim() + " - "
-            docLink.href = fileArray[d].split("|")[1].trim()
+        //for (let i = 0; i < docs.length; i++) {
+        //    let parentId = docs[i].parentElement.parentElement.parentElement.parentElement.id
+        //    let inFolder = portalContent.getElementById(parentId.replace("contents", "f")).innerHTML
+        //    let folderURL = folderLink + parentId.replace("contents", "")
+        //    let fileURL = fileLink.replace("0000000", docs[i].id.replace("d", ""))
+        //    if (folderSelected == "contents540434" || folderSelected == "contents951754" || (folderSelected == "contents328201" && (docs[i].innerHTML.includes("2024") && (docs[i].innerHTML.includes("Minutes") || docs[i].innerHTML.includes("Agenda") || docs[i].innerHTML.includes("Packets"))))) {
+        //        fileArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL)
+        //    }
+        //}
+        //document.getElementById("filesWait").style.display = "none"
+        //if (folderSelected == "contents951754") { fileArray.reverse() }
+        //if (folderSelected == "contents328201") { fileArray.sort((a, b) => { return a - b }); fileArray.reverse() }
+        //for (let d = 0, s = 1; d < fileArray.length && s <= 5; d++, s++) {
+        //    let linkSpan = document.createElement("li")
+        //    let docLink = document.createElement("a")
+        //    docLink.innerHTML = fileArray[d].split("|")[0].trim() + " - "
+        //    docLink.href = fileArray[d].split("|")[1].trim()
 
-            let inLink = document.createElement("a")
-            inLink.innerHTML = fileArray[d].split("|")[2].trim()
-            inLink.href = fileArray[d].split("|")[3].trim()
+        //    let inLink = document.createElement("a")
+        //    inLink.innerHTML = fileArray[d].split("|")[2].trim()
+        //    inLink.href = fileArray[d].split("|")[3].trim()
 
-            linkSpan.appendChild(docLink)
-            linkSpan.appendChild(inLink)
-            document.getElementById("recentFiles").getElementsByTagName("ul")[0].appendChild(linkSpan)
-        }
+        //    linkSpan.appendChild(docLink)
+        //    linkSpan.appendChild(inLink)
+        //    document.getElementById("recentFiles").getElementsByTagName("ul")[0].appendChild(linkSpan)
+        //}
     },
     getPosts: () => {
         document.getElementById("postsWait").style.display = ""
         document.getElementById("recentPosts").getElementsByTagName("ul")[0].innerHTML = ""
         let groups = ["8364", "8030", "11315", "000000"], forumArray = []
         function getPortalPosts() {
-            let numOfDays = localStorage.getItem("customDiff"), currentDate = new Date()
-            numOfDays = (numOfDays == null) ? 32 : numOfDays, historySlider.value = numOfDays
-            sliderDays.innerHTML = historySlider.value
-
+            let currentDate = new Date()
+            let numOfDays = localStorage.getItem("customDiff") ?? 31
+            document.getElementById("historyDays").innerHTML = numOfDays
             if (groups.length > 0) {
                 let groupID = groups.shift()
                 if (groupID == "000000") { showPosts(); return }
@@ -168,8 +168,7 @@ const woaCode = {
                             let contacts = post.getElementsByClassName("respReplyWrapper")
                             let dateSort = new Date(lastDate).getTime()
 
-                            if (dayDiff < numOfDays) {
-
+                            if (dayDiff <= numOfDays) {
                                 forumArray.push({
                                     postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
                                     postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: groupPageLink.innerText,
@@ -181,8 +180,8 @@ const woaCode = {
             }
         }
 
-        function showPosts() {            
-            document.getElementById("postsWait").style.display="none"
+        function showPosts() {
+            document.getElementById("postsWait").style.display = "none"
             if (forumArray.length > 0) {
                 forumArray.sort((a, b) => { return a.postSort - b.postSort })
                 forumArray.reverse()
@@ -200,6 +199,14 @@ const woaCode = {
 
         getPortalPosts()
 
+    },
+    showPostHistory: () => {
+        let lsNumber = localStorage.getItem("customDiff") ?? 0
+        let currentHistory = Number(lsNumber)
+        currentHistory = (currentHistory == 365) ? 31 : (currentHistory > 360) ? 365 : currentHistory + 30
+        document.getElementById("historyDays").innerText = currentHistory
+        localStorage.setItem("customDiff", currentHistory)
+        woaCode.getPosts()
     },
     showComments: (selectedPostID, groupID) => {
         let commentArea = document.getElementById("appDialogBody")
@@ -324,17 +331,11 @@ const woaCode = {
     },
 }
 localStorage.setItem("pageTime", new Date().getTime())
-let historySlider = document.getElementById("postRange"), sliderDays = document.getElementById("historyDays")
-historySlider.oninput = function () { sliderDays.innerHTML = this.value }
-historySlider.onmouseup = function () {
-    localStorage.setItem("customDiff", this.value)
-    woaCode.getPosts()
-}
 woaCode.getContacts()
 woaCode.getPosts()
 woaCode.getPortalData(woaCode.pageLocation("/resourcecenter/28118/resource-center"), woaCode.getFiles)
-woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getProfileID()[0]), woaCode.getProfile)
-woaCode.getPortalData(woaCode.pageLocation("/Member/Contact/28118~" + woaCode.getProfileID()[0] + "~" + woaCode.getProfileID()[2]), woaCode.getProfile)
+woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getDataFromParen()[0]), woaCode.getProfile)
+woaCode.getPortalData(woaCode.pageLocation("/Member/Contact/28118~" + woaCode.getDataFromParen()[0] + "~" + woaCode.getDataFromParen()[2]), woaCode.getProfile)
 woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
 woaCode.getPortalData(woaCode.pageLocation("/classified/search/28118~480182/classifieds"), woaCode.getForSaleOrFree)
 
