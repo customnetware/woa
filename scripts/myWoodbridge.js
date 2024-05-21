@@ -10,131 +10,120 @@ const woaCode = {
             isParent = isParent.parentElement
         } return false
     },
-    getDataFromParen: () => {
-        let profileID = /\(([^)]+)\)/.exec(document.getElementById("HeaderPublishAuthProfile").href)[1].split(",")
-        return profileID
-    },
-    getPortalData: (dataSource, dataFunction) => {
-        if (dataSource.includes("resourcecenter")) { dataFunction(""); return }
-        if (dataSource.includes("resident-home-page") && woaCode.refreshCheck() < 10) {
-            let cachedEmails = localStorage.getItem("pageEmails")
-            if (cachedEmails !== null && cachedEmails.includes("<li>")) {
-                dataFunction(cachedEmails)
-                return
-            }
+    refreshCheck: () => {
+        let checkStatus = (window.performance) ? window.performance.getEntriesByType("navigation")[0].type : "no_data"
+        let lastVisit = localStorage.getItem("pageTime")
+        let currentDate = new Date()
+        let pageDate = (lastVisit !== null) ? new Date(Number(lastVisit)) : currentDate
+        let cacheAge = Math.round((currentDate - pageDate) / 60000)
+        let pageUpdate = {
+            pageAge: cacheAge,
+            pageStatus: checkStatus,
         }
-        if (dataSource.includes("classifieds") && woaCode.refreshCheck() < 30) {
-            let cachedAds = localStorage.getItem("pageSales")
-            if (cachedAds !== null && cachedAds.includes("<li>")) {
-                dataFunction(cachedAds)
-                return
-            }
-        }
-        $.get(dataSource)
-            .done(function (responseText) {
-                try {
-                    let portalContent = new DOMParser().parseFromString(responseText, "text/html")
-                    dataFunction(portalContent)
-                } catch { }
-            })
-            .fail(function () {
-                let errorContent = new DOMParser().parseFromString("<div id='failMessage'>The requested file was not found on this server!</div>", "text/html")
-                dataFunction(errorContent)
-            })
+        if (checkStatus === "navigate") { localStorage.setItem("pageTime", new Date().getTime()) }
+        return pageUpdate
     },
-    getProfile: (portalContent) => {
+    getDataFromParen: (pageHref) => {
+        let parenData = /\(([^)]+)\)/.exec(pageHref)[1].split(",")
+        return parenData
+    },
+    getProfile: () => {
         let currentHour = new Date().getHours()
         let greeting = (currentHour < 12) ? "Good Morning, " : (currentHour >= 12 && currentHour <= 18) ? "Good Afternoon, " : "Good Evening, "
-        let portalImage = portalContent.getElementsByClassName("mt-1")
-        if (portalImage.length > 0) {
-            if (portalImage[0].src.endsWith(".png") || portalImage[0].src.endsWith(".gif") || portalImage[0].src.endsWith(".jpg") || portalImage[0].src.endsWith(".jpeg")) {
-                document.getElementById("headerRow").getElementsByTagName("img")[0].src = portalImage[0].src
+        let grp1 = $.get(woaCode.pageLocation("/Member/28118~" + woaCode.getDataFromParen(document.getElementById("HeaderPublishAuthProfile").href)[0]))
+        let grp2 = $.get(woaCode.pageLocation("/Member/Contact/28118~" + woaCode.getDataFromParen(document.getElementById("HeaderPublishAuthProfile").href)[0] + "~" + woaCode.getDataFromParen(document.getElementById("HeaderPublishAuthProfile").href)[2]))
+        $.when(grp1, grp2).done(function (responseText1, responseText2) {
+            let imageFile = new DOMParser().parseFromString(responseText1, "text/html")
+            let nameFile = new DOMParser().parseFromString(responseText2, "text/html")
+            let portalImage = imageFile.getElementsByClassName("mt-1")
+            let firstName = nameFile.getElementsByName("fname"), lastName = nameFile.getElementsByName("lname")
+            if (portalImage.length > 0) {
+                if (portalImage[0].src.endsWith(".png") || portalImage[0].src.endsWith(".gif") || portalImage[0].src.endsWith(".jpg") || portalImage[0].src.endsWith(".jpeg")) {
+                    document.getElementById("headerRow").getElementsByTagName("img")[0].src = portalImage[0].src
+                }
             }
-
-        } else {
-            let firstName = portalContent.getElementsByName("fname")
-            let lastName = portalContent.getElementsByName("lname")
             if (firstName.length > 0) {
                 greeting = greeting.concat(firstName[0].value + " " + lastName[0].value)
                 document.getElementById("headerRow").insertBefore(document.createTextNode(greeting + ".  "), document.getElementById("headerRow").firstChild)
                 localStorage.setItem("userName", firstName[0].value + " " + lastName[0].value)
             }
-        }
-        localStorage.setItem("userImage", document.getElementById("headerRow").getElementsByTagName("img")[0].src)
-
+            localStorage.setItem("userImage", document.getElementById("headerRow").getElementsByTagName("img")[0].src)
+        })
     },
-    getEmails: (portalContent) => {
-        let contentType = typeof portalContent
-        if (document.getElementById("emailWait") !== null) { document.getElementById("emailWait").remove() }
+    getEmails: () => {
         let emailListing = document.getElementById("recentEmails").getElementsByTagName("ul")[0]
-        if (contentType == "object") {
-            let recentEmails = portalContent.getElementById("panel_messages_content").getElementsByTagName("a")
-            for (let p = 0; p < recentEmails.length; p++) {
-                let currentEmail = document.createElement("li")
-                let emailHeader = document.createElement("a")
-                let emailTitle = recentEmails[p].getAttribute("data-tooltip-title").split("by")[0].split(",")
-                emailHeader.href = "javascript:woaCode.showEmail('" + recentEmails[p].href + "')"
-                emailHeader.innerHTML = emailTitle[0] + " (" + emailTitle[1].trim() + ")"
-                currentEmail.appendChild(emailHeader)
-                emailListing.appendChild(currentEmail)
-                localStorage.setItem(recentEmails[p].id, emailTitle + recentEmails[p].getAttribute("data-tooltip-text"))
-            }
-            localStorage.setItem("pageEmails", emailListing.innerHTML.trim())
-        } else { emailListing.innerHTML = portalContent }
-    },
-    showEmail: (savedMessageURL) => {
-        let commentArea = document.getElementById("appDialogBody")
-        while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
-        document.getElementById("appDialogLabel").innerText = ""
-        document.getElementById("replyButton").style.display = "none"
+        let storedEmails = localStorage.getItem("pageEmails")
+        let pageRefresh = woaCode.refreshCheck()
 
-        if (savedMessageURL.includes("/Messenger/MessageView/")) {
-            $("#appDialogBody").load(woaCode.pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
-                if (statusTxt == "error") { commentArea.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
+        $.get(woaCode.pageLocation("/homepage/28118/resident-home-page"))
+            .done(function (emailsFromPortal) {
+                document.getElementById("emailWait").style.display = "none"
+                let portalContent = new DOMParser().parseFromString(emailsFromPortal, "text/html")
+                let recentEmails = portalContent.getElementById("panel_messages_content").getElementsByTagName("a")
+                for (let p = 0; p < recentEmails.length; p++) {
+                    let currentEmail = document.createElement("li")
+                    let emailHeader = document.createElement("a")
+                    let emailTitle = recentEmails[p].getAttribute("data-tooltip-title").split("by")[0].split(",")
+                    emailHeader.href = "javascript:woaCode.showEmail('" + recentEmails[p].href + "')"
+                    emailHeader.innerHTML = emailTitle[0] + " (" + emailTitle[1].trim() + ")"
+                    currentEmail.appendChild(emailHeader)
+                    emailListing.appendChild(currentEmail)
+                    localStorage.setItem(recentEmails[p].id, emailTitle + recentEmails[p].getAttribute("data-tooltip-text"))
+                }
+                localStorage.setItem("pageEmails", emailListing.innerHTML.trim())
             })
-        }
-        if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
+
     },
-    getFiles: (portalContent) => {
+    getFiles: () => {
+        let fileArea = document.getElementById("recentFiles").getElementsByTagName("ul")[0]
         let fileMenu = document.getElementById("mobile-menu-publish-links").children[1].getElementsByTagName("ul")[0].children
         let filesMenuLink = document.getElementsByClassName("recentFileLink")
-        for (let f = 0; f < filesMenuLink.length; f++) {
-            filesMenuLink[f].href = fileMenu[f].getElementsByTagName("a")[0].href
+        for (let f = 0; f < filesMenuLink.length; f++) { filesMenuLink[f].href = fileMenu[f].getElementsByTagName("a")[0].href }
 
-        } return
-        //let fileArray = []
-        //let fileLink = "https://ourwoodbridge.net/ResourceCenter/Download/28118?doc_id=0000000&print=1&view=1"
-        //let folderLink = "https://ourwoodbridge.net/ResourceCenter/28118~"
-        //let selectedFolders = document.getElementById("recentFiles").getElementsByTagName("input")
-        //let folderSelected = (selectedFolders[0].checked == true) ? selectedFolders[0].value : (selectedFolders[1].checked == true) ? selectedFolders[1].value : selectedFolders[2].value
-        //let docs = portalContent.getElementById(folderSelected).querySelectorAll('[id^="d"]')
+        $.get(woaCode.pageLocation("/resourcecenter/28118/resource-center"))
 
-        //for (let i = 0; i < docs.length; i++) {
-        //    let parentId = docs[i].parentElement.parentElement.parentElement.parentElement.id
-        //    let inFolder = portalContent.getElementById(parentId.replace("contents", "f")).innerHTML
-        //    let folderURL = folderLink + parentId.replace("contents", "")
-        //    let fileURL = fileLink.replace("0000000", docs[i].id.replace("d", ""))
-        //    if (folderSelected == "contents540434" || folderSelected == "contents951754" || (folderSelected == "contents328201" && (docs[i].innerHTML.includes("2024") && (docs[i].innerHTML.includes("Minutes") || docs[i].innerHTML.includes("Agenda") || docs[i].innerHTML.includes("Packets"))))) {
-        //        fileArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL)
-        //    }
-        //}
-        //document.getElementById("filesWait").style.display = "none"
-        //if (folderSelected == "contents951754") { fileArray.reverse() }
-        //if (folderSelected == "contents328201") { fileArray.sort((a, b) => { return a - b }); fileArray.reverse() }
-        //for (let d = 0, s = 1; d < fileArray.length && s <= 5; d++, s++) {
-        //    let linkSpan = document.createElement("li")
-        //    let docLink = document.createElement("a")
-        //    docLink.innerHTML = fileArray[d].split("|")[0].trim() + " - "
-        //    docLink.href = fileArray[d].split("|")[1].trim()
+            .done(function (filesFromPortal) {
+                let portalContent = new DOMParser().parseFromString(filesFromPortal, "text/html")
+                let fileArray = []
+                let fileLink = "https://ourwoodbridge.net/ResourceCenter/Download/28118?doc_id=0000000&print=1&view=1"
+                let folderLink = "https://ourwoodbridge.net/ResourceCenter/28118~"
+                let selectedFolders = document.getElementById("recentFiles").getElementsByTagName("input")
 
-        //    let inLink = document.createElement("a")
-        //    inLink.innerHTML = fileArray[d].split("|")[2].trim()
-        //    inLink.href = fileArray[d].split("|")[3].trim()
+                let folderSelected = "contents" + filesMenuLink[4].href.split("~")[1].split("/")[0]
 
-        //    linkSpan.appendChild(docLink)
-        //    linkSpan.appendChild(inLink)
-        //    document.getElementById("recentFiles").getElementsByTagName("ul")[0].appendChild(linkSpan)
-        //}
+                let docs = portalContent.getElementById(folderSelected).querySelectorAll('[id^="d"]')
+
+                while (fileArea.firstChild) { fileArea.removeChild(fileArea.firstChild) }
+                document.getElementById("filesWait").style.display = ""
+
+                for (let i = 0; i < docs.length; i++) {
+                    let parentId = docs[i].parentElement.parentElement.parentElement.parentElement.id
+                    let inFolder = portalContent.getElementById(parentId.replace("contents", "f")).innerHTML
+                    let folderURL = folderLink + parentId.replace("contents", "")
+                    let fileURL = fileLink.replace("0000000", docs[i].id.replace("d", ""))
+                    if (folderSelected == "contents540434" || folderSelected == "contents951754" || (folderSelected == "contents328201" && (docs[i].innerHTML.includes("2024") && (docs[i].innerHTML.includes("Minutes") || docs[i].innerHTML.includes("Agenda") || docs[i].innerHTML.includes("Packets"))))) {
+                        fileArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL)
+                    }
+                }
+                document.getElementById("filesWait").style.display = "none"
+                if (folderSelected == "contents951754") { fileArray.reverse() }
+                if (folderSelected == "contents328201") { fileArray.sort((a, b) => { return a - b }); fileArray.reverse() }
+                for (let d = 0, s = 1; d < fileArray.length && s <= 5; d++, s++) {
+                    let linkSpan = document.createElement("li")
+                    let docLink = document.createElement("a")
+                    docLink.innerHTML = fileArray[d].split("|")[0].trim() + " - "
+                    docLink.href = fileArray[d].split("|")[1].trim()
+
+                    let inLink = document.createElement("a")
+                    inLink.innerHTML = fileArray[d].split("|")[2].trim()
+                    inLink.href = fileArray[d].split("|")[3].trim()
+
+                    linkSpan.appendChild(docLink)
+                    linkSpan.appendChild(inLink)
+                    document.getElementById("recentFiles").getElementsByTagName("ul")[0].appendChild(linkSpan)
+                }
+            })
+
     },
     getPosts: () => {
         document.getElementById("postsWait").style.display = ""
@@ -152,9 +141,8 @@ const woaCode = {
                     .done(function (groupsFromPortal) {
                         let portalContent = new DOMParser().parseFromString(groupsFromPortal, "text/html")
                         let groupPageLink = portalContent.getElementById("lnkAddTopic")
-                        let forumID = /\(([^)]+)\)/.exec(groupPageLink.href)[1].split(",")
+                        let forumID = woaCode.getDataFromParen(groupPageLink.href)
                         let posts = portalContent.getElementsByClassName("ThreadContainer")[0]
-
                         getPortalPosts()
                         for (let x = 0; x < posts.childElementCount; x++) {
                             let post = posts.children[x]
@@ -199,46 +187,6 @@ const woaCode = {
 
         getPortalPosts()
 
-    },
-    showPostHistory: () => {
-        let lsNumber = localStorage.getItem("customDiff") ?? 0
-        let currentHistory = Number(lsNumber)
-        currentHistory = (currentHistory == 365) ? 31 : (currentHistory > 360) ? 365 : currentHistory + 30
-        document.getElementById("historyDays").innerText = currentHistory
-        localStorage.setItem("customDiff", currentHistory)
-        woaCode.getPosts()
-    },
-    showComments: (selectedPostID, groupID) => {
-        let commentArea = document.getElementById("appDialogBody")
-        while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
-        $.get(woaCode.pageLocation("/Discussion/28118~" + groupID), function () { })
-            .done(function (responseText) {
-                let forum = new DOMParser().parseFromString(responseText, "text/html")
-                let comments = forum.getElementById(selectedPostID.replace("lnkTopicReply", "contents"))
-                let title = forum.getElementById(selectedPostID.replace("lnkTopicReply", "msgHeader") + " ")
-                let topic = comments.getElementsByClassName("respDiscTopic")
-                let replyText = comments.getElementsByClassName("respDiscChildPost")
-                let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
-                let commentSpan = document.createElement("span")
-                commentSpan.className = "commentSpan"
-                commentSpan.style.fontWeight = "600"
-                commentSpan.innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText + "<hr />"
-                document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = title.innerText
-                document.getElementById("replyButton").setAttribute("onclick", forum.getElementById(selectedPostID).href)
-                commentArea.appendChild(commentSpan)
-                for (let p = 0; p < replyText.length; p++) {
-                    let replySpan = document.createElement("span")
-                    let authorSpan = document.createElement("span")
-                    replySpan.className = "commentSpan"
-                    authorSpan.className = "commentSpan"
-                    replySpan.innerHTML = replyText[p].innerText.trim() + "<br />"
-                    authorSpan.innerHTML = replyAuthor[p + 1].innerText.trim() + "<hr />"
-                    commentArea.appendChild(replySpan)
-                    commentArea.appendChild(authorSpan)
-                }
-                document.getElementById("replyButton").style.display = ""
-                if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
-            })
     },
     getContacts: () => {
         let contacts = []
@@ -299,50 +247,89 @@ const woaCode = {
         showContacts(contacts)
 
     },
-    getForSaleOrFree: (portalContent) => {
-        let contentType = typeof portalContent
-        if (contentType == "object") {
-            let classifiedTitle = portalContent.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
-            let classifiedBody = portalContent.getElementsByClassName("clsBodyText hidden-sm-down")
-            for (let p = 0; p < 3; p++) {
-                if (p < classifiedTitle.length) {
-                    let ad = document.createElement("li")
-                    let adTitle = document.createElement("b")
-                    adTitle.appendChild(document.createTextNode(classifiedTitle[p].getElementsByTagName("a")[0].innerText.trim()))
-                    ad.appendChild(adTitle)
-                    ad.appendChild(document.createElement("br"))
-                    ad.appendChild(document.createTextNode(classifiedBody[p].childNodes[0].nodeValue))
-                    document.getElementById("recentSales").getElementsByTagName("ul")[0].appendChild(ad)
-                }
-            } localStorage.setItem("pageSales", document.getElementById("recentSales").getElementsByTagName("ul")[0].innerHTML.trim())
-        } else { document.getElementById("recentSales").getElementsByTagName("ul")[0].innerHTML = portalContent }
+    getForSaleOrFree: () => {
+        $.get(woaCode.pageLocation("/classified/search/28118~480182/classifieds"))
+            .done(function (itemsFromPortal) {
+                let portalContent = new DOMParser().parseFromString(itemsFromPortal, "text/html")
+                let classifiedTitle = portalContent.querySelectorAll('.clsBodyText:not(.hidden-md-up,.hidden-sm-down)')
+                let classifiedBody = portalContent.getElementsByClassName("clsBodyText hidden-sm-down")
+                for (let p = 0; p < 3; p++) {
+                    if (p < classifiedTitle.length) {
+                        let ad = document.createElement("li")
+                        let adTitle = document.createElement("b")
+                        adTitle.appendChild(document.createTextNode(classifiedTitle[p].getElementsByTagName("a")[0].innerText.trim()))
+                        ad.appendChild(adTitle)
+                        ad.appendChild(document.createElement("br"))
+                        ad.appendChild(document.createTextNode(classifiedBody[p].childNodes[0].nodeValue))
+                        document.getElementById("recentSales").getElementsByTagName("ul")[0].appendChild(ad)
+                    }
+                } localStorage.setItem("pageSales", document.getElementById("recentSales").getElementsByTagName("ul")[0].innerHTML.trim())
+            })
     },
-    refreshCheck: () => {
-        let checkStatus = (window.performance) ? window.performance.getEntriesByType("navigation")[0].type : "no_data"
-        let lastVisit = localStorage.getItem("pageTime")
-        let currentDate = new Date()
-        let pageDate = (lastVisit !== null) ? new Date(Number(lastVisit)) : currentDate
-        let cacheAge = Math.round((currentDate - pageDate) / 60000)
+    showEmail: (savedMessageURL) => {
+        let commentArea = document.getElementById("appDialogBody")
+        while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
+        document.getElementById("appDialogLabel").innerText = ""
+        document.getElementById("replyButton").style.display = "none"
 
-        if (checkStatus == "reload") { cacheAge = 60 }
-        if (checkStatus == "navigate" && cacheAge < 2) { cacheAge = 2 }
-
-        return cacheAge
+        if (savedMessageURL.includes("/Messenger/MessageView/")) {
+            $("#appDialogBody").load(woaCode.pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "error") { commentArea.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
+            })
+        }
+        if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
+    },
+    showComments: (selectedPostID, groupID) => {
+        let commentArea = document.getElementById("appDialogBody")
+        while (commentArea.firstChild) { commentArea.removeChild(commentArea.firstChild) }
+        $.get(woaCode.pageLocation("/Discussion/28118~" + groupID), function () { })
+            .done(function (responseText) {
+                let forum = new DOMParser().parseFromString(responseText, "text/html")
+                let comments = forum.getElementById(selectedPostID.replace("lnkTopicReply", "contents"))
+                let title = forum.getElementById(selectedPostID.replace("lnkTopicReply", "msgHeader") + " ")
+                let topic = comments.getElementsByClassName("respDiscTopic")
+                let replyText = comments.getElementsByClassName("respDiscChildPost")
+                let replyAuthor = comments.getElementsByClassName("respAuthorWrapper")
+                let commentSpan = document.createElement("span")
+                commentSpan.className = "commentSpan"
+                commentSpan.style.fontWeight = "600"
+                commentSpan.innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText + "<hr />"
+                document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = title.innerText
+                document.getElementById("replyButton").setAttribute("onclick", forum.getElementById(selectedPostID).href)
+                commentArea.appendChild(commentSpan)
+                for (let p = 0; p < replyText.length; p++) {
+                    let replySpan = document.createElement("span")
+                    let authorSpan = document.createElement("span")
+                    replySpan.className = "commentSpan"
+                    authorSpan.className = "commentSpan"
+                    replySpan.innerHTML = replyText[p].innerText.trim() + "<br />"
+                    authorSpan.innerHTML = replyAuthor[p + 1].innerText.trim() + "<hr />"
+                    commentArea.appendChild(replySpan)
+                    commentArea.appendChild(authorSpan)
+                }
+                document.getElementById("replyButton").style.display = ""
+                if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
+            })
+    },
+    showPostHistory: () => {
+        let lsNumber = localStorage.getItem("customDiff") ?? 0
+        let currentHistory = Number(lsNumber)
+        currentHistory = (currentHistory == 365) ? 31 : (currentHistory > 360) ? 365 : currentHistory + 30
+        document.getElementById("historyDays").innerText = currentHistory
+        localStorage.setItem("customDiff", currentHistory)
+        woaCode.getPosts()
     },
 }
-localStorage.setItem("pageTime", new Date().getTime())
+woaCode.getEmails()
 woaCode.getContacts()
 woaCode.getPosts()
-woaCode.getPortalData(woaCode.pageLocation("/resourcecenter/28118/resource-center"), woaCode.getFiles)
-woaCode.getPortalData(woaCode.pageLocation("/Member/28118~" + woaCode.getDataFromParen()[0]), woaCode.getProfile)
-woaCode.getPortalData(woaCode.pageLocation("/Member/Contact/28118~" + woaCode.getDataFromParen()[0] + "~" + woaCode.getDataFromParen()[2]), woaCode.getProfile)
-woaCode.getPortalData(woaCode.pageLocation("/homepage/28118/resident-home-page"), woaCode.getEmails)
-woaCode.getPortalData(woaCode.pageLocation("/classified/search/28118~480182/classifieds"), woaCode.getForSaleOrFree)
+woaCode.getProfile()
+woaCode.getForSaleOrFree()
+woaCode.getFiles()
 
 
-//if (dataSource.includes("resourcecenter") && document.getElementById("filesWait").style.display == "none") {
-//    let fileArea = document.getElementById("recentFiles").getElementsByTagName("ul")[0]
-//    while (fileArea.firstChild) { fileArea.removeChild(fileArea.firstChild) }
-//    document.getElementById("filesWait").style.display = ""
+
+
+
 
 

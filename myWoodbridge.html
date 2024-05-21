@@ -126,15 +126,15 @@
                 <ul></ul>
             </div>
             <div style="width:100%; float:left;" id="recentFiles">
-                <span class="fa fa-files-o fa-lg" aria-hidden="true" style="margin-right:5px"></span><strong>Recent Files</strong><br>We have updated the "Resource Center" link text to display "Documents" but the link will still take you to the Resource Center's documents. You can find the the most recent Executive Board <a href="#" class="recentFileLink">Agendas</a>, <a href="#" class="recentFileLink">Minutes</a> and <a href="#" class="recentFileLink">Meeting Packets</a> by clicking on the previous links or using the site menu. Recent issues of the <a href="" class="recentFileLink">Woodbridge Life Newsletters</a> and  <a href="" class="recentFileLink">Activity and Event Flyers</a> are also available by clicking the previous links or using the site menu. Hold your cursor over the Documents link in the site menu to see the documents available.<ul></ul>
+                <span class="fa fa-files-o fa-lg" aria-hidden="true" style="margin-right:5px"></span><strong>Recent Files</strong><br>We have updated the "Resource Center" link text to display "Documents" but the link will still take you to the Resource Center's documents. You can find the the most recent Executive Board <a href="#" class="recentFileLink">Agendas</a>, <a href="#" class="recentFileLink">Minutes</a> and <a href="#" class="recentFileLink">Meeting Packets</a> by clicking on the previous links or using the site menu. Recent issues of the <a href="" class="recentFileLink">Woodbridge Life Newsletters</a> and  <a href="" class="recentFileLink">Activity and Event Flyers</a> are also available by clicking the previous links or using the site menu. Hold your cursor over the Documents link in the site menu to see the documents available. For your convenience, the Activity/Events folder's files are listed below:
+                <div id="filesWait"><span class="fa fa-refresh fa-fw fa-spin"></span>Recent files are loading...</div>
+                <ul></ul>
             </div>
             <div style="width:100%; float:left" id="recentPosts">
                 <span class="fa fa-comments-o fa-lg" aria-hidden="true" style="margin-right:5px"></span><strong>Recent Discussion Group Posts<br></strong>Social media can be a useful tool for those who can avoid the scammers and click bait. But unfortunately, most social media sites are open to everyone including scammers. Your Associations' portal provides <a href="/discussion/list/28118/discussion-groups">discussion groups</a> for resident to share information. These groups are safe because everyone posting or reading the posts are your neighbors. The most recent posts from the last 30 days from the portal’s <a href="/Discussion/28118~8364">General</a>, <a href="/Discussion/28118~8030">Recommendations</a> and <a href="/Discussion/28118~11315">Social Media Help</a> discussion groups are listed below. <i>Currently viewing <span id="historyDays">30</span> days of discussion post history in all selected groups.  <a href="javascript:woaCode.showPostHistory()">Click here to view more history</a></i>
                 <div id="postsWait"><span class="fa fa-refresh fa-fw fa-spin"></span>Recent comments are loading...</div>
                 <ul></ul>
                 <div style="margin-left:20px; margin-bottom:5px;">
-
-
                 </div>
             </div>
             <div style="width:100%; float:left" id="recentSales">
@@ -180,9 +180,7 @@
             woaScripts.type = "text/javascript"
             woaScripts.src = (window.location.hostname == "localhost") ? "/scripts/myWoodbridge.js" : "https://customnetware.github.io/woa/scripts/myWoodbridge.js"
             document.body.appendChild(woaScripts)
-
             checkForScript(woaScripts, "error", function () { location.replace("https://ourwoodbridge.net/homepage/28118/resident-home-page") })
-
         </script>
 
     </div>
