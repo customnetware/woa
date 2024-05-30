@@ -15,6 +15,11 @@
       "taskLabel": "task-new_test",
       "appliesTo": "scripts/new_test.js",
       "type": "launch"
+    },
+    {
+      "taskLabel": "task-Assets",
+      "appliesTo": "Assets/",
+      "type": "launch"
     }
   ]
 }

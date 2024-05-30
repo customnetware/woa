@@ -274,8 +274,19 @@ const woaCode = {
 
         if (savedMessageURL.includes("/Messenger/MessageView/")) {
             $("#appDialogBody").load(woaCode.pageLocation(savedMessageURL) + " div:first", function (responseTxt, statusTxt, xhr) {
-                if (statusTxt == "error") { commentArea.innerHTML = "The requested email was not found on the server.  It may have been deleted or you do not have permission to view it." }
+                if (statusTxt == "error") {
+                    $("#appDialogBody").html("The requested email was not found on the server.It may have been deleted or you do not have permission to view it.")
+                }
+                if (statusTxt == "success") {
+                    let fxw = document.getElementById("appDialogBody").getElementsByClassName("clsBodyText")
+                    if (fxw.length > 0) {
+                        fxw[0].style = ""
+                        fxw[0].getElementsByTagName("td")[0].style = ""
+                    }
+
+                }
             })
+
         }
         if (!$("#appDialog").is(":visible")) { $("#appDialog").modal("show") }
     },
