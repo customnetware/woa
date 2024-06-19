@@ -158,7 +158,7 @@ const woaCode = {
 
                             if (dayDiff <= numOfDays) {
                                 forumArray.push({
-                                    postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerText.trim(), postAuthor: posters[0].innerText.trim(),
+                                    postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerHTML.trim(), postAuthor: posters[0].innerText.trim(),
                                     postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: groupPageLink.innerText,
                                     groupID: forumID[1].replaceAll("'", ""), numOfPost: comments.length
                                 })
@@ -330,6 +330,26 @@ const woaCode = {
         localStorage.setItem("customDiff", currentHistory)
         woaCode.getPosts()
     },
+    getCloudflare: () => {
+    const xhr = new XMLHttpRequest()
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === this.DONE) {
+            woaCode.parseCloudflare(this.responseText)
+        }
+    })
+    xhr.open("GET", "https://d1-customnetware.customnetware.workers.dev/api/customnetware/"+woaCode.getDataFromParen(document.getElementById("HeaderPublishAuthProfile").href)[2])
+    xhr.setRequestHeader("Content-Type", "application/json")
+    xhr.send()
+
+    },
+    parseCloudflare: (parseData) => {
+        if (parseData.length > 0) {  
+  let newObject = JSON.parse(parseData)
+
+            
+            console.log(newObject.success)
+        }
+    }
 }
 woaCode.getEmails()
 woaCode.getContacts()
@@ -337,6 +357,7 @@ woaCode.getPosts()
 woaCode.getProfile()
 woaCode.getForSaleOrFree()
 woaCode.getFiles()
+woaCode.getCloudflare()
 
 
 
