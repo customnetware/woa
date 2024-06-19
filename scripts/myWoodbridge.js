@@ -313,7 +313,7 @@ const woaCode = {
                     let authorSpan = document.createElement("span")
                     replySpan.className = "commentSpan"
                     authorSpan.className = "commentSpan"
-                    replySpan.innerHTML = replyText[p].innerText.trim() + "<br />"
+                    replySpan.innerHTML = replyText[p].innerHTML.trim() + "<br />"
                     authorSpan.innerHTML = replyAuthor[p + 1].innerText.trim() + "<hr />"
                     commentArea.appendChild(replySpan)
                     commentArea.appendChild(authorSpan)
