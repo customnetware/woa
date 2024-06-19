@@ -158,7 +158,7 @@ const woaCode = {
 
                             if (dayDiff <= numOfDays) {
                                 forumArray.push({
-                                    postSort: dateSort, lastPost: lastDate, subject: topic[0].innerHTML.trim(), postContent: topic[1].innerHTML.trim(), postAuthor: posters[0].innerText.trim(),
+                                    postSort: dateSort, lastPost: lastDate, subject: topic[0].innerText.trim(), postContent: topic[1].innerHTML.trim(), postAuthor: posters[0].innerText.trim(),
                                     postID: contacts[0].getElementsByTagName("a")[0].id, replyLink: contacts[0].getElementsByTagName("a")[0].href, groupName: groupPageLink.innerText,
                                     groupID: forumID[1].replaceAll("'", ""), numOfPost: comments.length
                                 })
