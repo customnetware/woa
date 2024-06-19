@@ -304,7 +304,7 @@ const woaCode = {
                 let commentSpan = document.createElement("span")
                 commentSpan.className = "commentSpan"
                 commentSpan.style.fontWeight = "600"
-                commentSpan.innerHTML = topic[0].innerText.trim() + "<br />" + replyAuthor[0].innerText + "<hr />"
+                commentSpan.innerHTML = topic[0].innerHTML.trim() + "<br />" + replyAuthor[0].innerText + "<hr />"
                 document.getElementById("appDialog").getElementsByClassName("modal-title")[0].innerHTML = title.innerText
                 document.getElementById("replyButton").setAttribute("onclick", forum.getElementById(selectedPostID).href)
                 commentArea.appendChild(commentSpan)
