@@ -50,31 +50,31 @@
 
         let oldReport = $.get(fileLocation, function () { })
         let newReport = $.get(fileLocatio2, function () { })
-        $.when(oldReport, newReport).done(function (oldReportText, newReportText) {
-            
+        $.when(newReport, oldReport,).done(function (newReportText, oldReportText) {
+
             let submittedFormsOld = new DOMParser().parseFromString(oldReportText, "text/html")
             let submittedFormsNew = new DOMParser().parseFromString(newReportText, "text/html")
-            let combinedForms = [submittedFormsNew,submittedFormsOld]
-            for (let d = 0; d < combinedForms.length; d++) { 
+            let combinedForms = [submittedFormsNew, submittedFormsOld]
+            for (let d = 0; d < combinedForms.length; d++) {
                 let formContents = combinedForms[d].getElementsByTagName("xmp")
-            let formContentTx = formContents[0].innerText.replace(/"/g, "").split(/\r?\n|\r|\n/g)
-            for (var s = formContentTx.length - 1; s >= 3; s--) {
-                if (formContentTx[s].split("|").length > 1) {
-                    let reportContent = formContentTx[s].split("|")
-                    let reportStatus = reportContent[4]
-                    if (reportStatus !== "COMPLETE" && reportStatus !== "CANCELLED") {
-                        let reportLine = document.createElement("p")
-                        let reportTitle = document.createElement("b")
-                        reportTitle.appendChild(document.createTextNode("Submitted by: " + reportContent[1] + " on " + reportContent[2] + " (Tracking ID: " + reportContent[3] + " - " + reportStatus + ")"))
-                        reportLine.appendChild(reportTitle)
-                        reportLine.appendChild(document.createElement("br"))
-                        reportLine.appendChild(document.createTextNode(reportContent[6]))
-                        reportLine.appendChild(document.createElement("br"))
-                        reportLine.appendChild(document.createTextNode("Response: " + reportContent[5]))
-                        reportLine.appendChild(document.createElement("hr"))
-                        document.getElementById("reports").appendChild(reportLine)
+                let formContentTx = formContents[0].innerText.replace(/"/g, "").split(/\r?\n|\r|\n/g)
+                for (var s = formContentTx.length - 1; s >= 3; s--) {
+                    if (formContentTx[s].split("|").length > 1) {
+                        let reportContent = formContentTx[s].split("|")
+                        let reportStatus = reportContent[4]
+                        if (reportStatus !== "COMPLETE" && reportStatus !== "CANCELLED") {
+                            let reportLine = document.createElement("p")
+                            let reportTitle = document.createElement("b")
+                            reportTitle.appendChild(document.createTextNode("Submitted by: " + reportContent[1] + " on " + reportContent[2] + " (Tracking ID: " + reportContent[3] + " - " + reportStatus + ")"))
+                            reportLine.appendChild(reportTitle)
+                            reportLine.appendChild(document.createElement("br"))
+                            reportLine.appendChild(document.createTextNode(reportContent[6]))
+                            reportLine.appendChild(document.createElement("br"))
+                            reportLine.appendChild(document.createTextNode("Response: " + reportContent[5]))
+                            reportLine.appendChild(document.createElement("hr"))
+                            document.getElementById("reports").appendChild(reportLine)
+                        }
                     }
-                }
                 }
             }
         })
