@@ -18,6 +18,45 @@
 #appDialogFooter tr {
     width: auto !important
 }
+#document {
+    width: 100%;
+    float: left;
+    margin-top: 20px;
+}
+
+    #document div {
+        
+        padding-left: 10px;
+        padding-bottom: 5px;
+        padding-top: 5px;
+        font-weight: 600;
+
+    }
+
+        #document div:nth-child(odd) {
+            background-color: #eceeef
+        }
+
+.navIcon {
+    padding-left: 10px;
+    padding-right: 5px
+}
+
+.formatRight {
+    text-decoration: none !important;
+    vertical-align: top !important;
+    padding: 0px;
+    margin: 0px;
+}
+
+.formatIcon {
+    padding-right: 20px;
+}
+
+.formatDocumentList {
+    max-height: 233px;
+    overflow-y: scroll;
+}
 
 /*.clsHeader {
     display: none !important;

@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
+<body>
+    <style>
+        #document {
+            width: 800px;
+            float: left;
+        }
+
+            #document span {
+                padding-left: 10px;
+                padding-bottom: 5px;
+                padding-top: 5px;
+                font-weight: 600;
+                display: block;
+            }
+
+                #document span:nth-child(odd) {
+                    background-color: #eceeef
+                }
+
+        .formatRight {
+            text-decoration: none !important;
+            vertical-align: top !important;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .formatIcon {
+            padding-right: 20px;
+        }
+    </style>
+    <div style="width: 800px; margin-top:20px">
+        <div style="float: right; width: 800px; text-align: right; vertical-align:middle">
+            <a href="javascript:screenSort('D')" class="fa fa-arrow-down fa-lg formatRight"></a>
+            <a href="javascript:screenSort('U')" class="fa fa-arrow-up fa-lg formatRight"></a>
+        </div>
+        <div id="document"></div>
+    </div>
+
+    <script src="scripts/woa_documents.js"></script>
+</body>
+</html>

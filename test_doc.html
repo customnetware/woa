@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
+<body>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary">Left</button>
+        <button type="button" class="btn btn-secondary">Middle</button>
+        <button type="button" class="btn btn-secondary">Right</button>
+    </div>
+    <div id="folderTree"></div>
+    <script type="text/javascript">
+        function pageLocation(pageName) {
+            return (window.location.hostname == "localhost") ? pageName.replace("https://ourwoodbridge.net", "") + ".html" : pageName
+        }
+        $.get(pageLocation("/resourcecenter/28118/resource-center"))
+            .done(function (filesFromPortal) {
+                let portalContent = new DOMParser().parseFromString(filesFromPortal, "text/html")
+                let fileArray = []
+                let selectedFolder = "contents951754"
+                let docs = portalContent.getElementById(selectedFolder).querySelectorAll('[id^="d"]')
+                alert(docs[docs.length - 1].innerHTML)
+                let pId = docs[docs.length - 1].parentElement.parentElement.parentElement.parentElement
+                alert(pId.id)
+                alert(portalContent.getElementById(pId.id.replace("contents", "f")).innerText)
+            });
+    </script>
+
+</body>
+</html>

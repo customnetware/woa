@@ -1,4 +1,5 @@
-
+let savedFolder = localStorage.getItem("savedFolder")
+if (savedFolder !== null && savedFolder !== "0") { document.getElementById("selectedFolder").value = savedFolder }
 const woaCode = {
     pageLocation: (pageName) => {
         return (window.location.hostname == "localhost") ? pageName.replace("https://ourwoodbridge.net", "") + ".html" : pageName
@@ -74,54 +75,99 @@ const woaCode = {
             })
 
     },
-    getFiles: () => {
-        let fileArea = document.getElementById("recentFiles").getElementsByTagName("ul")[0]
-        let fileMenu = document.getElementById("mobile-menu-publish-links").children[1].getElementsByTagName("ul")[0].children
-        let filesMenuLink = document.getElementsByClassName("recentFileLink")
-        for (let f = 0; f < filesMenuLink.length; f++) { filesMenuLink[f].href = fileMenu[f].getElementsByTagName("a")[0].href }
+    getFiles: (selectedFolder, previousFolder, previousFolderName) => {
+        const fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
+        document.getElementById("document").innerHTML = ""
+        localStorage.setItem("savedFolder", document.getElementById("selectedFolder").value)
 
-        $.get(woaCode.pageLocation("/resourcecenter/28118/resource-center"))
+        let waitRow = document.createElement("span"), waitFolder = document.createElement("i"), waitIcon = document.createElement("i")
+        waitFolder.className = "fa fa-folder-o formatIcon"
+        waitIcon.className = "fa fa-spinner fa-pulse fa-fw"
+        waitRow.appendChild(waitFolder, waitIcon)
+        waitRow.appendChild(document.createTextNode("The requested folders and files are loading..."))
+        document.getElementById("document").appendChild(waitRow)
 
-            .done(function (filesFromPortal) {
-                let portalContent = new DOMParser().parseFromString(filesFromPortal, "text/html")
-                let fileArray = []
-                let fileLink = "https://ourwoodbridge.net/ResourceCenter/Download/28118?doc_id=0000000&print=1&view=1"
-                let folderLink = "https://ourwoodbridge.net/ResourceCenter/28118~"
-                let selectedFolders = document.getElementById("recentFiles").getElementsByTagName("input")
 
-                let folderSelected = "contents" + filesMenuLink[4].href.split("~")[1].split("/")[0]
 
-                let docs = portalContent.getElementById(folderSelected).querySelectorAll('[id^="d"]')
+        //let currentScreen = localStorage.getItem(selectedFolder)
+        //if (currentScreen !== null) {
+        //    let fileListing = JSON.parse(currentScreen)
+        //    document.getElementById("document").innerHTML = ""
+        //    for (let p = 0; p < fileListing.length; p++) {
+        //        let currentFile = document.createElement("span")
+        //        currentFile.innerHTML = fileListing[p]
+        //        document.getElementById("document").appendChild(currentFile)
+        //    }
+        //} else {}
+        $.get(fileLocation, function () { })
+            .done(function (responseText) {
+                let sortScreens = []
+                document.getElementById("document").innerHTML = ""
+                let documents = new DOMParser().parseFromString(responseText, "text/html")
 
-                while (fileArea.firstChild) { fileArea.removeChild(fileArea.firstChild) }
-                document.getElementById("filesWait").style.display = ""
+                if (previousFolderName == "Recent Folder Files") {
+                    let docs = documents.getElementById("contents" + selectedFolder).querySelectorAll('[id^="d"]'), fileArray = []
+                    if (docs.length > 0) { for (let i = 0; i < docs.length; i++) { fileArray.push(docs[i].id) } }
+                    fileArray.sort()
+                    let folderSelected = documents.getElementById(fileArray[fileArray.length - 1]).parentElement.parentElement.parentElement.parentElement.id
+                    previousFolderName = documents.getElementById(folderSelected.replace("contents", "f")).innerText
+                    selectedFolder = folderSelected.replace("contents", "")
+                }
 
-                for (let i = 0; i < docs.length; i++) {
-                    let parentId = docs[i].parentElement.parentElement.parentElement.parentElement.id
-                    let inFolder = portalContent.getElementById(parentId.replace("contents", "f")).innerHTML
-                    let folderURL = folderLink + parentId.replace("contents", "")
-                    let fileURL = fileLink.replace("0000000", docs[i].id.replace("d", ""))
-                    if (folderSelected == "contents540434" || folderSelected == "contents951754" || (folderSelected == "contents328201" && (docs[i].innerHTML.includes("2024") && (docs[i].innerHTML.includes("Minutes") || docs[i].innerHTML.includes("Agenda") || docs[i].innerHTML.includes("Packets"))))) {
-                        fileArray.push(docs[i].innerHTML + "|" + fileURL + "|" + inFolder + "|" + folderURL)
+                if (previousFolderName == "Recent Files") { selectedFolder = document.getElementById("selectedFolder").value } else { document.getElementById("selectedFolder").value = 0 }
+                let currentDiv = (selectedFolder == "000000") ? documents.querySelector(".clsTree") : documents.getElementById("contents" + selectedFolder).querySelectorAll(":scope > div")[1]
+                documentList = currentDiv.querySelectorAll(":scope > div")
+
+                if (selectedFolder !== "000000") {
+                    let folderId = currentDiv.parentElement.parentElement.parentElement.parentElement.id, pfName = ""
+                    if (folderId == "contentInner") { previousFolder = "000000" }
+                    else {
+                        previousFolder = folderId.replace("contents", ""), pfName = documents.getElementById("f" + previousFolder).innerText
                     }
+                    if (previousFolderName == "Recent Files") { previousFolderName = documents.getElementById("f" + document.getElementById("selectedFolder").value).innerText }
+                    let docRow = document.createElement("div"), docLink = document.createElement("span"), docIcon1 = document.createElement("span")
+                    let docIcon2 = document.createElement("a"), docIcon2a = document.createElement("span"), docIcon2b = document.createElement("span"), docIcon2c = document.createElement("a")
+
+                    docLink.innerHTML = previousFolderName
+                    docIcon2.href = "javascript:woaCode.getFiles('" + previousFolder + "','000000','" + pfName + "')"
+                    docIcon1.className = "fa fa-folder-open-o formatIcon"
+                    docIcon2a.className = "fa fa-arrow-up"
+                    docIcon2b.className = "fa fa-list navIcon"
+                    docIcon2c.className = "fa fa-search navIcon"
+                    docIcon2c.href = "javascript:woaCode.getFiles('" + selectedFolder + "','000000','Recent Folder Files');"
+                    docIcon2.append(docIcon2b, docIcon2a)
+                    docRow.append(docIcon1, docLink, docIcon2, docIcon2c)
+                    document.getElementById("document").appendChild(docRow)
                 }
-                document.getElementById("filesWait").style.display = "none"
-                if (folderSelected == "contents951754") { fileArray.reverse() }
-                if (folderSelected == "contents328201") { fileArray.sort((a, b) => { return a - b }); fileArray.reverse() }
-                for (let d = 0, s = 1; d < fileArray.length && s <= 5; d++, s++) {
-                    let linkSpan = document.createElement("li")
+                for (let d = 0; d < documentList.length; d++) {
+                    let docRow = document.createElement("div")
                     let docLink = document.createElement("a")
-                    docLink.innerHTML = fileArray[d].split("|")[0].trim() + " - "
-                    docLink.href = fileArray[d].split("|")[1].trim()
+                    let docIcon = document.createElement("i")
+                    let remoteDoc = documentList[d].getElementsByTagName("span")[0]
+                    let isFolder = remoteDoc.id.startsWith("f")
+                    let localDocID = remoteDoc.id.replace("f", "").replace("d", "")
+                    docLink.innerHTML = remoteDoc.innerText
+                    if (isFolder == true) {
+                        docIcon.className = "fa fa-folder-o formatIcon"
+                        docLink.href = "javascript:woaCode.getFiles('" + localDocID + "','" + selectedFolder + "','" + remoteDoc.innerText + "');"
+                    } else {
+                        docIcon.className = "fa fa-file-pdf-o formatIcon"
+                        docLink.href = documents.getElementById("contentsDoc" + localDocID).getElementsByTagName("a")[2].href
+                        docRow.id = documents.getElementById("contentsDoc" + localDocID).id
+                    }
 
-                    let inLink = document.createElement("a")
-                    inLink.innerHTML = fileArray[d].split("|")[2].trim()
-                    inLink.href = fileArray[d].split("|")[3].trim()
 
-                    linkSpan.appendChild(docLink)
-                    linkSpan.appendChild(inLink)
-                    document.getElementById("recentFiles").getElementsByTagName("ul")[0].appendChild(linkSpan)
+                    docRow.appendChild(docIcon)
+                    docRow.appendChild(docLink)
+                    if (isFolder === true) { document.getElementById("document").appendChild(docRow) }
+                    if (isFolder === false) { sortScreens.push({ rowID: docRow.id.toString(), rowText: docLink.innerHTML, rowContent: docRow.innerHTML }) }
                 }
+                //let screenToSave = []
+                //let currentScreen = document.getElementById("document").getElementsByTagName("span")
+                //for (let h = 0; h < currentScreen.length; h++) { screenToSave.push(currentScreen[h].innerHTML) }
+                //let saveFileList = JSON.stringify(screenToSave)
+                //localStorage.setItem(selectedFolder, saveFileList)
+                if (selectedFolder !== "000000") { woaCode.screenSort(sortScreens) }
             })
 
     },
@@ -330,23 +376,42 @@ const woaCode = {
         localStorage.setItem("customDiff", currentHistory)
         woaCode.getPosts()
     },
-    getCloudflare: () => {
-    const xhr = new XMLHttpRequest()
-    xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === this.DONE) {
-            woaCode.parseCloudflare(this.responseText)
+    screenSort: (screenToSort) => {
+        let screens = document.getElementById("document")
+
+        screenToSort.sort((a, b) => {
+            const sortCriteraA = (screens.children[0].innerText == "Step Sheets") ? a.rowID.toString() : a.rowText
+            const sortCriteraB = (screens.children[0].innerText == "Step Sheets") ? b.rowID.toString() : b.rowText
+            if (sortCriteraA < sortCriteraB) { return -1 }
+            if (sortCriteraA > sortCriteraB) { return 1 }
+            return 0
+        })
+        if (screens.children[0].innerText !== "Flyers (Events or Activities)") { screenToSort.reverse() }
+        for (let s = 0; s < screenToSort.length && s < 5; s++) {
+
+            let newRow = document.createElement("div")
+            newRow.id = screenToSort[s].rowID
+            newRow.innerHTML = screenToSort[s].rowContent
+            screens.appendChild(newRow)
         }
-    })
-    xhr.open("GET", "https://d1-customnetware.customnetware.workers.dev/api/customnetware/"+woaCode.getDataFromParen(document.getElementById("HeaderPublishAuthProfile").href)[2])
-    xhr.setRequestHeader("Content-Type", "application/json")
-    xhr.send()
+    },
+    getCloudflare: () => {
+        const xhr = new XMLHttpRequest()
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === this.DONE) {
+                woaCode.parseCloudflare(this.responseText)
+            }
+        })
+        xhr.open("GET", "https://d1-customnetware.customnetware.workers.dev/api/customnetware/" + woaCode.getDataFromParen(document.getElementById("HeaderPublishAuthProfile").href)[2])
+        xhr.setRequestHeader("Content-Type", "application/json")
+        xhr.send()
 
     },
     parseCloudflare: (parseData) => {
-        if (parseData.length > 0) {  
-  let newObject = JSON.parse(parseData)
+        if (parseData.length > 0) {
+            let newObject = JSON.parse(parseData)
 
-            
+
             console.log(newObject.success)
         }
     }
@@ -356,8 +421,9 @@ woaCode.getContacts()
 woaCode.getPosts()
 woaCode.getProfile()
 woaCode.getForSaleOrFree()
-woaCode.getFiles()
-woaCode.getCloudflare()
+
+woaCode.getFiles('000000', '000000', 'Recent Files')
+/*woaCode.getCloudflare()*/
 
 
 
