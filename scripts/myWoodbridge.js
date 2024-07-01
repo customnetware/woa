@@ -1,6 +1,24 @@
-let savedFolder = localStorage.getItem("savedFolder")
-if (savedFolder !== null && savedFolder !== "0") { document.getElementById("selectedFolder").value = savedFolder }
+
+
+
+
 const woaCode = {
+    addFolderLinks: () => {
+        let fileMenu = document.getElementById("mobile-menu-publish-links").getElementsByClassName("menu-item has-sub")
+        for (x = 0; x < fileMenu[1].getElementsByTagName("ul")[0].childElementCount; x++) {
+            let menuName = fileMenu[1].getElementsByTagName("ul")[0].children[x].children[0].innerText
+            let menuID = fileMenu[1].getElementsByTagName("ul")[0].children[x].children[0].href.split("/")
+            if (menuName.includes("Flyers") || menuName.includes("Board Meeting") || menuName.includes("Newsletter") || menuName.includes("Step")) {
+                let selectOption = document.createElement("option")
+                selectOption.value = menuID[menuID.length - 2].replace("28118~", "")
+                selectOption.text = menuName
+                if (x == 1) { selectOption.selected = true }
+                document.getElementById("selectedFolder").appendChild(selectOption)
+            }
+        }
+        let savedFolder = localStorage.getItem("savedFolder")
+        if (savedFolder !== null && savedFolder !== "0") { document.getElementById("selectedFolder").value = savedFolder }
+    },
     pageLocation: (pageName) => {
         return (window.location.hostname == "localhost") ? pageName.replace("https://ourwoodbridge.net", "") + ".html" : pageName
     },
@@ -415,12 +433,12 @@ const woaCode = {
         }
     }
 }
+woaCode.addFolderLinks()
 woaCode.getEmails()
 woaCode.getContacts()
 woaCode.getPosts()
 woaCode.getProfile()
 woaCode.getForSaleOrFree()
-
 woaCode.getFiles('000000', '000000', 'Recent Files')
 /*woaCode.getCloudflare()*/
 

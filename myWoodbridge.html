@@ -131,7 +131,7 @@
             </div>
             <div style="width:100%; float:left;" id="recentFiles">
                 <span class="fa fa-files-o fa-lg" aria-hidden="true" style="margin-right:5px; margin-bottom:10px"></span><strong>Recent Files</strong><br>
-                The most recent files uploaded to the Document (Resource) Center in the folder selected are displayed below.  Click on the dropdown to change folders.  You may also browse the Document (Resource) Center's folder list on this page by clicking the<span class="fa fa-list navIcon"></span><span class="fa fa-arrow-up" style="margin-right:5px;"></span> icon on the top row of the file listing below.  Click here to browse the Document (Resource) Center's files and folders in the default format.
+                The most recent files uploaded to the Document (Resource) Center in the folder selected are displayed below.  Click on the dropdown to change folders. <i>(Note: Your selection will be saved).</i>  You may also browse the Document (Resource) Center's folder list on this page by clicking the<span class="fa fa-list navIcon"></span><span class="fa fa-arrow-up" style="margin-right:5px;"></span> icon on the top row of the file listing below.  Click <a href="/resourcecenter/index/28118/documents">here</a> to browse the <a href="/resourcecenter/index/28118/documents">Document (Resource) Center's</a> files and folders in the default format.
                 <div class="form-group">
                     <select class="form-control-mdlg" id="selectedFolder" onchange="woaCode.getFiles('000000', '000000','Recent Files')" style="float:left">
                         <option disabled value="0">Select a Folder</option>
@@ -177,20 +177,6 @@
         </div>
 
         <script>
-            let fileMenu = document.getElementById("mobile-menu-publish-links").getElementsByClassName("menu-item has-sub")
-            for (x = 0; x < fileMenu[1].getElementsByTagName("ul")[0].childElementCount; x++) {
-                let menuName = fileMenu[1].getElementsByTagName("ul")[0].children[x].children[0].innerText
-                let menuID = fileMenu[1].getElementsByTagName("ul")[0].children[x].children[0].href.split("/")
-                if (menuName.includes("Flyers") || menuName.includes("Board Meeting") || menuName.includes("Newsletter") || menuName.includes("Step")) {
-                    let selectOption = document.createElement("option")
-                    selectOption.value = menuID[menuID.length - 2].replace("28118~", "")
-                    selectOption.text = menuName
-                    if (x == 1) { selectOption.selected = true }
-                    document.getElementById("selectedFolder").appendChild(selectOption)
-                }
-            }
-
-
             function checkForScript(element, evnt, funct) {
                 if (element.attachEvent) { return element.attachEvent('on' + evnt, funct) } else { return element.addEventListener(evnt, funct, false) }
             }

@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:scripts\\myWoodbridge.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\willw\\source\\repos\\woa\\css\\myWoodbridge.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:css\\myWoodbridge.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\willw\\source\\repos\\woa\\myWoodbridge.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:myWoodbridge.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\willw\\source\\repos\\woa\\css\\myWoodbridge.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:css\\myWoodbridge.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -180,35 +180,36 @@
               "RelativeDocumentMoniker": "scripts\\myWoodbridge.js",
               "ToolTip": "C:\\Users\\willw\\source\\repos\\woa\\scripts\\myWoodbridge.js",
               "RelativeToolTip": "scripts\\myWoodbridge.js",
-              "ViewState": "AQIAAHwAAAAAAAAAAAAAAIkAAAA9AAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAALQBAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2024-07-01T09:22:35.751Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "myWoodbridge.css",
               "DocumentMoniker": "C:\\Users\\willw\\source\\repos\\woa\\css\\myWoodbridge.css",
               "RelativeDocumentMoniker": "css\\myWoodbridge.css",
               "ToolTip": "C:\\Users\\willw\\source\\repos\\woa\\css\\myWoodbridge.css",
               "RelativeToolTip": "css\\myWoodbridge.css",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAAAA4AAAAaAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2024-07-01T08:56:55.433Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "myWoodbridge.html",
               "DocumentMoniker": "C:\\Users\\willw\\source\\repos\\woa\\myWoodbridge.html",
               "RelativeDocumentMoniker": "myWoodbridge.html",
               "ToolTip": "C:\\Users\\willw\\source\\repos\\woa\\myWoodbridge.html",
               "RelativeToolTip": "myWoodbridge.html",
-              "ViewState": "AQIAAHwAAAAAAAAAAAAAANIAAAARAAAA",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAewBUAAAA/AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-07-01T08:50:36.068Z"
+              "WhenOpened": "2024-07-01T08:50:36.068Z",
+              "EditorCaption": ""
             }
           ]
         }
