@@ -5,10 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\willw\\source\\repos\\woa\\scripts\\myWoodbridge.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:scripts\\myWoodbridge.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\willw\\source\\repos\\woa\\myWoodbridge.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:myWoodbridge.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -176,22 +172,9 @@
               "RelativeDocumentMoniker": "scripts\\myWoodbridge.js",
               "ToolTip": "C:\\Users\\willw\\source\\repos\\woa\\scripts\\myWoodbridge.js",
               "RelativeToolTip": "scripts\\myWoodbridge.js",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFUAAABeAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFQAAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-07-01T08:44:10.771Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "myWoodbridge.html",
-              "DocumentMoniker": "C:\\Users\\willw\\source\\repos\\woa\\myWoodbridge.html",
-              "RelativeDocumentMoniker": "myWoodbridge.html",
-              "ToolTip": "C:\\Users\\willw\\source\\repos\\woa\\myWoodbridge.html",
-              "RelativeToolTip": "myWoodbridge.html",
-              "ViewState": "AQIAAH8AAAAAAAAAAAAAAI0AAAASAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-07-01T08:38:12.258Z",
+              "WhenOpened": "2024-07-01T08:48:07.619Z",
               "EditorCaption": ""
             }
           ]

@@ -82,7 +82,7 @@ const woaCode = {
 
         let waitRow = document.createElement("span"), waitFolder = document.createElement("span"), waitIcon = document.createElement("span")
         waitFolder.className = "fa fa-folder-o formatIcon"
-        waitIcon.className = "fa fa-spinner fa-pulse fa-fw"
+        waitIcon.className = "fa fa-spinner fa-spin fa-fw"
         waitRow.append(waitFolder, waitIcon, "The requested folders and files are loading...")
         document.getElementById("document").appendChild(waitRow)
 
