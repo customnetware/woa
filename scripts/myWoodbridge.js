@@ -94,16 +94,14 @@ const woaCode = {
 
     },
     getFiles: (selectedFolder, previousFolder, previousFolderName) => {
-        const fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
         document.getElementById("document").innerHTML = ""
-        localStorage.setItem("savedFolder", document.getElementById("selectedFolder").value)
+        const fileLocation = (window.location.hostname == "localhost") ? "/resourcecenter/28118/resource-center.html" : "/resourcecenter/28118/resource-center"
 
-        let waitRow = document.createElement("span"), waitFolder = document.createElement("span"), waitIcon = document.createElement("span")
-        waitFolder.className = "fa fa-folder-o formatIcon"
+        localStorage.setItem("savedFolder", document.getElementById("selectedFolder").value)
+        let waitRow = document.createElement("div"), waitIcon = document.createElement("span")
         waitIcon.className = "fa fa-refresh fa-fw fa-spin"
         waitRow.append(waitIcon, "  The requested folders and files are loading...")
         document.getElementById("document").appendChild(waitRow)
-
 
 
         //let currentScreen = localStorage.getItem(selectedFolder)
@@ -118,9 +116,8 @@ const woaCode = {
         //} else {}
         $.get(fileLocation, function () { })
             .done(function (responseText) {
-                let sortScreens = []
                 document.getElementById("document").innerHTML = ""
-                let documents = new DOMParser().parseFromString(responseText, "text/html")
+                let documents = new DOMParser().parseFromString(responseText, "text/html"), sortScreens = []
 
                 if (previousFolderName == "Recent Folder Files") {
                     let docs = documents.getElementById("contents" + selectedFolder).querySelectorAll('[id^="d"]'), fileArray = []
@@ -177,7 +174,7 @@ const woaCode = {
                     docRow.appendChild(docIcon)
                     docRow.appendChild(docLink)
                     if (isFolder === true) { document.getElementById("document").appendChild(docRow) }
-                    if (isFolder === false) { sortScreens.push({ rowID: docRow.id.toString(), rowText: docLink.innerHTML, rowContent: docRow.innerHTML }) }
+                    if (isFolder === false) { sortScreens.push({ rowID: docRow.id, rowText: docLink.innerHTML, rowContent: docRow.innerHTML }) }
                 }
                 //let screenToSave = []
                 //let currentScreen = document.getElementById("document").getElementsByTagName("span")
