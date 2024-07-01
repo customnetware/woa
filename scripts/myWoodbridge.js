@@ -80,11 +80,10 @@ const woaCode = {
         document.getElementById("document").innerHTML = ""
         localStorage.setItem("savedFolder", document.getElementById("selectedFolder").value)
 
-        let waitRow = document.createElement("span"), waitFolder = document.createElement("i"), waitIcon = document.createElement("i")
+        let waitRow = document.createElement("span"), waitFolder = document.createElement("span"), waitIcon = document.createElement("span")
         waitFolder.className = "fa fa-folder-o formatIcon"
         waitIcon.className = "fa fa-spinner fa-pulse fa-fw"
-        waitRow.appendChild(waitFolder, waitIcon)
-        waitRow.appendChild(document.createTextNode("The requested folders and files are loading..."))
+        waitRow.append(waitFolder, waitIcon, "The requested folders and files are loading...")
         document.getElementById("document").appendChild(waitRow)
 
 
