@@ -135,7 +135,7 @@ const woaCode = {
                     docIcon2c.className = "fa fa-search navIcon"
                     docIcon2c.href = "javascript:woaCode.getFiles('" + selectedFolder + "','000000','Recent Folder Files');"
                     docIcon2.append(docIcon2b, docIcon2a)
-                    docRow.append(docIcon1, docLink, docIcon2, docIcon2c)
+                    docRow.append(docIcon1, docLink, docIcon2)
                     document.getElementById("document").appendChild(docRow)
                 }
                 for (let d = 0; d < documentList.length; d++) {
