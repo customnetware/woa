@@ -1,11 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\css",
-    "\\resourcecenter",
-    "\\resourcecenter\\28118",
+    "\\Gallery",
+    "\\HOA",
+    "\\HOA\\assn28118",
+    "\\HOA\\assn28118\\images",
+    "\\HOA\\assn28118\\images\\gallery60884",
     "\\scripts"
   ],
-  "SelectedNode": "\\resourcecenter\\28118",
+  "SelectedNode": "\\scripts\\myWoodbridge.js",
   "PreviewInSolutionExplorer": false
 }

@@ -320,7 +320,13 @@ const woaCode = {
                         adTitle.appendChild(document.createTextNode(classifiedTitle[p].getElementsByTagName("a")[0].innerText.trim()))
                         ad.appendChild(adTitle)
                         ad.appendChild(document.createElement("br"))
-                        ad.appendChild(document.createTextNode(classifiedBody[p].childNodes[0].nodeValue))
+
+
+                        let adContent = document.createElement("span")
+                        adContent.innerHTML = classifiedBody[p].childNodes[0].nodeValue
+                        ad.appendChild(adContent)
+                        /*ad.appendChild(document.createTextNode(classifiedBody[p].childNodes[0].nodeValue))*/
+
                         document.getElementById("recentSales").getElementsByTagName("ul")[0].appendChild(ad)
                     }
                 } localStorage.setItem("pageSales", document.getElementById("recentSales").getElementsByTagName("ul")[0].innerHTML.trim())
